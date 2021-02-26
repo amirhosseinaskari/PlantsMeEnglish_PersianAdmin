@@ -1,0 +1,37 @@
+﻿@model IEnumerable<State>
+@if (((int)ViewData["SelectedStateId"]).Equals(-1))
+{
+    @foreach (var item in Model)
+    {
+        if (Model.First().Equals(item))
+        {
+            <option class="state-item" data-state-name="@item.StateName" role="option" value="@item.Id" selected>
+                @item.StateName
+            </option>
+            continue;
+        }
+        <option class="state-item" data-state-name="@item.StateName" role="option" value="@item.Id">
+            @item.StateName
+        </option>
+
+    }
+
+}
+else
+{
+    @foreach (var item in Model)
+    {
+        if (item.Id.Equals((int)ViewData["SelectedStateId"]))
+        {
+            <option class="state-item" data-state-name="@item.StateName" role="option" value="@item.Id" selected>
+                @item.StateName
+            </option>
+            continue;
+        }
+        <option class="state-item" data-state-name="@item.StateName" role="option" value="@item.Id">
+            @item.StateName
+        </option>
+
+    }
+
+}

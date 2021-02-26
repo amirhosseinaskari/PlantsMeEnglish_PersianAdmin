@@ -1,0 +1,129 @@
+﻿@model IEnumerable<Product>
+@if (Model.Count() > 0)
+{
+    <section id="special-discount-container" class="margin-top-20 product-slider">
+       
+        <div class="d-flex flex-column align-items-center justify-content-center">
+            <!--Title of special discount slider-->
+            <div class="product-slider-title margin-top-25 margin-bottom-15" dir="rtl">
+                <h2 class="dana-font fontsize-30 mobile-fontsize-28 white-text
+                    xsmobile-fontsize-26 font-weight-600 margin-0">
+                   Special Offer For You
+                </h2>
+         
+            </div>
+            <div class="d-flex flex-column align-items-center uk-position-relative uk-visible-toggle uk-light padding-top-10 padding-bottom-50 w-100 slider-container" tabindex="-1" uk-slider>
+                <ul class="uk-slider-items uk-child-width-1-1 uk-grid w-100">
+                    @foreach (var item in Model)
+                    {
+                        var orderedImages = item.Images.OrderBy(c => c.ImageOrder).ToList();
+                        string imageName = null;
+                        if (item.Images.OrderBy(c => c.ImageOrder).FirstOrDefault() != null)
+                        {
+                            imageName = orderedImages.First().ImageName;
+                        }
+                        <li>
+                            <div class="special-discount-card uk-card uk-card-default uk-margin uk-box-shadow-small margin-top-20">
+
+
+                                <div class="content-container">
+                                    <!--discount badge-->
+                                    <div class="discount-badge">
+                                        <strong class="digit-format fontsize-22 mobile-fontsize-20 dana-font font-weight-600 white-text discount-text">@(Math.Round(item.SpecialDiscount.First().DiscountPrice * 100 / item.BasePrice))%</strong>
+                                    </div>
+                                    <div class="uk-card-body dana-font" dir="ltr">
+                                        <!--Product title-->
+                                        @if (item.Title.Length > 30)
+                                        {
+                                            <h3 class="uk-card-title dana-font fontsize-14 font-weight-500">
+                                                @item.Title.Substring(0, 30) <span>....</span>
+                                            </h3>
+                                        }
+                                        else
+                                        {
+                                            <h3 class="uk-card-title dana-font fontsize-20 mobile-fontsize-18 xsmobile-fontsize-16 font-weight-500">
+                                                @item.Title
+                                            </h3>
+                                        }
+
+                                        <!--Price of product-->
+                                        <div class="price-container dana-font fontsize-18 mobile-fontsize-16 font-weight-600">
+                                            <!--Old price-->
+                                            <span class="old-price uk-text-muted margin-right-15 font-weight-500">
+                                                <span>KSh </span><span class="digit-format">@item.BasePrice</span>
+
+                                            </span>
+                                            <!--New price with discount-->
+                                            <span class="new-price main-color font-weight-600">
+                                                <span>KSh </span><span class="digit-format"> @((item.BasePrice - item.SpecialDiscount.First().DiscountPrice).ToString("N0", new System.Globalization.NumberFormatInfo() { NumberGroupSizes = new[] { 3 }, NumberGroupSeparator = "," }))</span>
+
+                                            </span>
+                                        </div>
+                                        <!--Time counter of special discount-->
+                                        <div class="uk-grid-small uk-child-width-auto margin-top-30 time-counter margin-top-40" uk-grid uk-countdown="date:  @(item.SpecialDiscount.First().ExpirationDate)" dir="ltr">
+                                            <div>
+                                                <div class="uk-countdown-number uk-countdown-days fontsize-12 icon"></div>
+                                                <div class="uk-countdown-label uk-margin-small uk-text-center uk-visible fontsize-14">DAY</div>
+                                            </div>
+
+                                            <div>
+                                                <div class="uk-countdown-number uk-countdown-hours fontsize-12 icon"></div>
+                                                <div class="uk-countdown-label uk-margin-small uk-text-center uk-visible fontsize-14">HOUR</div>
+                                            </div>
+
+                                            <div>
+                                                <div class="uk-countdown-number uk-countdown-minutes fontsize-12 icon"></div>
+                                                <div class="uk-countdown-label uk-margin-small uk-text-center uk-visible fontsize-14">MIN</div>
+                                            </div>
+
+                                            <div>
+                                                <div class="uk-countdown-number uk-countdown-seconds fontsize-12 icon"></div>
+                                                <div class="uk-countdown-label uk-margin-small uk-text-center uk-visible fontsize-14">SEC</div>
+                                            </div>
+                                        </div>
+
+                                        <!--Call to action button-->
+                                        <div class="special-discount-button uk-text-center margin-top-25 w-100">
+                                            <a asp-controller="Products" asp-action="ProductDetail" asp-area="" asp-route-id="@item.Id" asp-route-title="@item.Title.Replace(" ","-")" class="uk-button uk-button-default black-text dana-font
+                                            fontsize-16 font-weight-500">
+                                                <span>Discover</span>
+                                            </a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <!--product image for this special discount-->
+                                <div class="uk-card-media-right uk-cover-container">
+                                    @if (string.IsNullOrEmpty(imageName))
+                                    {
+                                        <img src="~/images/base/placeholderimage.jpg" alt="@item.Title">
+                                    }
+                                    else
+                                    {
+                                        <img class="lazyload" src="~/images/base/placeholderimage.jpg"
+                                             data-src="/images/products/small/product_@(item.Id)/@orderedImages.First().ImageName"
+                                             alt="@orderedImages.First().AltText" loading="lazy">
+                                    }
+                                </div>
+                            </div>
+
+                        </li>
+                    }
+
+
+                </ul>
+                <!--special discount slider arrow navigation-->
+                <a class="uk-position-center-left uk-position-small  slide-navigation slide-navigation-left uk-box-shadow-small" href="#" uk-slidenav-previous uk-slider-item="previous"></a>
+                <a class="uk-position-center-right uk-position-small  slide-navigation slide-navigation-right uk-box-shadow-small" href="#" uk-slidenav-next uk-slider-item="next"></a>
+                <!--dot navigations of slider-->
+                <ul class="uk-slider-nav uk-dotnav uk-flex-center margin-top-20 uk-visible@s"></ul>
+                <div class="d-flex justify-content-center margin-top-30">
+                    <a asp-action="AllSpecialDiscount" asp-controller="SpecialDiscount" asp-area="" class="white-text text-decoration-none dana-font black border-radius-3 uk-button uk-button-default
+                   fontsize-18 mobile-fontsize-16 xsmobile-fontsize-14 font-weight-500">Discover More Offers</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+   
+}

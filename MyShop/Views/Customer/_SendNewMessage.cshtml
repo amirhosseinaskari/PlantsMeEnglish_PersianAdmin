@@ -1,0 +1,54 @@
+﻿
+<!--Partial Content-->
+<div class="uk-card uk-card-default position-relative customer__partial-card">
+    <div class="uk-card-header border-bottom-grey uk-flex-wrap d-flex flex-row justify-content-between align-items-center">
+        <h3 class="dana-font fontsize-14 font-weight-500 margin-bottom-0  margin-y-5
+            flex-grow-1 font-color-3">
+            Add New Message
+        </h3>
+        <div>
+            <button data-target-url="/Customer/PartialViewMessages"
+                    class="uk-button uk-button-default border-radius-3 partial-top-link d-flex align-items-center">
+                <span class="d-flex align-items-center" uk-icon="icon:arrow-left"></span>
+                <span class="dana-font font-weight-400 fontsize-12 margin-left-10">Back</span>
+
+            </button>
+        </div>
+    </div>
+    <div class="uk-card-body m-0 py-3">
+        <article class="">
+            <form class="customer-form" asp-action="SendNewMessage" asp-controller="Customer"
+                  asp-area="" method="post" role="form">
+                <div class="dana-font fontsize-12 xsmobile-fontsize-10 font-weight-400 padding-x-5 margin-y-25">
+                    <div class="custom-text-field">
+                        <label class="uk-form-label" for="ticketSubject">Subject</label>
+                        <div class="uk-inline w-100" dir="ltr">
+                            <input class="uk-input uk-text-left border-radius-3" name="ticketSubject"
+                                   placeholder="Write subject" type="text">
+                        </div>
+                    </div>
+                    <span class="dana-font fontsize-12 red-text font-weight-400 d-none ticketSubject-error"></span>
+                </div>
+                
+                <div class="dana-font fontsize-12 xsmobile-fontsize-12 font-weight-400 padding-x-5 margin-bottom-20">
+                    <div class="custom-text-field">
+                        <label class="uk-form-label dana-font" for="ticketDescription">Message Description</label>
+                        <div class="uk-form-controls d-flex">
+                            <textarea name="ticketDescription" class="uk-textarea border-radius-3 padding-10 padding-top-15" rows="4"
+                                      placeholder="Write description"></textarea>
+                        </div>
+                    </div>
+                    <span class="dana-font fontsize-12 red-text font-weight-400 d-none ticketDescription-error"></span>
+                </div>
+                <div class="uk-text-left margin-y-10">
+                    <button class="send-ticket-submit-button black border-radius-3 wave-button white-text" type="submit">
+                      
+                        <span class="dana-font fontsize-12 xsmobile-fontsize-10 font-weight-400">
+                           Submit
+                        </span>
+                    </button>
+                </div>
+            </form>
+        </article>
+    </div>
+</div>

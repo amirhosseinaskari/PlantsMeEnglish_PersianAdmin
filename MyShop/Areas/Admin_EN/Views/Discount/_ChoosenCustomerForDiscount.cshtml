@@ -1,0 +1,65 @@
+﻿@model int
+<div class="col-12 px-2">
+    <div class="text-left mx-3 fontsize-12 IRANSans red-lighten-6
+                                 border-bottom--red py-1 d-inline-block" style="min-width:150px">
+        <span class="">Customers Covered By this Discount Code</span>
+    </div>
+    <div class="row m-0 py-4">
+        <!--Form-->
+        <div class="col-md-5 col-sm-6 my-2 px-0">
+            <div class="custom-text-field">
+                <label class="uk-form-label IRANSans_Light fontsize-12" for="discountCustomer">Select Customers</label>
+                <div class="my-2 my-sm-0 mx-0 d-flex flex-column" uk-form-custom="target: > * > span:first-child">
+                    <select name="discountCustomer" id="discountCustomer" class="IRANSans_Light fontsize-12 grey-darken-4 uk-border-rounded p-2">
+                        <vc:customer-list-title></vc:customer-list-title>
+                    </select>
+                    <button class="uk-button uk-button-default IRANSans_Light fontsize-12
+                                                border-grey uk-border-rounded w-100 text-left d-inline-block px-2" 
+                            style="height:42px;"
+                            type="button" tabindex="-1">
+                        <span class="IRANSans_Light fontsize-12"></span>
+                        <span uk-icon="icon: chevron-down;ratio:.7"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!--Add Button-->
+        <div class="col-lg-4 col-md-5 col-sm-6 d-flex align-items-center my-1 px-2">
+            <button class="mdc-button mdc-button--unelevated bg--white border px-0 add-customer-discount__button" 
+                    style="height:40px" data-id="@Model">
+                <div class="mdc-button__ripple"></div>
+                <span class="mdc-button__label IRANSans fontsize-12 blue-700 px-1 px-sm-2">
+                   Add
+                </span>
+            </button>
+        </div>
+        <!--Added Customers-->
+        <div class="col-12 my-2 pr-2" id="discount-target__added-customers">
+            <vc:customer-discount-target my-id="@Model"></vc:customer-discount-target>
+           
+        </div>
+    </div>
+</div>
+
+<script>
+     //Add discount code for a customer
+    $('.add-customer-discount__button').click(function(e) {
+        let disId = $(this).attr('data-id');
+        let userName = $('select[name="discountCustomer"]').val();
+        $.ajax({
+            url: "/Admin/Discount/AddDiscountCodeForCustomer",
+            type: "POST",
+            data: {
+                discountId: disId,
+                name: userName
+            },
+            error: function(xhr) { alert(xhr.responseText); },
+            beforeSend: function() { $('#progress-loader').removeClass('d-none'); },
+            success: function(data) {
+                $('#discount-target__added-customers').html(data);
+            }
+        }).done(function() {
+            $('#progress-loader').addClass('d-none');
+        });
+    });
+</script>

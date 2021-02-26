@@ -1,0 +1,23 @@
+﻿@model IEnumerable<BrandTitleDropDown>
+@if (Model.Count() < 1 || Model.Where(c=> c.Selected).Count() < 1)
+{
+    <li class="mdc-list-item mdc-list-item--selected" data-value="-1" role="option">
+       بدون برند
+    </li>
+}
+@foreach (var item in Model)
+{
+    if (item.Selected)
+    {
+        <li class="mdc-list-item mdc-list-item--selected" data-value="@item.Id" role="option">
+            @item.Title
+        </li>
+    }
+    else
+    {
+        <li class="mdc-list-item" data-value="@item.Id" role="option">
+            @item.Title
+        </li>
+    }
+
+}

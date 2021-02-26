@@ -1,0 +1,80 @@
+﻿@page
+@model MyShop.Pages.FAQModel
+
+@{
+    ViewData["Title"] = "FAQ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Schema{
+    <script type="application/ld+json">
+        {
+        "@@context": "https://schema.org",
+        "@@type": "FAQPage",
+        "mainEntity": [
+        @foreach (var item in Model.FAQ)
+        {
+            var answer = Html.Raw(System.Text.RegularExpressions.Regex.Replace(item.Answer, "<.*?>", String.Empty));
+
+            if (item.Equals(Model.FAQ.Last()))
+            {
+
+                <text>
+
+                    {
+                    "@@type": "Question",
+                    "name": "@Html.Raw(item.Question)",
+                    "acceptedAnswer": {
+                    "@@type": "Answer",
+                    "text": "
+                    @answer
+                    "
+                    }
+                    }
+                </text>
+                continue;
+            }
+            <text>
+                {
+                "@@type": "Question",
+                "name": "@Html.Raw(item.Question)",
+                "acceptedAnswer": {
+                "@@type": "Answer",
+                "text": "
+                @answer
+                "
+                }
+                },
+            </text>
+        }
+
+        ]
+        }
+    </script>
+}
+@section Style{
+    <link href="~/dist/sass/pages/aboutus.min.css" rel="stylesheet" />
+}
+@section JavaScript{
+    <script async src="~/dist/js/pages/_contactus.min.js" type="module"></script>
+}
+<section id="faq-page" class="padding-y-30">
+    <h1 class="uk-text-center margin-y-30 fontsize-22 mobile-fontsize-20 main-color dana-font font-weight-600 line-height-25">FAQ</h1>
+    <div id="faq-content">
+        <ul uk-accordion dir="ltr">
+            @foreach (var item in Model.FAQ)
+            {
+                <li class="uk-box-shadow-small uk-text-justify white margin-y-20">
+                    <a class="uk-accordion-title dana-font fontsize-18 line-height-30 tablet-fontsize-16 xsmobile-fontsize-12 font-weight-500 text-decoration-none faq-question" href="#">
+                        @item.Question
+                        <span uk-icon="icon:chevron-down" class="faq-chevron-icon margin-x-10 flex-shrink-0"></span>
+                    </a>
+                    <div class="uk-accordion-content dana-font fontsize-16 mobile-fontsize-14 font-weight-400 font-color-4 faq-answer line-height-30">
+                        @Html.Raw(item.Answer)
+                    </div>
+                </li>
+            }
+
+
+        </ul>
+    </div>
+</section>

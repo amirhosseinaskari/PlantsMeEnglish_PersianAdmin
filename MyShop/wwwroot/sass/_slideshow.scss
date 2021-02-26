@@ -1,0 +1,15 @@
+﻿@import "mixins/_custom-mixins.scss";
+@import "_bourbon.scss";
+#home-top-slideshow {
+    .uk-dotnav>*>*{
+        border-color:white;
+    }
+    .uk-dotnav>.uk-active>* {
+        background-color: white;
+    }
+}
+
+.product-media-card{
+    height:160px;
+    max-height:180px;
+}

@@ -1,0 +1,119 @@
+﻿@model IEnumerable<Blog>
+@if (Model.Count() < 1)
+{
+    <div class="d-flex justify-content-start flex-column align-items-center mt-3" style="min-height:300px">
+        <div class="Arial fontsize-12 text-center p-2 my-3 border--blue uk-box-shadow-medium" style="width:400px;max-width:100%">No Blogs Created</div>
+        <img style="max-height:300px" src="~/images/large/product1.svg" />
+    </div>
+}
+else
+{
+    //Delete Modal for remove product
+    <div id="item-remove-modal" uk-modal dir="ltr">
+        <div class="uk-modal-dialog">
+            <button class="uk-modal-close-default" type="button" uk-close syle="right:unset;left:10px !important;"></button>
+            <div class="uk-modal-header bg--light-3">
+                <h3 class="Arial fontsize-14 red-lighten-7">Warning!</h3>
+            </div>
+            <div class="uk-modal-body">
+                <div class="IRANSans fontsize-12 modal-body-text">Are you sure want to delete this blog?</div>
+            </div>
+            <div class="uk-modal-footer uk-text-left">
+                <form id="remove-item-form-on-modal" action="/En/Admin/Blog/DeleteBlog" method="post">
+                    <div class="item-id-container"></div>
+                    <button class="mdc-button mdc-button--unelevated border--blue red-lighten-7 bg--white uk-box-shadow-medium" style="height:30px" type="submit">
+                        <div class="mdc-button__ripple"></div>
+                        <span class="mdc-button__label IRANSans fontsize-12">
+                            Delete
+                        </span>
+                        <span class="material-icons-outlined mx-2 fontsize-16">
+                            delete
+                        </span>
+                    </button>
+                    <button class="mdc-button mdc-button--unelevated border--blue uk-modal-close bg--white uk-box-shadow-medium blue-600 mx-2"
+                            style="height:30px;">
+                        <div class="mdc-button__ripple"></div>
+                        <span class="mdc-button__label IRANSans fontsize-12">
+                          Cancel
+                        </span>
+
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="row my-3 mx-0 mb-5 justify-content-start content-list"
+         data-url="/Admin/Blog/ChangeBlogOrder" dir="ltr"
+         data-message="Blog Position Changed"
+         uk-sortable="handle: .uk-sortable-handle;cls-custom:text-left direction-ltr">
+
+        @foreach (var item in Model)
+        {
+            <div class="col-xl-2 col-md-3 col-sm-4 col-6 my-2 px-1 px-sm-2
+             blog-container--div" data-my-id="@item.BlogId">
+                <div class="uk-card uk-card-default
+                 uk-border-rounded border">
+                    <div class="uk-card-header px-2 d-flex align-items-center bg--light-2 text-left"
+                         style="height:40px;" dir="ltr">
+                        <span class="uk-sortable-handle uk-margin-small-right w-50" uk-icon="icon: table;ratio:.9"></span>
+                        <div class="d-flex align-items-center justify-content-end w-50" dir="ltr">
+                            @if (item.IsPublished)
+                            {
+                                <a href="#" data-id="@item.BlogId" data-val="false" class="text-decoration-none uk-text-muted mx-1 d-flex align-items-center publish-blog-icon" uk-tooltip="title:publish">
+                                    <i class="material-icons-outlined my-icon fontsize-14">
+                                        visibility
+                                    </i>
+                                </a>
+                            }
+                            else
+                            {
+                                <a href="#" data-id="@item.BlogId" data-val="true" class="text-decoration-none uk-text-muted mx-1 d-flex align-items-center publish-blog-icon" uk-tooltip="title:unpublish">
+                                    <i class="material-icons-outlined my-icon fontsize-14">
+                                        visibility_off
+                                    </i>
+                                </a>
+                            }
+
+                            <a href="~/En/Admin/Blog/EditBlog/@item.BlogId" class="text-decoration-none uk-text-muted mx-1 d-flex align-items-center" uk-tooltip="title:edit">
+                                <span class="mx-1" uk-icon="icon:pencil;ratio:.8"></span>
+                            </a>
+                            <a href="#" data-my-id="@item.BlogId" class="text-decoration-none uk-text-muted mx-1 delete-icon
+                           d-flex align-items-center" uk-tooltip="title:delete">
+                                <span class="mx-1" uk-icon="icon:trash;ratio:.8"></span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="uk-card-media-top w-100 justify-content-center text-center product-media-card text-center flex-grow-1
+                                 d-flex align-items-start bg--white">
+                        @if (string.IsNullOrEmpty(item.CoverImage))
+                        {
+                            <img class="mw-100 mh-100" src="~/images/large/placeholderimage.jpg" alt="">
+                        }
+                        <img class="mw-100 mh-100" src="~/images/blogs/medium/blog_@item.BlogId/@item.CoverImage"
+                             srcset="/images/blogs/small/blog_@item.BlogId/@item.CoverImage 600w,
+                             /images/blogs/medium/blog_@item.BlogId/@item.CoverImage 800w,
+                             /images/blogs/large/blog_@item.BlogId/@item.CoverImage 1200w" alt="">
+                    </div>
+                    <div class="uk-card-body IRANSans_Light fontsize-10 my-1 pt-1 pb-1 px-2">
+                        <h3 class="uk-card-title iranyekanwebbold fontsize-10 red-lighten-7 m-0">@item.Title</h3>
+                        <p class="py-1 m-0">@item.SummaryDescription</p>
+                    </div>
+                    <div class="uk-card-footer d-flex justify-content-around align-items-center px-1" style="height:50px;">
+                        <div class="d-flex align-items-center text-left w-50" dir="ltr">
+                            <span class="Nazanin fontsize-16 mx-2">@item.ViewNumber</span>
+                            <i class="material-icons-outlined fontsize-14">
+                                visibility
+                            </i>
+                        </div>
+                        <div class="IRANSans_Light fontsize-10 d-flex align-items-center text-left w-50" dir="ltr">
+                            <div class="stars-rating w-100 ml-2 d-flex align-items-center justify-content-start" dir="ltr">
+                                <span class="star-icon active" uk-icon="icon:star;ratio:.8"></span>
+                                <span class="mx-2">@item.RateNumber</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        </div>
+        }

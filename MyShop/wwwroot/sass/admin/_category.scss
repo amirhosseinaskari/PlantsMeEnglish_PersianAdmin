@@ -1,0 +1,117 @@
+﻿@import "../mixins/custom-mixins";
+.custom-category-sortable-list{
+    direction:rtl;
+    text-align:right;
+   
+}
+
+.category-list__list-item {
+    position: relative;
+    min-height: 60px;
+    max-width: 700px;
+
+    .category-list__list-item__title-sorthandle-container {
+        min-height: 60px;
+        overflow:visible;
+    }
+
+    .uk-sortable-handle {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .uk-accordion-title::before {
+        position: absolute;
+        left: 20px;
+        top: 20px;
+    }
+
+    
+}
+.action-items-container--mobile,
+.action-items-container {
+    position: absolute;
+    left: 30px;
+
+    @include multiple-devices-query("Large") {
+        left: 50px;
+    }
+
+    @include multiple-devices-query("Medium") {
+        left: 40px;
+    }
+
+    a {
+        display: flex;
+        height: 100%;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        margin: 0 8px;
+
+        &.publish-icon {
+            color: #71a255;
+        }
+
+        &.edit-icon {
+            color: #4998c8;
+        }
+
+        &.delete-icon {
+            color: #ff3402;
+        }
+
+        &.unpublish-icon {
+            color: #808080;
+        }
+    }
+}
+#category-list {
+    .action-items-container--mobile, .action-items-container{
+        left:55px;
+    }
+}
+.action-items-container--mobile {
+    top: 22px;
+    .action-items-container--mobile__dropdown{
+        min-width:unset;
+        width:90px;
+        padding:10px 10px;
+        text-align:center !important;
+        ul{
+            text-align:center;
+            padding:0 !important;
+            margin:0 !important;
+        }
+    }
+}
+.action-items-container {
+    top: 25px;
+
+   
+}
+
+#item-remove-modal,
+#item-mobile-remove-modal,
+#product-add-modal,
+#content-remove-modal,
+#product-variation-remove-modal,
+#group-remove-modal,
+#discount-add-modal,
+#blog-add-modal,
+#blog-content-remove-modal,
+#about-content-remove-modal,
+#delete-comment-modal,
+#blog-delete-comment-modal,
+#reply-comment-modal,
+#blog-reply-comment-modal,
+#delete-reply-comment-modal,
+#blog-delete-reply-comment-modal,
+#reply-ticket-remove-modal,
+#video-add-modal {
+    [class*='uk-modal-close-'] {
+        left: 10px !important;
+        right: unset !important;
+    }
+}

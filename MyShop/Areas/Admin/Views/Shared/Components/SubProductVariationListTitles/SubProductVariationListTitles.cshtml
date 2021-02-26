@@ -1,0 +1,126 @@
+﻿@model IEnumerable<SubProductVariationTitlesDropDown>
+@if (Model.Count() > 0)
+{
+    <!--Set pricing for created variations-->
+    <div class="row my-2 mx-0">
+        <div class="col-12 px-2">
+            <div class="text-right mx-3 fontsize-12 IRANSans red-lighten-6 border-bottom--red py-1 d-inline-block" style="min-width:150px">
+                <span class=""> قیمت گذاری تنوع محصول</span>
+            </div>
+            <small class="fontsize-12 iranyekanweblight">
+                زیرمجموعه هایی که قیمت گذاری نشوند، هم قیمت با قیمت اولیه محصول در نظر گرفته می شوند.
+            </small>
+            <div class="row m-0 py-4">
+                <div class="col-lg-2 col-md-3 col-sm-4 my-2 px-2">
+
+                    <div class="custom-text-field">
+                        <label class="uk-form-label IRANSans_Light fontsize-12"> زیر مجموعه</label>
+                        <div class="my-2 my-sm-0 mx-0 d-flex flex-column" uk-form-custom="target: > * > span:first-child">
+                            <select class="IRANSans_Light fontsize-12 grey-darken-4 uk-border-rounded p-2
+                                sub-product-variation-price-select">
+                                @foreach (var item in Model)
+                                {
+
+                                    <option class="IRANSans fontsize-12 m-2" value="@item.Id">@item.Title</option>
+
+                                }
+                            </select>
+                            <button class="uk-button uk-button-default IRANSans_Light fontsize-12
+                                                border-grey uk-border-rounded w-100 text-right d-inline-block px-2" style="height:42px;"
+                                    type="button" tabindex="-1">
+                                <span class="IRANSans_Light fontsize-12"></span>
+                                <span uk-icon="icon: chevron-down;ratio:.7"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6 my-2 px-2">
+                    <div class="custom-text-field">
+                        <label class="uk-form-label IRANSans_Light" for="price">قیمت</label>
+                        <div class="uk-form-controls d-flex">
+                            <input class="uk-input IRANSans_Light fontsize-12" name="" type="text" placeholder="قیمت زیر مجموعه را وارد کنید">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-auto col-md-4 col-sm-6 d-flex align-items-center my-1 px-2 position-relative">
+                    <button class="mdc-button mdc-button--unelevated bg--white border px-0" style="height:40px;top:4px">
+                        <div class="mdc-button__ripple"></div>
+                        <span class="mdc-button__label IRANSans fontsize-12 blue-700 px-1 px-sm-2">
+                            اضافه کردن
+                        </span>
+                    </button>
+                </div>
+                <div class="col-12 my-2 pr-2">
+                    <div class="uk-overflow-auto bg--white border d-flex">
+                        <table class="uk-table uk-table-striped uk-table-hover border-0" id="products-analytics-table">
+                            <thead class="IRANSans fontsize-12">
+                                <tr>
+                                    <th class="text-center fontsize-12">رنگ</th>
+                                    <th class="text-center fontsize-12">قیمت</th>
+                                    <th class="text-center fontsize-12">عملیات</th>
+                                </tr>
+                            </thead>
+                            <tbody class="IRANSans_Light fontsize-12">
+                                <tr>
+                                    <td class="text-center fontsize-12">سفید</td>
+                                    <td class="text-center fontsize-12">300000</td>
+                                    <td class="text-center fontsize-12">
+                                        <a href="#" class="delete-icon red-lighten-7" uk-tooltip="title:حذف">
+                                            <span uk-icon="icon:trash;ratio:.85"></span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center fontsize-12">سبز</td>
+                                    <td class="text-center fontsize-12">260000</td>
+                                    <td class="text-center fontsize-12">
+                                        <a href="#" class="delete-icon red-lighten-7" uk-tooltip="title:حذف">
+                                            <span uk-icon="icon:trash;ratio:.85"></span>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<script>
+    $('.delete-subProductVariation').click(function (e) {
+        let myId = $(this).attr('data-my-id');
+        let parent = $(this).parents('.admin-chip-tags');
+        $.ajax({
+            url: "/Admin/SubProductVariation/Delete",
+            type: "POST",
+            data: {
+                id:myId
+            },
+            success: function (data) {
+                if (data) {
+                    $(parent).remove();
+                    $.ajax({
+                        url: "/Admin/SubProductVariation/Titles",
+                        typ: "POST",
+                        data: {
+                            poducatVariationId: provarId
+                        },
+                        success: function (d) {
+                            $('.sub-product-variation-price-select').html(d);
+                        }
+                    });
+                    UIkit.notification({
+                        message: '<span class="material-icons-outlined red-lighten-7 mx-2 position-relative" style="top:6px">notifications_active</span><span class="IRANSans_Light fontsize-14" dir="rtl">زیر مجموعه مورد نظر حذف شد</span>',
+                        status: 'primary',
+                        pos: 'top-center',
+                        timeout: 5000
+                    });
+                } 
+            }
+        });
+        e.stopPropagation();
+        e.preventDefault();
+    });
+</script>

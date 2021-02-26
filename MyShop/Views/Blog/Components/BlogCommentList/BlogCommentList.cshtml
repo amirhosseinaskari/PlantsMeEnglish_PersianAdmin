@@ -1,0 +1,249 @@
+﻿@model PaginatedList<BlogComment>
+    <strong class="dana-font fontsize-16 mobile-fontsize-12 font-weight-600 font-color-3 border-bottom-grey padding-bottom-10 margin-top-20" dir="ltr">
+        <span class="">Reviews</span>
+    </strong>
+    <div class="padding-top-15">
+        @if (Model.Count() < 1)
+        {
+        <strong class="dana-font fontsize-14 font-weight-500">
+            Be the first to review this product
+        </strong>
+        }
+        else
+        {
+    <strong class="dana-font fontsize-14 font-weight-500">
+        Please share your comment
+    </strong>
+        }
+
+        <div class="margin-y-15">
+            @if (User.Identity.IsAuthenticated)
+            {
+                <!--Add new Comment Modal-->
+                <div id="comment-add-modal" uk-modal dir="ltr" class="margin-bottom-20">
+                    <div class="uk-modal-dialog">
+                        <button class="uk-modal-close-default" type="button" uk-close></button>
+                        <form id="comment-add-modal__form" method="post">
+                            <div class="uk-modal-header">
+                                <span class="dana-font font-color-3 fontsize-14 uk-text-secondary">Add New Comment</span>
+                            </div>
+                            <div class="uk-modal-body padding-bottom-0 margin-top-15">
+                                <!--Rating-->
+                                <div class="uk-magin">
+                                    <div class="margin-y-10">
+                                        <span class="dana-font font-color-3 fontsize-14">Your overall rating::</span>&nbsp;
+                                        <span class="rate-result digit-format">5</span>
+                                    </div>
+                                    <div dir="ltr" class="blog-stars-container margin-top-10" data-rate-number="5">
+                                        <div class="stars">
+                                            <div class="d-flex align-items-center" dir="rtl">
+                                                <input class="star star-5" id="star-5" type="radio" value="5" name="star" checked />
+                                                <label class="star star-5" for="star-5"></label>
+                                                <input class="star star-4" id="star-4" type="radio" value="4" name="star" />
+                                                <label class="star star-4" for="star-4"></label>
+                                                <input class="star star-3" id="star-3" type="radio" value="3" name="star"  />
+                                                <label class="star star-3" for="star-3"></label>
+                                                <input class="star star-2" id="star-2" type="radio" value="2" name="star" />
+                                                <label class="star star-2" for="star-2"></label>
+                                                <input class="star star-1" id="star-1" type="radio" value="1" name="star" />
+                                                <label class="star star-1" for="star-1"></label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <!--Comment Description-->
+                                <div class="uk-magin margin-top-20">
+                                    <div class="custom-text-field">
+                                        <label class="uk-form-label dana-font fontsize-14 mobile-fontsize-12">Your Comment</label>
+                                        <div class="uk-form-controls margin-top-10">
+                                            <textarea rows="6" class="uk-textarea dana-font fontsize-12 border-radius-3 padding-top-15" name="description"
+                                                      type="text" required placeholder="Write your comment"></textarea>
+                                        </div>
+                                    </div>
+                                    <span class="dana-font fontsize-12 error-comment-description d-none red-text"></span>
+                                </div>
+
+
+
+                            </div>
+                            <div class="uk-modal-footer uk-text-left d-flex align-items-center margin-bottom-25">
+                                <button class="blog-submit-comment--button white-text black border-radius-3 wave-button padding-x-15"
+                                        type="submit" data-id="@ViewData["BlogId"]">
+                                    <span class="dana-font fontsize-14 mobile-fontsize-12 font-weight-500">
+                                       Submit
+                                    </span>
+                                </button>
+                                <button class="uk-button uk-button-default uk-border-rounded margin-left-10 padding-x-10
+                                    uk-modal-close uk-box-shadow-small">
+                                    <span class="dana-font fontsize-14 mobile-fontsize-12 font-weight-500">
+                                       Cancel
+                                    </span>
+
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <button uk-toggle="target: #comment-add-modal" dir="ltr"
+                        class="uk-button uk-button-default add-new-comment black border-radius-3 black wave-button white-text dana-font fontsize-14 font-weight-500">
+                    <span uk-icon="icon:comment" class="margin-right-10"></span>
+                    <span>Add New Comment</span>
+                </button>
+
+                <!--Add new reply to comment-->
+                <div id="reply-comment-add-modal" uk-modal dir="ltr">
+                    <div class="uk-modal-dialog">
+                        <button class="uk-modal-close-default" type="button" uk-close></button>
+                        <form id="reply-comment-add-modal__form" method="post">
+                            <div class="uk-modal-header">
+                                <span class="dana-font fontsize-14 uk-text-secondary">
+                                    Reply to the Comment
+                                </span>
+                            </div>
+                            <div class="uk-modal-body padding-bottom-0 margin-top-15">
+                                <!--Comment Description-->
+                                <div class="uk-magin">
+                                    <div class="custom-text-field">
+                                        <label class="uk-form-label dana-font fontsize-14 mobile-fontsize-12 font-color-2">Your Comment</label>
+                                        <div class="uk-form-controls margin-top-10">
+                                            <textarea rows="6" class="uk-textarea dana-font fontsize-12" name="replyDescription"
+                                                      type="text" required placeholder="Write Your Comment"></textarea>
+                                        </div>
+                                    </div>
+                                    <span class="dana-font fontsize-12 error-reply-description d-none red-text"></span>
+                                </div>
+                            </div>
+                            <div class="uk-modal-footer uk-text-left d-flex align-items-center margin-bottom-20">
+                                <button class="blog-submit-reply-comment--button white-text wave-button padding-x-15"
+                                        type="submit" data-id="@ViewData["BlogId"]">
+                                    <span class="dana-font fontsize-14 mobile-fontsize-12 font-weight-500">
+                                        Submit
+                                    </span>
+                                </button>
+                                <button class="uk-button uk-button-default uk-border-rounded margin-left-10 padding-x-10
+                                    uk-modal-close uk-box-shadow-small">
+                                    <span class="dana-font fontsize-14 mobile-fontsize-12 font-weight-500">
+                                        Cancel
+                                    </span>
+
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <!--Add new Comment Modal-->
+                <div id="comment-add-modal" uk-modal dir="ltr">
+                    <div class="uk-modal-dialog">
+                        <button class="uk-modal-close-default" type="button" uk-close></button>
+
+                        <div class="uk-modal-header">
+                            <span class="dana-font font-color-3 fontsize-14">Add New Comment</span>
+                        </div>
+                        <div class="uk-modal-body">
+                            <div class="uk-magin margin-y-20 dana-font font-weight-500 fontsize-14 mobile-fontsize-12 line-height-30 uk-text-left" dir="ltr">
+                                <span>To write a review, first</span>
+                                <a href="#login--modal" uk-toggle class="text-decoration-none main-color">login</a>
+                                <span>your account and if you don't have an account yet, </span>
+                                <a href="#register--modal" uk-toggle class="text-decoration-none main-color">register</a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!--Reply Comment Modal-->
+                <div id="reply-comment-add-modal" uk-modal dir="ltr">
+                    <div class="uk-modal-dialog">
+                        <button class="uk-modal-close-default" type="button" uk-close></button>
+
+                        <div class="uk-modal-header bg--light-3">
+                            <span class="dana-font font-color-3 fontsize-16 mobile-fontsize-14">Add New Comment</span>
+                        </div>
+                        <div class="uk-modal-body">
+                            <div class="uk-magin margin-y-20 dana-font font-weight-500 fontsize-14 mobile-fontsize-12 line-height-30 uk-text-left" dir="ltr">
+                                <span>To write a review, first</span>
+                                <a href="#login--modal" uk-toggle class="text-decoration-none main-color">login</a>
+                                <span>your account and if you don't have an account yet, </span>
+                                <a href="#register--modal" uk-toggle class="text-decoration-none main-color">register</a>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+                <button uk-toggle="target: #comment-add-modal" dir="ltr"
+                        class="uk-button uk-button-default add-new-comment black border-radius-3 wave-button white-text dana-font fontsize-14 font-weight-500">
+                    <span uk-icon="icon:comment" class="margin-right-10"></span>
+                    <span>Add New Comment</span>
+                </button>
+            }
+        </div>
+
+
+        <ul class="uk-comment-list margin-top-40 digit-format">
+          
+            @foreach (var item in Model)
+            {
+
+               
+                <li class="margin-top-20">
+                    <article class="uk-comment pb-3" dir="ltr">
+                        <header class="uk-comment-header uk-grid-medium uk-flex-middle margin-bottom-20" uk-grid>
+                            <div class="uk-width-auto">
+                                <img width="45" src="~/images/icons/account-box.svg" />
+                            </div>
+                            <div class="uk-width-expand">
+                                <h4 class="uk-comment-title uk-margin-remove font-color-1 dana-font fontsize-14 mobile-fontsize-12">
+                                    @item.FullName
+                                </h4>
+                                <div class="stars-rating my-1" dir="ltr">
+                                    @for (int i = 0; i < 5; i++)
+                                    {
+                                        if (i < item.Rate)
+                                        {
+                                            <span class="gold-star" uk-icon="icon:star;ratio:.8"></span>
+                                        }
+                                        else
+                                        {
+                                            <span uk-icon="icon:star;ratio:.8"></span>
+                                        }
+                                    }
+                                </div>
+                                <ul class="uk-comment-meta uk-subnav uk-subnav-divider uk-margin-remove-top">
+                                    <li class="px-0"><span class="dana-font font-color-4 digit-format fontsize-14 mobile-fontsize-12">@item.SubmitedDate</span></li>
+                                    <li>
+
+                                        <a uk-toggle="target: #reply-comment-add-modal"
+                                           data-commentId="@item.Id"
+                                           class="dana-font font-weight-500 fontsize-14 blue-text  mobile-fontsize-12
+                                           text-decoration-none padding-right-10
+                                            blog-reply-comment-trigger" href="#">
+                                            <span class="">Reply</span>
+                                            <span uk-icon="icon:reply;ratio:.9"></span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </header>
+                        <div class="uk-comment-body dana-font font-color-2 fontsize-14 mobile-fontsize-12 line-height-25" dir="ltr">
+                            <p>
+                                @item.Description
+                            </p>
+                        </div>
+                    </article>
+                    <vc:blog-reply-comment-list comment-id="@item.Id"></vc:blog-reply-comment-list>
+
+                </li>
+            }
+
+        </ul>
+        <!--More comments (pageination)-->
+
+
+    </div>
+    <!--Pageination of blog list-->
+        @await Html.PartialAsync(partialViewName: "_BlogCommentPaginationButtons", model: Model)

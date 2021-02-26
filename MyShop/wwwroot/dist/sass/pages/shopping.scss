@@ -1,0 +1,473 @@
+﻿@import "../components/uikit-variables-theme.scss";
+@import "../components/Indexuikitcomponents/_indexUikitComponents.scss";
+@import "../main.scss";
+@import "../vendors/_bourbon.scss";
+@import "../vendors/_custommixin.scss";
+@import "../components/_progress.scss";
+
+//padding right and left of content
+#container-section {
+}
+//empty shopping basket
+#empty-order-message{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    min-height:300px;
+    margin:30px;
+
+}
+//shopping steps container
+.shopping-steps-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding-left: 90px;
+    padding-right: 90px;
+
+    @media only screen and (max-width: 950px) {
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+
+    @media only screen and (max-width: 768px) {
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+
+    @media only screen and (max-width: 600px) {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    @media only screen and (max-width: 300px) {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    & > div {
+        width: 600px;
+        max-width: 100%;
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        position: relative;
+
+        @media only screen and (max-width: 450px) {
+            margin: 0 10px;
+        }
+    }
+
+    & > div:nth-child(2) {
+        width: 670px;
+
+        @media only screen and (max-width: 450px) {
+            width: 100%;
+        }
+    }
+
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-top: 2px solid $main-color;
+    border-bottom: 1px solid #e9e9e9;
+    //shopping steps
+    .shopping-steps {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: white;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        border: 1px solid #b3b3b3;
+        position: relative;
+        z-index: 2;
+        outline: 10px solid white;
+
+        @media only screen and (max-width: 670px) {
+            width: 45px;
+            height: 45px;
+        }
+
+        @media only screen and (max-width: 450px) {
+            width: 40px;
+            height: 40px;
+        }
+
+        img {
+            width: 60%;
+        }
+    }
+    //step-text
+    .step-text {
+        width: 130px;
+        display: flex;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+
+        @media only screen and (max-width: 670px) {
+            width: 100px;
+            font-size: 12px !important;
+        }
+
+        @media only screen and (max-width: 450px) {
+            width: 80px;
+        }
+
+        @media only screen and (max-width: 300px) {
+            width: 60px;
+            font-size: 10px !important;
+        }
+    }
+    //shopping steps divider
+    .shopping-icon-divider {
+        flex-grow: 1;
+        border-bottom: 2px dashed #b3b3b3;
+        border-top: 0;
+        width: 530px;
+        max-width: calc(100% - 100px);
+        position: absolute;
+        top: 40%;
+        z-index: 1;
+
+        @media only screen and (max-width: 670px) {
+            top: 30%;
+        }
+
+        @media only screen and (max-width: 450px) {
+            top: 30%;
+        }
+    }
+    //animated border of current shopping-steps
+    .shopping-steps.current-step {
+        position: relative;
+        border: none;
+        background-color: #fcfcfc;
+
+        &::after {
+            content: '';
+            position: absolute;
+            display: block;
+            z-index: 2;
+            background: none;
+            width: 58px;
+            height: 58px;
+            border-radius: 50%;
+            border: 2px dashed $main-color;
+            @include prefixer(transform-origin,center center,("webkit","moz","o"));
+            @include prefixer(animation,rotateStepBorder 6s infinite linear both normal,("webkit","moz","o"));
+
+            @include custom-animation(rotateStepBorder) {
+                from {
+                    @include prefixer(transform,rotate(0),("webkit","moz","o"));
+                }
+
+                to {
+                    @include prefixer(transform,rotate(360deg),("webkit","moz","o"));
+                }
+            }
+
+            @media only screen and (max-width: 670px) {
+                width: 43px;
+                height: 43px;
+            }
+
+            @media only screen and (max-width: 450px) {
+                width: 38px;
+                height: 38px;
+            }
+        }
+    }
+    //passed step
+    .shopping-steps.passed-step {
+        border: 2px solid #00b551;
+        background-color: #fcfcfc;
+    }
+}
+
+//Main content
+#main-content {
+    display: flex;
+    flex-direction: row;
+    direction: ltr;
+    padding-left: 60px;
+    padding-right: 60px;
+
+    @media only screen and (max-width: 1100px) {
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+
+    @media only screen and (max-width: 1000px) {
+       flex-wrap:wrap;
+    }
+
+    @media only screen and (max-width: 600px) {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    @media only screen and (max-width: 300px) {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    //content
+    %content {
+        width: 69%;
+        margin-right: 20px;
+
+        @media only screen and (max-width: 1100px) {
+            width: 60%;
+        }
+
+
+        @media only screen and (max-width: 1000px) {
+            margin-right: 0;
+            width: 100%;
+        }
+
+        .goto-next-button {
+            background-color: white;
+            border-radius: 6px;
+            border: 1px solid #eaeaea;
+            padding: 20px;
+            margin: 20px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            @media only screen and (max-width: 300px) {
+                a {
+                    display: none;
+                }
+            }
+        }
+    }
+
+    %item-card {
+        padding: 15px;
+        margin: 15px 0;
+        border-radius: 6px;
+        border: 1px solid #eaeaea;
+        border-right: 3px solid $main-color;
+        background-color: white;
+    }
+    //list of orders
+    #orders-list {
+        @extend %content;
+
+        li.order-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            @extend %item-card;
+
+            .order-count {
+                width: 60px;
+            }
+
+            img {
+                max-width: 200px;
+            }
+
+            @media only screen and (max-width: 1000px) {
+                h2 {
+                    font-size: 14px !important;
+                }
+
+                .subpro-var-item {
+                    font-size: 14px !important;
+                }
+            }
+
+            @media only screen and (max-width: 680px) {
+                flex-wrap: wrap;
+
+                & > div {
+                    justify-content: center;
+                    width: 100%;
+                    margin-top: 20px;
+                }
+
+                .title-image-container {
+                    flex-wrap: wrap;
+                    width: 100%;
+
+                    .product-information-container {
+                        width: 100%;
+                        margin-left: 0 !important;
+                    }
+
+                    h2 {
+                        max-width: unset;
+                        width: 100%;
+                        text-align: center;
+                    }
+                }
+
+                .subpro-var-item {
+                    text-align: center !important;
+                    justify-content: center !important;
+                }
+            }
+
+            .each-product-price-container {
+                flex-grow: 1;
+                min-width: 200px;
+            }
+
+            h2 {
+                max-width: 170px;
+                line-height: 26px;
+            }
+        }
+
+        .product-information-container {
+            margin-left: 30px;
+        }
+
+        .increase-order, .decrease-order {
+            border: none;
+            color: white;
+            background-color: black;
+            border-radius: 5px;
+            padding: 5px;
+            width: 28px;
+            height: 28px;
+
+            span {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+        }
+
+        [data-svg="plus"] {
+            & rect:nth-child(1) {
+                width: 2px;
+            }
+
+            & rect:nth-child(2) {
+                height: 2px;
+                position: relative;
+                top: -1px;
+            }
+        }
+
+        .delete-order {
+            width: 50px;
+            height: 28px;
+            display: inline-flex;
+            flex-grow: 0;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            top: -1px;
+        }
+    }
+    //list of address
+    #address-list {
+        @extend %content;
+
+        li.address-item {
+            &::before {
+                content: none;
+            }
+
+            @extend %item-card;
+            display: flex;
+            justify-content: flex-start;
+            align-items: flex-start;
+
+            .custom-radio-input {
+                margin-top: 10px;
+                margin-right: 10px;
+            }
+        }
+    }
+    //confirmtion submited
+    #confirmtion-information {
+        @extend %content;
+
+        .submited-address-container {
+            & > div {
+                display: flex;
+                margin-bottom: 10px;
+            }
+        }
+
+        .confirmtion-item {
+            @extend %item-card;
+        }
+
+        .discount-code-input:focus {
+            border-color: unset !important;
+        }
+
+        @media only screen and (max-width: 420px) {
+            .payment-options-container {
+                width: 100%;
+            }
+        }
+    }
+    //price summary and details
+    #price-summary-container {
+        width: 30%;
+        margin-bottom: 40px;
+
+        @media only screen and (max-width: 1100px) {
+            width: 40%;
+        }
+
+        @media only screen and (max-width: 1000px) {
+            width: 100%;
+            padding: 0;
+        }
+
+        #price-summary {
+            z-index: 3;
+            background-color: white;
+            border-radius: 6px;
+            border: 1px solid #eaeaea;
+            padding: 20px;
+            flex-grow: 1;
+            position: relative;
+
+            .add-to-buy-bucket--list {
+                li {
+                    &::before {
+                        content: none;
+                    }
+
+                    justify-content: space-between;
+                    padding: 20px 0;
+                    margin-top: 0;
+                    margin-bottom: 0;
+                }
+            }
+        }
+
+        @media only screen and (max-width: 600px) {
+            .go-to-nex--button {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: white;
+                padding: 15px;
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                margin: 0 !important;
+                box-shadow: 0 5px 15px rgba(0,0,0,.08);
+
+                a {
+                    width: 100%;
+                }
+            }
+        }
+    }
+}

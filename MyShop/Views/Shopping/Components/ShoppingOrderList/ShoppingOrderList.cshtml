@@ -1,0 +1,17 @@
+﻿@model IEnumerable<Order>
+ <!--List of orders-->
+<span class="dana-font fontsize-16 mobile-fontsize-14 font-weight-600 d-inline-block
+      border-bottom-grey padding-bottom-10">Orders</span>
+<ul class="padding-0 margin-0 margin-top-15">
+    @foreach (var item in Model)
+    {
+        
+        <li class="d-flex align-items-center margin-bottom-10" dir="ltr">
+                <h2 class="dana-font fontsize-14 margin-bottom-0 margin-right-5">
+                    @item.ProductTitle
+                </h2>
+                <span class="digit-format dana-font fontsize-14">(@item.Number)</span>
+        </li>
+
+       }
+</ul>

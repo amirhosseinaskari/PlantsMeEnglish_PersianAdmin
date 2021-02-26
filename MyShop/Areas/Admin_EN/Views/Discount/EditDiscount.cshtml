@@ -1,0 +1,375 @@
+﻿@model Discount
+@{
+   
+
+    ViewData["discountpage"] = "active"; 
+}
+<!--Breadcrumb for this url-->
+<div class="row p-0 m-0 bg--white py-2 my-3 uk-box-shadow-small uk-border-rounded border position-relative">
+    <div class="col-12" dir="ltr">
+        <ul class="uk-breadcrumb IRANSans_Light fontsize-12 text-left p-0 m-0 d-flex" dir="ltr">
+            <li><a class="fontsize-12" href="~/En/Admin">Dashboard</a></li>
+            <li class="mx-1"><a class="fontsize-12" href="~/En/Admin/Discount">Discount Code</a></li>
+            <li class="mx-1 uk-active">Edit Discount Code</li>
+        </ul>
+        <div class="bg--blue-600 position-absolute rounded-right" style="width:8px;right:0;top:-8px;height:calc(100% + 16px);"></div>
+    </div>
+
+</div>
+<div class="row my-2 m-0 mb-5" dir="ltr" id="main-container">
+    <div class="col-12 uk-background-default uk-box-shadow-medium border uk-border-rounded p-0 bg--white pb-3"
+         id="detail-edit-container--active">
+        <div class="d-flex justify-content-between align-items-center p-3 bg-gradient--purple rounded-top">
+            <h3 class="fontsize-14 Arial font-weight--bold white p-0 m-0 flex-grow-1">
+                Edit Discount Code
+            </h3>
+            <a href="~/En/Admin/Discount" class="mdc-button mdc-button--unelevated flex-grow-1
+                    min-width--110 flex-sm-grow-0 flex-shrink-0 pagination--button bg--white
+               uk-box-shadow-small uk-box-shadow-hover-medium border">
+                <div class="mdc-button__ripple"></div>
+                <span class="mdc-button__label blue-700 IRANSans_Light fontsize-12">
+                    <span>Back</span>
+                    <span uk-icon="icon:arrow-left" class="mx-1 mx-sm-2"></span>
+                </span>
+            </a>
+        </div>
+        <!--Discount Edit Form-->
+        <!--Discount main parameters-->
+        <div class="row px-3 my-4" dir="ltr">
+            <div class="col-12">
+                <div class="border border--dashed form-bundle uk-border-rounded">
+                    <label class="IRANSans_Light">Discount Information</label>
+                    <div class="row m-0 py-3">
+                        <!--Discount Code-->
+                        <div class="col-md-4 col-sm-6 my-3">
+                            <div class="custom-text-field">
+                                <label class="uk-form-label IRANSans_Light" asp-for="Code">Discount Code</label>
+                                <div class="uk-form-controls">
+                                    <input class="uk-input IRANSans_Light fontsize-12"
+                                           asp-for="Code" type="text"
+                                           placeholder="enter discount code">
+                                </div>
+                            </div>
+                            <span class="Arial fontsize-12 error-code d-none red-lighten-7"></span>
+                        </div>
+                        <!--Discount Percent-->
+                        <div class="col-md-4 col-sm-6 my-3">
+                            <div class="custom-text-field">
+                                <label class="uk-form-label IRANSans_Light" asp-for="Percent">Discount Percentage(1-100)</label>
+                                <div class="uk-form-controls">
+                                    <input class="uk-input IRANSans_Light fontsize-12" asp-for="Percent"
+                                           type="text" placeholder="enter discount percentage">
+                                </div>
+                            </div>
+                            <span class="Arial fontsize-12 error-percent d-none red-lighten-7"></span>
+                        </div>
+                        <!--Discount Number-->
+                        <div class="col-md-4 col-sm-6 my-3">
+                            <div class="custom-text-field">
+                                <label class="uk-form-label IRANSans_Light" asp-for="Number">Quantity</label>
+                                <div class="uk-form-controls">
+                                    <input class="uk-input IRANSans_Light fontsize-12" asp-for="Number" type="text" placeholder="enter quantity">
+                                </div>
+                            </div>
+                            <span class="Arial fontsize-12 error-number d-none red-lighten-7"></span>
+                        </div>
+                        <div class="w-100"></div>
+                        <!--Submit button-->
+                        <div class="col-md-4 col-sm-6 mt-2">
+                            <button class="mdc-button mdc-button--unelevated
+                                    bg--blue-700 border px-0 total-information__submit-button
+                                    uk-box-shadow-small" style="height:30px" data-id="@Model.Id">
+                                <div class="mdc-button__ripple"></div>
+                                <span class="mdc-button__label IRANSans fontsize-10 white px-1 px-sm-2">
+                                  Save Changes
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Discount's products/categories-->
+        <div class="row px-3 my-4">
+            <div class="col-12">
+                <div class="border border--dashed form-bundle uk-border-rounded">
+                    <label class="IRANSans_Light">Applies To</label>
+                    <div class="row m-0 py-3">
+                        <div class="col-md-3 col-sm-6 my-2 px-2">
+                            <label class="IRANSans_Light fontsize-12">
+                                <input autocomplete="off" data-id="@Model.Id"
+                                       class="uk-radio mx-1 uk-border-rounded" type="radio"
+                                       asp-for="DiscountTarget" value="@DiscountTarget.AllProducts">
+                               All Products
+                            </label>
+                        </div>
+                        <div class="col-md-3 col-sm-6 my-2 px-2">
+                            <label class="IRANSans_Light fontsize-12">
+                                <input autocomplete="off" data-id="@Model.Id"
+                                       class="uk-radio mx-1 uk-border-rounded"
+                                       type="radio"
+                                       asp-for="DiscountTarget" value="@DiscountTarget.SomeProducts">
+                               Specific Products
+                            </label>
+                        </div>
+                        <div class="col-md-3 col-sm-6 my-2 px-2">
+                            <label class="IRANSans_Light fontsize-12">
+                                <input autocomplete="off" data-id="@Model.Id"
+                                       class="uk-radio mx-1 uk-border-rounded"
+                                       type="radio"
+                                       asp-for="DiscountTarget" value="@DiscountTarget.SomeCategories">
+                                Specific Categories
+                            </label>
+                        </div>
+                        <div class="col-md-3 col-sm-6 my-2 px-2">
+                            <label class="IRANSans_Light fontsize-12">
+                                <input autocomplete="off" data-id="@Model.Id"
+                                       class="uk-radio mx-1 uk-border-rounded"
+                                       type="radio"
+                                       asp-for="DiscountTarget" value="@DiscountTarget.SomeBrands">
+                                Specific Brands
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row my-2 mx-0" id="discount-target-details">
+                        @if (Model.DiscountTarget.Equals(DiscountTarget.SomeProducts))
+                        {
+                            <!--Choose products-->
+                            @await Html.PartialAsync("_ChooseProductsForDiscountTarget", model: Model.Id)
+                        }
+                        else if (Model.DiscountTarget.Equals(DiscountTarget.SomeCategories))
+                        {
+                            <!--Choose categories-->
+                            @await Html.PartialAsync("_ChooseCategoriesForDiscountTarget", model: Model.Id)
+                        }
+                        else if (Model.DiscountTarget.Equals(DiscountTarget.SomeBrands))
+                        {
+                            <!--Choose brands-->
+                            @await Html.PartialAsync("_ChooseBrandsForDiscountTarget", model: Model.Id)
+                        }
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!--Discount Conditions-->
+        <div class="row px-3 my-4">
+            <div class="col-12">
+                <div class="border border--dashed form-bundle uk-border-rounded">
+                    <label class="IRANSans_Light">Minimum Requirements</label>
+                    <div class="row m-0 py-3">
+                        <div class="col-md-3 col-sm-6 my-2 px-2">
+                            <label class="IRANSans_Light fontsize-12">
+                                <input autocomplete="off" class="uk-checkbox mx-1 uk-border-rounded"
+                                       data-id="@Model.Id"
+                                       type="checkbox" asp-for="IsForMinBuyValue">
+                                Minimum Purchase Amount
+                            </label>
+                            @if (Model.IsForMinBuyValue)
+                            {
+                                <div class="mt-1 mb-3 pl-sm-3 pl-2">
+                                    <input autocomplete="off"
+                                           class="uk-input mx-1 uk-border-rounded IRANSans_Light fontsize-10 number-type"
+                                           asp-for="MinBuyValue" type="text" placeholder="enter amount" />
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="mt-1 mb-3 pl-sm-3 pl-2">
+                                    <input autocomplete="off"
+                                           class="uk-input uk-disabled mx-1 uk-border-rounded IRANSans_Light fontsize-10 number-type"
+                                           asp-for="MinBuyValue" type="text"
+                                           value="" placeholder="enter amount" />
+                                </div>
+                            }
+
+                        </div>
+                        <div class="col-md-3 col-sm-6 my-2 px-2">
+                            <label class="IRANSans_Light fontsize-12">
+                                <input autocomplete="off"
+                                       class="uk-checkbox mx-1 uk-border-rounded"
+                                       type="checkbox" data-id="@Model.Id"
+                                       asp-for="IsForMinBuyNumber">
+                                Minimum Quantity of Items
+                            </label>
+                            @if (Model.IsForMinBuyNumber)
+                            {
+                                <div class="mt-1 mb-3 pl-sm-3 pl-2">
+                                    <input autocomplete="off"
+                                           class="uk-input mx-1 uk-border-rounded IRANSans_Light fontsize-10 number-type"
+                                           asp-for="MinBuyNumber" type="text" placeholder="enter quantity" />
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="mt-1 mb-3 pl-sm-3 pl-2">
+                                    <input autocomplete="off"
+                                           class="uk-input uk-disabled mx-1 uk-border-rounded IRANSans_Light fontsize-10 number-type"
+                                           asp-for="MinBuyNumber" type="text"
+                                           value="" placeholder="enter quantity" />
+                                </div>
+                            }
+
+                        </div>
+                        <div class="w-100"></div>
+                        <!--Submit button-->
+                        <div class="col-md-4 col-sm-6">
+                            <button class="mdc-button mdc-button--unelevated bg--blue-700
+                                    discount-conditions__submit-button
+                                    border px-0 uk-box-shadow-small" style="height:30px" data-id="@Model.Id">
+                                <div class="mdc-button__ripple"></div>
+                                <span class="mdc-button__label IRANSans fontsize-10 white px-1 px-sm-2">
+                                    Save Changes
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!--Discount's Customers-->
+        <div class="row px-3 my-4">
+            <div class="col-12">
+                <div class="border border--dashed form-bundle uk-border-rounded">
+                    <label class="IRANSans_Light">Customer Eligibility</label>
+                    <div class="row m-0 py-3">
+                        <div class="col-md-3 col-sm-6 my-2 px-2">
+                            <label class="IRANSans_Light fontsize-12">
+                                <input autocomplete="off" class="uk-radio mx-1 uk-border-rounded"
+                                       type="radio" asp-for="IsForAllCustomers" value="true" data-id="@Model.Id">
+                               Everyone
+                            </label>
+                        </div>
+                        <div class="col-md-3 col-sm-6 my-2 px-2">
+                            <label class="IRANSans_Light fontsize-12">
+                                <input autocomplete="off" class="uk-radio mx-1 uk-border-rounded"
+                                       type="radio" asp-for="IsForAllCustomers" value="false" data-id="@Model.Id">
+                                Specific Customers
+                            </label>
+                        </div>
+                    </div>
+                    <!--Choose Customers-->
+                    <div class="row my-2 mx-0" id="discount-customer-container">
+                        @if (!Model.IsForAllCustomers)
+                        {
+                            @await Html.PartialAsync("_ChoosenCustomerForDiscount", model: Model.Id)
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Date Settings-->
+        <div class="row px-3 my-4">
+            <div class="col-12">
+                <div class="border border--dashed form-bundle uk-border-rounded">
+                    <label class="IRANSans_Light">Activation Date and Expiration Date</label>
+                    <!--Date Pickers-->
+                    <div class="row m-0 py-2 my-2">
+                        <!--Activation Date-->
+                        <div class="col-md-4 col-sm-6 my-2 position-relative" style="z-index:4;">
+                            <div class="custom-text-field">
+                                <label class="uk-form-label IRANSans_Light" asp-for="ActivationDate">Activation Date</label>
+                                <div class="uk-form-controls">
+
+                                    @if (Model.ActivationDate == null)
+                                    {
+                                        <input class="uk-input IRANSans_Light fontsize-12" name="ActivationDate" id="ActivationDate"
+                                               type="date" value="@System.DateTime.Now.ToString("MM/dd/yyyy")">
+                                    }
+                                    else
+                                    {
+                                        <input class="uk-input IRANSans_Light fontsize-12" name="ActivationDate" id="ActivationDate"
+                                               type="date" value="@Model.ActivationDate.ToString("MM/dd/yyyy")">
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <!--Expired Date-->
+                        <div class="col-md-4 col-sm-6 my-2 position-relative" style="z-index:3;">
+                            <div class="custom-text-field">
+                                <label class="uk-form-label IRANSans_Light" asp-for="ExpirationDate">Expiration Date</label>
+                                <div class="uk-form-controls">
+
+                                    @if (Model.ExpirationDate == null)
+                                    {
+                                        <input class="uk-input IRANSans_Light fontsize-12" name="ExpirationDate" id="ExpirationDate"
+                                               type="text" value="@System.DateTime.Now.ToString("MM/dd/yyyy")">
+                                    }
+                                    else
+                                    {
+                                        <input class="uk-input IRANSans_Light fontsize-12" name="ExpirationDate" id="ExpirationDate"
+                                               type="text" value="@Model.ExpirationDate.ToString("MM/dd/yyyy")">
+                                    }
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="w-100 pr-3">
+                            <span class="IRANSans fontsize-12 error-discount-date red-lighten-7 d-none"></span>
+                        </div>
+
+                        <!--Submit button-->
+                        <div class="col-md-4 col-sm-6 mt-3">
+                            <button class="mdc-button mdc-button--unelevated
+                                    bg--blue-700 discount-date__submit-button
+                                    border px-0 uk-box-shadow-small" data-id="@Model.Id" style="height:30px">
+                                <div class="mdc-button__ripple"></div>
+                                <span class="mdc-button__label IRANSans fontsize-10 white px-1 px-sm-2">
+                                    Save Changes
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Publish Settings-->
+        <div class="row px-3 my-4">
+            <div class="col-12">
+                <div class="border border--dashed form-bundle uk-border-rounded">
+                    <label asp-for="IsPublished" class="IRANSans_Light">Publishment</label>
+                    <div class="row m-0 py-2">
+                        <div class="col-12 my-2 px-2">
+                            <label class="IRANSans_Light fontsize-12">
+                                <input autocomplete="off" class="uk-checkbox mx-1 uk-border-rounded discount-publishment"
+                                       type="checkbox" asp-for="IsPublished" data-id="@Model.Id">
+                                Publish
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+
+       
+        const mdcButton = $('.mdc-button');
+        for (let i = 0; i < mdcButton.length; i++) {
+            mdc.ripple.MDCRipple.attachTo(document.querySelectorAll('.mdc-button')[i]);
+        }
+
+        const mdcTextField = $('.mdc-text-field');
+        for (let i = 0; i < mdcTextField.length; i++) {
+            mdc.textField.MDCTextField.attachTo(document.querySelectorAll('.mdc-text-field')[i]);
+        }
+        mdc.tabBar.MDCTabBar.attachTo(document.querySelector('.my-tab-list'));
+        const MDCTABLE = $('.mdc-data-table');
+        for (let i = 0; i < MDCTABLE.length; i++) {
+            mdc.dataTable.MDCDataTable.attachTo(document.querySelectorAll('.mdc-data-table')[i]);
+        }
+    </script>
+}

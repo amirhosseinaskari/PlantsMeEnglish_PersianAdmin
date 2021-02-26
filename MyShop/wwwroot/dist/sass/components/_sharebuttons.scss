@@ -1,0 +1,29 @@
+﻿%twitter-share-button {
+    background-color: map-get($blue,"base") !important;
+    color:white !important;
+}
+
+%whatsapp-share-button {
+    background-color: map-get($green,"accent-4") !important;
+    color:white !important;
+}
+
+%facebook-share-button {
+    background-color: map-get($light-blue,"darken-4") !important;
+    color:white !important;
+}
+
+%mail-share-button {
+   background-color:map-get($red,"base") !important;
+   color:white !important;
+}
+
+%link-share-button {
+    background-color: black !important;
+    color:white !important;
+}
+
+%telegram-share-button {
+    background-color: map-get($light-blue,"base") !important;
+    color:white !important;
+}

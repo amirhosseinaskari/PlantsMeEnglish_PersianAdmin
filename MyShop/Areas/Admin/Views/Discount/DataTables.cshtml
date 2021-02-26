@@ -1,0 +1,141 @@
+﻿@model DiscountController.InputModel
+<div class="col-12 uk-background-default  uk-box-shadow-medium border uk-border-rounded py-3" id="product">
+    <!--Title of Discount list-->
+    <h3 class="iranyekanwebregular fontsize-14 text-right mx-3 my-1 py-2">
+        <span class="blue-600 border-bottom--blue py-2"> لیست تخفیف ها</span>
+    </h3>
+    <!--Filtering options-->
+    <div class="row uk-background-default py-2 m-0 align-items-center">
+        <!--Add new Discount-->
+        <div class="col-md-auto my-2 px-1 px-sm-2">
+            <!--Add new Discount Modal-->
+            <div id="discount-add-modal" uk-modal dir="rtl">
+                <div class="uk-modal-dialog">
+
+                    <button class="uk-modal-close-default" type="button" uk-close syle="right:unset;left:10px !important;"></button>
+                    <form action="/Admin/Discount/CreateDiscount" id="discount-add-modal__form" method="post">
+                        <div class="uk-modal-header bg--light-3">
+                            <h3 class="iranyekanwebregular fontsize-14 uk-text-secondary">اضافه کردن کد تخفیف جدید</h3>
+                        </div>
+                        <div class="uk-modal-body">
+
+                            <!--Discount Code-->
+                            <div class="uk-magin col-auto my-2">
+                                <div class="custom-text-field">
+                                    <label class="uk-form-label IRANSans_Light" asp-for="Code">کد تخفیف</label>
+                                    <div class="uk-form-controls">
+                                        <input asp-for="Code" class="uk-input IRANSans_Light fontsize-12" type="text" required placeholder="کد تخفیف را وارد کنید">
+                                    </div>
+                                </div>
+                                <span class="iranyekanwebregular fontsize-12 error-code d-none red-lighten-7"></span>
+                            </div>
+                            <!--Discount Percent-->
+                            <div class="uk-magin col-auto mt-4">
+                                <div class="custom-text-field">
+                                    <label class="uk-form-label IRANSans_Light" asp-for="Percent">درصد تخفیف (از یک تا صد)</label>
+                                    <div class="uk-form-controls">
+                                        <input asp-for="Percent" class="uk-input IRANSans_Light fontsize-12
+                                               number-type"
+                                               type="text" placeholder="درصد تخفیف را وارد کنید">
+                                    </div>
+                                </div>
+                                <span class="iranyekanwebregular fontsize-12 error-percent d-none red-lighten-7"></span>
+                            </div>
+                            <!--Discount Number-->
+                            <div class="uk-magin col-auto mt-4">
+                                <div class="custom-text-field">
+                                    <label class="uk-form-label IRANSans_Light" asp-for="Number">تعداد قابل استفاده</label>
+                                    <div class="uk-form-controls">
+                                        <input asp-for="Number" class="uk-input IRANSans_Light fontsize-12
+                                               number-type"
+                                               type="text" placeholder="تعداد را وارد کنید">
+                                    </div>
+                                </div>
+                                <span class="iranyekanwebregular fontsize-12 error-number d-none red-lighten-7"></span>
+                            </div>
+
+                        </div>
+                        <div class="uk-modal-footer uk-text-right">
+                            <button class="mdc-button mdc-button--unelevated border--blue
+                                    white bg--blue-600 uk-box-shadow-medium" style="height:30px" type="submit">
+                                <div class="mdc-button__ripple"></div>
+                                <span class="mdc-button__label IRANSans fontsize-12">
+                                    اضافه کردن
+                                </span>
+                                <span class="material-icons-outlined mx-2 fontsize-16">
+                                    add
+                                </span>
+                            </button>
+                            <button class="mdc-button mdc-button--unelevated
+                                    border--blue uk-modal-close bg--white uk-box-shadow-medium blue-600 mx-2"
+                                    style="height:30px;">
+                                <div class="mdc-button__ripple"></div>
+                                <span class="mdc-button__label IRANSans fontsize-12">
+                                    صرف نظر
+                                </span>
+
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <button uk-toggle="target: #discount-add-modal" class="mdc-button mdc-button--unelevated bg--blue-700 uk-box-shadow-medium">
+                <div class="mdc-button__ripple"></div>
+                <span class="mdc-button__label IRANSans fontsize-12">
+                    اضافه کردن کد تخفیف جدید
+                </span>
+                <i class="material-icons mr-sm-2 fontsize-18 mr-2">
+                    add
+                </i>
+            </button>
+        </div>
+        <!--Search form-->
+        <div class="col-md-4 col-sm-auto my-2 px-1 px-sm-2">
+            <div class="uk-inline w-100">
+                <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: search"></span>
+                <input autocomplete="off" name="discountSearch"  class="uk-input w-100 IRANSans_Light fontsize-14" dir="rtl" type="text" placeholder="جستجو کنید">
+            </div>
+        </div>
+
+        <!--Select Sort By-->
+        <div class="col-md-2 col-sm-3 my-2 mt-3 px-1 px-sm-2 position-relative " style="z-index:5;">
+            <div class="mdc-select mdc-select--outlined discount-sort">
+                <div class="mdc-select__anchor w-100 bg--white h-40">
+                    <i class="mdc-select__dropdown-icon" style="top:5px"></i>
+                    <div id="demo-selected-text" class="mdc-select__selected-text IRANSans_Light fontsize-12 position-relative" style="top:-5px" aria-labelledby="outlined-select-label"></div>
+                    <div class="mdc-notched-outline">
+                        <div class="mdc-notched-outline__leading"></div>
+                        <div class="mdc-notched-outline__notch">
+                            <label id="outlined-select-label" class="mdc-floating-label IRANSans_Light fontsize-14">مرتب کردن</label>
+                        </div>
+                        <div class="mdc-notched-outline__trailing"></div>
+                    </div>
+                </div>
+
+                <!-- Select customer status => Options -->
+                <div class="mdc-select__menu mdc-menu mdc-menu-surface w-100" role="listbox">
+                    <ul class="mdc-list IRANSans_Light fontsize-12">
+                        <li class="mdc-list-item mdc-list-item--selected" data-value="0" role="option">
+                            نزدیک ترین
+                        </li>
+                        <li class="mdc-list-item" data-value="1" role="option">
+                            دورترین
+                        </li>
+                        <li class="mdc-list-item" data-value="2" role="option">
+                            کدهای فعال
+                        </li>
+                        <li class="mdc-list-item" data-value="3" role="option">
+                            کدهای منقضی شده
+                        </li>
+                    </ul>
+                </div>
+            </div>
+          
+        </div>
+
+    </div>
+    <!--List of discounts-->
+    <div id="datatable-discount-list-container">
+        <vc:discount-list sort-type="0" text="@(null)" page-index="1"></vc:discount-list>
+    </div>
+</div>

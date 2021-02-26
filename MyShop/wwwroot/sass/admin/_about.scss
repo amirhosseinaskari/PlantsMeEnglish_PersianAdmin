@@ -1,0 +1,46 @@
+﻿@import "../_bourbon.scss";
+@import "../mixins/_custom-mixins.scss";
+
+
+
+
+
+.about-content-list__list-item__body__col{
+    border-left: 1px solid #c7c7c7;
+
+    @include multiple-devices-query("Tablet") {
+        border-left: none;
+        border-bottom: 1px solid #c7c7c7;
+    }
+
+    @include multiple-devices-query("Mobile") {
+        border-left: none;
+        border-bottom: 1px solid #c7c7c7;
+    }
+}
+
+
+
+
+
+.about-content-list__list-item {
+    .about-content-list__list-item__header {
+        background-color: #fefefe !important;
+        padding: 12px;
+
+        .delete-icon {
+            left: 20px;
+            top: 15px;
+        }
+
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+    }
+}
+
+
+.delete-about-content-icon {
+    left: 30px;
+    top: 17px;
+    cursor: pointer;
+}

@@ -1,0 +1,24 @@
+﻿footer {
+    align-self:flex-end;
+    .footer__lists-container {
+        background-color: #eceff1;
+
+        li {
+            margin: 10px 0;
+        }
+
+        li a,
+        address a {
+            text-decoration: none;
+            color: #757474;
+
+            &:hover {
+                color: #424242;
+            }
+        }
+    }
+
+    .footer__about-container {
+        background-color: #d7dee0;
+    }
+}

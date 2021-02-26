@@ -1,0 +1,191 @@
+﻿<div class="col-12 px-2">
+    <div class="text-left mx-3 fontsize-12 IRANSans red-lighten-6 border-bottom--red py-1 d-inline-block" style="min-width:150px">
+        <span class=""> City Based Shipping</span>
+    </div>
+    <div class="row m-0 py-4 city-state--container align-items-start">
+        <div class="col-sm-auto min-width--200 my-2 px-2">
+            <div class="mdc-select mdc-select--outlined state-of-delivery-set-price">
+                <div class="mdc-select__anchor w-100 bg--white h-40">
+                    <i class="mdc-select__dropdown-icon" style="top:5px"></i>
+                    <div id="demo-selected-text" class="mdc-select__selected-text IRANSans_Light fontsize-12 position-relative" style="top:-5px" aria-labelledby="outlined-select-label"></div>
+                    <div class="mdc-notched-outline">
+                        <div class="mdc-notched-outline__leading"></div>
+                        <div class="mdc-notched-outline__notch">
+                            <label id="outlined-select-label" class="mdc-floating-label IRANSans_Light fontsize-14">County</label>
+                        </div>
+                        <div class="mdc-notched-outline__trailing"></div>
+                    </div>
+                </div>
+
+                <!-- Select state options -->
+                <div class="mdc-select__menu mdc-menu mdc-menu-surface w-100" role="listbox">
+                    <ul class="mdc-list IRANSans_Light fontsize-12">
+                        <vc:state-list></vc:state-list>
+                    </ul>
+                </div>
+            </div>
+            
+        </div>
+        <div class="col-sm-auto min-width--200 my-2 px-2">
+            <div class="mdc-select mdc-select--outlined city-of-delivery-set-price">
+                <div class="mdc-select__anchor w-100 bg--white h-40">
+                    <i class="mdc-select__dropdown-icon" style="top:5px"></i>
+                    <div id="demo-selected-text" class="mdc-select__selected-text IRANSans_Light fontsize-12 position-relative" style="top:-5px" aria-labelledby="outlined-select-label"></div>
+                    <div class="mdc-notched-outline">
+                        <div class="mdc-notched-outline__leading"></div>
+                        <div class="mdc-notched-outline__notch">
+                            <label id="outlined-select-label" class="mdc-floating-label IRANSans_Light fontsize-14">Sub County</label>
+                        </div>
+                        <div class="mdc-notched-outline__trailing"></div>
+                    </div>
+                </div>
+
+                <!-- Select city options -->
+                <div class="mdc-select__menu mdc-menu mdc-menu-surface w-100" role="listbox">
+                    <ul class="mdc-list IRANSans_Light fontsize-12 city-of-delivery-set-price__options">
+
+                        <vc:city-list id="-1"></vc:city-list>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6 my-2 px-2">
+            <div class="custom-text-field">
+                <label class="uk-form-label IRANSans_Light" for="priceOfCityDelivery">Price Shipping</label>
+                <div class="uk-form-controls d-flex">
+                    <input class="uk-input IRANSans_Light fontsize-12 number-type" id="priceOfCityDelivery" name="priceOfCityDelivery" type="text" placeholder="enter price">
+                </div>
+            </div>
+            <span class="Arial fontsize-12 red-lighten-7 d-none error-delivery-price"></span>
+        </div>
+        <div class="col-lg-auto col-md-4 col-sm-6 d-flex align-items-center my-1 px-2">
+            <button class="mdc-button mdc-button--unelevated bg--white border px-0 position-relative
+                    add-city-delivery-price--button" style="height:40px;top:5px;">
+                <div class="mdc-button__ripple"></div>
+                <span class="mdc-button__label IRANSans fontsize-12 blue-700 px-1 px-sm-2">
+                    Add
+                </span>
+            </button>
+        </div>
+        <div class="col-12 my-2 pr-2" id="city-price-delivery--table">
+            <vc:city-price-delivery-table></vc:city-price-delivery-table>
+          
+        </div>
+    </div>
+</div>
+
+<script>
+
+    //state and city list in set price for each delivery zone
+    //change city list select box when state changed
+    try {
+        const MDCStateOfDeliverySetPrice = mdc.select.MDCSelect;
+        const stateOfDeliverySetPrice = new MDCStateOfDeliverySetPrice(document.querySelector('.state-of-delivery-set-price'));
+        const MDCCityOfDeliverySetPrice = mdc.select.MDCSelect;
+        const cityOfDeliverySetPrice = new MDCCityOfDeliverySetPrice(document.querySelector('.city-of-delivery-set-price'));
+        stateOfDeliverySetPrice.listen('MDCSelect:change', function () {
+            let val = stateOfDeliverySetPrice.value;
+            let parent = $('.state-of-delivery-set-price').parents('.city-state--container');
+            $.ajax({
+                url: "/Admin/Delivery/CityList",
+                type: "POST",
+                data: {
+                    stateId: val
+                },
+                success: function (data) {
+                    $(parent).find('.city-of-delivery-set-price__options').html(data);
+
+                }
+            });
+        });
+
+        //add delivery price for a city
+        $('.add-city-delivery-price--button').click(function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+            let parent = $(this).parents('.city-state--container');
+            let price = $(parent).find('input[name="priceOfCityDelivery"]').val();
+            if (price === null || price.trim() === "") {
+                $(parent).find('.error-delivery-price').removeClass('d-none').html('وارد کردن قیمت الزامی است');
+                $(parent).find('input[name="priceOfCityDelivery"]').css('border-color', 'red');
+                e.preventDefault();
+                e.stopPropagation();
+                return false;
+            }
+            let city = cityOfDeliverySetPrice.value;
+            let state = stateOfDeliverySetPrice.value;
+            $.ajax({
+                url: "/Admin/Delivery/AddPriceForACity",
+                type: "POST",
+                data: {
+                    cityId: city,
+                    stateId: state,
+                    price: price
+                },
+                beforeSend: function () {
+                    $('#progress-loader').removeClass('d-none');
+                },
+                error: function (xhr) {
+                    alert(xhr.responseText);
+                },
+                success: function (data) {
+                    $('#city-price-delivery--table').html(data);
+                    UIkit.notification({
+                        message: '<span class="material-icons-outlined red-lighten-7 mx-2 position-relative" style="top:6px">notifications_active</span><span class="IRANSans_Light fontsize-14" dir="ltr">قیمت ارسال کالای شهر مورد نظر اضافه شد</span>',
+                        status: 'primary',
+                        pos: 'top-center',
+                        timeout: 5000
+                    });
+                }
+            }).done(function () {
+                $('#progress-loader').addClass('d-none');
+            });
+        });
+
+    } catch (e) {
+        console.log(e);
+    }
+    //input type numbers
+    $('input.number-type').keydown(function (e) {
+        let key = e.keyCode || e.which;
+        if (!((e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 96 && e.keyCode <= 105)) && key !== 8) {
+            e.preventDefault();
+            return false;
+        }
+    });
+
+
+    //reset error message for price of delivery
+    $('input[name="priceOfCityDelivery"]').focus(function () {
+        let parent = $(this).parents('.city-state--container');
+        $(parent).find('.error-delivery-price').addClass('d-none').html('');
+        $(this).css('border-color', 'unset');
+    });
+
+    //Delete price of a city delivery
+    $('.delete-city-price-delivery-icon').click(function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+        let myId = $(this).attr('data-id');
+        $.ajax({
+            url: "/Admin/Delivery/DeletePriceCityDelivery",
+            type: "POST",
+            data: {
+                id: myId
+            }
+            , beforeSend: function () { $('#progress-loader').removeClass('d-none'); },
+            success: function (data) {
+                $('#city-price-delivery--table').html(data);
+                UIkit.notification({
+                    message: '<span class="material-icons-outlined red-lighten-7 mx-2 position-relative" style="top:6px">notifications_active</span><span class="IRANSans_Light fontsize-14" dir="ltr">هزینه ارسال شهر مورد نظر حذف شد</span>',
+                    status: 'primary',
+                    pos: 'top-center',
+                    timeout: 5000
+                });
+            }
+        }).done(function () {
+            $('#progress-loader').addClass('d-none');
+        });
+
+    });
+</script>

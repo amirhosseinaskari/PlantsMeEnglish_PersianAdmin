@@ -1,0 +1,186 @@
+﻿@model SpecialDiscountController.InputModel
+@{ViewData["specialdiscountpage"] = "active"; }
+<!--Breadcrumb for this url-->
+<div class="row p-0 m-0 bg--white py-2 my-3 uk-box-shadow-small uk-border-rounded border position-relative">
+    <div class="col-12" dir="ltr">
+        <ul class="uk-breadcrumb IRANSans_Light fontsize-12 text-left p-0 m-0 d-flex" dir="ltr">
+            <li><a href="~/En/Admin" class="fontsize-12">Dashboard</a></li>
+            <li class="mx-sm-1"><a href="~/En/Admin/SpecialDiscount" class="fontsize-12">Speical Offers</a></li>
+            <li class="mx-sm-1 uk-active">Edit Offer</li>
+        </ul>
+        <div class="bg--blue-600 position-absolute rounded-left" style="width:8px;left:0;top:-8px;height:calc(100% + 16px);"></div>
+    </div>
+
+</div>
+<!--Special Discount Creation Form-->
+<form action="~/En/Admin/SpecialDiscount/EditSpecialDiscount" method="post" class="row my-2 m-0 mb-5" dir="ltr" id="main-container">
+    <input type="hidden" name="id" value="@ViewData["DiscountId"]" />
+    <div class="col-12 uk-background-default  uk-box-shadow-medium border uk-border-rounded py-3">
+        <div class="d-flex justify-content-between align-items-center p-3 bg-gradient--purple rounded-top">
+            <h3 class="fontsize-14 Arial font-weight--bold white p-0 m-0 flex-grow-1">
+               Edit Special Offer
+            </h3>
+            <a href="~/En/Admin/SpecialDiscount" class="mdc-button mdc-button--unelevated flex-grow-1
+                    min-width--110 flex-sm-grow-0 flex-shrink-0 pagination--button bg--white
+               uk-box-shadow-small uk-box-shadow-hover-medium border">
+                <div class="mdc-button__ripple"></div>
+                <span class="mdc-button__label blue-700 IRANSans_Light fontsize-12">
+                    <span>Back</span>
+                    <span uk-icon="icon:arrow-left" class="mx-1 mx-sm-2"></span>
+                </span>
+            </a>
+        </div>
+        <!--Discount main parameters-->
+        <div class="row px-3 my-4" dir="ltr">
+            <div class="col-12">
+                <div class="border border--dashed form-bundle uk-border-rounded">
+                    <label class="IRANSans_Light">Total Information</label>
+                    <div class="row m-0 py-3">
+                        <!--Discount Value-->
+                        <div class="col-md-4 col-sm-6 my-3">
+                            <div class="custom-text-field">
+                                <label class="uk-form-label IRANSans_Light" asp-for="DiscountPrice">Discount Amount</label>
+                                <div class="uk-form-controls">
+                                    <input class="uk-input IRANSans_Light fontsize-12 number-type" asp-for="DiscountPrice" type="text" placeholder="amount">
+                                </div>
+                            </div>
+                            <span asp-validation-for="DiscountPrice" class="IRANSans fontsize-12 red-lighten-7"></span>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Discount's products-->
+        <div class="row px-3 my-4">
+            <div class="col-12">
+                <div class="border border--dashed form-bundle uk-border-rounded">
+                    <label class="IRANSans_Light">Target</label>
+
+                    <!--Choose Products-->
+                    <div class="row my-2 mx-0">
+                        <div class="col-auto px-3 py-4 min-width--200">
+                            <input type="hidden" asp-for="ProductId" />
+                            <div class="mdc-select mdc-select--outlined product-of-special-discount min-width--200">
+                                <div class="mdc-select__anchor w-100 bg--white h-40">
+                                    <i class="mdc-select__dropdown-icon" style="top:5px"></i>
+                                    <div id="demo-selected-text" class="mdc-select__selected-text IRANSans_Light fontsize-12 position-relative" style="top:-5px" aria-labelledby="outlined-select-label"></div>
+                                    <div class="mdc-notched-outline">
+                                        <div class="mdc-notched-outline__leading"></div>
+                                        <div class="mdc-notched-outline__notch">
+                                            <label id="outlined-select-label" class="mdc-floating-label IRANSans_Light fontsize-14">Select a Product</label>
+                                        </div>
+                                        <div class="mdc-notched-outline__trailing"></div>
+                                    </div>
+                                </div>
+
+                                <!-- Select product options -->
+                                <div class="mdc-select__menu mdc-menu mdc-menu-surface w-100" role="listbox">
+                                    <ul class="mdc-list IRANSans_Light fontsize-12 product-of-special-discount__options">
+
+                                        <vc:product-list-title my-id="@Model.ProductId"></vc:product-list-title>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <span asp-validation-for="ProductId" class="IRANSans fontsize-12 red-lighten-7"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!--Date Settings-->
+        <div class="row px-3 my-4">
+            <div class="col-12">
+                <div class="border border--dashed form-bundle uk-border-rounded">
+                    <label class="IRANSans_Light">Activation and Expiration Date</label>
+                    <!--Date Pickers-->
+                    <div class="row m-0 py-2 my-2 mt-3">
+                        <!--Activation Date-->
+                        <div class="col-md-4 col-sm-6 my-2 position-relative" style="z-index:4;">
+                            <div class="custom-text-field">
+                                <label class="uk-form-label IRANSans_Light" asp-for="ActivationDate">Start Date</label>
+                                <div class="uk-form-controls">
+
+
+                                    <input class="uk-input IRANSans_Light fontsize-12" asp-for="ActivationDate"
+                                           type="date">
+
+
+                                </div>
+                            </div>
+                            <span asp-validation-for="ActivationDate" class="IRANSans fontsize-12 red-lighten-7"></span>
+                        </div>
+                        <!--Expired Date-->
+                        <div class="col-md-4 col-sm-6 my-2 position-relative" style="z-index:3;">
+                            <div class="custom-text-field">
+                                <label class="uk-form-label IRANSans_Light" asp-for="ExpiredDate">End Date</label>
+                                <div class="uk-form-controls">
+                                    <input class="uk-input IRANSans_Light fontsize-12" asp-for="ExpiredDate"
+                                           type="date">
+                                </div>
+                            </div>
+                            <span asp-validation-for="ExpiredDate" class="IRANSans fontsize-12 red-lighten-7"></span>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Publish Settings-->
+        <div class="row px-3 my-4">
+            <div class="col-12">
+                <div class="border border--dashed form-bundle uk-border-rounded">
+                    <label class="IRANSans_Light">Publishment</label>
+                    <div class="row m-0 py-2">
+                        <div class="col-12 my-2 px-2">
+                            <label class="IRANSans_Light fontsize-12">
+                                <input autocomplete="off" class="uk-checkbox mx-1 uk-border-rounded " type="checkbox" asp-for="Publishment">
+                               Publish
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Submit Button-->
+        <div class="row px-3 my-4">
+            <div class="col-12">
+                <button class="mdc-button mdc-button--unelevated bg--blue-700 border px-0 special-discount-edit__submit-button" type="submit"
+                        style="height:40px">
+                    <div class="mdc-button__ripple"></div>
+                    <span class="mdc-button__label IRANSans fontsize-12 white px-1 px-sm-2">
+                       Save Changes
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+</form>
+@section Scripts{
+    <script>
+
+        const mdcButton = $('.mdc-button');
+        for (let i = 0; i < mdcButton.length; i++) {
+            mdc.ripple.MDCRipple.attachTo(document.querySelectorAll('.mdc-button')[i]);
+        }
+
+
+        const mdcTextField = $('.mdc-text-field');
+        for (let i = 0; i < mdcTextField.length; i++) {
+            mdc.textField.MDCTextField.attachTo(document.querySelectorAll('.mdc-text-field')[i]);
+        }
+        mdc.tabBar.MDCTabBar.attachTo(document.querySelector('.my-tab-list'));
+        const MDCTABLE = $('.mdc-data-table');
+        for (let i = 0; i < MDCTABLE.length; i++) {
+            mdc.dataTable.MDCDataTable.attachTo(document.querySelectorAll('.mdc-data-table')[i]);
+        }
+    </script>
+}

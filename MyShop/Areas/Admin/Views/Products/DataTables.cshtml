@@ -1,0 +1,165 @@
+﻿@model ProductsController.InputModel
+<div class="col-12 uk-background-default  uk-box-shadow-medium border uk-border-rounded py-3" id="product">
+    <!--Title of Product list-->
+    <h3 class="iranyekanwebregular fontsize-14 text-right mx-3 my-1 py-2">
+        <span class="blue-600 border-bottom--blue py-2"> لیست محصولات</span>
+    </h3>
+    <!--Filtering options-->
+    <div class="row uk-background-default py-2 m-0 align-items-center">
+        <!--Add new product-->
+        <div class="col-md-auto my-2 px-1 px-sm-2">
+            <!--Add new product Modal-->
+            <div id="product-add-modal" uk-modal dir="rtl">
+                <div class="uk-modal-dialog">
+
+                    <button class="uk-modal-close-default" type="button" uk-close syle="right:unset;left:10px !important;"></button>
+                    <form action="/Admin/Products/CreateProduct" id="product-add-modal__form" method="post">
+                        <div class="uk-modal-header bg--light-3">
+                            <h3 class="iranyekanwebregular fontsize-14 uk-text-secondary">اضافه کردن محصول جدید</h3>
+                        </div>
+                        <div class="uk-modal-body">
+
+                            <!--Title of product-->
+                            <div class="uk-magin col-auto">
+                                <div class="custom-text-field">
+                                    <label class="uk-form-label IRANSans_Light" asp-for="Title">عنوان محصول</label>
+                                    <div class="uk-form-controls">
+                                        <input asp-for="Title" class="uk-input IRANSans_Light fontsize-12" type="text" required placeholder="عنوان محصول را وارد کنید">
+                                    </div>
+                                </div>
+                                <span class="iranyekanwebregular fontsize-12 error-title d-none red-lighten-7"></span>
+                            </div>
+                            <!--Select category-->
+                            <div class="uk-magin col-auto mt-4">
+                                <input type="hidden" asp-for="CategoryId" />
+                                <div class="mdc-select mdc-select--outlined category-of-product w-100">
+                                    <div class="mdc-select__anchor w-100 bg--white h-40">
+                                        <i class="mdc-select__dropdown-icon" style="top:5px"></i>
+                                        <div id="demo-selected-text" class="mdc-select__selected-text IRANSans_Light fontsize-12 position-relative" style="top:-5px" aria-labelledby="outlined-select-label"></div>
+                                        <div class="mdc-notched-outline">
+                                            <div class="mdc-notched-outline__leading"></div>
+                                            <div class="mdc-notched-outline__notch min-width--90">
+                                                <label id="outlined-select-label" class="mdc-floating-label IRANSans_Light fontsize-14">انتخاب دسته بندی</label>
+                                            </div>
+                                            <div class="mdc-notched-outline__trailing"></div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Select category options -->
+                                    <div class="mdc-select__menu mdc-menu mdc-menu-surface w-100" role="listbox">
+                                        <ul class="mdc-list IRANSans_Light fontsize-12">
+
+                                            <vc:category-list-titles my-id="-1" is-from-product="true"></vc:category-list-titles>
+                                        </ul>
+                                    </div>
+                                </div>
+                               <span class="IRANSans fontsize-12 red-lighten-7 error-select-category d-none"></span>
+                            </div>
+
+                        </div>
+                        <div class="uk-modal-footer uk-text-right">
+
+
+                            <button class="mdc-button mdc-button--unelevated border--blue white bg--blue-600 uk-box-shadow-medium" style="height:30px" type="submit">
+                                <div class="mdc-button__ripple"></div>
+                                <span class="mdc-button__label IRANSans fontsize-12">
+                                    اضافه کردن
+                                </span>
+                                <span class="material-icons-outlined mx-2 fontsize-16">
+                                    add
+                                </span>
+                            </button>
+                            <button class="mdc-button mdc-button--unelevated border--blue uk-modal-close bg--white uk-box-shadow-medium blue-600 mx-2"
+                                    style="height:30px;">
+                                <div class="mdc-button__ripple"></div>
+                                <span class="mdc-button__label IRANSans fontsize-12">
+                                    صرف نظر
+                                </span>
+
+                            </button>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!--Add new product Button (modal trigger)-->
+            <button uk-toggle="target: #product-add-modal" class="mdc-button mdc-button--unelevated bg--blue-700 uk-box-shadow-medium">
+                <div class="mdc-button__ripple"></div>
+                <span class="mdc-button__label IRANSans fontsize-12">
+                    اضافه کردن محصول جدید
+                </span>
+                <i class="material-icons mr-sm-2 fontsize-18 mr-2">
+                    add
+                </i>
+            </button>
+        </div>
+        <!--Search form-->
+        <div class="col-md-4 col-sm-auto my-2 px-1 px-sm-2">
+            <div class="uk-inline w-100">
+                <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: search"></span>
+                <input autocomplete="off" name="productSearch" class="uk-input w-100 IRANSans_Light fontsize-14" dir="rtl" type="text" placeholder="جستجو کنید">
+            </div>
+        </div>
+
+        <!--Select Sort By-->
+        <div class="col-md-2 col-sm-3 my-2 px-1 px-sm-2 position-relative filter-mdc-select--container" style="z-index:2;">
+            <div class="mdc-select mdc-select--outlined product-sort">
+                <div class="mdc-select__anchor w-100 bg--white h-40">
+                    <i class="mdc-select__dropdown-icon" style="top:5px"></i>
+                    <div id="demo-selected-text" class="mdc-select__selected-text IRANSans_Light fontsize-12 position-relative" style="top:-5px" aria-labelledby="outlined-select-label"></div>
+                    <div class="mdc-notched-outline">
+                        <div class="mdc-notched-outline__leading"></div>
+                        <div class="mdc-notched-outline__notch">
+                            <label id="outlined-select-label" class="mdc-floating-label IRANSans_Light fontsize-14">مرتب کردن</label>
+                        </div>
+                        <div class="mdc-notched-outline__trailing"></div>
+                    </div>
+                </div>
+
+                <!-- Select customer status => Options -->
+                <div class="mdc-select__menu mdc-menu mdc-menu-surface w-100" role="listbox">
+                    <ul class="mdc-list IRANSans_Light fontsize-12">
+                        <li class="mdc-list-item mdc-list-item--selected" data-value="0" role="option">
+                            جدیدترین
+                        </li>
+                        <li class="mdc-list-item" data-value="1" role="option">
+                            پرفروش ترین
+                        </li>
+                        <li class="mdc-list-item" data-value="2" role="option">
+                            پر بازدیدترین
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!--Select By Category-->
+        <div class="col-md-2 col-sm-3 my-2 px-1 px-sm-2 position-relative filter-mdc-select--container" style="z-index:2;">
+            <div class="mdc-select mdc-select--outlined category-sort">
+                <div class="mdc-select__anchor w-100 bg--white h-40">
+                    <i class="mdc-select__dropdown-icon" style="top:5px"></i>
+                    <div id="demo-selected-text" class="mdc-select__selected-text IRANSans_Light fontsize-12 position-relative" style="top:-5px" aria-labelledby="outlined-select-label"></div>
+                    <div class="mdc-notched-outline">
+                        <div class="mdc-notched-outline__leading"></div>
+                        <div class="mdc-notched-outline__notch">
+                            <label id="outlined-select-label" class="mdc-floating-label IRANSans_Light fontsize-14">دسته بندی</label>
+                        </div>
+                        <div class="mdc-notched-outline__trailing"></div>
+                    </div>
+                </div>
+
+                <!-- Select customer status => Options -->
+                <div class="mdc-select__menu mdc-menu mdc-menu-surface w-100" role="listbox">
+                    <ul class="mdc-list IRANSans_Light fontsize-12">
+                       
+                        <vc:category-list-titles my-id="-1" is-from-product="true"></vc:category-list-titles>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--List of products-->
+    <div id="datatable-product-list-container">
+        <vc:product-list sort-type="0" text="@(null)" cat-id="-1" page-index="1"></vc:product-list>
+    </div>
+
+</div>

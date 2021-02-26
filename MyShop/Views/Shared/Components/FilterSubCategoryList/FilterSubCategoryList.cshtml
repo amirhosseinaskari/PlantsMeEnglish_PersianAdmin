@@ -1,0 +1,27 @@
+﻿@model IEnumerable<Category>
+
+@foreach (var item in Model)
+{
+    <li class="filter__list-item__sub-list__list-item">
+        <div class="mdc-form-field my-1">
+            <div class="mdc-checkbox">
+                <input type="checkbox"
+                       name="categoryCheckbox"
+                       data-id="@item.CategoryId"
+                       class="mdc-checkbox__native-control filter-checkbox"
+                       id="categorySelect@(item.CategoryId)" />
+                <div class="mdc-checkbox__background">
+                    <svg class="mdc-checkbox__checkmark"
+                         viewBox="0 0 24 24">
+                        <path class="mdc-checkbox__checkmark-path"
+                              fill="none"
+                              d="M1.73,12.91 8.1,19.28 22.79,4.59" />
+                    </svg>
+                    <div class="mdc-checkbox__mixedmark"></div>
+                </div>
+                <div class="mdc-checkbox__ripple"></div>
+            </div>
+            <label for="categorySelect@(item.CategoryId)" class="IRANSans fontsize-12">@item.Title</label>
+        </div>
+    </li>
+}

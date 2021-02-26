@@ -1,0 +1,114 @@
+﻿@model PaginatedList<Ticket>
+
+@if (Model.Count() < 1)
+{
+    <div class="d-flex justify-content-start flex-column align-items-center mt-2" style="min-height:300px">
+        <div class="Arial fontsize-12 text-center p-2 my-3 border--blue uk-box-shadow-medium" style="width:400px;max-width:100%">No Message Submitted</div>
+        <img style="max-height:300px" src="~/images/large/product1.svg" />
+    </div>
+}
+else
+{
+    int i = (Model.PageIndex * 10) - 10;
+    //Delete Modal for remove message
+    <div id="item-remove-modal" uk-modal dir="ltr">
+        <div class="uk-modal-dialog">
+            <button class="uk-modal-close-default" type="button" uk-close syle="right:unset;left:10px !important;"></button>
+            <div class="uk-modal-header bg--light-3">
+                <h3 class="Arial fontsize-14 red-lighten-7">Delete Message</h3>
+            </div>
+            <div class="uk-modal-body">
+                <div class="IRANSans fontsize-12 modal-body-text">Are you sure want to delete this message?</div>
+            </div>
+            <div class="uk-modal-footer uk-text-left">
+                <form id="remove-item-form-on-modal" action="/En/Admin/Messages/DeleteTicket" method="post">
+                    <div class="item-id-container"></div>
+                    <button class="mdc-button mdc-button--unelevated border--blue red-lighten-7
+                            bg--white uk-box-shadow-medium h-30" type="submit">
+                        <div class="mdc-button__ripple"></div>
+                        <span class="mdc-button__label IRANSans fontsize-12">
+                            Delete
+                        </span>
+                        <span class="material-icons-outlined mx-2 fontsize-16">
+                            delete
+                        </span>
+                    </button>
+                    <button class="mdc-button mdc-button--unelevated border--blue uk-modal-close
+                            bg--white uk-box-shadow-medium blue-600 mx-2 h-30 message-delete__submit-button">
+                        <div class="mdc-button__ripple"></div>
+                        <span class="mdc-button__label IRANSans fontsize-12">
+                            Cancel
+                        </span>
+
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 ">
+
+            <div class="mdc-data-table d-block overflow-auto my-4">
+                <table class="mdc-data-table__table overflow-auto" dir="ltr">
+                    <thead class="IRANSans fontsize-12">
+                        <tr class="mdc-data-table__header-row">
+                            <th class="text-center mdc-data-table__header-cell fontsize-14 IRANSans">Row</th>
+                            <th class="text-center mdc-data-table__header-cell fontsize-14 IRANSans">Sender</th>
+                            <th class="text-center mdc-data-table__header-cell fontsize-14 IRANSans">Subject</th>
+                            <th class="text-center mdc-data-table__header-cell mdc-data-table__header-cell--numeric fontsize-14 IRANSans">Created On</th>
+                            <th class="text-center mdc-data-table__header-cell fontsize-14 IRANSans">Status</th>
+                            <th class="text-center mdc-data-table__header-cell fontsize-14 IRANSans">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody class="mdc-data-table__content IRANSans_Light fontsize-12">
+                        @foreach (var item in Model)
+                        {
+                            i++;
+                           
+                            <tr class="mdc-data-table__row">
+                                <td class="mdc-data-table__cell text-center"><div class="td--number IRANSans_Light fontsize-14">@i</div></td>
+                                <td class="mdc-data-table__cell text-center"><div class="td--name IRANSans_Light fontsize-14">@item.FullName</div></td>
+                                <td class="mdc-data-table__cell text-center"><div class="td--title IRANSans_Light fontsize-14">@item.Subject</div></td>
+                                <td class="mdc-data-table__cell text-center"><div class="td--date IRANSans_Light fontsize-14">@item.SubmitDate.ToString("MM/dd/yyyy")</div></td>
+
+                                <td class="mdc-data-table__cell text-center">
+                                    <div class="td--name IRANSans_Light fontsize-14">
+                                        @switch (item.TicketStatus)
+                                        {
+                                            case TicketStatus.WaitForReply:
+                                                <text>pending</text>
+                                                break;
+                                            case TicketStatus.Closed:
+                                                <text>closed</text>
+                                                break;
+                                            case TicketStatus.Replied:
+                                                <text>answered</text>
+                                                break;
+                                            default:
+                                                break;
+                                        }
+                                    </div>
+                                </td>
+                                <td class="mdc-data-table__cell text-center IRANSans_Light fontsize-12">
+                                    <div class="d-flex align-items-center">
+                                        <a asp-action="TicketDetail" asp-controller="Messages"
+                                           asp-area="Admin" asp-route-id="@item.Id"
+                                           class="blue-600 text-decoration-none d-inline-block min-width--90">Details and Reply</a>
+                                        <span class="mx-2">|</span>
+                                        <a href="#" class="delete-icon red-lighten-7 text-decoration-none" data-my-id="@item.Id">
+                                           Delete
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!--Pageination of message list-->
+    <div id="message-pagination-buttons-container">
+        @await Html.PartialAsync(partialViewName: "_MessagePaginationButtons", model: Model)
+    </div>
+}

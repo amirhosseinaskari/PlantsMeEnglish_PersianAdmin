@@ -1,0 +1,117 @@
+﻿@model ApplicationUser
+    <div class="customer-side-bar">
+        <div class="uk-card uk-card-default" dir="ltr" uk-sticky="offset: 100;bottom: true" style="z-index:3;">
+            <div class="uk-card-header padding-x-20">
+                <div class="uk-grid-small uk-flex-middle" uk-grid>
+                    <div class="uk-width-auto">
+                        <img width="50" src="~/images/icons/account-box.svg" />
+                    </div>
+                    <div class="uk-width-expand">
+                        <h3 class="uk-card-title uk-margin-remove-bottom dana-font fontsize-14 mobile-fontsize-12 font-weight-500">
+                            @Model.FullName
+                        </h3>
+                        <p class="uk-text-meta uk-margin-remove-top dana-font fontsize-12 mobile-fontsize-10 font-weight-400 digit-format">
+                            @Model.Mobile
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="uk-card-body padding-0">
+                <ul class="uk-list uk-list-divider padding-0 margin-0 customer-side-bar__list">
+                    <!--Default list-item (hidden in mobile view)-->
+                    <li class="customer-side-bar__list-item customer-information__list-item hidden-in-mobile">
+                        <a asp-controller="Customer" asp-action="CustomerInformation"
+                           class="customer-side-bar__list__link customer-information-link">
+                            <div>
+                                <span class="my-icon" uk-icon="icon:user"></span>
+                                <span class="fontsize-14 mobile-fontsize-12 font-weight-400 dana-font
+                                  margin-right-5 my-title">Information</span>
+                            </div>
+                            <span uk-icon="icon:chevron-right"></span>
+                        </a>
+                    </li>
+                    <!--Customer information list-item-->
+                    <li class="customer-side-bar__list-item customer-information__list-item hidden-in-desktop">
+                        <a asp-controller="Customer" asp-action="CustomerInformation"
+                           class="customer-side-bar__list__link customer-information-link">
+                            <div>
+                                <span class="my-icon" uk-icon="icon:user"></span>
+                                <span class="fontsize-14 mobile-fontsize-12 font-weight-400 dana-font
+                                  margin-right-5 my-title">Information</span>
+                            </div>
+                            <span uk-icon="icon:chevron-right"></span>
+                        </a>
+                    </li>
+                    <!--All orders list-item-->
+                    <li class="m-0 p-0 customer-side-bar__list-item orders-container__list-item">
+                        <a asp-controller="Customer" asp-action="AllOrders"
+                           class="customer-side-bar__list__link orders-link">
+                            <div>
+                                <span class="my-icon" uk-icon="icon:database"></span>
+                                <span class="fontsize-14 mobile-fontsize-12 font-weight-400 dana-font
+                                  margin-right-5 my-title my-title">Orders</span>
+                            </div>
+                            <span uk-icon="icon:chevron-right"></span>
+                        </a>
+                    </li>
+
+                    <!--Messages list-item-->
+                    <li class="m-0 p-0 customer-side-bar__list-item messages-container__list-item">
+                        <a asp-controller="Customer" asp-action="Messages"
+                           class="customer-side-bar__list__link messages-link">
+                            <div>
+                                <span class="my-icon" uk-icon="icon:mail"></span>
+                                <span class="fontsize-14 mobile-fontsize-12 font-weight-400 dana-font
+                                  margin-right-5 my-title my-title">Messages</span>
+                            </div>
+                            <span uk-icon="icon:chevron-right"></span>
+                        </a>
+                    </li>
+                 
+                </ul>
+            </div>
+            <!--side bar footer-->
+            <div class="uk-card-footer d-flex padding-0" dir="ltr">
+                <!--logout button-->
+                <a href="#log-out--modal" uk-toggle class="uk-text-center">
+                    <span uk-icon="icon:sign-out"></span>
+                    <br />
+                    <span class="dana-font fontsize-14 mobile-fontsize-12 font-weight-400">Logout</span>
+                </a>
+                <!--change password button-->
+                <a asp-action="ChangePassword" asp-controller="Customer" asp-area="" id="change-password-link"
+                   class="uk-text-center">
+                    <span uk-icon="icon:lock"></span>
+                    <br />
+                    <span class="dana-font fontsize-14 mobile-fontsize-12 font-weight-400">Change Password</span>
+                </a>
+            </div>
+        </div>
+        <!--Log out modal-->
+        <div id="log-out--modal" uk-modal>
+            <div class="uk-modal-dialog border-radius-3">
+                <button class="uk-modal-close-default custom-close--button" type="button" uk-close></button>
+                <div class="uk-modal-header text-left bg--light-2" dir="ltr">
+                    <h3 class="dana-font text-left fontsize-16">
+                        Warning!
+                    </h3>
+                </div>
+                <div class="uk-modal-body" dir="ltr">
+                    <p class="dana-font fontsize-16 mobile-fontsize-14 text-left">Are you sure want to logout?</p>
+                </div>
+                <div class="uk-modal-footer uk-text-left" dir="ltr">
+                    <a asp-area="Identity" asp-page="/Account/Logout" 
+                       class="wave-button black white-text border-radius-3 remove-button h-30 uk-box-shadow-medium">
+                       
+                            Yes
+                        
+                    </a>
+                    <button class="wave-button white black-text border-radius-3 remove-button h-30 uk-box-shadow-medium margin-left-10">
+                        
+                            No
+                        
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>

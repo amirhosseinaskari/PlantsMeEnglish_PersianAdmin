@@ -1,0 +1,268 @@
+﻿@model IEnumerable<HomeBanner>
+@{
+    var banner01 = Model.Where(c => c.Order == 0).FirstOrDefault();
+    var banner02 = Model.Where(c => c.Order == 1).FirstOrDefault();
+    var banner03 = Model.Where(c => c.Order == 2).FirstOrDefault();
+    var banner04 = Model.Where(c => c.Order == 3).FirstOrDefault();
+    var banner05 = Model.Where(c => c.Order == 4).FirstOrDefault();
+}
+<!--Home banner images-->
+<div class="row my-4 mx-0" dir="rtl">
+    <div class="col-12">
+        <div class="border border--dashed form-bundle uk-border-rounded">
+            <label class="IRANSans_Light">تصاویر بنرهای صفحه اصلی</label>
+            <div class="row my-4 mx-0" dir="ltr">
+                <!--Home Banner01-->
+                <div class="col-md-3 col-6 pl-2 my-4">
+                    <span class="p-2 IRANSans fontsize-12 fontsize-sm-10 my-1" dir="ltr">(600 X 1043) بنر شماره 1</span>
+                    <label for="bannerImage01" class="d-flex w-100 h-100">
+                        @if (!string.IsNullOrEmpty(banner01.Image))
+                        {
+                            if (banner01.Image.EndsWith(".mp4"))
+                            {
+                                <video loop autoplay="autoplay" muted>
+                                    <source src="~/images/banners/@banner01.Image" type="video/mp4" />
+                                </video>
+                            }
+                            else
+                            {
+                                <img class="w-100" src="~/images/banners/medium/@banner01.Image" />
+                            }
+
+                        }
+                        else
+                        {
+                            <img class="w-100" src="~/images/banners/bannersquare-min.png" />
+                        }
+                        <div uk-spinner="ratio:2" class="my-spinner position-absolute d-none" style="top:45%;left:45%"></div>
+                        <input data-id="@banner01.Id" class="d-none inputOfImageBanner" type="file" name="bannerImage01" id="bannerImage01" />
+                    </label>
+                </div>
+              
+                <div class="col-md-3 col-6 pl-2 my-4">
+                    <!--Home Banner02-->
+                    <div class="mb-1">
+                        <span class="p-2 IRANSans fontsize-12 fontsize-sm-10 my-1" dir="ltr">(600 X 528) بنر شماره دو</span>
+                        <label for="bannerImage02" class="d-flex w-100 h-100">
+                            @if (!string.IsNullOrEmpty(banner02.Image))
+                            {
+                                <img class="w-100" src="~/images/banners/medium/@banner02.Image" />
+                            }
+                            else
+                            {
+                                <img class="w-100" src="~/images/banners/bnnerrectangle-min.png" />
+                            }
+                            <div uk-spinner="ratio:2" class="my-spinner position-absolute d-none" style="top:45%;left:45%"></div>
+                            <input data-id="@banner02.Id" class="d-none inputOfImageBanner" type="file" name="bannerImage02" id="bannerImage02" />
+                        </label>
+                    </div>
+                    <!--Home Banner03-->
+                    <div class="mt-1">
+                        <span class="p-2 IRANSans fontsize-12 fontsize-sm-10 my-1" dir="ltr">(600 X 528) بنر شماره سه</span>
+                        <label for="bannerImage03" class="d-flex w-100 h-100">
+                            @if (!string.IsNullOrEmpty(banner03.Image))
+                            {
+                                <img class="w-100" src="~/images/banners/medium/@banner03.Image" />
+                            }
+                            else
+                            {
+                                <img class="w-100" src="~/images/banners/bannersquare-min.png" />
+                            }
+                            <div uk-spinner="ratio:2" class="my-spinner position-absolute d-none" style="top:45%;left:45%"></div>
+                            <input data-id="@banner03.Id" class="d-none inputOfImageBanner" type="file" name="bannerImage03" id="bannerImage03" />
+                        </label>
+                    </div>
+                </div>
+                <!--Home Banner04-->
+                <div class="col-md-6 col-12 pl-2 my-4">
+                    <span class="p-2 IRANSans fontsize-12 fontsize-sm-10 my-1" dir="ltr">(660 X 491) بنر شماره چهار</span>
+                    <label for="bannerImage04" class="d-flex w-100 h-100">
+                        @if (!string.IsNullOrEmpty(banner04.Image))
+                        {
+                            <img class="w-100" src="~/images/banners/medium/@banner04.Image" />
+                        }
+                        else
+                        {
+                            <img class="w-100" src="~/images/banners/bnnerrectangle-min.png" />
+                        }
+                        <div uk-spinner="ratio:2" class="my-spinner position-absolute d-none" style="top:45%;left:45%"></div>
+                        <input data-id="@banner04.Id" class="d-none inputOfImageBanner" type="file" name="bannerImage04" id="bannerImage04" />
+                    </label>
+                </div>
+               
+            </div>
+        </div>
+    </div>
+</div>
+<!--Home banner informations-->
+<div class="row px-2 my-4" dir="rtl">
+    <!--Home banner01 information-->
+    <div class="col-12 my-3">
+        <div class="border border--dashed form-bundle uk-border-rounded home-banner-information">
+            <label class="IRANSans_Light">اطلاعات بنر شماره یک</label>
+            <div class="row m-0 py-3">
+                <div class="col-auto my-3">
+                    <div class="custom-text-field">
+                        <label class="uk-form-label IRANSans_Light" for="title">عنوان</label>
+                        <div class="uk-form-controls">
+                            <input class="uk-input IRANSans_Light fontsize-12 uk-width-medium" name="title" type="text" value="@banner01.Title" placeholder="عنوان را وارد کنید">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-auto my-3">
+                    <div class="custom-text-field">
+                        <label class="uk-form-label IRANSans_Light" for="alt">نوشته جایگزین (alt)</label>
+                        <div class="uk-form-controls">
+                            <input class="uk-input IRANSans_Light fontsize-12 uk-width-medium" name="alt" type="text" value="@banner01.AltText" placeholder="نوشته جایگزین را وارد کنید">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-auto my-3">
+                    <div class="custom-text-field">
+                        <label class="uk-form-label IRANSans_Light" for="targetLink">لینک هدف</label>
+                        <div class="uk-form-controls">
+                            <input class="uk-input IRANSans_Light fontsize-12 uk-width-medium" name="targetLink" type="text" value="@banner01.TargetLink" placeholder="لینک هدف را وارد کنید">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--Submit button-->
+            <div class="mt-1 mb-3 mx-3">
+                <button class="mdc-button mdc-button--unelevated home-banner-information__submit-button
+                                bg--blue-700 border uk-box-shadow-small px-0" data-my-id="@banner01.Id" style="height:30px">
+                    <div class="mdc-button__ripple"></div>
+                    <span class="mdc-button__label IRANSans fontsize-10 white px-1 px-sm-2">
+                        ویرایش و ذخیره تغییرات
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <!--Home banner02 information-->
+    <div class="col-12 my-3">
+        <div class="border border--dashed form-bundle uk-border-rounded home-banner-information">
+            <label class="IRANSans_Light">اطلاعات بنر شماره دو</label>
+            <div class="row m-0 py-3">
+                <div class="col-auto my-3">
+                    <div class="custom-text-field">
+                        <label class="uk-form-label IRANSans_Light" for="title">عنوان</label>
+                        <div class="uk-form-controls">
+                            <input class="uk-input IRANSans_Light fontsize-12 uk-width-medium" name="title" type="text" value="@banner02.Title" placeholder="عنوان را وارد کنید">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-auto my-3">
+                    <div class="custom-text-field">
+                        <label class="uk-form-label IRANSans_Light" for="alt">نوشته جایگزین (alt)</label>
+                        <div class="uk-form-controls">
+                            <input class="uk-input IRANSans_Light fontsize-12 uk-width-medium" name="alt" type="text" value="@banner02.AltText" placeholder="نوشته جایگزین را وارد کنید">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-auto my-3">
+                    <div class="custom-text-field">
+                        <label class="uk-form-label IRANSans_Light" for="targetLink">لینک هدف</label>
+                        <div class="uk-form-controls">
+                            <input class="uk-input IRANSans_Light fontsize-12 uk-width-medium" name="targetLink" type="text" value="@banner02.TargetLink" placeholder="لینک هدف را وارد کنید">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--Submit button-->
+            <div class="mt-1 mb-3 mx-3">
+                <button class="mdc-button mdc-button--unelevated home-banner-information__submit-button
+                                bg--blue-700 border uk-box-shadow-small px-0" data-my-id="@banner02.Id" style="height:30px">
+                    <div class="mdc-button__ripple"></div>
+                    <span class="mdc-button__label IRANSans fontsize-10 white px-1 px-sm-2">
+                        ویرایش و ذخیره تغییرات
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <!--Home banner03 information-->
+    <div class="col-12 my-3">
+        <div class="border border--dashed form-bundle uk-border-rounded home-banner-information">
+            <label class="IRANSans_Light">اطلاعات بنر شماره سه</label>
+            <div class="row m-0 py-3">
+                <div class="col-auto my-3">
+                    <div class="custom-text-field">
+                        <label class="uk-form-label IRANSans_Light" for="title">عنوان</label>
+                        <div class="uk-form-controls">
+                            <input class="uk-input IRANSans_Light fontsize-12 uk-width-medium" name="title" type="text" value="@banner03.Title" placeholder="عنوان را وارد کنید">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-auto my-3">
+                    <div class="custom-text-field">
+                        <label class="uk-form-label IRANSans_Light" for="alt">نوشته جایگزین (alt)</label>
+                        <div class="uk-form-controls">
+                            <input class="uk-input IRANSans_Light fontsize-12 uk-width-medium" name="alt" type="text" value="@banner03.AltText" placeholder="نوشته جایگزین را وارد کنید">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-auto my-3">
+                    <div class="custom-text-field">
+                        <label class="uk-form-label IRANSans_Light" for="targetLink">لینک هدف</label>
+                        <div class="uk-form-controls">
+                            <input class="uk-input IRANSans_Light fontsize-12 uk-width-medium" name="targetLink" type="text" value="@banner03.TargetLink" placeholder="لینک هدف را وارد کنید">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--Submit button-->
+            <div class="mt-1 mb-3 mx-3">
+                <button class="mdc-button mdc-button--unelevated home-banner-information__submit-button
+                                bg--blue-700 border uk-box-shadow-small px-0" data-my-id="@banner03.Id" style="height:30px">
+                    <div class="mdc-button__ripple"></div>
+                    <span class="mdc-button__label IRANSans fontsize-10 white px-1 px-sm-2">
+                        ویرایش و ذخیره تغییرات
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <!--Home banner04 information-->
+    <div class="col-12 my-3">
+        <div class="border border--dashed form-bundle uk-border-rounded home-banner-information">
+            <label class="IRANSans_Light">اطلاعات بنر شماره چهار</label>
+            <div class="row m-0 py-3">
+                <div class="col-auto my-3">
+                    <div class="custom-text-field">
+                        <label class="uk-form-label IRANSans_Light" for="title">عنوان</label>
+                        <div class="uk-form-controls">
+                            <input class="uk-input IRANSans_Light fontsize-12 uk-width-medium" name="title" type="text" value="@banner04.Title" placeholder="عنوان را وارد کنید">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-auto my-3">
+                    <div class="custom-text-field">
+                        <label class="uk-form-label IRANSans_Light" for="alt">نوشته جایگزین (alt)</label>
+                        <div class="uk-form-controls">
+                            <input class="uk-input IRANSans_Light fontsize-12 uk-width-medium" name="alt" type="text" value="@banner04.AltText" placeholder="نوشته جایگزین را وارد کنید">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-auto my-3">
+                    <div class="custom-text-field">
+                        <label class="uk-form-label IRANSans_Light" for="targetLink">لینک هدف</label>
+                        <div class="uk-form-controls">
+                            <input class="uk-input IRANSans_Light fontsize-12 uk-width-medium" name="targetLink" type="text" value="@banner04.TargetLink" placeholder="لینک هدف را وارد کنید">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--Submit button-->
+            <div class="mt-1 mb-3 mx-3">
+                <button class="mdc-button mdc-button--unelevated home-banner-information__submit-button
+                                bg--blue-700 border uk-box-shadow-small px-0" data-my-id="@banner04.Id" style="height:30px">
+                    <div class="mdc-button__ripple"></div>
+                    <span class="mdc-button__label IRANSans fontsize-10 white px-1 px-sm-2">
+                        ویرایش و ذخیره تغییرات
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    
+</div>

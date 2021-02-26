@@ -1,0 +1,44 @@
+﻿@model IEnumerable<BlogReplyComment>
+@if (Model.Count() > 0)
+{
+  
+      
+
+   
+    <ul dir="ltr" class="">
+        @foreach (var item in Model)
+        {
+           
+
+            <li class="my-2">
+                <article class="uk-comment uk-comment-primary uk-visible-toggle" tabindex="-1">
+                    <header class="uk-comment-header uk-position-relative">
+                        <div class="uk-grid-medium uk-flex-middle" uk-grid>
+                            <div class="uk-width-auto">
+                                <span class="material-icons-round fontsize-38" style="color:#808080">
+                                    account_box
+                                </span>
+                            </div>
+                            <div class="uk-width-expand">
+                                <h4 class="uk-comment-title uk-margin-remove dana-font fontsize-14">
+                                    @item.FullName
+                                </h4>
+                                <p class="uk-comment-meta uk-margin-remove-top">
+                                    <span class="iranyekanweblight fontsize-14">@item.SubmitedDate</span>
+                                </p>
+                            </div>
+                        </div>
+
+                    </header>
+                    <div class="uk-comment-body dana-font fontsize-14" dir="ltr">
+                        <p>
+                            @item.Description
+                        </p>
+                    </div>
+                </article>
+            </li>
+        }
+
+
+    </ul>
+}

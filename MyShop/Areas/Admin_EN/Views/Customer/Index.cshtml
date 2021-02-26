@@ -1,0 +1,23 @@
+﻿@{ViewData["customerpage"] = "active"; }
+<!--Breadcrumb for this url-->
+<div class="row p-0 m-0 bg--white py-2 my-3 uk-box-shadow-small uk-border-rounded border position-relative">
+    <div class="col-12" dir="ltr">
+        <ul class="uk-breadcrumb IRANSans_Light fontsize-12 text-left p-0 m-0 d-flex" dir="ltr">
+            <li><a class="fontsize-12" href="~/En/Admin">Dashboard</a></li>
+            <li class="mx-1 uk-active">Customers</li>
+        </ul>
+        <div class="bg--blue-600 position-absolute rounded-right" style="width:8px;right:0;top:-8px;height:calc(100% + 16px);"></div>
+    </div>
+</div>
+<!--Product List-->
+<div class="row my-2 m-0" dir="ltr" id="main-container">
+    @await Html.PartialAsync("DataTables")
+</div>
+@section Scripts{
+    <script>
+        const mdcButton = $('.mdc-button');
+        for (let i = 0; i < mdcButton.length; i++) {
+            mdc.ripple.MDCRipple.attachTo(document.querySelectorAll('.mdc-button')[i]);
+        }
+    </script>
+}

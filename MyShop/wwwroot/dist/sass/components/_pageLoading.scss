@@ -1,0 +1,92 @@
+﻿@import "../vendors/_bourbon.scss";
+@import "../vendors/_custommixin.scss";
+.page-loading {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index:1100;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0,0,0,.6);
+    opacity: 0;
+    span{
+        direction:rtl;
+    }
+    &.active {
+        @include prefixer(animation,loadingFadeIn .3s ease-in both,("webkit","moz","o"));
+
+        @include custom-animation(loadingFadeIn) {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+    }
+    //page loading animation (white balls)
+    %page-loading-animation {
+       
+        width: 20px;
+        height: 20px;
+        background-color: white;
+        border-radius: 50%;
+        content: '';
+        display: block;
+        animation: ballScale .4s ease-in-out infinite alternate-reverse both;
+    }
+
+    .page-loading-animation {
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        margin-left: 20px;
+
+        &::after {
+
+            @extend %page-loading-animation;
+            margin-left: 10px;
+        }
+
+        &::before {
+            @extend %page-loading-animation;
+            margin-right: 10px;
+        }
+    }
+
+    .page-loading-animation:nth-child(1) {
+        &::before {
+            animation-delay: 0;
+        }
+
+        &::after {
+            animation-delay: .1s;
+        }
+    }
+
+    .page-loading-animation:nth-child(2) {
+        &::before {
+            animation-delay: .2s;
+        }
+
+        &::after {
+            animation-delay: .3s;
+        }
+    }
+
+    @keyframes ballScale {
+        from {
+            transform: scale(.2,.2);
+        }
+
+        to {
+            transform: scale(1,1);
+        }
+    }
+}

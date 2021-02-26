@@ -1,0 +1,58 @@
+﻿@{
+    ViewData["Title"] = "Special Discount";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Style{
+    <link href="~/dist/sass/pages/favoritProductList.min.css" rel="stylesheet" />
+}
+@section JavaScript{
+    <script async src="~/dist/js/pages/_index.js" type="module"></script>
+}
+
+
+<section id="container-section">
+    <!--Breadcrumb for this url-->
+    <div class="breadcrumb-container grey lighten-5 padding-y-15" dir="ltr">
+        <ul class="uk-breadcrumb text-left padding-0 margin-0 d-flex align-items-center" dir="ltr">
+            <li>
+                <a class="fontsize-14 mobile-fontsize-12 dana-font font-weight-500 font-color-4" asp-action="Index" asp-controller="Home" asp-area="">Home</a>
+            </li>
+            <li class="uk-active"><h1 class="margin-bottom-0 font-weight-600 dana-font fontsize-14 mobile-fontsize-12 font-color-1">Special Offers</h1></li>
+        </ul>
+
+    </div>
+    <!--Main Content-->
+    <div id="main-content">
+
+        <div id="products-container">
+            <!--product cards-->
+            <section class="d-flex justify-content-start flex-column margin-top-20">
+                <vc:all-special-discount-list page-index="1"></vc:all-special-discount-list>
+            </section>
+        </div>
+
+    </div>
+
+</section>
+
+<!--alert for log in before action-->
+<div id="login-alert-modal" uk-modal dir="ltr">
+    <div class="uk-modal-dialog">
+        <button class="uk-modal-close-default" type="button" uk-close></button>
+
+        <div class="uk-modal-header border-bottom-grey">
+            <span class="dana-font font-color-1 fontsize-16 font-weight-600">Added To Favorits</span>
+        </div>
+        <div class="uk-modal-body">
+            <div class="uk-magin margin-y-20 dana-font font-weight-500 fontsize-16 mobile-fontsize-14 line-height-30 uk-text-left" dir="ltr">
+                <span>To add to your favorit list, you must first</span>
+                <a href="#login--modal" uk-toggle class="text-decoration-none main-color">login</a>
+                <span>to your account or</span>
+                <a href="#register--modal" uk-toggle class="text-decoration-none main-color">sign up</a>
+                <span>if you have not yet registered</span>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,46 @@
+﻿@model IEnumerable<Category>
+<div id="main-mobile-category-list" class="mobile-sub-category-list-items">
+    <a id="main-back-mobile-menu"  href="#main-mobile-menu"
+       class="d-flex align-items-center red-lighten-7 padding-x-15 padding-y-10 uk-flex-between
+                           text-decoration-none" dir="ltr">
+        <span class="dana-font fontsize-14 red-text">Back</span>
+        <span class="red-text" uk-icon="icon:arrow-right"></span>
+    </a>
+    <ul class="uk-list uk-list-divider">
+        @foreach (var item in Model)
+        {
+
+
+            <li class="mobile-menu__list-item">
+                @if (item.SubCategories.Count() < 1)
+                {
+                    <a asp-route-categoryTitle="@item.Title.Replace(" ","-")"
+                       asp-route-id="@item.CategoryId" asp-action="CategoryDetail" asp-controller="Category" asp-area=""
+                       class="mobile-menu-list__link fontsize-12">
+                        <h2 class="font-weight-500 dana-font fontsize-14 margin-bottom-0"> @item.Title</h2>
+                    </a>
+                }
+                else
+                {
+                    <a href="#" class="mobile-menu-list__link fontsize-12 category-has-subcat d-flex align-items-center" data-id="@item.CategoryId">
+                        <h2 class="margin-bottom-0 font-weight-500 dana-font fontsize-14"> @item.Title</h2>
+
+                    </a>
+                    <a href="#mobile-sub-category-@(item.CategoryId)" class="category-navigation">
+                        <span uk-icon="icon:chevron-right"></span>
+                    </a>
+                }
+
+            </li>
+        }
+
+
+    </ul>
+</div>
+@foreach (var item in Model)
+{
+    if (item.SubCategories.Count() > 0)
+    {
+        <vc:mobile-menu-sub-category-list parent-id="item.CategoryId"></vc:mobile-menu-sub-category-list>
+    }
+}

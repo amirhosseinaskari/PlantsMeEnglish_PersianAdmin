@@ -1,0 +1,30 @@
+﻿@model IEnumerable<MobileHomeSliderImages>
+    <div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1"
+         uk-slideshow="max-height:520;animation: scale;autoplay:true;autoplay-interval:3000;velocity:.3;ratio: 4:3">
+        <ul class="uk-slideshow-items" id="home-slide-show">
+            @if (Model.Count() < 1)
+            {
+                <li>
+
+                    <img class="w-100" src="~/images/banners/bnnerrectangle-min.png" uk-cover>
+
+                </li>
+            }
+            @foreach (var item in Model)
+            {
+                <li>
+                    <a href="@item.TargetLink" title="@item.AlternativeText" class="text-decoration-none uk-position-cover">
+                        <img src="~/images/mobilehomepageslider/medium/@item.ImageName"
+                             srcset="/images/mobilehomepageslider/small/@item.ImageName 600w,
+                             /images/mobilehomepageslider/medium/@item.ImageName 800w"
+                             alt="@item.AlternativeText" uk-cover>
+                    </a>
+                </li>
+            }
+        </ul>
+        <!--arrow navigations of slide show-->
+        <a class="uk-position-center-left uk-position-small uk-hidden-hover slide-navigation slide-navigation-left" href="#" uk-slidenav-previous uk-slideshow-item="previous"></a>
+        <a class="uk-position-center-right uk-position-small uk-hidden-hover slide-navigation slide-navigation-right" href="#" uk-slidenav-next uk-slideshow-item="next"></a>
+        <!--dot navigations of slide show-->
+        <ul class="uk-slideshow-nav uk-dotnav uk-flex-center uk-margin"></ul>
+    </div>

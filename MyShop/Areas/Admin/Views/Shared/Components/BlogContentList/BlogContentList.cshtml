@@ -1,0 +1,120 @@
+﻿@model IEnumerable<BlogContent>
+@if (Model.Count() > 0)
+{
+    //Delete Modal for remove item
+    <div id="blog-content-remove-modal" uk-modal dir="rtl">
+        <div class="uk-modal-dialog">
+            <button class="uk-modal-close-default" type="button" uk-close syle="right:unset;left:10px !important;"></button>
+            <div class="uk-modal-header bg--light-3">
+                <h3 class="iranyekanwebregular fontsize-14 red-lighten-7">هشدار!</h3>
+            </div>
+            <div class="uk-modal-body">
+                <div class="IRANSans fontsize-12">آیا مطمئن هستید که می خواهید این آیتم از محتوا را حذف کنید؟</div>
+            </div>
+            <div class="uk-modal-footer uk-text-right">
+                <form id="remove-blog-content-form-on-modal" action="/Admin/BlogContent/Delete" method="post">
+                   <input type="hidden" name="blogId" value="@ViewData["BlogId"]" />
+                    <div class="item-id-container"></div>
+                    <button class="mdc-button mdc-button--unelevated border--blue red-lighten-7 bg--white uk-box-shadow-medium" style="height:30px" type="submit">
+                        <div class="mdc-button__ripple"></div>
+                        <span class="mdc-button__label IRANSans fontsize-12">
+                            حذف
+                        </span>
+                        <span class="material-icons-outlined mx-2 fontsize-16">
+                            delete
+                        </span>
+                    </button>
+                    <button class="mdc-button mdc-button--unelevated border--blue uk-modal-close bg--white uk-box-shadow-medium blue-600 mx-2"
+                            style="height:30px;">
+                        <div class="mdc-button__ripple"></div>
+                        <span class="mdc-button__label IRANSans fontsize-12">
+                            صرف نظر
+                        </span>
+
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <ul class="list-unstyled m-0 p-0 blog-content-list" 
+        data-url="/Admin/BlogContent/ChangeContentOrder"
+        data-message="ترتیب محتواها تغییر یافت"
+        uk-sortable="handle: .uk-sortable-handle;cls-custom:border uk-box-shadow-small content-list-ghost">
+        @foreach (var item in Model)
+        {
+            if (item.ContentType.Equals(ContentType.Text))
+            {
+                <li class="blog-content-list__list-item uk-box-shadow-small border uk-border-rounded mb-3 blog-content-text" dir="rtl" data-my-id="@item.Id">
+                    <div class="blog-content-list__list-item__header uk-border-rounded position-relative">
+                        <span class="uk-sortable-handle uk-margin-small-right" uk-icon="icon: table"></span>
+                        <button class="mdc-button mdc-button--unelevated bg--blue-700 mx-2 blog-content-text__submit-button
+                                border uk-box-shadow-small px-0" data-my-id="@item.Id" style="height:30px">
+                            <div class="mdc-button__ripple"></div>
+                            <span class="mdc-button__label IRANSans fontsize-10 white px-1 px-sm-2">
+                                ویرایش و ذخیره
+                            </span>
+                        </button>
+                        <span class="delete-blog-content-icon red-lighten-7 position-absolute" data-my-id="@item.Id"
+                              uk-icon="icon:trash;ratio:.9" uk-tooltip="title:حذف"></span>
+                    </div>
+                    <div class="blog-content-list__list-item__body bg--white">
+                        <div class="IRANSans_Light fontsize-12 text-editor"
+                             style="min-height:120px">
+                            <p class="ql-align-right ql-direction-rtl uk-text-muted">
+                                @Html.Raw(item.Content)
+                            </p>
+                               
+                        </div>
+                    </div>
+                </li>
+            }
+            else if (item.ContentType.Equals(ContentType.Image))
+            {
+                <li class="blog-content-list__list-item uk-box-shadow-small border uk-border-rounded mb-3 blog-content-image" dir="rtl" data-my-id="@item.Id">
+                    <div class="blog-content-list__list-item__header uk-border-rounded position-relative">
+                        <span class="uk-sortable-handle uk-margin-small-right" uk-icon="icon: table"></span>
+                        <div class="custom-text-field d-inline-block my-2 mx-2" style="width:200px">
+                            <label class="uk-form-label IRANSans_Light" for="imageAlt">نوشته جایگزین تصویر (alt)</label>
+                            <div class="uk-form-controls">
+                                <input name="imageAlt" class="uk-input IRANSans_Light fontsize-12" 
+                                       type="text" placeholder="نوشته جایگزین را وارد کنید" value="@item.AltTextForImage">
+                            </div>
+                        </div>
+                        <button class="mdc-button mdc-button--unelevated bg--blue-700 blog-content-image__submit-button
+                                border uk-box-shadow-small px-0" data-my-id="@item.Id" style="height:30px">
+                            <div class="mdc-button__ripple"></div>
+                            <span class="mdc-button__label IRANSans fontsize-10 white px-1 px-sm-2">
+                                ویرایش و ذخیره
+                            </span>
+                        </button>
+                        <span class="delete-blog-content-icon red-lighten-7 position-absolute"  data-my-id="@item.Id"
+                              uk-icon="icon:trash;ratio:.9" uk-tooltip="title:حذف"></span>
+                    </div>
+                    <div class="blog-content-list__list-item__body bg--white text-center">
+                        <img class="w-100" src="/images/blog_content/medium/blog_@ViewData["BlogId"]/@item.Content"
+                             srcset="/images/blog_content/small/blog_@ViewData["BlogId"]/@item.Content 600w,
+                             /images/blog_content/medium/blog_@ViewData["BlogId"]/@item.Content 800w,
+                             /images/blog_content/large/blog_@ViewData["BlogId"]/@item.Content 1200w"
+                             alt="">
+                    </div>
+                </li>
+            }
+            else if (item.ContentType.Equals(ContentType.Video))
+            {
+                <li class="blog-content-list__list-item uk-box-shadow-small border uk-border-rounded mb-3 blog-content-video" dir="rtl" data-my-id="@item.Id">
+                    <div class="blog-content-list__list-item__header uk-border-rounded position-relative">
+                        <span class="uk-sortable-handle uk-margin-small-right" uk-icon="icon: table"></span>
+                        <span class="delete-blog-content-icon red-lighten-7 position-absolute"  data-my-id="@item.Id"
+                              uk-icon="icon:trash;ratio:.9" uk-tooltip="title:حذف"></span>
+                    </div>
+                    <div class="blog-content-list__list-item__body bg--white">
+                        @Html.Raw(item.Content)
+                    </div>
+                </li>
+            }
+
+        }
+
+
+    </ul>
+}

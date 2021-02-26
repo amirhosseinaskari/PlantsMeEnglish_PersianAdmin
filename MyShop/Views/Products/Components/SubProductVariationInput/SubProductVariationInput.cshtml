@@ -1,0 +1,10 @@
+﻿@model IEnumerable<ProductVariation>
+
+@foreach (var item in Model)
+{
+    if (item.SubProductVariations.Count() > 0)
+    {
+        <input type="hidden" name="ids" value="@item.SubProductVariations.First().SubProductVariationId" />
+    }
+
+}

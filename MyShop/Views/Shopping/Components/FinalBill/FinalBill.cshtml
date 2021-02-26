@@ -1,0 +1,73 @@
+﻿@model Shopping
+  <!--Total Price and Bill-->
+<div id="price-summary" class="margin-y-20" uk-sticky="bottom:true;offset:100">
+    <ul class="uk-list uk-list-divider add-to-buy-bucket--list">
+        <li dir="rtl" class="d-flex align-items-center uk-flex-between">
+            <div class="dana-font fontsize-14 mobile-fontsize-12 font-color-3 font-weight-400 flex-grow-1">
+                <span>قیمت کالاها</span>
+                <span class="dana-font fontsize-14 mobile-fontsize-12 font-weight-500 orders-count digit-format">(@Model.OrdersCount)</span>
+            </div>
+            <div class="dana-font fontsize-14 xsmobile-fontsize-12 flex-grow-1 font-weight-500 uk-text-left">
+                <span class="total-price digit-format">
+                    @(((int)Model.BasePrice).ToString("N0", new System.Globalization.NumberFormatInfo() { NumberGroupSizes = new[] { 3 }, NumberGroupSeparator = "," }))
+                </span>
+                <span>تومان</span>
+            </div>
+        </li>
+        <li dir="rtl" class="d-flex align-items-center uk-flex-between">
+            <div class="dana-font fontsize-14 mobile-fontsize-12 font-color-3 font-weight-400 flex-grow-1">
+                <span>هزینه ارسال</span>
+            </div>
+            <div class="dana-font fontsize-14 xsmobile-fontsize-12 flex-grow-1 uk-text-left digit-format font-weight-500">
+                @switch (Model.DeliveryPrice)
+                {
+                    case 0:
+                        <text>رایگان</text>
+                        break;
+                    case -2:
+                        <text>محاسبه هزینه ارسال با هماهنگی و پرداخت هزینه ارسال در محل</text>
+                        break;
+                    default:
+                        <text>
+                            <span>@Model.DeliveryPrice.ToString("N0", new System.Globalization.NumberFormatInfo() { NumberGroupSizes = new[] { 3 }, NumberGroupSeparator = "," })</span>
+                            &nbsp;
+                            <span>تومان</span>
+                        </text>
+                        break;
+                }
+            </div>
+        </li>
+        <li dir="rtl" class="d-flex align-items-center uk-flex-between">
+            <div class="dana-font fontsize-14 mobile-fontsize-12 font-color-3 font-weight-400 flex-grow-1">
+                <span>تخفیف</span>
+            </div>
+            <div class="dana-font fontsize-14 xsmobile-fontsize-12 font-weight-500 flex-grow-1 digit-format uk-text-left">
+                <span>@(((int)Model.DiscountPrice).ToString("N0", new System.Globalization.NumberFormatInfo() { NumberGroupSizes = new[] { 3 }, NumberGroupSeparator = "," }))</span>
+                @if (Model.DiscountPrice > 0)
+                {
+                    <span>تومان</span>
+                }
+            </div>
+        </li>
+        <li dir="rtl" class="d-flex align-items-center uk-flex-between">
+            <div class="dana-font fontsize-14 mobile-fontsize-12 font-weight-500 flex-grow-1">
+                <span>جمع کل</span>
+            </div>
+            <div class="dana-font fontsize-16 mobile-fontsize-14 font-weight-500 flex-grow-1 uk-text-left ">
+                <span class="total-price digit-format">@(((int)Model.TotalPrice).ToString("N0", new System.Globalization.NumberFormatInfo() { NumberGroupSizes = new[] { 3 }, NumberGroupSeparator = "," }))</span>
+                <span>تومان</span>
+            </div>
+        </li>
+    </ul>
+    <div class="margin-y-25 dana-font fontsize-12 line-height-25 font-weight-400">
+        کالاهای موجود در سبد شما ثبت و رزرو نشده‌اند، برای ثبت سفارش مراحل بعدی را تکمیل کنید.
+    </div>
+    <div class="margin-y-20 go-to-nex--button">
+        <a asp-action="PaymentGateway" asp-controller="Shopping" asp-route-shoppingId="@Model.Id"
+           class="wave-button uk-box-shadow-medium padding-x-15 ">
+            <span class="dana-font fontsize-14 xsmobile-fontsize-12 font-weight-500 white-text">
+                تایید و پرداخت
+            </span>
+        </a>
+    </div>
+</div>

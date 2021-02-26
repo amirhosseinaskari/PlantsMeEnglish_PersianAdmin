@@ -1,0 +1,46 @@
+//main color
+$main-color: #318636;
+$main-color-hover: #296f2d;
+//main color complement
+$main-color-complement:#FCF9F6;
+$main-color-complement-hover: #fbf6f2; 
+//background color
+$background-color:#FCF9F6;
+//gray background color (used in category / brand / all products)
+$gray-background-color: #fefefe;
+//color classes
+.bg-main-color{
+    background:$main-color !important;
+    &:hover{
+        background:$main-color-hover !important;
+    }
+}
+.main-color {
+    color: $main-color !important;
+
+    &:hover {
+        color: $main-color-hover !important;
+    }
+}
+
+.bg-main-color-complement {
+    background: $main-color-complement !important;
+
+    &:hover {
+        background: $main-color-complement-hover !important;
+    }
+}
+.main-color-complement {
+    color: $main-color-complement !important;
+
+    &:hover {
+        color: $main-color-hover !important;
+    }
+}
+
+.bg-default {
+    background: $background-color !important;
+}
+.gray-background{
+    background-color:$gray-background-color;
+}

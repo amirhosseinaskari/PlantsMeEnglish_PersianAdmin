@@ -1,0 +1,95 @@
+﻿@model PaginatedList<Ticket>
+@if (Model.TotalPages > 1)
+{
+    <div class="uk-margin">
+        <ul class="list-unstyled d-flex justify-content-center justify-content-sm-end align-items-center pagination-list m-0 p-0" dir="ltr">
+
+            @if (Model.HasPreviousPage)
+            {
+                <li class="mx-1">
+                    <button data-page-index="@(Model.PageIndex - 1)" class="mdc-button mdc-button--unelevated pagination--button
+                                bg--white uk-box-shadow-small uk-box-shadow-hover-medium border" style="width:40px;">
+                        <div class="mdc-button__ripple"></div>
+                        <span class="mdc-button__label blue-700 IRANSans_Light fontsize-12">
+                            Prev
+                        </span>
+                    </button>
+                </li>
+            }
+            @{
+                bool isManyPages = false;
+
+            }
+            @for (int n = 1; n <= Model.TotalPages; n++)
+            {
+              
+                if (isManyPages && (Math.Abs(Model.PageIndex - n) > 1) && n != Model.TotalPages)
+                {
+                    continue;
+                }
+                else if ((Math.Abs(Model.PageIndex - n) > 1)
+                     && n != 1 && n != Model.TotalPages && Model.TotalPages > 6)
+                {
+                    <li class="mx-1">
+                        <button class="mdc-button mdc-button--unelevated pagination--button
+                                    bg--white uk-box-shadow-small uk-box-shadow-hover-medium border" style="width:30px">
+                            <div class="mdc-button__ripple"></div>
+                            <span class="mdc-button__label blue-700">
+                                ...
+                            </span>
+                        </button>
+                    </li>
+                    isManyPages = true;
+                    continue;
+                }
+                else
+                {
+                    isManyPages = false;
+
+                }
+                if (Model.PageIndex == n)
+                {
+                    <li class="mx-1">
+                        <button class="mdc-button mdc-button--unelevated
+                                pagination--button
+                                uk-disabled border" style="width:30px;background-color:#f9f9f9">
+                            <div class="mdc-button__ripple"></div>
+                            <span class="mdc-button__label blue-700">
+                                @n
+                            </span>
+                        </button>
+                    </li>
+                }
+                else
+                {
+                    <li class="mx-1">
+                        <button data-page-index="@n" class="mdc-button mdc-button--unelevated
+                                pagination--button bg--white
+                                uk-box-shadow-small uk-box-shadow-hover-medium border" style="width:30px">
+                            <div class="mdc-button__ripple"></div>
+                            <span class="mdc-button__label blue-700">
+                                @n
+                            </span>
+                        </button>
+                    </li>
+                }
+
+            }
+
+
+            @if (Model.HasNextPage)
+            {
+                <li class="mx-1">
+                    <button data-page-index="@(Model.PageIndex + 1)" class="mdc-button mdc-button--unelevated pagination--button bg--white
+                                uk-box-shadow-small uk-box-shadow-hover-medium border" style="width:40px;">
+                        <div class="mdc-button__ripple"></div>
+                        <span class="mdc-button__label blue-700 IRANSans_Light fontsize-12">
+                            Next
+                        </span>
+                    </button>
+                </li>
+            }
+
+        </ul>
+    </div>
+}

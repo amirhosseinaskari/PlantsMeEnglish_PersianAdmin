@@ -1,0 +1,98 @@
+﻿@import "../_bourbon.scss";
+@import "../mixins/_custom-mixins.scss";
+#blog-list {
+    .uk-card{
+        position:relative;
+        display:flex;
+        flex-direction:column;
+        justify-content:space-between;
+        height:100%;
+    }
+   
+}
+
+.grid-item-preview{
+   background-image: url('../../images/medium/white-2484120_960_720.webp');
+   background-repeat:repeat;
+   background-position:center center;
+   background-size:60px;
+    height:30px;
+}
+
+.add-new-content {
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap:wrap;
+    .mdc-button__ripple {
+        background-color: transparentize(#f6f6f6,.9) !important;
+    }
+
+    .mdc-button__ripple:hover {
+        background-color: transparentize(#b7d7f8,.8);
+    }
+
+    .mdc-button__ripple::after, .mdc-button__ripple:before {
+        background-color: transparentize(#776684,.8);
+    }
+}
+
+.blog-content-list__list-item__body__col{
+    border-right: 1px solid #c7c7c7;
+
+    @include multiple-devices-query("Tablet") {
+        border-right: none;
+        border-bottom: 1px solid #c7c7c7;
+    }
+
+    @include multiple-devices-query("Mobile") {
+        border-right: none;
+        border-bottom: 1px solid #c7c7c7;
+    }
+}
+.blog-container--div{
+    min-width:160px;
+}
+
+#blog-tech-description {
+    .mdc-button {
+        height: 50px;
+    }
+
+    .mdc-button__ripple::after, .mdc-button__ripple:before {
+        background-color: transparentize(#9db4c4,.8);
+    }
+}
+
+
+
+.blog-content-list__list-item {
+    .blog-content-list__list-item__header {
+        background-color: #fefefe !important;
+        padding: 12px;
+
+        .delete-icon {
+            left: 20px;
+            top: 15px;
+        }
+
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+    }
+}
+
+.sortablelist-item-title {
+    max-width: 36%;
+}
+
+.blog-media-card {
+    height: 140px;
+    max-height: 160px;
+}
+
+.delete-blog-content-icon {
+    left: 30px;
+    top: 17px;
+    cursor: pointer;
+}

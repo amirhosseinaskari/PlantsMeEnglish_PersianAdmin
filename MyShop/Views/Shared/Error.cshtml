@@ -1,0 +1,24 @@
+﻿@model ErrorViewModel
+@{
+    ViewData["Title"] = "Error";
+}
+@section Style{
+    <link href="~/dist/sass/pages/error.min.css" rel="stylesheet" />
+}
+@section JavaScript{
+    <script async src="~/dist/js/pages/_index.min.js" type="module"></script>
+}
+<div class="error-container d-flex flex-column align-items-center">
+    <div class="error-image-container margin-y-25">
+        <img class="w-100" src="~/images/base/unknownerror.svg" />
+    </div>
+    <div class="error-text-container border uk-border-rounded uk-text-center margin-x-10
+         d-flex flex-column align-items-center justify-content-center margin-bottom-25">
+        <div class="margin-y-10 dana-font fontsize-16 mobile-fontsize-14 line-height-25 font-weight-600">
+           Unknown Error Call to Support Team
+        </div>
+        <a class="margin-y-10 dana-font fontsize-14 mobile-fontsize-12 line-height-25 font-weight-500 blue-text" href="~/">
+            Back to Home
+        </a>
+    </div>
+</div>

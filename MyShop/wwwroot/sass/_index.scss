@@ -1,0 +1,48 @@
+﻿@import "mixins/_custom-mixins.scss";
+#call-to-action--button
+{
+    background-color:rgba(0, 0, 0, 0.00) !important;
+    border:1px solid white !important;
+    color:#ffbb00;
+}
+.text-of-home-icons{
+    font-size:14px !important;
+    @include multiple-devices-query("Tablet"){
+        font-size:13px !important;
+    }
+    @include multiple-devices-query("Mobile"){
+        font-size:11px !important;
+    }
+}
+.main-title-index {
+    padding: 0 10px;
+    text-align: center;
+    line-height: 25px;
+    margin-bottom: 20px !important;
+
+    @include multiple-devices-query("Mobile") {
+        font-size: 16px !important;
+    }
+}
+.main-caption-index {
+    text-align: center;
+    padding-left: 15px;
+    padding-right: 15px;
+
+    @include multiple-devices-query("Mobile") {
+        font-size: 14px !important;
+    }
+}
+
+#top-brands{
+  
+    img{
+        max-width:100px;
+        @include multiple-devices-query("Tablet"){
+            max-width:90px;
+        }
+        @include multiple-devices-query("Mobile"){
+            max-width:80px;
+        }
+    }
+}

@@ -1,0 +1,19 @@
+﻿@model IEnumerable<BlogCategoryTitlesDropDown>
+
+    @foreach (var item in Model)
+    {
+        if (item.Selected)
+        {
+            <li class="mdc-list-item mdc-list-item--selected" data-value="@item.Id" role="option">
+                @item.Title
+            </li>
+
+            continue;
+        }
+
+        <li class="mdc-list-item" data-value="@item.Id" role="option">
+            @item.Title
+        </li>
+
+
+    }

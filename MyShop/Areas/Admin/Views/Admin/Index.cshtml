@@ -1,0 +1,127 @@
+﻿@{ViewData["adminpage"] = "active"; }
+<div class="row analytics-cards-container my-2" dir="rtl">
+    <!--Orders value-->
+    <vc:orders-value></vc:orders-value>
+    <!--Registerd users value-->
+    <vc:registered-users-count></vc:registered-users-count>
+    <!--Number sell-->
+    <vc:sell-number></vc:sell-number>
+    <!--Income value-->
+    <vc:income-value></vc:income-value>
+  
+</div>
+<div class="row" dir="rtl">
+    <!--Top Sold Product-->
+    <vc:top-sold-product></vc:top-sold-product>
+   
+    <!--Income-Time Chart-->
+    <div class="col-xl-9 col-lg-8 col-md-12 my-2 order-lg-1 order-0" >
+        
+        <div class="chart-container uk-box-shadow-medium">
+            <div class="uk-card uk-card-default uk-border-rounded h-100 d-flex flex-column justify-content-center">
+                <div class="uk-card-header text-right mb-1 d-flex flex-wrap">
+                    <span class="IRANSans fontsize-12 blue-600 pb-2 ml-3 my-2">
+                        نمودار فروش بر مبنای زمان
+                    </span>
+                    <div class="mdc-select mdc-select--outlined icome-chart-date-range my-2 min-width--100">
+                        <div class="mdc-select__anchor w-100 bg--white h-40">
+                            <i class="mdc-select__dropdown-icon" style="top:5px"></i>
+                            <div id="demo-selected-text" class="mdc-select__selected-text IRANSans_Light 
+                                 fontsize-12 position-relative" style="top:-5px" 
+                                 aria-labelledby="outlined-select-label"></div>
+                            <div class="mdc-notched-outline">
+                                <div class="mdc-notched-outline__leading"></div>
+                                <div class="mdc-notched-outline__notch">
+                                    <label id="outlined-select-label" class="mdc-floating-label 
+                                           IRANSans_Light fontsize-14">بازه زمانی</label>
+                                </div>
+                                <div class="mdc-notched-outline__trailing"></div>
+                            </div>
+                        </div>
+
+                        <!-- Select range date of incomes -->
+                        <div class="mdc-select__menu mdc-menu mdc-menu-surface w-100" role="listbox">
+                            <ul class="mdc-list IRANSans_Light fontsize-12">
+                                <li class="mdc-list-item mdc-list-item--selected" data-value="0" role="option">
+                                   هفتگی
+                                </li>
+                                <li class="mdc-list-item" data-value="1" role="option">
+                                    ماهیانه
+                                </li>
+                                <li class="mdc-list-item" data-value="2" role="option">
+                                    سالیانه
+                                </li>
+                               
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="uk-card-body p-sm-3 p-2 pt-1" id="income-chart-container">
+                    <vc:income-chart date-range="0"></vc:income-chart>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Register-Time Chart-->
+    <div class="col-xl-9 col-lg-8 col-md-12 my-2 order-lg-2 order-3">
+        <div class="chart-container uk-box-shadow-medium">
+            <div class="uk-card uk-card-default uk-border-rounded h-100 d-flex flex-column justify-content-center">
+                <div class="uk-card-header text-right mb-1 d-flex flex-wrap">
+                    <span class="IRANSans fontsize-12 blue-600 pb-2 ml-3 my-2">
+                        نمودار ثبت نام بر مبنای زمان
+                    </span>
+                    <div class="mdc-select mdc-select--outlined register-chart-date-range my-2 min-width--100">
+                        <div class="mdc-select__anchor w-100 bg--white h-40">
+                            <i class="mdc-select__dropdown-icon" style="top:5px"></i>
+                            <div id="demo-selected-text" class="mdc-select__selected-text IRANSans_Light
+                                 fontsize-12 position-relative" style="top:-5px"
+                                 aria-labelledby="outlined-select-label"></div>
+                            <div class="mdc-notched-outline">
+                                <div class="mdc-notched-outline__leading"></div>
+                                <div class="mdc-notched-outline__notch">
+                                    <label id="outlined-select-label" class="mdc-floating-label
+                                           IRANSans_Light fontsize-14">بازه زمانی</label>
+                                </div>
+                                <div class="mdc-notched-outline__trailing"></div>
+                            </div>
+                        </div>
+
+                        <!-- Select range date of incomes -->
+                        <div class="mdc-select__menu mdc-menu mdc-menu-surface w-100" role="listbox">
+                            <ul class="mdc-list IRANSans_Light fontsize-12">
+                                <li class="mdc-list-item mdc-list-item--selected" data-value="0" role="option">
+                                    هفتگی
+                                </li>
+                                <li class="mdc-list-item" data-value="1" role="option">
+                                    ماهیانه
+                                </li>
+                                <li class="mdc-list-item" data-value="2" role="option">
+                                    سالیانه
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="uk-card-body p-sm-3 p-2 pt-1" id="register-chart-container">
+                    <vc:register-chart date-range="0"></vc:register-chart>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Top view Product-->
+    <vc:top-view-product></vc:top-view-product>
+   
+</div>
+
+@section Scripts{
+    <script>
+     const mdcButton = $('.mdc-button');
+    for (let i = 0; i < mdcButton.length; i++) {
+        mdc.ripple.MDCRipple.attachTo(document.querySelectorAll('.mdc-button')[i]);
+    }
+
+    </script>
+}

@@ -1,0 +1,45 @@
+﻿@model IEnumerable<CategoryTitleDropDown>
+
+@foreach (var item in Model)
+{
+    <div class="admin-chip-tags d-inline-block border uk-border-rounded bg--white uk-box-shadow-small py-1 ml-2 my-1" dir="ltr">
+        <a href="#" class="text-decoration-none red-lighten-7 px-2 delete-discount-target__category"
+           data-id="@item.Id"
+           uk-tooltip="title:delete">
+            <span uk-icon="icon:close;ratio:.7"></span>
+        </a>
+        <span class="IRANSans_Light fontsize-12 border-left px-2 grey-darken-4">@item.Title</span>
+    </div>
+}
+
+<script>
+     //Delete category of discount target
+    $('.delete-discount-target__category').click(function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+        let myId = $(this).attr('data-id');
+        let myParent = $(this).parents('.admin-chip-tags');
+        $.ajax({
+            url: "/Admin/Discount/DeleteCategoryDiscountTarget",
+            type: "POST",
+            data: {
+                id: myId
+            },
+            error: function (xhr) { alert(xhr.responseText); },
+            beforeSend: function () { $('#progress-loader').removeClass('d-none'); },
+            success: function (data) {
+                if (data) {
+                    $(myParent).remove();
+                    UIkit.notification({
+                        message: '<span class="material-icons-outlined red-lighten-7 mx-2 position-relative" style="top:6px">notifications_active</span><span class="IRANSans_Light fontsize-14" dir="ltr">the category removed</span>',
+                        status: 'primary',
+                        pos: 'top-center',
+                        timeout: 5000
+                    });
+                }
+            }
+        }).done(function () {
+            $('#progress-loader').addClass('d-none');
+        });
+    });
+</script>

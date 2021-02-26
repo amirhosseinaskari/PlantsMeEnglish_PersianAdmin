@@ -1,0 +1,15 @@
+﻿@model IEnumerable<State>
+@foreach (var item in Model)
+{
+    if (Model.First().Equals(item))
+    {
+        <li class="mdc-list-item mdc-list-item--selected" data-value="@item.Id" role="option">
+            @item.StateName
+        </li>
+        continue;
+    }
+    <li class="mdc-list-item" data-value="@item.Id" role="option">
+        @item.StateName
+    </li>
+
+}

@@ -1,0 +1,15 @@
+﻿@model IEnumerable<Category>
+
+@foreach (var item in Model)
+{
+    <li class="filter-subitem-list__list-item">
+        <label>
+            <input class="uk-checkbox" type="checkbox"
+                   id="categorySelect@(item.CategoryId)"
+                   data-id="@item.CategoryId"
+                   name="categoryCheckbox">
+            <span class="dana-font fontsize-14 mobile-fontsize-12 margin-right-10 font-weight-500">@item.Title</span>
+        </label>
+    </li>
+   
+}

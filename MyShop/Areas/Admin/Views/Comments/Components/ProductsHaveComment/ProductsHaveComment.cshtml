@@ -1,0 +1,24 @@
+﻿@model IEnumerable<Product>
+@{var i = 0; }
+@foreach (var item in Model)
+{
+    if (i == 0)
+    {
+        <li class="active product-comment-list-items">
+            <a href="#" data-id="@item.Id" class="comment-list-items__link text-decoration-none uk-text-secondary">
+                <span class="iranyekanwebregular fontsize-12">@item.Title</span>
+
+            </a>
+        </li>
+        i++;
+        continue;
+    }
+    <li class="product-comment-list-items">
+        <a href="#" data-id="@item.Id" class="comment-list-items__link text-decoration-none uk-text-secondary">
+            <span class="iranyekanwebregular fontsize-12">@item.Title</span>
+
+        </a>
+    </li>
+    i++;
+
+}

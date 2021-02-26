@@ -1,0 +1,82 @@
+﻿[
+  {
+    "outputFile": "wwwroot/lib/uikit-3.2.4/css/uikit.min.css",
+    "inputFile": "wwwroot/lib/uikit-3.2.4/css/uikit.scss"
+  },
+  {
+    "outputFile": "wwwroot/sass/mdc-button/mdc-button.min.css",
+    "inputFile": "wwwroot/sass/mdc-button/mdc-button.scss"
+  },
+  {
+    "outputFile": "wwwroot/sass/googleMaterialDesign.min.css",
+    "inputFile": "wwwroot/sass/googleMaterialDesign.scss"
+  },
+  {
+    "outputFile": "wwwroot/sass/admin/adminstyle.css",
+    "inputFile": "wwwroot/sass/admin/adminstyle.scss"
+  },
+  {
+    "outputFile": "wwwroot/sass/StyleSheet.css",
+    "inputFile": "wwwroot/sass/StyleSheet.scss"
+  },
+  {
+    "outputFile": "wwwroot/js/Admin/admin.es5.js",
+    "inputFile": "wwwroot/js/Admin/admin.js"
+  },
+  {
+    "outputFile": "wwwroot/dist/sass/pages/_login.css",
+    "inputFile": "wwwroot/dist/sass/pages/_login.scss"
+  },
+  {
+    "outputFile": "wwwroot/dist/sass/pages/contactus.css",
+    "inputFile": "wwwroot/dist/sass/pages/contactus.scss"
+  },
+  {
+    "outputFile": "wwwroot/dist/sass/pages/aboutus.css",
+    "inputFile": "wwwroot/dist/sass/pages/aboutus.scss"
+  },
+  {
+    "outputFile": "wwwroot/dist/sass/pages/_account.css",
+    "inputFile": "wwwroot/dist/sass/pages/_account.scss"
+  },
+  {
+    "outputFile": "wwwroot/dist/sass/pages/productDetail.css",
+    "inputFile": "wwwroot/dist/sass/pages/productDetail.scss"
+  },
+  {
+    "outputFile": "wwwroot/dist/sass/pages/productList.css",
+    "inputFile": "wwwroot/dist/sass/pages/productList.scss"
+  },
+  {
+    "outputFile": "wwwroot/dist/sass/pages/blogList.css",
+    "inputFile": "wwwroot/dist/sass/pages/blogList.scss"
+  },
+  {
+    "outputFile": "wwwroot/dist/sass/pages/index.css",
+    "inputFile": "wwwroot/dist/sass/pages/index.scss"
+  },
+  {
+    "outputFile": "wwwroot/dist/sass/pages/blogDetail.css",
+    "inputFile": "wwwroot/dist/sass/pages/blogDetail.scss"
+  },
+  {
+    "outputFile": "wwwroot/dist/sass/pages/shopping.css",
+    "inputFile": "wwwroot/dist/sass/pages/shopping.scss"
+  },
+  {
+    "outputFile": "wwwroot/dist/sass/pages/favoritProductList.css",
+    "inputFile": "wwwroot/dist/sass/pages/favoritProductList.scss"
+  },
+  {
+    "outputFile": "wwwroot/dist/sass/pages/customerInformation.css",
+    "inputFile": "wwwroot/dist/sass/pages/customerInformation.scss"
+  },
+  {
+    "outputFile": "wwwroot/dist/sass/pages/error.css",
+    "inputFile": "wwwroot/dist/sass/pages/error.scss"
+  },
+  {
+    "outputFile": "wwwroot/sass/admin_en/adminstyle.css",
+    "inputFile": "wwwroot/sass/admin_en/adminstyle.scss"
+  }
+]

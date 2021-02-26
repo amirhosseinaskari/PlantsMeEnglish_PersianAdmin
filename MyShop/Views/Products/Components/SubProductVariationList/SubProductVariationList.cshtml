@@ -1,0 +1,40 @@
+﻿@model IEnumerable<SubProductVariation>
+
+@if (Model.Count() < 1)
+{
+    @*<li class="item--selected" data-value="0" role="option">
+            این قسمت در حال تکمیل است
+        </li>*@
+    <button class="item--selected uk-button uk-button-default dana-font fontsize-12 font-weight-500" data-value="0" role="option">
+        This is Compeleting
+    </button>
+
+}
+else
+{
+    foreach (var item in Model)
+    {
+        if (item.Equals(Model.First()))
+        {
+            <label class="sub-product-variation sub-product-variation--selected uk-button uk-button-default dana-font fontsize-14 font-weight-500 margin-y-10">
+                <input type="radio" name="subpro-@(item.ProductVariationId)" data-has-difprice="@item.HasDefinedDifferentPrice"
+                       data-price="@item.Price"
+                       value="@item.SubProductVariationId"
+                       class="uk-hidden position-absolute" />
+                <span>@item.Title</span>
+            </label>
+        }
+        else
+        {
+            <label class="sub-product-variation uk-button uk-button-default dana-font fontsize-14 font-weight-500 margin-y-10">
+                <input type="radio" name="subpro-@(item.ProductVariationId)" data-has-difprice="@item.HasDefinedDifferentPrice"
+                       data-price="@item.Price"
+                       value="@item.SubProductVariationId"
+                       class="uk-hidden position-absolute" />
+                <span>@item.Title</span>
+            </label>
+        }
+
+
+    }
+}

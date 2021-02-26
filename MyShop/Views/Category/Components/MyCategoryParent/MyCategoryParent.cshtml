@@ -1,0 +1,14 @@
+﻿@model Category
+@if (Model != null)
+{
+    @if (Model.HasParent)
+    {
+        <vc:my-category-parent parent-id="@Model.ParentId"></vc:my-category-parent>
+    }
+    <li class="">
+        <a class="fontsize-14 mobile-fontsize-12 dana-font font-weight-500 font-color-4"
+           asp-controller="Category" asp-area="" asp-route-categoryTitle="@Model.Title"
+           asp-route-id="@Model.CategoryId"
+           asp-action="CategoryDetail">@Model.Title</a>
+    </li>
+}

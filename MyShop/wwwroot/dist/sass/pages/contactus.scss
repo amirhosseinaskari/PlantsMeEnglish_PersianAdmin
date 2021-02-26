@@ -1,0 +1,90 @@
+﻿@import "../components/uikit-variables-theme.scss";
+@import "../components/Indexuikitcomponents/_indexUikitComponents.scss";
+@import "../main.scss";
+@import "../vendors/_bourbon.scss";
+main {
+    background-image: url('../../../images/background-vectors/bannerbg.svg');
+    background-size: 2000px 1600px;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+#contactus-container {
+    background-color: white;
+    display: flex;
+    margin-top: 40px;
+    margin-bottom: 60px;
+    margin-left: 20px;
+    margin-right: 20px;
+    border-radius: 10px;
+    max-width:1200px;
+    width:100%;
+    @media only screen and (max-width: 700px) {
+        flex-direction: column;
+    }
+    //contactus information
+    #contactus-information {
+        padding: 20px;
+        width: 40%;
+        background-color: rgba(251, 251, 251, 0.40);
+
+        @media only screen and (max-width: 900px) {
+            width: 50%;
+        }
+
+        @media only screen and (max-width: 700px) {
+            width: unset;
+        }
+
+        .contactus-information__items {
+            list-style: none;
+            padding: 0 !important;
+            margin: 0 !important;
+
+            li {
+                display: flex;
+                align-items: center;
+                margin-top: 15px;
+                margin-bottom: 15px;
+                width:100%;
+                overflow:auto;
+            }
+        }
+    }
+    //send your message form
+    #send-your-message {
+        padding: 20px;
+        width: 60%;
+
+        @media only screen and (max-width: 900px) {
+            width: 50%;
+        }
+
+        @media only screen and (max-width: 700px) {
+            width: unset;
+        }
+
+        .form-row {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 0 15px;
+            direction: ltr;
+            text-align: left;
+
+            @media only screen and (max-width: 900px) {
+                flex-direction: column;
+            }
+
+            input, textarea {
+                width: 100%;
+                border: none;
+                border-bottom: 1px solid #cdcdcd;
+                margin-top:5px;
+                &:focus {
+                    outline: none;
+                    border-bottom: 1px solid $main-color;
+                }
+            }
+        }
+    }
+}

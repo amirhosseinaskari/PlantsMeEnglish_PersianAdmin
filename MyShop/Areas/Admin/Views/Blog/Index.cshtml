@@ -1,0 +1,222 @@
+﻿@model BlogController.InputModel
+@{ViewData["blogpage"] = "active"; }
+<!--Breadcrumb for this url-->
+<div class="row p-0 m-0 bg--white py-2 my-3 uk-box-shadow-small uk-border-rounded border position-relative">
+    <div class="col-12" dir="rtl">
+        <ul class="uk-breadcrumb IRANSans_Light fontsize-12 text-right p-0 m-0 d-flex" dir="rtl">
+            <li><a class="fontsize-12" href="~/Admin">مدیریت</a></li>
+            <li class="mx-1 uk-active">وبلاگ ها</li>
+        </ul>
+        <div class="bg--blue-600 position-absolute rounded-left" style="width:8px;left:0;top:-8px;height:calc(100% + 16px);"></div>
+    </div>
+
+</div>
+
+<div class="row my-2 m-0" dir="rtl" id="main-container">
+    <div class="col-12 uk-background-default uk-box-shadow-medium border uk-border-rounded p-sm-3 p-1 pb-3 bg--white" id="blog">
+        <!--blog category list-->
+        <div class="row">
+            <div class="col-12">
+                <h3 class="iranyekanwebregular fontsize-14 text-right mx-3 my-1 py-2">
+                    <span class="blue-600 border-bottom--blue py-2"> موضوعات بلاگ</span>
+                </h3>
+            </div>
+        </div>
+        <!--Add new blog category button-->
+        <form asp-controller="BlogCategory" asp-action="CreateBlogCategory" method="post">
+            <div class="row m-0 pt-4 align-items-start">
+                <div class="col-lg-4 col-md-5 col-sm-6 my-2 px-2">
+                    <div class="custom-text-field mx-2">
+                        <label class="uk-form-label IRANSans_Light"
+                               for="blogTags">عنوان</label>
+                        <div class="uk-form-controls d-flex">
+                            <input class="uk-input IRANSans_Light fontsize-12"
+                                   name="blogCategoryTitle" id="blogCategoryTitle" type="text"
+                                   placeholder="عنوان را وارد کنید">
+                        </div>
+                    </div>
+                    <span class="IRANSans fontsize-12 error-blog-category-title red-lighten-7 d-none mr-3"></span>
+                </div>
+
+                <div class="col-lg-4 col-md-5 my-2 col-sm-6 d-flex align-items-center">
+                    <button class="mdc-button mdc-button--unelevated bg--white position-relative blog-category__submit-button
+                                border px-0" style="height:40px" type="submit">
+                        <div class="mdc-button__ripple"></div>
+                        <span class="mdc-button__label IRANSans fontsize-12 blue-700 px-1 px-sm-2">
+                            اضافه کردن موضوع
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </form>
+        <!--blog category list-->
+        <div class="row my-2">
+            <div class="col-12">
+                <vc:blog-category-list></vc:blog-category-list>
+            </div>
+        </div>
+
+        <!--blog List-->
+        <div class="row">
+            <div class="col-12">
+                <h3 class="iranyekanwebregular fontsize-14 text-right mx-3 my-1 py-2">
+                    <span class="blue-600 border-bottom--blue py-2"> وبلاگ های موجود</span>
+                </h3>
+            </div>
+        </div>
+        <!--Add new Blog Modal-->
+        <div id="blog-add-modal" uk-modal dir="rtl">
+            <div class="uk-modal-dialog">
+                <button class="uk-modal-close-default" type="button" uk-close syle="right:unset;left:10px !important;"></button>
+                <form action="/Admin/Blog/CreateBlog" id="blog-add-modal__form" method="post">
+                    <div class="uk-modal-header bg--light-3">
+                        <h3 class="iranyekanwebregular fontsize-14 uk-text-secondary">ایجاد کردن وبلاگ جدید</h3>
+                    </div>
+                    <div class="uk-modal-body">
+
+                        <!--Blog Title-->
+                        <div class="uk-magin col-12 my-2">
+                            <div class="custom-text-field">
+                                <label class="uk-form-label IRANSans_Light" asp-for="Title">عنوان وبلاگ</label>
+                                <div class="uk-form-controls">
+                                    <input asp-for="Title" class="uk-input IRANSans_Light fontsize-12" type="text" required placeholder="عنوان وبلاگ را وارد کنید">
+                                </div>
+                            </div>
+                            <span class="iranyekanwebregular fontsize-12 error-blog-title d-none red-lighten-7"></span>
+                        </div>
+
+                        <!--Blog Category-->
+                        <div class="uk-magin col-12 my-2 mt-4">
+                            <input type="hidden" asp-for="BlogCategoryId" />
+                            <div class="mdc-select mdc-select--outlined blog-category-title w-100">
+                                <div class="mdc-select__anchor w-100 bg--white h-40">
+                                    <i class="mdc-select__dropdown-icon" style="top:5px"></i>
+                                    <div id="demo-selected-text" class="mdc-select__selected-text IRANSans_Light fontsize-12 position-relative" style="top:-5px" aria-labelledby="outlined-select-label"></div>
+                                    <div class="mdc-notched-outline">
+                                        <div class="mdc-notched-outline__leading"></div>
+                                        <div class="mdc-notched-outline__notch min-width--90">
+                                            <label id="outlined-select-label" class="mdc-floating-label IRANSans_Light fontsize-14">انتخاب موضوع</label>
+                                        </div>
+                                        <div class="mdc-notched-outline__trailing"></div>
+                                    </div>
+                                </div>
+
+                                <!-- Select category options -->
+                                <div class="mdc-select__menu mdc-menu mdc-menu-surface w-100" role="listbox">
+                                    <ul class="mdc-list IRANSans_Light fontsize-12">
+                                        <vc:blog-category-titles id="1"></vc:blog-category-titles>
+                                    </ul>
+                                </div>
+                            </div>
+                            <span class="IRANSans fontsize-12 red-lighten-7 error-select-category d-none"></span>
+                        </div>
+                    </div>
+                    <div class="uk-modal-footer uk-text-right">
+                        <button class="mdc-button mdc-button--unelevated border--blue add-blog__submit-button
+                                    white bg--blue-600 uk-box-shadow-medium" style="height:30px" type="submit">
+                            <div class="mdc-button__ripple"></div>
+                            <span class="mdc-button__label IRANSans fontsize-12">
+                                اضافه کردن
+                            </span>
+                            <span class="material-icons-outlined mx-2 fontsize-16">
+                                add
+                            </span>
+                        </button>
+                        <button class="mdc-button mdc-button--unelevated
+                                    border--blue uk-modal-close bg--white uk-box-shadow-medium blue-600 mx-2"
+                                style="height:30px;">
+                            <div class="mdc-button__ripple"></div>
+                            <span class="mdc-button__label IRANSans fontsize-12">
+                                صرف نظر
+                            </span>
+
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!--Add new blog button-->
+        <div class="row uk-background-default m-0 align-items-center">
+            <!--Add new Blog-->
+            <div class="col-md-auto my-2 px-2">
+                <button uk-toggle="target: #blog-add-modal" class="mdc-button mdc-button--unelevated bg--blue-700 uk-box-shadow-medium">
+                    <div class="mdc-button__ripple"></div>
+                    <span class="mdc-button__label IRANSans fontsize-12">
+                        اضافه کردن وبلاگ جدید
+                    </span>
+                    <i class="material-icons mr-sm-2 fontsize-18 mr-2">
+                        add
+                    </i>
+                </button>
+            </div>
+            <!--Filtering options-->
+            <!--Search form-->
+            <div class="col-md-4 col-sm-auto my-2 px-2">
+                <div class="uk-inline w-100">
+                    <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: search"></span>
+                    <input autocomplete="off" name="blogSearch" class="uk-input w-100 IRANSans_Light fontsize-12" dir="rtl" type="text" placeholder="جستجو کنید">
+                </div>
+            </div>
+
+            <!--Select Sort By-->
+            <div class="col-md-2 col-sm-3 my-2 px-2 position-relative" style="z-index:5;">
+                <div class="mdc-select mdc-select--outlined blog-sort">
+                    <div class="mdc-select__anchor w-100 bg--white my-2" style="height:40px;">
+                        <i class="mdc-select__dropdown-icon" style="top:5px"></i>
+                        <div id="demo-selected-text" class="mdc-select__selected-text IRANSans_Light fontsize-12 position-relative" style="top:-5px" aria-labelledby="outlined-select-label"></div>
+                        <div class="mdc-notched-outline">
+                            <div class="mdc-notched-outline__leading"></div>
+                            <div class="mdc-notched-outline__notch">
+                                <label id="outlined-select-label" class="mdc-floating-label IRANSans_Light fontsize-14">مرتب کردن</label>
+                            </div>
+                            <div class="mdc-notched-outline__trailing"></div>
+                        </div>
+                    </div>
+                    <!-- Select Sort By => Options -->
+                    <div class="mdc-select__menu mdc-menu mdc-menu-surface w-100 my-2" role="listbox">
+                        <ul class="mdc-list IRANSans_Light fontsize-12">
+                            <li class="mdc-list-item mdc-list-item--selected" data-value="6" role="option">
+                                ترتیب قرارگیری
+                            </li>
+                            <li class="mdc-list-item" data-value="0" role="option">
+                                جدیدترین
+                            </li>
+                            <li class="mdc-list-item" data-value="1" role="option">
+                                قدیمی ترین
+                            </li>
+                            <li class="mdc-list-item" data-value="2" role="option">
+                                بیشترین بازدید
+                            </li>
+                            <li class="mdc-list-item" data-value="3" role="option">
+                                بیشترین امتیاز
+                            </li>
+                            <li class="mdc-list-item" data-value="4" role="option">
+                                وبلاگ های منتشر شده
+                            </li>
+                            <li class="mdc-list-item" data-value="5" role="option">
+                                وبلاگ های منتشر نشده
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!--Blog Lists-->
+        <div id="blog-list-container">
+            <vc:blog-card-list></vc:blog-card-list>
+        </div>
+    </div>
+
+</div>
+@section Scripts{
+    <script>
+        const mdcButton = $('.mdc-button');
+        for (let i = 0; i < mdcButton.length; i++) {
+            mdc.ripple.MDCRipple.attachTo(document.querySelectorAll('.mdc-button')[i]);
+        }
+       
+    </script>
+}

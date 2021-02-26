@@ -1,0 +1,160 @@
+﻿@model IEnumerable<ProductImage>
+    <div class="col-12">
+        <!--Delete Modal for remove Image-->
+        <div id="item-remove-modal" uk-modal dir="ltr">
+            <div class="uk-modal-dialog">
+                <button class="uk-modal-close-default" type="button" uk-close syle="right:unset;left:10px !important;"></button>
+                <div class="uk-modal-header bg--light-3">
+                    <h3 class="Arial fontsize-14 red-lighten-7">Warning!</h3>
+                </div>
+                <div class="uk-modal-body">
+                    <div class="IRANSans fontsize-12">Are you sure want to delete this image?</div>
+                </div>
+                <div class="uk-modal-footer uk-text-left">
+                    <form id="remove-item-form-on-modal" action="/En/Admin/Products/DeleteProductImage" method="post">
+                        <input type="hidden" name="productId" value="@ViewData["productId"]" />
+                        <div class="item-id-container"></div>
+                        <button class="mdc-button mdc-button--unelevated border--blue red-lighten-7 bg--white uk-box-shadow-medium" style="height:30px" type="submit">
+                            <div class="mdc-button__ripple"></div>
+                            <span class="mdc-button__label IRANSans fontsize-12">
+                                Delete
+                            </span>
+                            <span class="material-icons-outlined mx-2 fontsize-16">
+                                delete
+                            </span>
+                        </button>
+                        <button class="mdc-button mdc-button--unelevated border--blue uk-modal-close bg--white uk-box-shadow-medium blue-600 mx-2"
+                                style="height:30px;">
+                            <div class="mdc-button__ripple"></div>
+                            <span class="mdc-button__label IRANSans fontsize-12">
+                                Cancel
+                            </span>
+
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <ul class="row justify-content-start uk-list"
+            uk-sortable="handle: .uk-sortable-handle;cls-custom: text-left direction-ltr"
+            data-url="/Admin/Products/ChangeImageOrder"
+            data-message="Image Position Changed"
+            id="product-image-list">
+            <!--Product Image List-->
+            @foreach (var item in Model)
+            {
+                <li class="col-xl-3 col-md-4 col-sm-5 mb-3 px-sm-2 blog-container--div px-1 mt-0"
+                    data-my-id="@item.ProductImageId">
+                    <div class="uk-card uk-card-default uk-border-rounded border">
+                        <div class="uk-card-header px-2 d-flex align-items-center bg--light-2 text-left" style="height:40px;" dir="ltr">
+                            <span class="uk-sortable-handle uk-margin-small-right w-50" uk-icon="icon: table;ratio:.9"></span>
+                            <div class="d-flex align-items-center justify-content-end w-50" dir="ltr">
+                                <a href="#" data-my-id="@item.ProductImageId"
+                                   class="text-decoration-none uk-text-muted mx-1 d-flex align-items-center delete-icon"
+                                   uk-tooltip="title:delete">
+                                    <span class="mx-1" uk-icon="icon:trash;ratio:.8"></span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="uk-card-media-top w-100 justify-content-center text-center product-media-card text-center flex-grow-1
+                                 d-flex align-items-start bg--white">
+                            <img class="mw-100 mh-100" src="/images/products/medium/product_@(ViewData["productId"])/@item.ImageName" alt="" uk-img>
+                        </div>
+                        <div class="uk-card-body IRANSans_Light fontsize-10 my-1 pt-1 pb-1 px-2">
+                            <h3 class="uk-card-title iranyekanwebbold fontsize-10 red-lighten-7 m-0" dir="ltr">Alt</h3>
+                            <div class="alt-form d-flex flex-column align-items-start justify-content-center">
+                                <input type="text" name="altText" class="uk-input"
+                                       data-imageId="@item.ProductImageId"
+                                       placeholder="alt"
+                                       value="@item.AltText" />
+                                <button type="button" class="alt-form-button uk-button uk-button-default
+                                        Arial fontsize-10 border--blue px-2
+                                        my-2 uk-border-rounded uk-box-shadow-small">
+                                    Save
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            }
+
+        </ul>
+    </div>
+
+<script>
+    //When category order Or brand order changed
+    $('ul[uk-sortable]').on('moved', function (e) {
+        let myIds = $('.uk-sortable-item');
+        let list = [];
+        myIds.each(function () {
+            let id = $(this).attr('data-my-id');
+            list.push(id);
+        });
+        let myurl = $(this).attr('data-url');
+        let successMessage = $(this).attr('data-message');
+        let myIdList = $.makeArray(list);
+        $.ajax({
+            url: myurl,
+            type: "POST",
+            data: {
+                myIds: myIdList
+            },
+            traditional: true,
+            success: function (data) {
+                if (data) {
+                    UIkit.notification({
+                        message: '<span class="material-icons-outlined red-lighten-7 mx-2 position-relative" style="top:6px">notifications_active</span><span class="IRANSans_Light fontsize-14" dir="ltr">' + successMessage + '</span>',
+                        status: 'primary',
+                        pos: 'top-center',
+                        timeout: 5000
+                    });
+                }
+            }
+
+        });
+    });
+     //Delete Category
+    $('.delete-icon').click(function (e) {
+        let myId = $(this).attr('data-my-id');
+        let input = '<input type="hidden" name="id" id="id" value="' + myId + '" />';
+        $('#remove-item-form-on-modal .item-id-container').html(input);
+        UIkit.modal('#item-remove-modal').show();
+        e.preventDefault();
+        e.stopPropagation();
+    });
+
+     //Change Alt of images
+    $('.alt-form-button').click(function (e) {
+        let myform = $(this).parents('.alt-form');
+        let altInput = $(myform).find('input[name="altText"]');
+        let myId = $(altInput).attr('data-imageId');
+        let mytext = $(altInput).val();
+        $.ajax({
+            url: "/Admin/Products/ImageAltText",
+            type:"POST",
+            data: {
+                imageId: myId,
+                altText: mytext
+            },
+            success: function (data) {
+                if (data) {
+                    UIkit.notification({
+                        message: '<span class="material-icons-outlined red-lighten-7 mx-2 position-relative" style="top:6px">notifications_active</span><span class="IRANSans_Light fontsize-14" dir="ltr">Alt Edited Successfully</span>',
+                        status: 'primary',
+                        pos: 'top-center',
+                        timeout: 5000
+                    });
+                } else {
+                    UIkit.notification({
+                        message: '<span class="material-icons-outlined red-lighten-7 mx-2 position-relative" style="top:6px">notifications_active</span><span class="IRANSans_Light fontsize-14" dir="ltr">Error in Alt Edit</span>',
+                        status: 'primary',
+                        pos: 'top-center',
+                        timeout: 5000
+                    });
+                }
+            }
+        });
+        e.stopPropagation();
+        e.preventDefault();
+    });
+</script>

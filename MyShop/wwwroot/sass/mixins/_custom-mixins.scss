@@ -1,0 +1,84 @@
+﻿@import "../bourbon";
+//Mixin for query Media Screens
+@mixin multiple-devices-query($device) {
+    @if $device=="Mobile" {
+        @media only screen and (max-width: 570px) {
+            @content;
+        }
+    }
+
+    @else if $device=="Tablet" {
+        @media only screen and (min-width: 571px) and (max-width: 770px) {
+            @content;
+        }
+    }
+
+    @else if $device=="Medium" {
+        @media only screen and (min-width: 771px) and (max-width: 1000px) {
+            @content;
+        }
+    }
+
+    @else if $device=="Large" {
+        @media only screen and (min-width: 1000px) and (max-width: 1140px) {
+            @content;
+        }
+    }
+
+    @else if $device=="XL" {
+        @media only screen and (min-width: 11401px) {
+            @content;
+        }
+    }
+    @else {
+        @media only screen and (max-width: #{$device}px) {
+            @content;
+        }
+    }
+}
+//Mixin for convert write shorthand animation
+@mixin inline-animation($name, $duration, $iteration-count, $fill-mode, $direction, $timing-function) {
+
+    @keyframes #{$name} {
+        @content;
+    }
+
+    @include prefixer(animation-name,$name,("webkit","moz","o"));
+    @include prefixer(animation-duration,$duration,("webkit","moz","o"));
+    @include prefixer(animation-iteration-count,$iteration-count,("webkit","moz","o"));
+    @include prefixer(animation-fill-mode,$fill-mode,("webkit","moz","o"));
+    @include prefixer(animation-direction,$direction,("webkit","moz","o"));
+    @include prefixer(animation-timing-function,$timing-function,("webkit","moz","o"));
+}
+
+
+//Create chevron in CSS
+@mixin chevron($dir, $width: .45em, $height: .45em,$border-width: .08em) {
+    border-style: solid;
+    border-width: $border-width $border-width 0 0;
+    display: inline-block;
+    width: $width;
+    height: $height;
+    vertical-align: top;
+
+    @if $dir=="top" {
+        @include prefixer(transform,rotate(-45deg),("webkit","moz","o"));
+    }
+    @else if $dir=="left" {
+        @include prefixer(transform,rotate(-135deg),("webkit","moz","o"));
+    }
+    @else if $dir=="right" {
+        @include prefixer(transform,rotate(45deg),("webkit","moz","o"));
+    }
+    @else if $dir=="bottom" {
+        @include prefixer(transform,rotate(135deg),("webkit","moz","o"));
+    }
+}
+
+@mixin gradient($direction, $list) {
+    background: -webkit-linear-gradient($direction, $list);
+    background: -moz-linear-gradient($direction, $list);
+    background: -o-linear-gradient($direction, $list);
+    background: linear-gradient($direction, $list);
+}
+

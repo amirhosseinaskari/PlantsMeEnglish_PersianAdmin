@@ -1,0 +1,39 @@
+﻿@model ApplicationUser
+@{
+    ViewData["Title"] = "Customer";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["ActiveLink"] = "customer-default";
+}
+@section Style{
+    <link href="~/dist/sass/pages/customerInformation.min.css" rel="stylesheet" />
+}
+@section JavaScript{
+    <script async src="~/dist/js/pages/_customerInformation.min.js" type="module"></script>
+}
+<section id="container-section" dir="ltr">
+    <!--Breadcrumb for this url-->
+    <div class="breadcrumb-container grey lighten-5 padding-y-15" dir="ltr">
+        <ul class="uk-breadcrumb text-left padding-0 margin-0 d-flex align-items-center" dir="ltr">
+            <li>
+                <a class="fontsize-14 mobile-fontsize-12 dana-font font-weight-500 font-color-4" asp-action="Index" asp-controller="Home" asp-area="">Home</a>
+            </li>
+            <li class="uk-active"><h1 class="margin-bottom-0 font-weight-600 dana-font fontsize-14 mobile-fontsize-12 font-color-1">Account</h1></li>
+        </ul>
+
+    </div>
+
+    <section id="customer-page" class="margin-y-20  @ViewData["ActiveLink"]">
+            <!--Side bar-->
+            <div id="side-bar-container" class="main-content">
+                <vc:customer-side-bar user-name="@Model.Mobile"></vc:customer-side-bar>
+            </div>
+            <!--Main Content-->
+            <div id="main-content-container" class="main-content" dir="ltr">
+                <!--Partial Content-->
+                @await Html.PartialAsync(partialViewName: "_CustomerInformation", model: Model)
+            </div>
+        </section>
+
+   </section>
+
+

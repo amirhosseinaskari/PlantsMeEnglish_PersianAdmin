@@ -1,0 +1,26 @@
+﻿<!--Partial Content-->
+    <div class="uk-card uk-card-default position-relative customer__partial-card">
+        <div class="uk-card-header d-flex uk-flex-wrap border-bottom-grey uk-flex-between align-items-center">
+            <h3 class="dana-font fontsize-14 font-weight-500 margin-bottom-0  margin-y-5
+            flex-grow-1 font-color-3">
+                All Messages
+            </h3>
+            <div class="flex-grow-1 d-flex uk-flex-wrap">
+                <a asp-controller="Customer" asp-action="Index"
+                   class="uk-button uk-button-default border-radius-3 d-flex justify-content-center align-items-center partial-top-link margin-left-10 margin-y-10">
+                    <span class="d-flex align-items-center" uk-icon="icon:arrow-left"></span>
+                    <span class="dana-font font-weight-400 fontsize-12 margin-left-10">Back</span>
+
+                </a>
+                <button data-target-url="/Customer/SendNewMessage"
+                        class="uk-button uk-button-default border-radius-3 partial-top-link margin-left-10 margin-y-10">
+                    <span class="dana-font font-weight-400 fontsize-12 margin-right-10">Add New Message</span>
+                </button>
+
+            </div>
+        </div>
+        <div class="uk-card-body padding-x-20" id="ticket-list-container">
+            <vc:ticket-list page-index="1"></vc:ticket-list>
+        </div>
+      
+    </div>

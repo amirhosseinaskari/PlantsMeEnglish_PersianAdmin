@@ -1,0 +1,13 @@
+﻿@model Address
+
+<div class="d-inline-flex flex-column m-2 text-left">
+    <span class="fontsize-10 uk-text-muted IRANSans">Receiver Mobile Number</span>
+    <span class="fontsize-12 IRANSans_Light">@Model.ReceiverMobileNumber</span>
+</div>
+
+<div class="d-inline-flex flex-column m-2 text-left">
+    <span class="fontsize-10 uk-text-muted IRANSans">Receiver Address</span>
+    <span class="fontsize-12 IRANSans_Light">
+      @Model.StateName , @Model.CityName ,  @Model.Details
+    </span>
+</div>

@@ -1,0 +1,22 @@
+﻿@model IEnumerable<ProductTag>
+@if (Model.Count() > 0)
+{
+    <article class="margin-top-10 margin-bottom-30" id="product-tags" dir="ltr">
+        
+            <strong class="margin-y-15 d-inline-block" dir="rtl">
+                <span class="dana-font fontsize-18 mobile-fontsize-16 font-weight-500">
+                    <span class="font-color-2">Tags</span>
+                </span>
+            </strong>
+            <div class="">
+                @foreach (var item in Model)
+                {
+                    <a asp-action="SearchDetail" asp-controller="Search" asp-area="" asp-route-searchText="@item.Text"
+                       class="uk-button uk-button-default dana-font
+                       uk-box-shadow-hover-small fontsize-14 margin-right-10 margin-bottom-10">
+                        @item.Text
+                    </a>
+                }
+            </div>
+    </article>
+}

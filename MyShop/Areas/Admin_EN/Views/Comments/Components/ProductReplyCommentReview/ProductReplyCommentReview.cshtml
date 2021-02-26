@@ -1,0 +1,72 @@
+﻿@model IEnumerable<ReplyComment>
+@foreach (var item in Model)
+{
+    
+    if (item.IsFromAdmin)
+    {
+        <div class="uk-box-shadow-medium admin-comment-box IRANSans_Light fontsize-12 my-2 reply-comment-box" data-id="@item.Id">
+            <div class="d-flex justify-content-between flex-wrap text-left Arial fontsize-10 border-bottom w-100 pb-2">
+
+                <span>@item.FullName</span>
+                <span class="uk-text-muted">@item.SubmitedDate.ToString("yyyy/MM/dd")</span>
+            </div>
+            <div class="py-2">
+                <p>@item.Description</p>
+
+            </div>
+            <div class="d-flex align-items-center justify-content-start comment-actions w-100 pt-2">
+                <a href="#" data-id="@item.Id" data-publish="@item.IsPublished" class="reply-comment-publish" uk-tooltip="title:publish">
+                    @if (item.IsPublished)
+                    {
+                        <i class="material-icons-outlined fontsize-16">
+                            visibility
+                        </i>
+                    }
+                    else
+                    {
+                        <i class="material-icons-outlined fontsize-16">
+                            visibility_off
+                        </i>
+                    }
+                </a>
+
+                <a href="#delete-reply-comment-modal" data-id="@item.Id" class="delete-reply-comment" uk-tooltip="title:delete" uk-toggle>
+                    <span uk-icon="icon:trash;ratio:.7"></span>
+                </a>
+            </div>
+        </div>
+        continue;
+    }
+    <div class="uk-box-shadow-medium user-comment-box IRANSans_Light fontsize-12 my-2 reply-comment-box" data-id="@item.Id">
+        <div class="d-flex justify-content-between flex-wrap text-left Arial fontsize-10 border-bottom w-100 pb-2">
+
+            <span>@item.FullName</span>
+            <span class="uk-text-muted">@item.SubmitedDate.ToString("MM/dd/yyyy")</span>
+        </div>
+        <div class="py-2">
+            <p>@item.Description</p>
+
+        </div>
+        <div class="d-flex align-items-center justify-content-start comment-actions w-100 pt-2">
+            <a href="#" data-id="@item.Id" data-publish="@item.IsPublished" class="reply-comment-publish" uk-tooltip="title:publish">
+                @if (item.IsPublished)
+                {
+                    <i class="material-icons-outlined fontsize-16">
+                        visibility
+                    </i>
+                }
+                else
+                {
+                    <i class="material-icons-outlined fontsize-16">
+                        visibility_off
+                    </i>
+                }
+            </a>
+
+            <a href="#delete-reply-comment-modal" data-id="@item.Id" class="delete-reply-comment" uk-toggle
+               uk-tooltip="title:delete">
+                <span uk-icon="icon:trash;ratio:.7"></span>
+            </a>
+        </div>
+    </div>
+}

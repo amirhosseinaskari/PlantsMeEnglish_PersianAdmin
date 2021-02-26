@@ -1,0 +1,33 @@
+﻿@model ContactUs
+    <script type="application/ld+json">
+        {
+        "@@context": "https://schema.org",
+        "@@type": "LocalBusiness",
+        "name": "Tebjoo",
+        "address": {
+        "@@type": "PostalAddress",
+        "streetAddress": "@Model.Address"
+        },
+        "logo": "http://www.shopikardemo.ir/apple-touch-icon.png",
+        "email": "@Model.Email",
+        "telePhone": "@Model.Phone",
+        "url": "http://www.shopikardemo.ir",
+        "openingHours": "Mo,Tu,We,Th,Fr,Sa,Su 0-0",
+        "openingHoursSpecification": [ {
+        "@@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday"
+        ],
+        "opens": "0",
+        "closes": "0"
+        } ],
+        "priceRange":"IRR"
+
+        }
+    </script>

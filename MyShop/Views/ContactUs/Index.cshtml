@@ -1,0 +1,132 @@
+﻿@model ContactUs
+@{
+    ViewData["Title"] = Model.TitlePage;
+    ViewData["MetaDescription"] = Model.MetaDescription;
+    ViewData["RedirectURL"] = Model.RedirectURL;
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Schema{
+    <vc:home-schema></vc:home-schema>
+
+}
+@section Style{
+    <link href="~/dist/sass/pages/contactus.min.css" rel="stylesheet" />
+}
+@section JavaScript{
+    <script async src="~/dist/js/pages/_contactus.min.js" type="module"></script>
+}
+<div class="d-flex justify-content-center align-items-center padding-x-15">
+    <section id="contactus-container" class="uk-box-shadow-medium" dir="ltr">
+        <!--Contact us information-->
+        <article id="contactus-information" class="uk-text-left" dir="ltr">
+            <h1 class="dana-font fontsize-22 mobile-fontsize-20 font-weight-600 margin-top-20 margin-bottom-5">Contact Us</h1>
+            <p class="padding-bottom-15 dana-font fontsize-16 mobile-fontsize-14 line-height-25 font-color-4">Here's how you can reach us</p>
+            <ul class="contactus-information__items dana-font fontsize-14">
+                @if (!string.IsNullOrEmpty(Model.Phone))
+                {
+                    <li>
+                        <div class="d-inline-flex padding-5 align-items-center justify-content-center black border-radius-3"> 
+                        <span uk-icon="icon:receiver;ratio:1" class="white-text flex-shrink-0"></span>
+                        </div>
+                        <span class="font-color-3 margin-left-10 mobile-fontsize-14  digit-format">@Model.Mobile</span>
+                    </li>
+                }
+                @if (!string.IsNullOrEmpty(Model.Mobile))
+                {
+            <li>
+                <div class="d-inline-flex padding-5 align-items-center justify-content-center black border-radius-3">
+                    <span uk-icon="icon:phone;ratio:1" class="white-text flex-shrink-0"></span>
+                    </div>
+                    <span class="font-color-3 margin-left-10 mobile-fontsize-12  digit-format">@Model.Mobile</span>
+            </li>
+                }
+
+                @if (!string.IsNullOrEmpty(Model.Email))
+                {
+            <li>
+                <div class="d-inline-flex padding-5 align-items-center justify-content-center black border-radius-3">
+                    <span uk-icon="icon:mail;ratio:1" class="white-text flex-shrink-0"></span>
+                    </div>
+                    <span class="font-color-3 mobile-fontsize-12  margin-left-10">@Model.Email</span>
+            </li>
+                }
+                @if (!string.IsNullOrEmpty(Model.WhatsAppNumber))
+                {
+            <li>
+                <div class="d-inline-flex padding-5 align-items-center justify-content-center black border-radius-3">
+                    <span uk-icon="icon:whatsapp;ratio:1" class="white-text flex-shrink-0"></span>
+                    </div>
+                    <span class="font-color-3 mobile-fontsize-12  margin-left-10 digit-format">@Model.WhatsAppNumber</span>
+            </li>
+                }
+                @if (!string.IsNullOrEmpty(Model.Instagram))
+                {
+            <li>
+                <div class="d-inline-flex padding-5 align-items-center justify-content-center black border-radius-3">
+                    <span uk-icon="icon:instagram;ratio:1" class="white-text flex-shrink-0"></span>
+                    </div>
+                    <span class="font-color-3 mobile-fontsize-12  margin-left-10">@Model.Instagram</span>
+            </li>
+                }
+                @if (!string.IsNullOrEmpty(Model.Telegram))
+                {
+            <li>
+                <div class="d-inline-flex padding-5 align-items-center justify-content-center black border-radius-3">
+                    <img width="20" style="max-width:unset" src="~/images/icons/telegram.svg" />
+                    </div>
+                    <span class="font-color-3 mobile-fontsize-12  margin-left-10">@Model.Telegram</span>
+            </li>
+
+                }
+                @if (!string.IsNullOrEmpty(Model.Facebook))
+                {
+            <li>
+                <div class="d-inline-flex padding-5 align-items-center justify-content-center black border-radius-3">
+                    <span uk-icon="icon:facebook;ratio:1" class="white-text flex-shrink-0"></span>
+                    </div>
+                    <span class="font-color-3 mobile-fontsize-12  margin-left-10">@Model.Facebook</span>
+            </li>
+                }
+                @if (!string.IsNullOrEmpty(Model.Twitter))
+                {
+            <li>
+                <div class="d-inline-flex padding-5 align-items-center justify-content-center black border-radius-3">
+                    <span uk-icon="icon:twitter;ratio:1" class="white-text flex-shrink-0"></span>
+                    </div>
+                    <span class="font-color-3 mobile-fontsize-12  margin-left-10">@Model.Twitter</span>
+            </li>
+
+                }
+
+                @if (!string.IsNullOrEmpty(Model.YouTube))
+                {
+            <li>
+                <div class="d-inline-flex padding-5 align-items-center justify-content-center black border-radius-3">
+                    <span uk-icon="icon:youtube;ratio:1" class="white-text"></span>
+                    </div>
+                    <span class="font-color-3 mobile-fontsize-12  margin-left-10">@Model.YouTube</span>
+            </li>
+                }
+                @if (!string.IsNullOrEmpty(Model.Address))
+                {
+            <li>
+                <div class="d-inline-flex padding-5 align-items-center justify-content-center black border-radius-3">
+                    <span uk-icon="icon:location;ratio:1" class="white-text flex-shrink-0"></span>
+                    </div>
+                    <span class="font-color-3 mobile-fontsize-12  margin-left-10 mobile-fontsize-12">@Model.Address</span>
+            </li>
+                }
+            </ul>
+        </article>
+        <!--Send your message form-->
+        <aside id="send-your-message" dir="ltr" class="uk-text-left">
+            <h2 class="fontsize-22 mobile-fontsize-20 font-weight-600 dana-font margin-y-20">Send Message</h2>
+            <p class="padding-bottom-15 dana-font fontsize-16 mobile-fontsize-14 line-height-25 font-color-4">We'd love to hear from you</p>
+            <!--Send message form-->
+            @await Html.PartialAsync(partialViewName: "_SendMessageForm", model: null)
+        </aside>
+    </section>
+</div>
+
+

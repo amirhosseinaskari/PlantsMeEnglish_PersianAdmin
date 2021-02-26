@@ -1,0 +1,68 @@
+[
+  {
+    "outputFileName": "wwwroot/js/Admin/finaladminjs.js",
+    "inputFiles": [
+      "wwwroot/lib/jquery/dist/jquery.min.js",
+      "wwwroot/lib/uikit/js/uikit.min.js",
+      "wwwroot/lib/uikit/js/uikiticons.min.js",
+      "wwwroot/lib/chartjs/dist/Chart.min.js",
+      "wwwroot/lib/kamadatepicker/kamadatepicker.min.js",
+      "wwwroot/lib/quill/quill.min.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/Admin_en/finalENadminjs.js",
+    "inputFiles": [
+      "wwwroot/lib/jquery/dist/jquery.min.js",
+      "wwwroot/lib/uikit/js/uikit.min.js",
+      "wwwroot/lib/uikit/js/uikiticons.min.js",
+      "wwwroot/lib/chartjs/dist/Chart.min.js",
+      "wwwroot/lib/kamadatepicker/kamadatepicker.min.js",
+      "wwwroot/lib/quill/quill.min.js"
+    ]
+  },
+  { 
+    "outputFileName": "wwwroot/js/GoogleMaterialDesign.min.js",
+    "inputFiles": [
+      "wwwroot/js/googleMaterialDesign.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/Admin/mainadminjs.js",
+    "inputFiles": [
+      "wwwroot/js/Admin/admin.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/Admin_en/mainEnadminjs.js",
+    "inputFiles": [ 
+      "wwwroot/js/Admin_en/admin.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/css/finaladmincss.css",
+    "inputFiles": [
+      "wwwroot/sass/googleMaterialDesign.min.css", 
+      "wwwroot/lib/uikit/css/uikit.min.css",
+      "wwwroot/lib/uikit/css/uikit-datatable.css",
+      "wwwroot/lib/chart.js/dist/Chart.min.css",
+      "wwwroot/lib/kamadatepicker/kamadatepicker.min.css",
+      "wwwroot/lib/quill/snow.css",
+      "wwwroot/lib/quill/bubble.css",
+      "wwwroot/sass/admin/adminstyle.min.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/css/finaladmin_en_css.css",
+    "inputFiles": [
+      "wwwroot/sass/googleMaterialDesign.min.css",
+      "wwwroot/lib/uikit/css/uikit.min.css",
+      "wwwroot/lib/uikit/css/uikit-datatable.css",
+      "wwwroot/lib/chart.js/dist/Chart.min.css",
+      "wwwroot/lib/kamadatepicker/kamadatepicker.min.css",
+      "wwwroot/lib/quill/snow.css",
+      "wwwroot/lib/quill/bubble.css",
+      "wwwroot/sass/admin_en/adminstyle.min.css"
+    ]
+  }
+]

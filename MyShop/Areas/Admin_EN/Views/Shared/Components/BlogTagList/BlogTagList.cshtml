@@ -1,0 +1,40 @@
+﻿@model IEnumerable<BlogTags>
+@foreach (var item in Model)
+{
+    <div class="admin-chip-tags d-inline-block border uk-border-rounded bg--white uk-box-shadow-small py-1 ml-2 my-1" dir="ltr">
+        <a href="#" data-my-id="@item.Id" class="text-decoration-none red-lighten-7 px-2 delete-blog-tag-icon" 
+           uk-tooltip="title:delete">
+            <span uk-icon="icon:close;ratio:.7"></span>
+        </a>
+        <span class="IRANSans_Light fontsize-12 border-right px-2 grey-darken-4">@item.Text</span>
+    </div>
+}
+
+<script>
+     //Delete a blog tag
+    $('.delete-blog-tag-icon').click(function (e) {
+        let myId = $(this).attr('data-my-id');
+        let parent = $(this).parents('.admin-chip-tags');
+        $.ajax({
+            url: "/Admin/Blog/DeleteTag",
+            type: "POST",
+            data: {
+                id: myId
+            },
+            success: function (data) {
+                if (data) {
+                    $(parent).remove();
+                    UIkit.notification({
+                        message: '<span class="material-icons-outlined red-lighten-7 mx-2 position-relative" style="top:6px">notifications_active</span><span class="IRANSans_Light fontsize-14" dir="ltr">Tag Removed</span>',
+                        status: 'primary',
+                        pos: 'top-center',
+                        timeout: 5000
+                    });
+                }
+            }
+
+        });
+        e.preventDefault();
+        e.stopPropagation();
+    });
+</script>

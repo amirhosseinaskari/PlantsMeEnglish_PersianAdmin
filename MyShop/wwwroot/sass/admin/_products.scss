@@ -1,0 +1,209 @@
+﻿@import "../bourbon";
+@import "../mixins/custom-mixins";
+
+#products-analytics-table,
+#customer-analytics-table,
+#message-analytics-table,
+
+#special-discount-table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    max-width:100%;
+
+    tr {
+        border-collapse: collapse;
+        border-spacing: 0;
+
+        td, th {
+            padding-left: 10px;
+            text-align: right;
+            border: 1px solid #dedede;
+            min-height: 80px;
+            vertical-align: middle;
+
+            div.td--title {
+                min-width: 140px;
+            }
+
+            div.td--name, &.td--date {
+                min-width: 100px;
+            }
+
+            div.td--number {
+                min-width: 70px;
+            }
+
+            div.td--status {
+                min-width: 90px;
+            }
+
+            div.td--row-number {
+                min-width: 80px;
+            }
+
+            div.td--catname {
+                min-width: 120px;
+            }
+        }
+
+        th {
+            text-align: center
+        }
+    }
+}
+.product-action-items {
+    min-width:110px;
+    a {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none !important;
+        margin: 0 4px;
+
+        &.publish-icon {
+            color: #71a255;
+        }
+
+        &.edit-icon {
+            color: #4998c8;
+        }
+
+        &.delete-icon {
+            color: #ff3402;
+        }
+
+        &.unpublish-icon {
+            color: #808080;
+        }
+    }
+}
+
+//when one or a number of products selected you can see it
+#all-product-actions-control,
+#all-discount-actions-control,
+#all-customer-actions-control,
+#all-special-discount-actions-control {
+    width: 150px;
+    height: 40px;
+    top: -45px;
+    right: 20px;
+    z-index: 10;
+    display: none;
+
+    a:not(.delete-icon) {
+        color: #dedede;
+        opacity: .6;
+        text-decoration: none;
+        margin: 0 10px;
+        display: flex;
+        align-items: center;
+    }
+
+    a.delete-icon {
+        text-decoration: none;
+        margin: 0 10px;
+        display: flex;
+        align-items: center;
+    }
+
+    a.active {
+        color: white;
+        opacity: 1;
+    }
+
+    &.active {
+        display: flex;
+        @include prefixer(animation,opacity-animate .3s ease-in-out both,("webkit","moz","o"));
+    }
+}
+
+.form-bundle {
+    position: relative;
+    border-color: #a9a9a9 !important;
+
+    & > label {
+        background-color: white;
+        font-size: 10px;
+        position: absolute;
+        top: -14px;
+        right: 14px;
+        padding: 0 4px;
+        color: #ff004b;
+    }
+
+    .image-upload--placeholder{
+        border-color:#4998c8;
+
+    }
+}
+/*Background-color of search-button when ripple actived*/
+#submit-product-SEO{
+    top:-12px;
+}
+#add-product-variation,
+#add-product-tags,
+#submit-product-SEO {
+
+
+    .mdc-button__ripple {
+        background-color: transparentize(#e1dcea,.9) !important;
+    }
+
+    .mdc-button__ripple:hover {
+        background-color: transparentize(#b7d7f8,.8);
+    }
+
+    .mdc-button__ripple::after, .mdc-button__ripple:before {
+        background-color: transparentize(#776684,.8);
+    }
+}
+
+.ql-snow .ql-tooltip{
+    right:-20px;
+    width:300px;
+    @include multiple-devices-query("Mobile"){
+        right:-40px;
+    }
+}
+#product-tech-description {
+    .mdc-button{
+        height:50px;
+    }
+    .mdc-button__ripple::after, .mdc-button__ripple:before {
+        background-color: transparentize(#9db4c4,.8);
+    }
+}
+#product-description-content-list {
+   
+   
+}
+.content-list__list-item {
+    .content-list__list-item__header {
+        background-color: #fefefe !important;
+        padding: 12px;
+
+        .delete-icon {
+            left: 20px;
+            top: 15px;
+        }
+
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+    }
+}
+
+.sortablelist-item-title{
+    max-width:36%;
+   
+}
+
+.product-media-card {
+    height: 140px;
+    max-height: 160px;
+}
+
+.delete-content-icon{
+   left:30px;
+   top:17px;
+   cursor:pointer;
+}

@@ -1,0 +1,120 @@
+﻿@model IEnumerable<AboutUsContent>
+@if (Model.Count() > 0)
+{
+    //Delete Modal for remove item
+    <div id="about-content-remove-modal" uk-modal dir="ltr">
+        <div class="uk-modal-dialog">
+            <button class="uk-modal-close-default" type="button" uk-close syle="right:unset;left:10px !important;"></button>
+            <div class="uk-modal-header bg--light-3">
+                <h3 class="Arial fontsize-14 red-lighten-7">Warning!</h3>
+            </div>
+            <div class="uk-modal-body">
+                <div class="IRANSans fontsize-12">Are you sure want to delete this item?</div>
+            </div>
+            <div class="uk-modal-footer uk-text-left">
+                <form id="remove-about-content-form-on-modal" action="/En/Admin/AboutUs/Delete" method="post">
+                   <input type="hidden" name="blogId" value="@ViewData["AboutId"]" />
+                    <div class="item-id-container"></div>
+                    <button class="mdc-button mdc-button--unelevated border--blue red-lighten-7 bg--white uk-box-shadow-medium" style="height:30px" type="submit">
+                        <div class="mdc-button__ripple"></div>
+                        <span class="mdc-button__label IRANSans fontsize-12">
+                            Delete
+                        </span>
+                        <span class="material-icons-outlined mx-2 fontsize-16">
+                            delete
+                        </span>
+                    </button>
+                    <button class="mdc-button mdc-button--unelevated border--blue uk-modal-close bg--white uk-box-shadow-medium blue-600 mx-2"
+                            style="height:30px;">
+                        <div class="mdc-button__ripple"></div>
+                        <span class="mdc-button__label IRANSans fontsize-12">
+                            Cancel
+                        </span>
+
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <ul class="list-unstyled m-0 p-0 about-content-list" 
+        data-url="/Admin/AboutUs/ChangeContentOrder"
+        data-message="content position changed"
+        uk-sortable="handle: .uk-sortable-handle;cls-custom:border uk-box-shadow-small content-list-ghost" 
+        id="product-description-content-list">
+        @foreach (var item in Model)
+        {
+            if (item.ContentType.Equals(ContentType.Text))
+            {
+                <li class="about-content-list__list-item uk-box-shadow-small border uk-border-rounded mb-3 about-content-text" dir="ltr" data-my-id="@item.Id">
+                    <div class="about-content-list__list-item__header uk-border-rounded position-relative">
+                        <span class="uk-sortable-handle uk-margin-small-right" uk-icon="icon: table"></span>
+                        <button class="mdc-button mdc-button--unelevated bg--blue-700 mx-2 about-content-text__submit-button
+                                border uk-box-shadow-small px-0" data-my-id="@item.Id" style="height:30px">
+                            <div class="mdc-button__ripple"></div>
+                            <span class="mdc-button__label IRANSans fontsize-10 white px-1 px-sm-2">
+                                Save Changes
+                            </span>
+                        </button>
+                        <span class="delete-about-content-icon red-lighten-7 position-absolute" data-my-id="@item.Id"
+                              uk-icon="icon:trash;ratio:.9" uk-tooltip="title:delete"></span>
+                    </div>
+                    <div class="about-content-list__list-item__body bg--white">
+                        <div class="IRANSans_Light fontsize-12 text-editor"
+                             style="min-height:120px">
+                            <p class="ql-align-right ql-direction-ltr uk-text-muted">
+                                @Html.Raw(item.Content)
+                            </p>
+                        </div>
+                    </div>
+                </li>
+            }
+            else if (item.ContentType.Equals(ContentType.Image))
+            {
+                <li class="about-content-list__list-item uk-box-shadow-small border uk-border-rounded mb-3 about-content-image" dir="ltr" data-my-id="@item.Id">
+                    <div class="about-content-list__list-item__header uk-border-rounded position-relative">
+                        <span class="uk-sortable-handle uk-margin-small-right" uk-icon="icon: table"></span>
+                        <div class="custom-text-field d-inline-block my-2 mx-2" style="width:200px">
+                            <label class="uk-form-label IRANSans_Light" for="imageAlt">Alt</label>
+                            <div class="uk-form-controls">
+                                <input name="imageAlt" class="uk-input IRANSans_Light fontsize-12" 
+                                       type="text" placeholder="alt" value="@item.AltTextForImage">
+                            </div>
+                        </div>
+                        <button class="mdc-button mdc-button--unelevated bg--blue-700 about-content-image__submit-button
+                                border uk-box-shadow-small px-0" data-my-id="@item.Id" style="height:30px">
+                            <div class="mdc-button__ripple"></div>
+                            <span class="mdc-button__label IRANSans fontsize-10 white px-1 px-sm-2">
+                               Save Changes
+                            </span>
+                        </button>
+                        <span class="delete-about-content-icon red-lighten-7 position-absolute"  data-my-id="@item.Id"
+                              uk-icon="icon:trash;ratio:.9" uk-tooltip="title:delete"></span>
+                    </div>
+                    <div class="blog-content-list__list-item__body bg--white text-center">
+                        <img class="w-100" src="/images/about_content/medium/@item.Content"
+                             srcset="/images/about_content/small/@item.Content 600w,
+                             /images/about_content/medium/@item.Content 800w,
+                             /images/about_content/large/@item.Content 1200w"
+                             alt="">
+                    </div>
+                </li>
+            }
+            else if (item.ContentType.Equals(ContentType.Video))
+            {
+                <li class="about-content-list__list-item uk-box-shadow-small border uk-border-rounded mb-3 about-content-video" dir="ltr" data-my-id="@item.Id">
+                    <div class="about-content-list__list-item__header uk-border-rounded position-relative">
+                        <span class="uk-sortable-handle uk-margin-small-right" uk-icon="icon: table"></span>
+                        <span class="delete-about-content-icon red-lighten-7 position-absolute"  data-my-id="@item.Id"
+                              uk-icon="icon:trash;ratio:.9" uk-tooltip="title:delete"></span>
+                    </div>
+                    <div class="about-content-list__list-item__body bg--white">
+                        @Html.Raw(item.Content)
+                    </div>
+                </li>
+            }
+
+        }
+
+
+    </ul>
+}

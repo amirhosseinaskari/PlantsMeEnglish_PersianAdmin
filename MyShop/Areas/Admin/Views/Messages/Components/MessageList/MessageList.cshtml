@@ -1,0 +1,117 @@
+﻿@model PaginatedList<Ticket>
+
+@if (Model.Count() < 1)
+{
+    <div class="d-flex justify-content-start flex-column align-items-center mt-2" style="min-height:300px">
+        <div class="iranyekanwebregular fontsize-12 text-center p-2 my-3 border--blue uk-box-shadow-medium" style="width:400px;max-width:100%">پیامی ثبت نشده است</div>
+        <img style="max-height:300px" src="~/images/large/product1.svg" />
+    </div>
+}
+else
+{
+    int i = (Model.PageIndex * 10) - 10;
+    //Delete Modal for remove message
+    <div id="item-remove-modal" uk-modal dir="rtl">
+        <div class="uk-modal-dialog">
+            <button class="uk-modal-close-default" type="button" uk-close syle="right:unset;left:10px !important;"></button>
+            <div class="uk-modal-header bg--light-3">
+                <h3 class="iranyekanwebregular fontsize-14 red-lighten-7">حذف پیام</h3>
+            </div>
+            <div class="uk-modal-body">
+                <div class="IRANSans fontsize-12 modal-body-text">آیا مطمئن هستید که می خواهید این پیام را حذف کنید؟</div>
+            </div>
+            <div class="uk-modal-footer uk-text-right">
+                <form id="remove-item-form-on-modal" action="/Admin/Messages/DeleteTicket" method="post">
+                    <div class="item-id-container"></div>
+                    <button class="mdc-button mdc-button--unelevated border--blue red-lighten-7
+                            bg--white uk-box-shadow-medium h-30" type="submit">
+                        <div class="mdc-button__ripple"></div>
+                        <span class="mdc-button__label IRANSans fontsize-12">
+                            حذف
+                        </span>
+                        <span class="material-icons-outlined mx-2 fontsize-16">
+                            delete
+                        </span>
+                    </button>
+                    <button class="mdc-button mdc-button--unelevated border--blue uk-modal-close
+                            bg--white uk-box-shadow-medium blue-600 mx-2 h-30 message-delete__submit-button">
+                        <div class="mdc-button__ripple"></div>
+                        <span class="mdc-button__label IRANSans fontsize-12">
+                            صرف نظر
+                        </span>
+
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 ">
+
+            <div class="mdc-data-table d-block overflow-auto my-4">
+                <table class="mdc-data-table__table overflow-auto" dir="rtl">
+                    <thead class="IRANSans fontsize-12">
+                        <tr class="mdc-data-table__header-row">
+                            <th class="text-center mdc-data-table__header-cell fontsize-14 IRANSans">ردیف</th>
+                            <th class="text-center mdc-data-table__header-cell fontsize-14 IRANSans">ارسال کننده</th>
+                            <th class="text-center mdc-data-table__header-cell fontsize-14 IRANSans">عنوان پیام</th>
+                            <th class="text-center mdc-data-table__header-cell mdc-data-table__header-cell--numeric fontsize-14 IRANSans">تاریخ پیام</th>
+                            <th class="text-center mdc-data-table__header-cell fontsize-14 IRANSans">وضعیت</th>
+                            <th class="text-center mdc-data-table__header-cell fontsize-14 IRANSans">عملیات</th>
+                        </tr>
+                    </thead>
+                    <tbody class="mdc-data-table__content IRANSans_Light fontsize-12">
+                        @foreach (var item in Model)
+                        {
+                            i++;
+                            var persianDate = new PersianCalendar();
+                            var ticketDate = string.Format("{0}/{1}/{2}", persianDate.GetYear(item.SubmitDate),
+                                persianDate.GetMonth(item.SubmitDate),
+                                persianDate.GetDayOfMonth(item.SubmitDate));
+                            <tr class="mdc-data-table__row">
+                                <td class="mdc-data-table__cell text-center"><div class="td--number IRANSans_Light fontsize-14">@i</div></td>
+                                <td class="mdc-data-table__cell text-center"><div class="td--name IRANSans_Light fontsize-14">@item.FullName</div></td>
+                                <td class="mdc-data-table__cell text-center"><div class="td--title IRANSans_Light fontsize-14">@item.Subject</div></td>
+                                <td class="mdc-data-table__cell text-center"><div class="td--date IRANSans_Light fontsize-14">@ticketDate</div></td>
+
+                                <td class="mdc-data-table__cell text-center">
+                                    <div class="td--name IRANSans_Light fontsize-14">
+                                        @switch (item.TicketStatus)
+                                        {
+                                            case TicketStatus.WaitForReply:
+                                                <text>در انتظار پاسخ</text>
+                                                break;
+                                            case TicketStatus.Closed:
+                                                <text>بسته شده</text>
+                                                break;
+                                            case TicketStatus.Replied:
+                                                <text>پاسخ داده شده</text>
+                                                break;
+                                            default:
+                                                break;
+                                        }
+                                    </div>
+                                </td>
+                                <td class="mdc-data-table__cell text-center IRANSans_Light fontsize-12">
+                                    <div class="d-flex align-items-center">
+                                        <a asp-action="TicketDetail" asp-controller="Messages"
+                                           asp-area="Admin" asp-route-id="@item.Id"
+                                           class="blue-600 text-decoration-none d-inline-block min-width--90">مشاهده و پاسخ</a>
+                                        <span class="mx-2">|</span>
+                                        <a href="#" class="delete-icon red-lighten-7 text-decoration-none" data-my-id="@item.Id">
+                                           حذف
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!--Pageination of message list-->
+    <div id="message-pagination-buttons-container">
+        @await Html.PartialAsync(partialViewName: "_MessagePaginationButtons", model: Model)
+    </div>
+}

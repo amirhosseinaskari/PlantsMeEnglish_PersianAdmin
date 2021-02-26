@@ -1,0 +1,86 @@
+﻿@import "../vendors/_bourbon.scss";
+@import "./_color-classes.scss";
+@import "../layout/_layoutcolors.scss";
+@import "../vendors/_custommixin.scss";
+
+.riggle {
+    background: map-get($red,"base");
+    border-radius: 50px;
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    opacity: .6;
+    @include prefixer(transform,translate(-50%, -50%) scale(0),("webkit","moz","o"));
+    @include prefixer(animation,riggle .8s linear forwards,("webkit","moz","o"));
+
+    @include custom-animation(riggle) {
+        to {
+            opacity: 0;
+            @include prefixer(transform,translate(-50%, -50%) scale(5),("webkit","moz","o"));
+        }
+    }
+}
+
+
+.ripple {
+    position: absolute;
+    z-index: 9;
+    top: 20%;
+    left: 4px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: $main-color;
+    opacity: .6;
+    @include prefixer(transform,scale(0),("webkit","moz","o"));
+    @include prefixer(animation,ripple .7s linear forwards,("webkit","moz","o"));
+
+    @include custom-animation(ripple) {
+        to {
+            opacity: 0;
+            @include prefixer(transform,scale(5),("webkit","moz","o"));
+        }
+    }
+}
+
+.wave-button {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 40px;
+    background-color: $main-color;
+    border: none;
+    outline: none;
+    cursor: pointer;
+
+    span {
+        color: white;
+    }
+
+    .riggle {
+        background-color: rgba(255, 255, 255, 0.60);
+    }
+
+    &:hover,&:focus {
+        background-color: $main-color;
+    }
+}
+
+.click-button-effect {
+
+
+    &.active-effect {
+        @include prefixer(animation,clickButtonEffect .3s ease-out backwards alternate,("webkit","moz","o"));
+        @include custom-animation(clickButtonEffect) {
+            from {
+                @include prefixer(transform,scale(1,1),("webkit","moz","o"));
+            }
+
+            to {
+                @include prefixer(transform,scale(.7,.7),("webkit","moz","o"));
+            }
+        }
+    }
+}

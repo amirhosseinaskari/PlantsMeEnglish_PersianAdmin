@@ -1,0 +1,13 @@
+﻿@model ProductOption
+<tr data-my-id="@Model.ProductOptionId" class="proOption-table-row">
+    <td class="text-left fontsize-12 border-left">@Model.OptionTitle</td>
+    <td class="text-left fontsize-12 border-left">@Model.OptionValue</td>
+    <td class="text-center fontsize-12">
+        <a href="#" class="red-lighten-7 delete-productOptions"
+           data-my-id="@Model.ProductOptionId"
+           uk-tooltip="title:حذف">
+            <span uk-icon="icon:trash;ratio:.85"></span>
+        </a>
+    </td>
+</tr>
+</tr>

@@ -1,0 +1,74 @@
+﻿@model Ticket
+
+<!--Partial Content-->
+    <div class="uk-card uk-card-default position-relative customer__partial-card">
+        <div class="uk-card-header d-flex flex-row uk-flex-wrap border-bottom-grey justify-content-between align-items-center margin-y-0">
+            <h3 class="dana-font fontsize-14 font-weight-500 margin-bottom-0  margin-y-5
+            flex-grow-1 font-color-3">
+               Message Detail
+            </h3>
+            <button data-target-url="/Customer/PartialViewMessages"
+                    class="uk-button uk-button-default border-radius-3 partial-top-link  d-flex align-items-center">
+                <span class="d-flex align-items-center" uk-icon="icon:arrow-left"></span>
+                <span class="dana-font font-weight-400 fontsize-12 margin-left-10">Back</span>
+                
+            </button>
+
+        </div>
+        <section class="uk-card-body padding-x-20">
+            <div class="uk-text-justify">
+                <div class="justify-content-center" dir="ltr">
+                    <ul class="list-unstyled uk-list uk-list-divider">
+                        <li class="border-radius-3 padding-y-10 margin-top-15">
+                            <div class="d-flex">
+                                <div class="uk-width-auto">
+                                    <img width="42" src="~/images/icons/account-box.svg" />
+                                </div>
+                                <div class="flex-grow-1 flex-shrink-1 margin-left-10" dir="ltr">
+                                    <span class="dana-font fontsize-12 xsmobile-fontsize-10 font-weight-400">@Model.FullName</span>
+                                    <br />
+                                    <span class="dana-font fontsize-12 xsmobile-fontsize-10 font-weight-400 font-color-4 digit-format">@Model.SubmitDate.ToString("dd/MM/yyyy")</span>
+                                </div>
+                            </div>
+                            <h3 class="dana-font fontsize-12 xsmobile-fontsize-10 font-weight-400">
+                                <span class="main-color margin-left-5 font-weight-500">Subject:</span>
+                                <span class="">@Model.Subject</span>
+                            </h3>
+                            <p class="dana-font fontsize-12 xsmobile-fontsize-10 font-weight-400">
+                                @Model.Description
+                            </p>
+                            @if (Model.ReplyTickets.Count() > 0)
+                            {
+                        <ul class="list-unstyled uk-list margin-x-10 margin-y-20 padding-x-10">
+                            @foreach (var item in Model.ReplyTickets.OrderByDescending(c=> c.SubmitDate))
+                            {
+                                <li class="gray-background margin-y-10 border-radius-3 padding-10">
+                                    <div class="d-flex margin-top-10">
+                                        <div class="uk-width-auto">
+                                            <img width="42" src="~/images/icons/account-box.svg" />
+                                        </div>
+                                        <div class="flex-grow-1 flex-shrink-1 margin-right-10" dir="rtl">
+                                            <span class="dana-font fontsize-12 xsmobile-fontsize-10 font-weight-500">@item.FullName</span>
+                                            <br />
+                                            <span class="dana-font fontsize-12 xsmobile-fontsize-10 font-color-4 digit-format">@item.SubmitDate.ToString("dd/MM/yyyy")</span>
+                                        </div>
+                                    </div>
+                                    <div class="dana-font fontsize-12 xsmobile-fontsize-10 ">
+                                      @Html.Raw(item.Description)
+                                    </div>
+                                  
+
+                                </li>
+                            }
+
+                           
+                        </ul>
+                            }
+
+                        </li>
+                     
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </div>

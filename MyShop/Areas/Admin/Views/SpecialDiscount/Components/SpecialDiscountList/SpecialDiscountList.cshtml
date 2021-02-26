@@ -1,0 +1,222 @@
+﻿
+@model PaginatedList<SpecialDiscount>
+@{ 
+     var persianDate = new PersianCalendar();
+   
+}
+@if (Model.Count() == 0)
+{
+    <div class="d-flex justify-content-start flex-column align-items-center mt-2" style="min-height:300px">
+        <div class="iranyekanwebregular fontsize-12 text-center p-2 my-3 border--blue uk-box-shadow-medium" style="width:400px;max-width:100%">هنوز هیچ هیچ پیشنهاد ایجاد نشده است</div>
+        <img style="max-height:300px" src="~/images/large/product1.svg" />
+    </div>
+}
+else
+{
+    //Delete Modal for remove special discount
+    <div id="item-remove-modal" uk-modal dir="rtl">
+        <div class="uk-modal-dialog">
+            <button class="uk-modal-close-default" type="button" uk-close syle="right:unset;left:10px !important;"></button>
+            <div class="uk-modal-header bg--light-3">
+                <h3 class="iranyekanwebregular fontsize-14 red-lighten-7">هشدار!</h3>
+            </div>
+            <div class="uk-modal-body">
+                <div class="IRANSans fontsize-12 modal-body-text">آیا مطمئن هستید که می خواهید این پیشنهاد شگفت انگیز را حذف کنید؟</div>
+            </div>
+            <div class="uk-modal-footer uk-text-right">
+                <form id="remove-item-form-on-modal" action="/Admin/SpecialDiscount/DeleteSpecialDiscount" method="post">
+                    <div class="item-id-container"></div>
+                    <button class="mdc-button mdc-button--unelevated border--blue red-lighten-7 
+                            bg--white uk-box-shadow-medium" style="height:30px" type="submit">
+                        <div class="mdc-button__ripple"></div>
+                        <span class="mdc-button__label IRANSans fontsize-12">
+                            حذف
+                        </span>
+                        <span class="material-icons-outlined mx-2 fontsize-16">
+                            delete
+                        </span>
+                    </button>
+                    <button class="mdc-button mdc-button--unelevated border--blue uk-modal-close 
+                            bg--white uk-box-shadow-medium blue-600 mx-2"
+                            style="height:30px;">
+                        <div class="mdc-button__ripple"></div>
+                        <span class="mdc-button__label IRANSans fontsize-12">
+                            صرف نظر
+                        </span>
+
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    //Delete Modal for remove a group of special discounts
+    <div id="group-remove-modal" uk-modal dir="rtl">
+        <div class="uk-modal-dialog">
+            <button class="uk-modal-close-default" type="button" uk-close syle="right:unset;left:10px !important;"></button>
+            <div class="uk-modal-header bg--light-3">
+                <h3 class="iranyekanwebregular fontsize-14 red-lighten-7">هشدار!</h3>
+            </div>
+            <div class="uk-modal-body">
+                <div class="IRANSans fontsize-12 modal-body-text">آیا مطمئن هستید که می خواهید این پیشنهادات را حذف کنید؟</div>
+            </div>
+            <div class="uk-modal-footer uk-text-right">
+                <form id="remove-group-form-on-modal" action="/Admin/SpecialDiscount/DeleteGroupSpecialDiscount" method="post">
+                    <div class="group-id-container"></div>
+                    <button class="mdc-button mdc-button--unelevated border--blue red-lighten-7 bg--white uk-box-shadow-medium" style="height:30px" type="submit">
+                        <div class="mdc-button__ripple"></div>
+                        <span class="mdc-button__label IRANSans fontsize-12">
+                            حذف
+                        </span>
+                        <span class="material-icons-outlined mx-2 fontsize-16">
+                            delete
+                        </span>
+                    </button>
+                    <button class="mdc-button mdc-button--unelevated border--blue uk-modal-close bg--white uk-box-shadow-medium blue-600 mx-2"
+                            style="height:30px;">
+                        <div class="mdc-button__ripple"></div>
+                        <span class="mdc-button__label IRANSans fontsize-12">
+                            صرف نظر
+                        </span>
+
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    int i = (Model.PageIndex * 10) - 10;
+    <div class="row">
+        <div class="col-12 position-relative" style="width:100px">
+            <div class="position-absolute uk-box-shadow-medium bg--grey-darken-4
+                  justify-content-center align-items-center uk-border-rounded"
+                 id="all-special-discount-actions-control">
+                <!--Group Publish Icon-->
+                <a href="#" class="group-special-discount-publish-icon" uk-tooltip="title:انتشار">
+                    <i class="material-icons-outlined fontsize-18">
+                        visibility
+                    </i>
+                </a>
+                <!--Group UnPublish Icon-->
+                <a href="#" class="group-special-discount-unpublish-icon" uk-tooltip="title:عدم انتشار">
+                    <i class="material-icons-outlined fontsize-18">
+                        visibility_off
+                    </i>
+                </a>
+                <!--Group Remove Icon-->
+                <a href="#" class="group-special-discount-delete-icon white" uk-tooltip="title:حذف">
+                    <span uk-icon="icon:trash;ratio:.85"></span>
+                </a>
+            </div>
+
+            <div class="mdc-data-table d-block overflow-auto my-4">
+                <table class="mdc-data-table__table overflow-auto" dir="rtl">
+                    <thead class="IRANSans fontsize-12">
+                        <tr class="mdc-data-table__header-row">
+                            <th class="mdc-data-table__header-cell">
+                                <label for="main-special-discount-checkbox">
+                                    <input autocomplete="off" name="main-special-discount-checkbox" class="uk-checkbox uk-border-rounded" type="checkbox">
+                                </label>
+                                <span class="mx-2 IRANSans fontsize-14">ردیف</span>
+                            </th>
+                            <th class="mdc-data-table__header-cell text-center fontsize-14 IRANSans">نام محصول</th>
+                            <th class="mdc-data-table__header-cell mdc-data-table__header-cell--numeric text-center fontsize-14 IRANSans">قیمت پایه</th>
+                            <th class="mdc-data-table__header-cell mdc-data-table__header-cell--numeric text-center fontsize-14 IRANSans">میزان تخفیف</th>
+                            <th class="mdc-data-table__header-cell mdc-data-table__header-cell--numeric text-center fontsize-14 IRANSans">تعداد فروش</th>
+                            <th class="mdc-data-table__header-cell mdc-data-table__header-cell--numeric text-center fontsize-14 IRANSans">تعداد بازدید</th>
+                            <th class="mdc-data-table__header-cell text-center fontsize-14 IRANSans">وضعیت</th>
+                            <th class="mdc-data-table__header-cell mdc-data-table__header-cell--numeric text-center fontsize-14 IRANSans">زمان شروع</th>
+                            <th class="mdc-data-table__header-cell mdc-data-table__header-cell--numeric text-center fontsize-14 IRANSans">زمان پایان</th>
+                            <th class="mdc-data-table__header-cell text-center fontsize-14 IRANSans">عملیات</th>
+                        </tr>
+                    </thead>
+                    <tbody class="mdc-data-table__content IRANSans_Light fontsize-14">
+                        @foreach (var item in Model)
+                        {
+                            i++;
+                             var activationDate = string.Format("{0}/{1}/{2}", persianDate.GetYear(item.ActivationDate),
+                                                    persianDate.GetMonth(item.ActivationDate),
+                                                    persianDate.GetDayOfMonth(item.ActivationDate));
+                            var expirationDate = string.Format("{0}/{1}/{2}", persianDate.GetYear(item.ExpirationDate),
+                                                    persianDate.GetMonth(item.ExpirationDate),
+                                                    persianDate.GetDayOfMonth(item.ExpirationDate));
+                        <tr class="mdc-data-table__row">
+                            <td class="mdc-data-table__cell text-center">
+                                <div class="td--row-number" dir="rtl">
+                                    <label>
+                                        <input autocomplete="off" class="special-discount-checkbox 
+                                               uk-checkbox uk-border-rounded" type="checkbox" 
+                                               data-my-id="@item.Id">
+                                    </label>
+                                    <span class="mx-2 IRANSans_Light fontsize-14">@i</span>
+                                </div>
+                            </td>
+                            <td class="mdc-data-table__cell text-center"><div class="td--title IRANSans_Light fontsize-14">@item.ProductName</div></td>
+                            <td class="mdc-data-table__cell text-center"><div class="td--number IRANSans_Light fontsize-14">@item.BasePrice</div></td>
+                            <td class="mdc-data-table__cell text-center"><div class="td--name IRANSans_Light fontsize-14">@item.DiscountPrice</div></td>
+                            <td class="mdc-data-table__cell text-center"><div class="td--name IRANSans_Light fontsize-14">@item.SellNumber</div></td>
+                            <td class="mdc-data-table__cell text-center"><div class="td--name IRANSans_Light fontsize-14">@item.ViewNumber</div></td>
+                            <td class="mdc-data-table__cell text-center">
+                                <div class="td--number IRANSans_Light fontsize-14">
+                                    @if (item.ExpirationDate < System.DateTime.Now)
+                                    {
+                                        <text>منقضی</text>
+                                    }
+                                    else
+                                    {
+                                        <text>فعال</text>
+                                    }
+                                </div>
+                            </td>
+                            <td class="text-center"><div class="td--number IRANSans_Light fontsize-14">@activationDate</div></td>
+                            <td class="text-center"><div class="td--catname IRANSans_Light fontsize-14">@expirationDate</div></td>
+                            <td class="text-center">
+                                <div class="d-flex align-items-center justify-content-center product-action-items">
+                                    @if (item.IsPublished)
+                                    {
+                                        <a href="#" data-my-id="@item.Id" data-state="publish"
+                                           data-message="انتشار پیشنهاد شگفت انگیز مورد نظر لغو گردید"
+                                           data-changed-message="پیشنهاد شگفت انگیز مورد نظر انتشار یافت"
+                                           data-url="/Admin/SpecialDiscount/UnPublish"
+                                           data-changed-url="/Admin/SpecialDiscount/Publish"
+                                           class="publish-icon" uk-tooltip="title:لغو انتشار">
+                                            <i class="material-icons-outlined fontsize-18">
+                                                visibility
+                                            </i>
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a href="#" data-my-id="@item.Id" data-state="unpublish"
+                                           data-url="/Admin/SpecialDiscount/Publish"
+                                           data-changed-url="/Admin/SpecialDiscount/UnPublish"
+                                           data-message="پیشنهاد شگفت انگیز مورد نظر انتشار یافت"
+                                           data-changed-message="انتشار پیشنهاد شگفت انگیز مورد نظر لغو گردید"
+                                           class="publish-icon" uk-tooltip="title:انتشار">
+                                            <i class="material-icons-outlined fontsize-18 uk-text-muted">
+                                                visibility_off
+                                            </i>
+                                        </a>
+                                    }
+                                    <a href="~/Admin/SpecialDiscount/EditSpecialDiscount/@item.Id" class="edit-icon" uk-tooltip="title:ویرایش">
+                                        <span uk-icon="icon:pencil;ratio:.85"></span>
+                                    </a>
+                                    <a href="#" class="delete-icon" data-my-id="@item.Id" uk-tooltip="title:حذف">
+                                        <span uk-icon="icon:trash;ratio:.85"></span>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+    <!--Pageination of products list-->
+    <div id="special-discount-list__pageination-buttons-container" data-searchText="@ViewData["dataSearchText"]" data-sortType="@ViewData["dataSortType"]">
+        @await Html.PartialAsync(partialViewName: "_SpecialDiscountPaginationButtons", model: Model)
+    </div>
+
+
+}

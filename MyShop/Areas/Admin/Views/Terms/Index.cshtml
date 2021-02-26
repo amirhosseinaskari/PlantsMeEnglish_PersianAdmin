@@ -1,0 +1,140 @@
+﻿@model Term
+<!--Breadcrumb for this url-->
+<div class="row p-0 m-0 bg--white py-2 my-3 uk-box-shadow-small uk-border-rounded border position-relative">
+    <div class="col-12" dir="rtl">
+        <ul class="uk-breadcrumb IRANSans_Light fontsize-12 text-right p-0 m-0 d-flex" dir="rtl">
+            <li><a href="~/Admin" class="fontsize-12">مدیریت</a></li>
+            <li class="mx-sm-1 uk-active">صفحه قوانین</li>
+        </ul>
+        <div class="bg--blue-600 position-absolute rounded-left" style="width:8px;left:0;top:-8px;height:calc(100% + 16px);"></div>
+    </div>
+
+</div>
+<!--Terms Creation Form-->
+<div class="row my-2 m-0" dir="rtl" id="main-container">
+    <div class="col-12 uk-background-default  uk-box-shadow-medium border uk-border-rounded py-3">
+        <!--Title of terms page-->
+        <h3 class="iranyekanwebregular fontsize-14 text-right mx-3 my-1 py-2">
+            <span class="blue-600 border-bottom--blue py-2"> صفحه قوانین</span>
+        </h3>
+
+        <!--terms Total Information-->
+        <div class="row px-3 py-2 my-4" id="product-tech-description">
+            <div class="col-12">
+                <div class="border border--dashed form-bundle uk-border-rounded">
+                    <label class="IRANSans_Light">محتوای صفحه قوانین</label>
+
+                    <div class=" mx-3 my-4">
+                        <div class="IRANSans_Light fontsize-12 text-editor"
+                             style="min-height:120px">
+                             @Html.Raw(Model.Content)
+                        </div>
+                    </div>
+                    <div class="mx-md-3 mr-3 mb-3">
+                        <button class="mdc-button mdc-button--unelevated edit-terms__submit-button
+                                bg--blue-700 border px-0 uk-box-shadow-small" style="height:30px">
+                            <div class="mdc-button__ripple"></div>
+                            <span class="mdc-button__label IRANSans fontsize-10 white px-1 px-sm-2">
+                                ذخیره تغییرات
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--SEO Settings-->
+        <div class="row px-3 my-4">
+            <div class="col-12 py-2">
+                <div class="border border--dashed form-bundle uk-border-rounded">
+                    <label class="IRANSans_Light">تنظیمات سئو</label>
+                    <div class="row m-0 pt-2" dir="rtl">
+                        <!--Page Title and Meta Description-->
+                        <div class="col-sm-6 my-2 mt-sm-2 mb-sm-0 px-2 order-1 order-sm-0">
+                            <div class="custom-text-field mx-2 my-4">
+                                <label class="uk-form-label IRANSans_Light"
+                                       asp-for="TitlePage">عنوان</label>
+                                <div class="uk-form-controls d-flex">
+                                    <input class="uk-input IRANSans_Light fontsize-12"
+                                           asp-for="TitlePage" type="text" placeholder="عنوان (60 تا 70 کاراکتر)">
+                                </div>
+                            </div>
+                            <div class="custom-text-field mx-2 my-4">
+                                <label class="uk-form-label IRANSans_Light" asp-for="RedirectURL">لینک انتقال (redirect 301)</label>
+                                <div class="uk-form-controls d-flex">
+                                    <input class="uk-input IRANSans_Light fontsize-12" asp-for="RedirectURL" type="text" placeholder="لینک صفحه هدف را وارد کنید">
+                                </div>
+                            </div>
+                            <div class="custom-text-field mx-2 my-4">
+                                <label class="uk-form-label IRANSans_Light"
+                                       asp-for="MetaDescription">توضیحات</label>
+                                <div class="uk-form-controls d-flex">
+                                    <textarea asp-for="MetaDescription" class="uk-textarea IRANSans_Light fontsize-12 uk-border-rounded" rows="5"
+                                              placeholder="توضیحات را وارد کنید / 50 تا 160 کاراکتر">@Model.MetaDescription</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Preview in Google Results-->
+                        <div class="col-sm-6 my-2 order-0 order-sm-1 px-2 py-3" dir="rtl">
+                            <div class="border form-bundle uk-border-rounded m-2">
+                                <label class="IRANSans_Light">پیش نمایش در گوگل</label>
+                                <div class="my-3 p-3">
+                                    @if (string.IsNullOrEmpty(Model.TitlePage))
+                                    {
+                                        <div id="title-page-preview"
+                                             class="IRANSans fontsize-14" style="color:#1a0dab">عنوان صفحه</div>
+                                    }
+                                    else
+                                    {
+                                        <div id="title-page-preview"
+                                             class="IRANSans fontsize-14" style="color:#1a0dab">@Model.TitlePage</div>
+                                        }
+                                    @if (string.IsNullOrEmpty(Model.MetaDescription))
+                                    {
+                                        <div id="metadescription-page-preview"
+                                             class="IRANSans_Light fontsize-12">توضیحاتی که در نتیجه ی جستجوی موتورهای جستجوگر دیده می شود</div>
+                                    }
+                                    else
+                                    {
+                                        <div id="metadescription-page-preview"
+                                             class="IRANSans_Light fontsize-12">@Model.MetaDescription</div>
+                                        }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Submit button-->
+                    <div class="px-3 mb-3">
+                        <button class="mdc-button mdc-button--unelevated terms-seo-settings__submit-button
+                            bg--blue-700 border px-0 uk-box-shadow-small" data-id="@Model.Id" style="height:30px">
+                            <div class="mdc-button__ripple"></div>
+                            <span class="mdc-button__label IRANSans fontsize-10 white px-1 px-sm-2">
+                                ذخیره تغییرات
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+       
+    </div>
+</div>
+@section Scripts{
+    <script>
+
+        const mdcButton = $('.mdc-button');
+        for (let i = 0; i < mdcButton.length; i++) {
+            mdc.ripple.MDCRipple.attachTo(document.querySelectorAll('.mdc-button')[i]);
+        }
+
+       
+        const mdcTextField = $('.mdc-text-field');
+        for (let i = 0; i < mdcTextField.length; i++) {
+            mdc.textField.MDCTextField.attachTo(document.querySelectorAll('.mdc-text-field')[i]);
+        }
+
+    </script>
+}

@@ -1,0 +1,50 @@
+﻿@model MyShop.Areas.Identity.Pages.Account.RegisterModel
+<!--Register Modal-->
+<div id="register--modal" uk-modal class="form-modal">
+    <div class="uk-modal-dialog form-modal--type-a">
+        <button class="uk-modal-close-default" type="button" uk-close></button>
+        <div class="uk-modal-header text-center margin-top-20">
+            <strong class="font-weight-600 dana-font xsmobile-fontsize-14
+                                fontsize-16 text-center margin-0">Submit New Account</strong>
+            <div class="uk-text-center margin-top-10" dir="ltr">
+                <span class="dana-font fontsize-16 xsmobile-fontsize-14">Already have an account?</span>
+                <a href="#login--modal" uk-toggle class="main-color text-decoration-none
+                           dana-font border-bottom--red--dashed py-1 fontsize-16 xsmobile-fontsize-14">Login</a>
+            </div>
+        </div>
+        <div class="uk-modal-body d-flex justify-content-center" dir="ltr">
+            <form asp-route-returnUrl="@Context.Request.Path" method="post" asp-area="Identity" asp-page="/Account/Register">
+                <div class="uk-margin w-100" dir="ltr">
+                    <div class="uk-inline w-100" dir="ltr">
+                        <span class="uk-form-icon" uk-icon="icon: user"></span>
+                        <input asp-for="Input.FullName" class="uk-input dana-font fontsize-14 xsmobile-fontsize-12 w-100" type="text" placeholder="Enter your full name">
+                    </div>
+                </div>
+                <div class="uk-margin w-100" dir="ltr">
+                    <div class="uk-inline w-100" dir="ltr">
+                        <span class="uk-form-icon" uk-icon="icon: phone"></span>
+                        <input type="tel" asp-for="Input.Mobile" class="uk-input dana-font fontsize-14 xsmobile-fontsize-12 w-100"  placeholder="Enter your phone number">
+                    </div>
+                </div>
+                <div class="uk-margin w-100 mb-0" dir="ltr">
+                    <div class="uk-inline w-100" dir="ltr">
+                        <span class="uk-form-icon" uk-icon="icon: lock"></span>
+                        <a href="#" class="uk-form-icon uk-form-icon-flip text-decoration-none visible-password-icon" uk-tooltip="title:Show password">
+                            <img data-second-src="/images/icons/visibility_off.svg" width="18" src="~/images/icons/visibility.svg" />
+                        </a>
+                        <input asp-for="Input.Password" class="uk-input dana-font fontsize-14 xsmobile-fontsize-12 w-100" type="password" placeholder="Enter a password">
+                    </div>
+                </div>
+                <div class="margin-top-40" dir="ltr">
+                    <label class="d-flex justify-content-first align-items-center checkbox-type-a ripple-input">
+                        <input class="uk-checkbox" type="checkbox" asp-for="Input.AcceptTerms" checked>
+                        <span class="dana-font font-weight-400 fontsize-14  xsmobile-fontsize-12 font-color-2 margin-x-10">By creating an account, you agree to our terms of use and privacy policy.</span>
+                    </label>
+                </div>
+                <button class="w-100 register--button wave-button black submit-button margin-top-20">
+                    <span class="dana-font fontsize-16  xsmobile-fontsize-14 font-weight-500">Register</span>
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

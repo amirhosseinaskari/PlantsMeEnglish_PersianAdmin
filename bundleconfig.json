@@ -1,0 +1,10 @@
+[
+  {
+    "outputFileName": "wwwroot/css/site.min.css",
+    "inputFiles": [
+      "wwwroot/sass/googleMaterialDesign.min.css",
+      "wwwroot/lib/uikit-3.2.4/css/uikit-rtl.min.css",
+      "wwwroot/sass/StyleSheet.min.css"
+    ] 
+  }
+]

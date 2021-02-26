@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="robots" content="noindex">
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    @RenderSection("Style")
+</head>
+<body id="account-body">
+
+    <header class="w-100" id="account-header">
+        <!--Logo-->
+        <section class="w-100 uk-text-center" id="account-header__logo-container">
+            <span class="dana-font fontsize-20 mobile-fontsize-18 font-weight-500 font-color-2" dir="ltr">
+                Plants<span class="main-color">Me</span>.com
+            </span>
+        </section>
+    </header>
+    <main class="position-relative d-flex flex-column margin-y-25
+          justify-content-center align-items-center" id="account-main">
+        @RenderBody()
+    </main>
+    <footer class="w-100" id="account-footer">
+        <ul class="d-flex justify-content-center align-items-center none-list-style" dir="ltr">
+            <li>
+                <a class="dana-font fontsize-14 mobile-fontsize-12" asp-area="" asp-controller="Home" asp-action="Index" title="Home">Home</a>
+            </li>
+            <li>
+                <a class="dana-font fontsize-14 mobile-fontsize-12" asp-area="Identity" asp-page="/Account/Login" title="Login">Login</a>
+            </li>
+            <li>
+                <a class="dana-font fontsize-14 mobile-fontsize-12" asp-area="Identity" asp-page="/Account/Register" title="Register">Register</a>
+            </li>
+            <li>
+                <a class="dana-font fontsize-14 mobile-fontsize-12" href="~/AboutUs" title="About Us">About Us</a>
+            </li>
+            <li>
+                <a class="dana-font fontsize-14 mobile-fontsize-12" asp-area="" asp-controller="ContactUs" asp-action="Index" title="Contact Us">Contact Us</a>
+            </li>
+        </ul>
+    </footer>
+
+    <script src="~/dist/library/uikit-3.5.6/js/uikit.min.js"></script>
+    <script src="~/dist/library/uikit-3.5.6/js/uikit-icons.min.js"></script>
+    @await RenderSectionAsync("JavaScript")
+
+    @RenderSection("Scripts", false)
+    @{
+        int messageCode = -1;
+        if (Context.Session.GetInt32("Message") != null)
+        {
+            messageCode = (int)Context.Session.GetInt32("Message");
+        }
+
+    }
+    @if (messageCode == (int)Messages.PasswordChangedSuccessfully)
+    {
+        <script>
+            UIkit.notification({
+                message: '<span class="margin-right-10 position-relative" uk-icon="icon:bell;ratio:1.2"></span><span class="dana-font fontsize-14" dir="ltr">Your Password Changed</span>',
+                status: 'primary',
+                pos: 'top-center',
+                timeout: 3000
+            });
+        </script>
+        Context.Session.Clear();
+    }
+
+</body>
+</html>

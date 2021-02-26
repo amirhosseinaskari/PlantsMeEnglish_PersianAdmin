@@ -1,0 +1,19 @@
+﻿@model ProductImage
+@if (Model != null)
+{
+    @if (string.IsNullOrEmpty(Model.ImageName))
+    {
+        <img class="w-100" src="~/images/base/placeholderimage.jpg">
+    }
+    else
+    {
+<img class="w-100 lazyload" src="~/images/base/placeholderimage.jpg"
+     data-src="/images/products/small/product_@(Model.ProductId)/@Model.ImageName"
+     alt="@Model.AltText" loading="lazy">
+    }
+}
+
+else
+{
+<img class="w-100" src="~/images/base/placeholderimage.jpg">
+}

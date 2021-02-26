@@ -1,0 +1,47 @@
+﻿@model IEnumerable<CategoryTitleDropDown>
+@if (Model.Count() < 1)
+{
+    
+    <li class="mdc-list-item mdc-list-item--selected" data-value="-1" role="option">
+        No Category Created
+    </li>
+}
+else if (Model.Where(c => c.Selected).FirstOrDefault() == null)
+{
+    <li class="mdc-list-item mdc-list-item--selected" data-value="-1" role="option">
+        Main Category
+    </li>
+    @foreach (var item in Model)
+    {
+
+        <li class="mdc-list-item" data-value="@item.Id" role="option">
+            @item.Title
+        </li>
+
+
+    }
+}
+else
+{
+    <li class="mdc-list-item" data-value="-1" role="option">
+       Main Category
+    </li>
+    @foreach (var item in Model)
+    {
+        if (item.Selected)
+        {
+            <li class="mdc-list-item mdc-list-item--selected" data-value="@item.Id" role="option">
+                @item.Title
+            </li>
+
+            continue;
+        }
+
+        <li class="mdc-list-item" data-value="@item.Id" role="option">
+            @item.Title
+        </li>
+
+
+    }
+
+}

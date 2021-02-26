@@ -1,0 +1,80 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Models
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+
+@if (SignInManager.IsSignedIn(User))
+{
+    
+        <div class="uk-inline h-100 d-inline-flex align-items-center">
+            <button class="uk-button uk-button-default profile-button border-radius-3">
+                <span uk-icon="user"></span>
+                <span class="dana-font fontsize-14 font-weight-500 mytext profile-button-text">Account</span>
+                <span class="profile-button-cheveron-icon" uk-icon="icon:chevron-down"></span>
+            </button>
+            <div class="uk-box-shadow-medium menu-second-section__user-dropdown border-radius-3" 
+                 uk-dropdown="mode: click;pos: bottom-left">
+                <ul class="uk-list uk-list-divider">
+                    <li>
+                        <a class="text-decoration-none font-color-3 fontsize-12 dana-font"
+                           asp-area="" asp-controller="Customer" asp-action="AllOrders" dir="ltr">
+                            <span uk-icon="icon:database" class="margin-right-10"></span>
+                            <span>All my orders</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="text-decoration-none font-color-3 fontsize-12 dana-font"
+                           asp-area="" asp-controller="FavoritProduct" asp-action="Index" dir="ltr">
+                            <span uk-icon="icon:heart" class="margin-right-10"></span>
+                            <span>My Favorites</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="text-decoration-none uk-text-secondary fontsize-12 dana-font"
+                           asp-area="" asp-controller="Customer" asp-action="Index" dir="ltr">
+                            <span uk-icon="icon:cog" class="margin-right-10"></span>
+                            <span>Account Management</span>
+                        </a>
+                    </li>
+                    @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+                    {
+                        <li>
+                            <a class="text-decoration-none uk-text-secondary fontsize-12 dana-font"
+                               asp-area="Admin" asp-controller="Admin" asp-action="Index" dir="ltr">
+                                <span uk-icon="icon:cog" class="margin-right-10"></span>
+                                <span>Website Management</span>
+                            </a>
+                        </li>
+                    }
+                    <li>
+                        <a class="text-decoration-none uk-text-secondary fontsize-12 dana-font"
+                           asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Context.Request.Path" dir="ltr">
+                            <span uk-icon="icon:sign-out" class="margin-right-10"></span>
+                            <span>Logout</span>
+                        </a>
+                    </li>
+                </ul>
+
+            </div>
+
+        </div>
+   
+}
+else
+{
+
+    <button uk-toggle="target: #login--modal" class="uk-button uk-button-default profile-button border-radius-3">
+        <span uk-icon="user"></span>
+        <span class="dana-font fontsize-14 font-weight-500 mytext profile-button-text"> Login/Register</span>
+    </button>
+    <!--Login Modal-->
+    @await Html.PartialAsync("_LoginPartialModal")
+
+    <!--Register Modal-->
+    @await Html.PartialAsync("_RegisterPartialModal")
+
+}
+
+
+

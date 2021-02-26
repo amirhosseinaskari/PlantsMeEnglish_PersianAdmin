@@ -1,0 +1,213 @@
+﻿@model Delivery
+@{ViewData["deliverypage"] = "active"; }
+<!--Breadcrumb for this url-->
+<div class="row p-0 m-0 bg--white py-2 my-3 uk-box-shadow-small uk-border-rounded border position-relative">
+    <div class="col-12" dir="rtl">
+        <ul class="uk-breadcrumb IRANSans_Light fontsize-12 text-right p-0 m-0 d-flex" dir="rtl">
+            <li><a href="~/Admin" class="fontsize-12">مدیریت</a></li>
+            <li class="mx-sm-1 uk-active">ارسال کالا</li>
+        </ul>
+        <div class="bg--blue-600 position-absolute rounded-left" style="width:8px;left:0;top:-8px;height:calc(100% + 16px);"></div>
+    </div>
+
+</div>
+<!--Product Delivery Form-->
+<div class="row my-2 m-0" dir="rtl" id="main-container">
+    <div class="col-12 uk-background-default  uk-box-shadow-medium border uk-border-rounded py-3">
+        <!--Title of product delivery-->
+        <h3 class="iranyekanwebregular fontsize-14 text-right mx-3 my-1 py-2">
+            <span class="blue-600 border-bottom--blue py-2"> تنظیم شرایط ارسال کالا</span>
+        </h3>
+
+        <!--Accepted Addresses-->
+        <div class="row px-3 my-4">
+            <div class="col-12">
+                <div class="border border--dashed form-bundle uk-border-rounded">
+                    <label class="IRANSans_Light">امکان ارسال کلا به شهرهای مختلف</label>
+                    <div class="row m-0 py-3">
+                        <div class="col-lg-3 col-md-4 col-sm-6 my-2 px-2">
+                            <label class="IRANSans_Light fontsize-12">
+                                <input asp-for="CanSendingToAllCity" autocomplete="off" class="uk-radio mx-1 uk-border-rounded" type="radio" value="true">
+                                امکان ارسال به همه ی شهرها
+                            </label>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-6 my-2 px-2">
+                            <label class="IRANSans_Light fontsize-12">
+                                <input asp-for="CanSendingToAllCity" autocomplete="off" class="uk-radio mx-1 uk-border-rounded" type="radio" value="false">
+                                امکان ارسال به بعضی از شهرها
+                            </label>
+                        </div>
+
+                    </div>
+                    <!--Set pricing based on address-->
+                    <div class="row my-2 mx-0" id="cities-of-deliver-zone">
+                        @if (!Model.CanSendingToAllCity)
+                        {
+
+                            <div class="col-12 px-2">
+                                <div class="text-right mx-3 fontsize-12 IRANSans red-lighten-6 border-bottom--red py-1 d-inline-block" style="min-width:150px">
+                                    <span class=""> انتخاب شهرهای قابل ارسال</span>
+                                </div>
+                                <!--Select State-->
+                                <div class="row m-0 py-4 city-state--container">
+                                    <div class="col-sm-auto min-width--200 my-2 px-2">
+                                        <div class="mdc-select mdc-select--outlined state-of-delivery-zone">
+                                            <div class="mdc-select__anchor w-100 bg--white h-40">
+                                                <i class="mdc-select__dropdown-icon" style="top:5px"></i>
+                                                <div id="demo-selected-text" class="mdc-select__selected-text IRANSans_Light fontsize-12 position-relative" style="top:-5px" aria-labelledby="outlined-select-label"></div>
+                                                <div class="mdc-notched-outline">
+                                                    <div class="mdc-notched-outline__leading"></div>
+                                                    <div class="mdc-notched-outline__notch">
+                                                        <label id="outlined-select-label" class="mdc-floating-label IRANSans_Light fontsize-14">استان</label>
+                                                    </div>
+                                                    <div class="mdc-notched-outline__trailing"></div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Select state options -->
+                                            <div class="mdc-select__menu mdc-menu mdc-menu-surface w-100" role="listbox">
+                                                <ul class="mdc-list IRANSans_Light fontsize-12">
+                                                    <vc:state-list></vc:state-list>
+                                                </ul>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                    <div class="col-sm-auto min-width--200 my-2 px-2">
+                                        <div class="mdc-select mdc-select--outlined city-of-delivery-zone">
+                                            <div class="mdc-select__anchor w-100 bg--white h-40">
+                                                <i class="mdc-select__dropdown-icon" style="top:5px"></i>
+                                                <div id="demo-selected-text" class="mdc-select__selected-text IRANSans_Light fontsize-12 position-relative" style="top:-5px" aria-labelledby="outlined-select-label"></div>
+                                                <div class="mdc-notched-outline">
+                                                    <div class="mdc-notched-outline__leading"></div>
+                                                    <div class="mdc-notched-outline__notch">
+                                                        <label id="outlined-select-label" class="mdc-floating-label IRANSans_Light fontsize-14">شهر</label>
+                                                    </div>
+                                                    <div class="mdc-notched-outline__trailing"></div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Select city options -->
+                                            <div class="mdc-select__menu mdc-menu mdc-menu-surface w-100" role="listbox">
+                                                <ul class="mdc-list IRANSans_Light fontsize-12 city-of-delivery-zone__options">
+
+                                                    <vc:city-list id="-1"></vc:city-list>
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-lg-auto col-md-4 col-sm-6 d-flex align-items-center my-1 px-2">
+                                        <button class="mdc-button mdc-button--unelevated bg--white border px-0 add-city-to-delivery-zone" style="height:40px">
+                                            <div class="mdc-button__ripple"></div>
+                                            <span class="mdc-button__label IRANSans fontsize-12 blue-700 px-1 px-sm-2">
+                                                اضافه کردن
+                                            </span>
+                                        </button>
+                                    </div>
+                                    <div class="col-12 my-2 pr-2" id="city-table-container">
+                                        <vc:city-table delivery-id="@Model.Id"></vc:city-table>
+                                    </div>
+                                </div>
+                            </div>
+
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Conditions based on address-->
+        <div class="row px-3 my-4">
+            <div class="col-12">
+                <div class="border border--dashed form-bundle uk-border-rounded">
+                    <label class="IRANSans_Light">هزینه ارسال بر مبنای آدرس</label>
+                    <div class="row m-0 py-3">
+                        <div class="col-lg-3 col-md-4 col-sm-6 my-2 px-2">
+                            <label class="IRANSans_Light fontsize-12">
+                                <input asp-for="CityPriceStatus" autocomplete="off"
+                                       class="uk-radio mx-1 uk-border-rounded" type="radio" value="@MyShop.Data.CityPriceStatus.FreeForAllCities">
+                                ارسال رایگان به همه ی شهرها
+                            </label>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-6 my-2 px-2">
+                            <label class="IRANSans_Light fontsize-12">
+                                <input asp-for="CityPriceStatus" autocomplete="off"
+                                       class="uk-radio mx-1 uk-border-rounded" type="radio" value="@MyShop.Data.CityPriceStatus.DeifferentForEachCity">
+                                متغیر بودن بر اساس شهرهای مختلف
+                            </label>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-6 my-2 px-2">
+                            <label class="IRANSans_Light fontsize-12">
+                                <input asp-for="CityPriceStatus" autocomplete="off"
+                                       class="uk-radio mx-1 uk-border-rounded" type="radio" value="@MyShop.Data.CityPriceStatus.LocalPayment">
+                                دریافت هزینه ارسال در محل
+                            </label>
+                        </div>
+
+                    </div>
+                    <!--Set pricing based on address-->
+                    <div class="row my-2 mx-0" id="set-price-for-each-city--container">
+                        @if (Model.CityPriceStatus.Equals(MyShop.Data.CityPriceStatus.DeifferentForEachCity))
+                        {
+                            @await Html.PartialAsync("_SetPriceForEachCity")
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Conditions based on buy value-->
+        <div class="row px-3 my-4">
+            <div class="col-12 py-2">
+                <div class="border border--dashed form-bundle uk-border-rounded">
+                    <label class="IRANSans_Light">هزینه ارسال بر مبنای مبلغ خرید</label>
+                    <div class="row m-0 py-3">
+                        <div class="col-lg-3 col-md-4 col-sm-6 my-2 px-2">
+                            <label class="IRANSans_Light fontsize-12">
+                                <input asp-for="HasMinAmountForFreeDelivery" autocomplete="off" class="uk-radio mx-1 uk-border-rounded" type="radio" value="false">
+                                یکسان برای همه کالاها
+                            </label>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-6 my-2 px-2">
+                            <label class="IRANSans_Light fontsize-12">
+                                <input asp-for="HasMinAmountForFreeDelivery" autocomplete="off" class="uk-radio mx-1 uk-border-rounded" type="radio" value="true">
+                                رایگان بودن بر اساس مبلغ خرید
+                            </label>
+                        </div>
+
+                    </div>
+
+
+                    <!--Set pricing based on buy value-->
+                    <div class="row my-2 mx-0" id="set-min-amount-for-free-delivery--container">
+                        @if (Model.HasMinAmountForFreeDelivery)
+                        {
+                            @await Html.PartialAsync("_SetMinAmountForDelivery", model: Model)
+
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+@section Scripts{
+    <script>
+
+        const mdcButton = $('.mdc-button');
+        for (let i = 0; i < mdcButton.length; i++) {
+            mdc.ripple.MDCRipple.attachTo(document.querySelectorAll('.mdc-button')[i]);
+        }
+        const mdcTextField = $('.mdc-text-field');
+        for (let i = 0; i < mdcTextField.length; i++) {
+            mdc.textField.MDCTextField.attachTo(document.querySelectorAll('.mdc-text-field')[i]);
+        }
+
+    </script>
+}

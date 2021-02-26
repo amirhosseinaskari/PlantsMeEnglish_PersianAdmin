@@ -1,0 +1,85 @@
+﻿@model IEnumerable<HomeBanner>
+@{
+    var banner01 = Model.Where(c => c.Order == 0).FirstOrDefault();
+    var banner02 = Model.Where(c => c.Order == 1).FirstOrDefault();
+    var banner03 = Model.Where(c => c.Order == 2).FirstOrDefault();
+    var banner04 = Model.Where(c => c.Order == 3).FirstOrDefault();
+    var banner05 = Model.Where(c => c.Order == 4).FirstOrDefault();
+}
+<!--Product banners-->
+<section id="product-banners-container" class="margin-top-30 margin-bottom-15">
+   
+        <div class="banner-row">
+            <div class="banner-col banner-video">
+                <a href="@banner01.TargetLink" title="@banner01.Title">
+                    @if (!string.IsNullOrEmpty(banner01.Image))
+                    {
+                        if (banner01.Image.EndsWith(".mp4"))
+                        {
+                            <video loop autoplay="autoplay" muted>
+                                <source src="~/images/banners/@banner01.Image" type="video/mp4" />
+                            </video>
+                        }
+                        else
+                        {
+                            <img alt="@banner01.AltText" class="w-100 lazyload" src="~/images/banners/bannersquare-min.png"
+                                 data-src="/images/banners/medium/@banner01.Image" data-srcset="/images/banners/medium/@banner01.Image 800w,
+                                /images/banners/small/@banner01.Image 600w" sizes="(max-width:600px) 600px, 800px" />
+                        }
+                    }
+                    else
+                    {
+                        <img class="w-100" src="~/images/banners/bannersquare-min.png" />
+                    }
+
+                </a>
+            </div>
+            <div class="banner-col">
+                <a href="@banner02.TargetLink" title="@banner02.Title"
+                   class="margin-bottom-20">
+                    @if (!string.IsNullOrEmpty(banner02.Image))
+                    {
+                        <img alt="@banner02.AltText" class="w-100 lazyload" src="~/images/banners/bannersquare-min.png"
+                             data-src="/images/banners/medium/@banner02.Image" data-srcset="/images/banners/medium/@banner02.Image 800w,
+                     /images/banners/small/@banner02.Image 600w" sizes="(max-width:600px) 600px, 800px" />
+                    }
+                    else
+                    {
+                        <img class="w-100" src="~/images/banners/bannersquare-min.png" />
+                    }
+                </a>
+                <a href="@banner03.TargetLink" title="@banner03.Title"
+                   class="">
+                    @if (!string.IsNullOrEmpty(banner03.Image))
+                    {
+                        <img alt="@banner03.AltText" class="w-100 lazyload" src="~/images/banners/bannersquare-min.png"
+                             data-src="/images/banners/medium/@banner03.Image" data-srcset="/images/banners/medium/@banner03.Image 800w,
+                     /images/banners/small/@banner03.Image 600w" sizes="(max-width:600px) 600px, 800px" />
+                    }
+                    else
+                    {
+                        <img class="w-100" src="~/images/banners/bannersquare-min.png" />
+                    }
+                </a>
+            </div>
+        </div>
+        <div class="banner-row">
+            <div class="banner-col">
+                <a href="@banner04.TargetLink" title="@banner04.Title"
+                   class="h-100">
+                    @if (!string.IsNullOrEmpty(banner04.Image))
+                    {
+                        <img alt="@banner04.AltText" class="w-100 h-100 lazyload" src="~/images/banners/bannersquare-min.png"
+                             data-src="/images/banners/medium/@banner04.Image" data-srcset="/images/banners/medium/@banner04.Image 800w,
+                     /images/banners/small/@banner04.Image 600w" sizes="(max-width:600px) 600px, 800px" />
+                    }
+                    else
+                    {
+                        <img class="w-100" src="~/images/banners/bannersquare-min.png" />
+                    }
+                </a>
+            </div>
+          
+        </div>
+
+</section>

@@ -1,0 +1,61 @@
+﻿@model MyShop.Areas.Identity.Pages.Account.LoginModel
+
+            <!--Login Modal-->
+            <div id="login--modal" uk-modal dir="ltr" class="form-modal">
+                <div class="uk-modal-dialog form-modal--type-a">
+                    <button class="uk-modal-close-default" type="button" uk-close></button>
+                    <div class="uk-modal-header text-center margin-top-20">
+                        <strong class="font-weight-600 dana-font xsmobile-fontsize-14
+                                fontsize-18 text-center margin-0">Login to Account</strong>
+                        <div class="uk-text-center margin-top-10" dir="ltr">
+                            <span class="dana-font fontsize-16 xsmobile-fontsize-14">Not Registered Yet?</span>
+                            <a href="#register--modal" uk-toggle class="main-color text-decoration-none
+                           dana-font border-bottom--red--dashed py-1 fontsize-16 xsmobile-fontsize-14">Sign Up</a>
+                        </div>
+                    </div>
+                    <div class="uk-modal-body d-flex justify-content-center" dir="ltr">
+                        <form asp-area="Identity" asp-page="/Account/Login"   
+                              asp-route-returnUrl="@Context.Request.Path" method="post" asp-route-isModalLogin="true">
+                            <div class="uk-margin w-100 modal-input-container" dir="ltr">
+                                <div class="uk-inline w-100" dir="ltr">
+                                    <span class="uk-form-icon" uk-icon="icon: user"></span>
+                                    <input type="tel" class="uk-input dana-font fontsize-14 xsmobile-fontsize-12 w-100" 
+                                           asp-for="Input.Mobile" placeholder="Enter your phone number">
+                                </div>
+                                <span asp-validation-for="Input.Mobile" class="red-text font-weight-500 dana-font fontsize-12"></span>
+                            </div>
+                            <div class="uk-margin w-100 mb-0 modal-input-container" dir="ltr">
+                                <div class="uk-inline w-100" dir="ltr">
+                                    <span class="uk-form-icon" uk-icon="icon: lock"></span>
+                                    <a href="#" class="uk-form-icon uk-form-icon-flip text-decoration-none visible-password-icon" uk-tooltip="title:show password">
+                                        <img data-second-src="/images/icons/visibility_off.svg" width="18" src="~/images/icons/visibility.svg" />
+                                    </a>
+                                    <input type="password" class="uk-input dana-font fontsize-14 xsmobile-fontsize-12 w-100" 
+                                           asp-for="Input.Password" placeholder="Enter your password">
+                                </div>
+                                <span asp-validation-for="Input.Password" 
+                                      class="red-text dana-font fontsize-12 font-weight-500"></span>
+                                <div class="margin-y-10">
+                                    <a asp-area="Identity" asp-page="/Account/ForgotPassword"
+                                       asp-route-returnUrl="@Context.Request.Path" 
+                                       class="dana-font font-weight-500 fontsize-14 xsmobile-fontsize-12 main-color border-bottom--red--dashed
+                                       text-decoration-none py-1"> Forgot password?</a>
+                                </div>
+                            </div>
+                            <div class="margin-top-40" dir="ltr">
+                                <label class="d-flex justify-content-first align-items-center checkbox-type-a ripple-input">
+                                    <input class="uk-checkbox" type="checkbox" asp-for="Input.RememberMe" checked>
+                                    <span class="dana-font font-weight-400 fontsize-14  xsmobile-fontsize-12 font-color-2 margin-x-10">Remember Me</span>
+                                </label>
+                            </div>
+                            <button class=" login--button w-100 wave-button black border-radius-3
+                                    submit-button margin-top-20">
+                                 <span class="dana-font fontsize-16  xsmobile-fontsize-14 font-weight-500">Login</span>
+                            </button>
+                        </form>
+                    </div>
+                   
+                </div>
+            </div>
+
+         

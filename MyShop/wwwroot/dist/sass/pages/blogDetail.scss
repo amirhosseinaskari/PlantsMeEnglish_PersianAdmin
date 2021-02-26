@@ -1,0 +1,279 @@
+﻿@import "../components/uikit-variables-theme.scss";
+@import "../components/Indexuikitcomponents/_indexUikitComponents.scss";
+@import "../components/_pageLoading.scss";
+@import "../main.scss";
+@import "../vendors/_bourbon.scss";
+//bread crumb container
+.breadcrumb-container {
+    padding-left: 90px;
+    padding-right: 90px;
+
+    @media only screen and (max-width: 950px) {
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+
+    @media only screen and (max-width: 768px) {
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+
+    @media only screen and (max-width: 600px) {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    @media only screen and (max-width: 300px) {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}
+
+.ql-hidden {
+    display: none;
+}
+//main content
+#main-content {
+    background-color: $gray-background-color;
+    display: flex;
+    flex-direction: row;
+    direction: ltr;
+    padding-left: 90px;
+    padding-right: 90px;
+
+    @media only screen and (max-width: 950px) {
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+
+    @media only screen and (max-width: 768px) {
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+
+    @media only screen and (max-width: 600px) {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    @media only screen and (max-width: 300px) {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    @media only screen and (max-width: 866px) {
+        flex-wrap: wrap;
+    }
+    //related blog list
+    #related-blogs-container {
+        width: 25%;
+
+        @media only screen and (max-width: 975px) {
+            width: 30%;
+        }
+
+        @media only screen and (max-width: 866px) {
+            width: 100%;
+            margin-top: 15px !important;
+            margin-left: 0 !important;
+        }
+
+        & > div {
+            min-height: 320px;
+            max-height: 600px;
+            overflow: auto;
+            z-index: 10;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            padding-top: 20px;
+
+            li {
+                padding: 7px 0;
+
+                &::before {
+                    content: none;
+                }
+
+                margin-top: 0;
+                margin-bottom: 0;
+            }
+
+            li a {
+                padding: 7px 0;
+                display: inline-block;
+                width: 100%;
+                @include prefixer(transition,all .4s linear,("webkit","moz","o"));
+
+                &:hover {
+                    color: black !important;
+                    @include prefixer(transition,all .4s linear,("webkit","moz","o"));
+                }
+            }
+        }
+    }
+    //blog content container
+    #blog-content-container {
+        width: 75%;
+
+        @media only screen and (max-width: 975px) {
+            width: 70%;
+        }
+
+        @media only screen and (max-width: 866px) {
+            width: 100%;
+            margin-left: 0 !important;
+        }
+
+        .blog-body {
+        }
+    }
+}
+
+//comments
+.reply-comment-list {
+    @media only screen and (max-width: 600px) {
+        padding: 0;
+    }
+}
+
+.reply-comment-list-items {
+    padding: 15px;
+    background-color: #fbfbfb;
+}
+
+//comment add modal
+#comment-add-modal,
+#reply-comment-add-modal {
+    .uk-modal-dialog {
+        border-radius: 3px;
+        display: flex;
+        flex-direction: column;
+        min-height: 260px;
+        justify-content: flex-start;
+    }
+
+    .uk-modal-body {
+        padding-top: 10px;
+        display: flex;
+        flex-grow: 1;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .uk-modal-close-default {
+       
+        top: 15px;
+    }
+
+    .uk-modal-header {
+        text-align: left;
+        @include border-top-radius(5px);
+        padding-top: 10px;
+        background-color: rgba(248, 248, 248, 0.40);
+        border-bottom: 1px solid #d1cece;
+
+        span {
+            padding-bottom: 10px;
+        }
+    }
+
+    .uk-modal-footer {
+        @include border-bottom-radius(5px);
+    }
+}
+
+//----Blog Rate
+.blog-stars-container {
+    div.stars {
+        display: inline-block;
+    }
+
+    input.star {
+        display: none;
+    }
+
+    label.star {
+        padding: 3px;
+        transition: all .2s;
+    }
+
+    input.star:checked ~ label.star:before {
+        content: '';
+        display: block;
+        width: 35px;
+        height: 35px;
+        background-image: url('../../../images/icons/goldStar.svg');
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: 30px 30px;
+        transition: all .3s;
+    }
+
+
+
+    label.star:hover {
+        transform: rotate(-15deg) scale(1.3);
+    }
+
+    label.star:before {
+        content: '';
+        display: block;
+        width: 35px;
+        height: 35px;
+        background-image: url('../../../images/icons/star.svg');
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: 30px 30px;
+    }
+
+    .rev-box {
+        overflow: hidden;
+        height: 0;
+        width: 100%;
+        transition: all .3s;
+    }
+
+
+
+    label.review {
+        display: block;
+        transition: opacity .3s;
+    }
+
+
+
+    input.star:checked ~ .rev-box {
+        height: 125px;
+        overflow: visible;
+    }
+}
+#blog-comment-list__pageination-buttons-container {
+    .pagination--button {
+        border: none;
+        -moz-box-shadow: 0 2px 8px rgba(0,0,0,.08);
+        -webkit-box-shadow: 0 2px 8px rgba(0,0,0,.08);
+        box-shadow: 0 2px 8px rgba(0,0,0,.08);
+        border-radius: 5px;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: white;
+        padding: 0;
+        @include prefixer(transition,all .3s ease-in-out,("webkit","moz","o"));
+
+        &.uk-disabled {
+            background-color: $main-color;
+            color: white;
+            @include prefixer(transition,all .3s ease-in-out,("webkit","moz","o"));
+            -moz-box-shadow: none;
+            -webkit-box-shadow: none;
+            box-shadow: none;
+        }
+    }
+}

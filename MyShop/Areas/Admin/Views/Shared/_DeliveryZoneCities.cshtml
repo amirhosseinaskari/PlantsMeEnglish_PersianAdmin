@@ -1,0 +1,133 @@
+﻿
+<div class="col-12 px-2">
+    <div class="text-right mx-3 fontsize-12 IRANSans red-lighten-6 border-bottom--red py-1 d-inline-block" style="min-width:150px">
+        <span class=""> انتخاب شهرهای قابل ارسال</span>
+    </div>
+    <!--Select State-->
+    <div class="row m-0 py-4 city-state--container">
+        <div class="col-sm-auto min-width--200 my-2 px-2">
+            <div class="mdc-select mdc-select--outlined state-of-delivery-zone">
+                <div class="mdc-select__anchor w-100 bg--white h-40">
+                    <i class="mdc-select__dropdown-icon" style="top:5px"></i>
+                    <div id="demo-selected-text" class="mdc-select__selected-text IRANSans_Light fontsize-12 position-relative" style="top:-5px" aria-labelledby="outlined-select-label"></div>
+                    <div class="mdc-notched-outline">
+                        <div class="mdc-notched-outline__leading"></div>
+                        <div class="mdc-notched-outline__notch">
+                            <label id="outlined-select-label" class="mdc-floating-label IRANSans_Light fontsize-14">استان</label>
+                        </div>
+                        <div class="mdc-notched-outline__trailing"></div>
+                    </div>
+                </div>
+
+                <!-- Select state options -->
+                <div class="mdc-select__menu mdc-menu mdc-menu-surface w-100" role="listbox">
+                    <ul class="mdc-list IRANSans_Light fontsize-12">
+                        <vc:state-list></vc:state-list>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-auto min-width--200 my-2 px-2">
+            <div class="mdc-select mdc-select--outlined city-of-delivery-zone">
+                <div class="mdc-select__anchor w-100 bg--white h-40">
+                    <i class="mdc-select__dropdown-icon" style="top:5px"></i>
+                    <div id="demo-selected-text" class="mdc-select__selected-text IRANSans_Light fontsize-12 position-relative" style="top:-5px" aria-labelledby="outlined-select-label"></div>
+                    <div class="mdc-notched-outline">
+                        <div class="mdc-notched-outline__leading"></div>
+                        <div class="mdc-notched-outline__notch">
+                            <label id="outlined-select-label" class="mdc-floating-label IRANSans_Light fontsize-14">شهر</label>
+                        </div>
+                        <div class="mdc-notched-outline__trailing"></div>
+                    </div>
+                </div>
+
+                <!-- Select city options -->
+                <div class="mdc-select__menu mdc-menu mdc-menu-surface w-100" role="listbox">
+                    <ul class="mdc-list IRANSans_Light fontsize-12 city-of-delivery-zone__options">
+                       
+                        <vc:city-list id="-1"></vc:city-list>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-auto col-md-4 col-sm-6 d-flex align-items-center my-1 px-2">
+            <button class="mdc-button mdc-button--unelevated bg--white border px-0 add-city-to-delivery-zone" style="height:40px">
+                <div class="mdc-button__ripple"></div>
+                <span class="mdc-button__label IRANSans fontsize-12 blue-700 px-1 px-sm-2">
+                    اضافه کردن
+                </span>
+            </button>
+        </div>
+        <div class="col-12 my-2 pr-2" id="city-table-container">
+           
+        </div>
+    </div>
+</div>
+
+<script>
+    //state and city list
+    //change city list select box when state changed
+    try {
+       
+        const MDCStateOfDeliveryZone = mdc.select.MDCSelect;
+        const stateOfDeliveryZone = new MDCStateOfDeliveryZone(document.querySelector('.state-of-delivery-zone'));
+        const MDCCityOfDeliveryZone = mdc.select.MDCSelect;
+        const cityOfDeliveryZone = new MDCCityOfDeliveryZone(document.querySelector('.city-of-delivery-zone'));
+        stateOfDeliveryZone.listen('MDCSelect:change', function () {
+             
+            let val = stateOfDeliveryZone.value;
+            console.log("StateValue:",val);
+            let parent = $('.state-of-delivery-zone').parents('.city-state--container');
+            console.log("parent Length:", parent.length);
+            $.ajax({
+                url: "/Admin/Delivery/CityList",
+                type: "POST",
+                data: {
+                    stateId: val
+                },
+                error: function (xhr) {
+                    console.log(xhr.responseText);
+                },
+                success: function (data) {
+                    console.log('data:', data);
+                    $(parent).find('.city-of-delivery-zone__options').html(data);
+
+                }
+            });
+        });
+
+        //Add new city to delivery zone
+        $('.add-city-to-delivery-zone').click(function (e) {
+
+            e.stopPropagation();
+            e.preventDefault();
+            let val = cityOfDeliveryZone.value;
+            let myState = stateOfDeliveryZone.value;
+
+            $.ajax({
+                url: "/Admin/Deliver/AddCityToDeliverZone",
+                type: "POST",
+                data: {
+                    cityId: val,
+                    stateId: myState
+
+                },
+                beforeSend: function () {
+                    $('#progress-loader').removeClass('d-none');
+                },
+                success: function (data) {
+                    UIkit.notification({
+                        message: '<span class="material-icons-outlined red-lighten-7 mx-2 position-relative" style="top:6px">notifications_active</span><span class="IRANSans_Light fontsize-14" dir="rtl">شهر مورد نظر به لیست اضافه شد</span>',
+                        status: 'primary',
+                        pos: 'top-center',
+                        timeout: 5000
+                    });
+                    $('#city-table-container').html(data);
+                }
+            }).done(function () { $('#progress-loader').addClass('d-none'); });
+        });
+
+    } catch (e) {
+        console.log(e);
+    }
+</script>

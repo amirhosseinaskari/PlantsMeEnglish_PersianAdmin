@@ -1,0 +1,53 @@
+﻿@model ApplicationUser
+<!--Partial Content-->
+<div class="uk-card uk-card-default position-relative customer__partial-card">
+    <div class="uk-card-header d-flex align-items-center border-bottom-grey uk-flex-wrap">
+        <h3 class="dana-font fontsize-14 font-weight-500 margin-bottom-0  margin-y-5
+            flex-grow-1 font-color-3">
+           Account Information
+        </h3>
+        <a asp-controller="Customer" asp-action="Index"
+           class="uk-button uk-button-default border-radius-3 partial-top-link flex-grow-0 margin-y-5
+           align-items-center d-flex uk-flex-between">
+            <span class="d-flex align-items-center" uk-icon="icon:arrow-left"></span>
+            <span class="dana-font font-weight-400 fontsize-12 margin-left-10">Back</span>
+            
+        </a>
+    </div>
+    <div class="uk-card-body">
+        <form asp-area="" asp-action="CustomerInformation" asp-controller="Customer" method="post" class=" customer-form" id="personal-information" dir="ltr">
+            <div class="form-row">
+                <div class="dana-font mobile-fontsize-12 fontsize-14 text-left margin-y-10">
+                    <label class="" asp-for="FullName">Full Name</label>
+                    <div class="uk-form-controls m-0">
+                        <input class="uk-input w-100 border-radius-3" asp-for="FullName" type="text" placeholder="Enter your full name">
+                    </div>
+                    <span asp-validation-for="FullName" class="dana-font red-text fontsize-12"></span>
+                </div>
+                <div class="dana-font mobile-fontsize-12 fontsize-14 text-left margin-y-10">
+                    <label class="" asp-for="Mobile">Mobile Number</label>
+                    <div class="uk-form-controls m-0">
+                        <input class="uk-input w-100 border-radius-3" asp-for="Mobile" type="tel" placeholder="Enter your mobile number">
+                    </div>
+                    <span asp-validation-for="Mobile" class="dana-font red-text fontsize-12"></span>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="dana-font mobile-fontsize-12 fontsize-14 text-left margin-y-10">
+                    <label class="" asp-for="Email">Email</label>
+                    <div class="uk-form-controls m-0">
+                        <input class="uk-input w-100 border-radius-3" asp-for="Email" type="text" placeholder="Enter your email">
+                    </div>
+                    <span asp-validation-for="Email" class="dana-font red-text fontsize-12"></span>
+                </div>
+               
+            </div>
+            <div class="">
+                <button class="dana-font mobile-fontsize-12 fontsize-14 uk-button uk-button-default wave-button black border-radius-3 white-text margin-y-10 submit-button" type="submit" id="personal-information__submit">
+                       Save Changes
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+

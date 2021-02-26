@@ -1,0 +1,20 @@
+﻿@model IEnumerable<Category>
+<!--Breadcrumb for this url-->
+<div class="breadcrumb-container grey lighten-5 padding-y-15 margin-bottom-20" dir="ltr">
+        <ul class="uk-breadcrumb text-right padding-0 margin-0 d-flex align-items-center" dir="ltr">
+          
+                <li>
+                    <a class="fontsize-14 mobile-fontsize-12 dana-font font-weight-500 font-color-4" asp-action="Index" asp-controller="Home" asp-area="">Home</a>
+                </li>
+                @foreach (var item in Model.Reverse())
+                {
+                    <li>
+                        <a class="fontsize-14 mobile-fontsize-12 dana-font font-weight-500 font-color-4" asp-area="" asp-controller="Category"
+                           asp-action="CategoryDetail" asp-route-id="@item.CategoryId" asp-route-categoryTitle="@item.Title.Replace(" ","-")">@item.Title</a>
+                    </li>
+                }
+            
+            <li class="uk-active"><h1 class="margin-bottom-0 font-weight-600 dana-font fontsize-14 mobile-fontsize-12 font-color-1">@ViewData["ProductTitle"]</h1></li>
+        </ul>
+       
+</div>

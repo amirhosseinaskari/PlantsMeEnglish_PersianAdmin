@@ -1,0 +1,31 @@
+﻿@model IEnumerable<Brand>
+@if (Model.Count() > 0)
+{
+    <!--Top brands-->
+    <section id="top-brands" class="uk-overflow-hidden position-relative product-slider">
+        <div class="title-and-slider-container position-relative uk-overflow-hidden w-100">
+            <!--Slides of top insta post slider-->
+            <div class="uk-position-relative uk-visible-toggle uk-light padding-top-10 padding-bottom-60 " tabindex="-1" uk-slider>
+                <ul class="uk-slider-items uk-child-width-1-2 uk-child-width-1-3@s uk-child-width-1-4@m uk-child-width-1-5@l uk-grid">
+                    @foreach (var item in Model)
+                    {
+                        <li>
+                            <a asp-action="BrandDetail" asp-controller="Brand" asp-area="" asp-route-id="@item.BrandId" class="">
+                                <img class="max-width-100 lazyload" src="~/images/base/placeholderimage.jpg"
+                                     data-src="/images/brands/small/@item.Image"
+                                     alt="@item.Title" loading="lazy">
+                            </a>
+                        </li>
+                    }
+
+
+                </ul>
+                <!--top blogs slider arrow navigation-->
+                <a class="uk-position-center-left uk-position-small  slide-navigation slide-navigation-left uk-box-shadow-small" href="#" uk-slidenav-previous uk-slider-item="previous"></a>
+                <a class="uk-position-center-right uk-position-small  slide-navigation slide-navigation-right uk-box-shadow-small" href="#" uk-slidenav-next uk-slider-item="next"></a>
+
+            </div>
+        </div>
+    </section>
+   
+}

@@ -1,0 +1,24 @@
+﻿.breadcrumb-container {
+    padding-left: 40px;
+    padding-right: 40px;
+
+    @media only screen and (max-width: 600px) {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    li {
+        line-height: 27px;
+        a:hover{
+            color:#4a4949 !important;
+        }
+    }
+
+    li:before {
+        margin: 0 10px !important;
+
+        @media only screen and (max-width: 600px) {
+            margin: 0 6px !important;
+        }
+    }
+}

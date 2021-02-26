@@ -1,0 +1,273 @@
+﻿@import "../components/uikit-variables-theme.scss";
+@import "../components/Indexuikitcomponents/_indexUikitComponents.scss";
+@import "../main.scss";
+@import "../vendors/_bourbon.scss";
+@import "../components/_progress.scss";
+//container section
+#container-section {
+    background-color: $gray-background-color;
+}
+//bread crumb container
+.breadcrumb-container, #customer-page {
+    padding-left: 90px;
+    padding-right: 90px;
+
+    @media only screen and (max-width: 950px) {
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+
+    @media only screen and (max-width: 768px) {
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+
+    @media only screen and (max-width: 600px) {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    @media only screen and (max-width: 300px) {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    @media only screen and (max-width: 1100px) {
+        flex-wrap: wrap;
+    }
+}
+%active-link {
+    background-color: rgba(255, 251, 197, .5);
+    & > a:hover{
+        color:red;
+    }
+}
+//customer page
+#customer-page {
+    display: flex;
+
+    #side-bar-container {
+        width: 25%;
+        height: 100%;
+        margin-right: 20px;
+        border-radius: 5px;
+        border: 1px solid rgba(0, 0, 0, 0.13);
+        background-color: white;
+
+        & .hidden-in-desktop {
+            display: none;
+        }
+
+        @media only screen and (max-width: 1100px) {
+            width: 38%;
+        }
+
+        @media only screen and (max-width: 860px) {
+            width: 100%;
+            margin-right: 0;
+            max-width: 500px;
+
+            & .hidden-in-mobile {
+                display: none;
+            }
+
+            & .hidden-in-desktop {
+                display: list-item;
+            }
+        }
+
+        .uk-card {
+            border-radius: 5px;
+        }
+        //side bar list item
+        .customer-side-bar__list-item {
+            padding: 0 15px;
+            margin: 0 !important;
+            border-top: 0;
+            border-bottom: 1px solid #e5e5e5 !important;
+
+            &:first-child {
+                border-top: 1px solid #e5e5e5 !important;
+            }
+
+            &:hover {
+                @extend %active-link;
+            }
+
+            &::before {
+                content: none;
+            }
+
+            & > a {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 10px 10px;
+                width: 100%;
+                color: #414141;
+            }
+        }
+        //side bar footer
+        .uk-card-footer {
+            background-color: rgba(245, 245, 245, .8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            & > a {
+                &:first-child {
+                    border-left: 1px solid #e5e5e5 !important;
+                }
+
+                padding: 10px;
+                text-align: center;
+                flex-grow: 1;
+                width: 50%;
+                color: #414141;
+
+                &:hover {
+                    color: red;
+                }
+            }
+        }
+    }
+
+    #main-content-container {
+        width: 75%;
+        height: 100%;
+        border-radius: 5px;
+        border: 1px solid rgba(0, 0, 0, 0.13);
+        background-color: white;
+
+        @media only screen and (max-width: 1100px) {
+            width: 62%;
+        }
+
+        @media only screen and (max-width: 860px) {
+            display: none;
+        }
+
+        @media only screen and (max-width: 600px) {
+            .uk-card-body{
+                padding:0 5px !important;
+            }
+        }
+
+        .uk-card {
+            border-radius: 5px;
+        }
+    }
+}
+.customer-default {
+    @media only screen and (min-width: 860px) {
+        .customer-information__list-item {
+            background-color: rgba(255, 251, 197, .5);
+
+            & > a:hover {
+                color: red;
+            }
+
+            a {
+                color: red !important;
+            }
+        }
+    }
+}
+%other-customer-page {
+    #side-bar-container {
+        @media only screen and (max-width: 860px) {
+            display:none;
+        }
+    }
+
+    #main-content-container {
+        @media only screen and (max-width: 860px) {
+            width: 100%;
+            display:block;
+        }
+    }
+}
+
+#customer-page.customer-information-container {
+    
+    @extend %other-customer-page;
+
+    .customer-information__list-item {
+        @extend %active-link;
+
+        a {
+            color: red !important;
+        }
+    }
+}
+
+#customer-page.orders-container {
+    @extend %other-customer-page;
+
+    .orders-container__list-item {
+        @extend %active-link;
+
+        a {
+            color: red !important;
+        }
+    }
+   
+}
+
+#customer-page.messages-container {
+    @extend %other-customer-page;
+
+    .messages-container__list-item {
+        @extend %active-link;
+
+        a {
+            color: red !important;
+        }
+    }
+}
+
+#customer-page.changepassword-container {
+    @extend %other-customer-page;
+
+    
+}
+
+table {
+    td {
+        min-width: 90px;
+    }
+}
+
+.back-link-text {
+    @media only screen and (max-width: 500px) {
+        display:none;
+    }
+}
+
+//pagination buttons
+#ticket-list__pageination-buttons-container{
+    .pagination--button {
+        border: none;
+        -moz-box-shadow: 0 2px 8px rgba(0,0,0,.08);
+        -webkit-box-shadow: 0 2px 8px rgba(0,0,0,.08);
+        box-shadow: 0 2px 8px rgba(0,0,0,.08);
+        border-radius: 5px;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: white;
+        padding: 0;
+        @include prefixer(transition,all .3s ease-in-out,("webkit","moz","o"));
+
+        &.uk-disabled {
+            background-color: red;
+            color: white;
+            @include prefixer(transition,all .3s ease-in-out,("webkit","moz","o"));
+            -moz-box-shadow: none;
+            -webkit-box-shadow: none;
+            box-shadow: none;
+        }
+    }
+}

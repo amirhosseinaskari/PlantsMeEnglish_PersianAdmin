@@ -1,0 +1,25 @@
+﻿@model IEnumerable<Order>
+<div class="mdc-data-table d-block overflow-auto my-4">
+    <table class="mdc-data-table__table overflow-auto">
+        <thead class="IRANSans fontsize-12 bg--light-2">
+            <tr class="mdc-data-table__header-row">
+                <th class="mdc-data-table__header-celltext-right mdc-data-table__header-cell--numeric text-center fontsize-12 IRANSans blue-500 product-name">نام محصول</th>
+                <th class="mdc-data-table__header-celltext-right mdc-data-table__header-cell--numeric text-center fontsize-12 IRANSans blue-500">تعداد</th>    
+                <th class="mdc-data-table__header-celltext-right mdc-data-table__header-cell--numeric text-center fontsize-12 IRANSans blue-500">مبلغ واحد</th>
+                <th class="mdc-data-table__header-celltext-right mdc-data-table__header-cell--numeric text-center fontsize-12 IRANSans blue-500">مبلغ کل</th>
+            </tr>
+        </thead>
+        <tbody class="mdc-data-table__content IRANSans_Light fontsize-12">
+            @foreach (var item in Model)
+            {
+                <tr class="mdc-data-table__row">
+                    <td class="mdc-data-table__cell text-center product-name IRANSans_Light fontsize-12">@item.ProductTitle</td>
+                    <td class="mdc-data-table__cell text-center IRANSans_Light fontsize-12">@item.Number</td>
+                    <td class="mdc-data-table__cell text-center IRANSans_Light fontsize-12">@(item.TotalPrice)</td>
+                    <td class="mdc-data-table__cell text-center IRANSans_Light fontsize-12">@(item.TotalPrice*item.Number)</td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>

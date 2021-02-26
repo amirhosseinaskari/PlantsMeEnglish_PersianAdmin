@@ -1,0 +1,11 @@
+﻿@model IEnumerable<BlogPageBanner>
+@foreach (var item in Model)
+{
+    <a href="@item.TargetLink" title="@item.Title" 
+       class="blog-banner-container d-flex w-100 margin-top-15 border-radius-3">
+        <img class="w-100 uk-border-rounded lazyload"
+             alt="@item.Alt"
+             src="~/images/banners/bannersquare-min.png"
+             data-src="/images/banners/small/@item.Image"/>
+    </a>
+}

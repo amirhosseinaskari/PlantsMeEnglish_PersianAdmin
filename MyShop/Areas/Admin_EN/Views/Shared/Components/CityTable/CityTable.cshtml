@@ -1,0 +1,64 @@
+﻿@model IEnumerable<City>
+
+@if (Model.Count() > 0)
+{
+   
+        <div class="uk-overflow-auto bg--white d-flex scroll-hidden">
+            <table class="uk-table uk-table-striped uk-table-hover border scroll-hidden">
+                <thead class="IRANSans fontsize-12">
+                    <tr>
+                        <th class="text-center fontsize-12">County</th>
+                        <th class="text-center fontsize-12">Sub County</th>
+                        <th class="text-center fontsize-12">Action</th>
+                    </tr>
+                </thead>
+                <tbody class="IRANSans_Light fontsize-12">
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="text-center fontsize-12">@item.StateName</td>
+                            <td class="text-center fontsize-12">@item.Title</td>
+                            <td class="text-center fontsize-12">
+                                <a href="#" data-id="@item.Id" class="delete-city-icon red-lighten-7" uk-tooltip="title:delete">
+                                    <span uk-icon="icon:trash;ratio:.85"></span>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    
+}
+
+<script>
+    $('.delete-city-icon').click(function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+        let val = $(this).attr('data-id');
+        let parent = $(this).parents('tr');
+        $.ajax({
+            url: "/Admin/Delivery/DeleteCityFromDeliveryZone",
+            type: "POST",
+            data: {
+                id: val
+            },
+            beforeSend: function () {
+                 $('#progress-loader').removeClass('d-none');
+            },
+            success: function (data) {
+                if (data) {
+                    $(parent).remove();
+                     UIkit.notification({
+                            message: '<span class="material-icons-outlined red-lighten-7 mx-2 position-relative" style="top:6px">notifications_active</span><span class="IRANSans_Light fontsize-14" dir="ltr">Sub county removed</span>',
+                            status: 'primary',
+                            pos: 'top-center',
+                            timeout: 5000
+                        });
+                }
+            }
+        }).done(function () {
+            $('#progress-loader').addClass('d-none');
+        });
+    });
+</script>

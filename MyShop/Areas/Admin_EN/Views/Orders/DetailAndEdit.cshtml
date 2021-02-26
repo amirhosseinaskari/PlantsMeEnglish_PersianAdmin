@@ -1,0 +1,169 @@
+﻿@model Shopping
+@{
+    
+    ViewData["orderspage"] = "active"; 
+
+}
+
+<div class="row my-2 m-0">
+    <div class="col-12 uk-background-default uk-box-shadow-medium border uk-border-rounded bg--white pb-3 px-0 mx-0"
+         id="detail-edit-container--active">
+        <div class="d-flex justify-content-between align-items-center p-3 bg-gradient--purple rounded-top">
+            <h3 class="fontsize-14 Arial font-weight--bold white p-0 m-0 flex-grow-1">
+                Order Details
+            </h3>
+            <a asp-action="Index" asp-controller="Orders" asp-area="Admin"
+               class="mdc-button mdc-button--unelevated flex-grow-1 min-width--110 flex-sm-grow-0 flex-shrink-0 pagination--button bg--white
+               uk-box-shadow-small uk-box-shadow-hover-medium border">
+                <div class="mdc-button__ripple"></div>
+                <span class="mdc-button__label blue-700 IRANSans_Light fontsize-12">
+                    <span>Back</span>
+                    <span uk-icon="icon:arrow-left" class="mx-1 mx-sm-2"></span>
+                </span>
+            </a>
+        </div>
+        <div class="row my-2 m-0" dir="ltr">
+            <div class="col-12 py-3">
+                <div class="row p-0 m-0">
+                    <div class="col-sm-7 col-md-8 p-2 p-sm-3 d-flex justify-content-between flex-wrap">
+                        <div class="d-inline-flex flex-column m-2 text-left">
+                            <span class="fontsize-10 uk-text-muted IRANSans">Full Name of User</span>
+                            <a asp-action="EditCustomer" asp-controller="Customer" asp-area="Admin" asp-route-id="@Model.UserId" class="fontsize-12 IRANSans_Light text-decoration-none">@Model.FullName</a>
+                        </div>
+                        <div class="d-inline-flex flex-column m-2 text-left">
+                            <span class="fontsize-10 uk-text-muted IRANSans">Full Name of Recipient</span>
+                            <span class="fontsize-12 IRANSans_Light">@Model.ReceiverName</span>
+                        </div>
+                        @if (Model.PaymentDateTime != null)
+                        {
+                            <div class="d-inline-flex flex-column m-2 text-left">
+                                <span class="fontsize-10 uk-text-muted IRANSans">Created On</span>
+                                <span class="fontsize-18 Nazanin" dir="ltr">
+                                    @Model.PaymentDateTime.ToString("MM/dd/yyyy")
+                                </span>
+                            </div>
+                        }
+                        <div class="d-inline-flex flex-column m-2 text-left">
+                            <span class="fontsize-10 uk-text-muted IRANSans">Mobile Number of Recipient</span>
+                            <span class="fontsize-12 IRANSans_Light">@Model.ReceiverMobileNumber</span>
+                        </div>
+
+                        <div class="d-inline-flex flex-column m-2 text-left">
+                            <span class="fontsize-10 uk-text-muted IRANSans">Address Recipient</span>
+                            <span class="fontsize-12 IRANSans_Light">
+                                @Model.AddressInformation
+                            </span>
+                        </div>
+                        <div class="d-inline-flex flex-column m-2 text-left">
+                            <span class="fontsize-10 uk-text-muted IRANSans">Postal Code</span>
+                            <span class="fontsize-12 IRANSans_Light">
+                                @Model.PostalCode
+                            </span>
+                        </div>
+                       
+                    </div>
+
+                    <div class="col-sm-5 col-md-4 text-center align-self-center pt-3 my-3 border-sm-right border-mobile-top border-dotted">
+                        <div class="d-inline-flex flex-column m-2">
+                            <span class="fontsize-12 uk-text-muted IRANSans">Total</span>
+                            <span class="fontsize-26 Nazanin red-lighten-7" dir="ltr">
+                                @Model.TotalPrice.ToString("N0", new System.Globalization
+                                .NumberFormatInfo()
+                                { NumberGroupSizes = new[] { 3 }, NumberGroupSeparator = "," })
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row py-3 my-2 m-0 p-0" id="order-product-detail">
+                    <div class="col-12">
+                        <vc:orders-of-shopping order-ids="@Model.OrderIds"></vc:orders-of-shopping>
+
+                    </div>
+                    <div class="col-md-12 my-2 py-2">
+                        <h3 class="fontsize-12 blue-500 IRANSans pr-2 border-bottom--blue pb-1" style="max-width:130px">Status</h3>
+                        <div class="mdc-form-field ml-2">
+                            <div class="mdc-radio">
+                                <input class="mdc-radio__native-control" data-id="@Model.Id" type="radio" asp-for="Status" value="@(Status.WaitForRegister)">
+                                <div class="mdc-radio__background">
+                                    <div class="mdc-radio__outer-circle"></div>
+                                    <div class="mdc-radio__inner-circle"></div>
+                                </div>
+                                <div class="mdc-radio__ripple"></div>
+                            </div>
+                            <label for="radio-1" class="IRANSans_Light fontsize-12">Pending</label>
+                        </div>
+                        <div class="mdc-form-field">
+                            <div class="mdc-radio">
+                                <input class="mdc-radio__native-control" data-id="@Model.Id" type="radio" asp-for="Status" value="@(Status.Registered)">
+                                <div class="mdc-radio__background">
+                                    <div class="mdc-radio__outer-circle"></div>
+                                    <div class="mdc-radio__inner-circle"></div>
+                                </div>
+                                <div class="mdc-radio__ripple"></div>
+                            </div>
+                            <label for="radio-1" class="IRANSans_Light fontsize-12">Processing</label>
+                        </div>
+                        <div class="mdc-form-field">
+                            <div class="mdc-radio">
+                                <input class="mdc-radio__native-control" data-id="@Model.Id" type="radio" asp-for="Status" value="@(Status.OnlinePaid)">
+                                <div class="mdc-radio__background">
+                                    <div class="mdc-radio__outer-circle"></div>
+                                    <div class="mdc-radio__inner-circle"></div>
+                                </div>
+                                <div class="mdc-radio__ripple"></div>
+                            </div>
+                            <label for="radio-1" class="IRANSans_Light fontsize-12">Paid Online</label>
+                        </div>
+                        <div class="mdc-form-field">
+                            <div class="mdc-radio">
+                                <input class="mdc-radio__native-control" data-id="@Model.Id" type="radio" asp-for="Status" value="@(Status.Delivered)">
+                                <div class="mdc-radio__background">
+                                    <div class="mdc-radio__outer-circle"></div>
+                                    <div class="mdc-radio__inner-circle"></div>
+                                </div>
+                                <div class="mdc-radio__ripple"></div>
+                            </div>
+                            <label for="radio-1" class="IRANSans_Light fontsize-12">Compeleted</label>
+                        </div>
+                        <div class="mdc-form-field">
+                            <div class="mdc-radio">
+                                <input class="mdc-radio__native-control" data-id="@Model.Id" type="radio" asp-for="Status" value="@(Status.Cancelled)">
+                                <div class="mdc-radio__background">
+                                    <div class="mdc-radio__outer-circle"></div>
+                                    <div class="mdc-radio__inner-circle"></div>
+                                </div>
+                                <div class="mdc-radio__ripple"></div>
+                            </div>
+                            <label for="radio-1" class="IRANSans_Light fontsize-12">Cancel</label>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-2 pt-2">
+                        <h3 class="fontsize-12 blue-500 IRANSans pr-2 border-bottom--blue pb-1" style="max-width:130px">Note</h3>
+                        <div class="uk-margin" style="max-width:600px">
+                            <textarea class="uk-textarea IRANSans_Light fontsize-12" name="shoppingDescription" rows="4" placeholder="note">@Model.Description</textarea>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <button data-id="@Model.Id" class="mdc-button mdc-button--unelevated flex-grow-1
+                    min-width--110 flex-sm-grow-0 flex-shrink-0 bg--white
+               uk-box-shadow-medium border shopping-description--submit-button">
+                            <div class="mdc-button__ripple"></div>
+                            <span class="mdc-button__label blue-700 IRANSans_Light fontsize-12">
+                                <span>Save</span>
+                                <span uk-icon="icon:arrow-left" class="mx-1 mx-sm-2"></span>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+
+                <!--Other user orders-->
+                <vc:other-user-orders user-id="@Model.UserId"></vc:other-user-orders>
+
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+

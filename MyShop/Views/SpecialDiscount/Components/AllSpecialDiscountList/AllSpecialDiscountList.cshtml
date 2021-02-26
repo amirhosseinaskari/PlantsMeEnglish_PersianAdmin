@@ -1,0 +1,224 @@
+﻿@model ProductPaginatedList
+@if (Model.Count() < 1)
+{
+    <div class="d-flex justify-content-center flex-column align-items-center margin-top-25" style="min-height:300px">
+        <div class="dana-font fontsize-16 mobile-fontsize-14 xsmobile-fontsize-12 uk-text-center margin-y-25 padding-y-10 border uk-box-shadow-medium white font-weight-600 line-height-25" style="width:400px;max-width:100%">Special Discount History is Empty</div>
+        <img style="max-height:300px" src="~/images/base/placeholderimage.jpg" />
+    </div>
+}
+else
+{
+    <ul id="product-cards-list">
+        @foreach (var item in Model)
+        {
+            var orderedImages = item.Images.OrderBy(c => c.ImageOrder).ToList();
+            string firstImage = null;
+            if (orderedImages.FirstOrDefault() != null)
+            {
+                firstImage = orderedImages.First().ImageName;
+            }
+            string secondImage = null;
+            if (orderedImages.Count() > 1)
+            {
+                secondImage = orderedImages[1].ImageName;
+            }
+            <li class="product-card-container product-specialdiscount-card-container">
+                <!--actions (view, buy and set to favorit)-->
+                <div class="product-card__actions uk-visible@s">
+                    <div class="icons-container">
+                        <a asp-controller="Products" asp-action="ProductDetail" asp-area="" asp-route-id="@item.Id" asp-route-title="@item.Title.Replace(" ","-")"
+                           class="text-decoration-none white uk-box-shadow-small"
+                           uk-tooltip="title:View Detail;pos:right;">
+                            <span class="font-color-2" uk-icon="icon:cart;ratio:.9"></span>
+                        </a>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            if (item.IsProductSaved)
+                            {
+                                <a href="#" class="text-decoration-none white uk-box-shadow-small product-saving saved-product" data-id="@item.Id"
+                                   uk-tooltip="title:Save;pos:right;">
+                                    <span class="font-color-2" uk-icon="icon:heart;ratio:.9"></span>
+                                </a>
+                            }
+                            else
+                            {
+                                <a href="#" class="text-decoration-none white uk-box-shadow-small product-saving" data-id="@item.Id"
+                                   uk-tooltip="title:Save;pos:right;">
+                                    <span class="font-color-2" uk-icon="icon:heart;ratio:.9"></span>
+                                </a>
+                            }
+
+                        }
+                        else
+                        {
+                            <a href="#login-alert-modal" uk-toggle class="text-decoration-none white uk-box-shadow-small"
+                               uk-tooltip="title:Save;pos:right;">
+                                <span class="font-color-2" uk-icon="icon:heart;ratio:.9"></span>
+                            </a>
+                        }
+                    </div>
+                </div>
+                <a asp-controller="Products" asp-action="ProductDetail" asp-area="" asp-route-id="@item.Id" asp-route-title="@item.Title.Replace(" ","-")" class="product-card uk-card uk-card-default">
+
+                    <!--discount badge-->
+                    @if (item.SpecialDiscount.Where(c => c.ExpirationDate > System.DateTime.Now).Count() > 0)
+                    {
+
+                        <div class="discount-badge">
+                            <strong class="digit-format fontsize-16 dana-font font-weight-600 white-text discount-text">@(Math.Round(item.SpecialDiscount.First().DiscountPrice * 100 / item.BasePrice))%</strong>
+                        </div>
+                    }
+                    else if (item.Discount > 0)
+                    {
+
+                <div class="discount-badge">
+                    <strong class="digit-format fontsize-14 dana-font font-weight-600 white-text discount-text">@(Math.Round((item.Discount - item.BasePrice) * 100 / item.Discount))%</strong>
+                </div>
+                    }
+                    <!--image of product slide-->
+                    <div class="uk-card-media-top w-100 product-card__image">
+                        @if (orderedImages == null)
+                        {
+                            <img class="" src="~/images/base/placeholderimage.jpg">
+                        }
+                        else if (orderedImages.Count > 0 && orderedImages.Count < 2)
+                        {
+                            <img class="lazyload" src="~/images/base/placeholderimage.jpg"
+                                 data-src="/images/products/small/product_@(item.Id)/@firstImage"
+                                 alt="@orderedImages.First().AltText" loading="lazy">
+                        }
+                        else if (orderedImages.Count > 1)
+                        {
+                            <img class="lazyload" src="~/images/base/placeholderimage.jpg"
+                                 data-src="/images/products/small/product_@(item.Id)/@firstImage"
+                                 data-second-image="/images/products/small/product_@(item.Id)/@secondImage"
+                                 alt="@orderedImages.First().AltText" loading="lazy">
+                        }
+                        else
+                        {
+                            <img class="" src="~/images/base/placeholderimage.jpg">
+                        }
+
+                    </div>
+                    <!--content of product slide-->
+                    <div class="uk-card-body padding-0 w-100 uk-text-left margin-y-10" dir="ltr">
+                        @if (item.Title.Length > 30)
+                        {
+                            <h3 class="uk-card-title dana-font fontsize-16 mobile-fontsize-14 font-color-1 font-weight-400">
+                                @item.Title.Substring(0, 30) <span>....</span>
+                            </h3>
+                        }
+                        else
+                        {
+                            <h3 class="uk-card-title dana-font fontsize-16 mobile-fontsize-14 font-color-1 font-weight-400">
+                                @item.Title
+                            </h3>
+                        }
+
+                        <!--Price of product-->
+                        @if (item.SpecialDiscount.Where(c => c.ExpirationDate > System.DateTime.Now).Count() > 0)
+                        {
+                            if (item.Stock > 0)
+                            {
+                                <div class="price-container dana-font fontsize-16 mobile-fontsize-14 font-weight-500">
+                                    <!--Old price-->
+                                    <span class="old-price font-color-4 margin-right-15">
+                                        <span>KSh</span>
+                                        <span class="digit-format">@item.BasePrice</span>
+
+                                    </span>
+                                    <!--New price with discount-->
+                                    <span class="new-price main-color font-weight-600">
+                                        <span>KSh</span>
+                                        <span class="digit-format">
+                                            @((item.BasePrice - item.SpecialDiscount.First().DiscountPrice).ToString("N0", new System.Globalization.NumberFormatInfo() { NumberGroupSizes = new[] { 3 }, NumberGroupSeparator = "," }))
+                                        </span>
+
+                                    </span>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="price-container dana-font fontsize-12">
+                                    <div class="option-divider center-align">
+                                        <strong class="font-color-4 fontsize-16 mobile-fontsize-14 font-weight-500">
+                                            Not Available
+                                        </strong>
+                                    </div>
+                                </div>
+                            }
+
+
+                        }
+                        else
+                        {
+                            if (item.Stock > 0)
+                            {
+                                <div class="price-container dana-font fontsize-16 mobile-fontsize-14 font-weight-500">
+                                    @if (item.Discount > 0)
+                                    {
+                                        <!--Old price-->
+                                    <span class="old-price font-color-4 margin-right-15">
+                                        <span>KSh</span>
+                                        <span class="digit-format">@item.Discount</span>
+
+                                    </span>
+
+                                    }
+                                    <!--New price with discount-->
+                                <span class="new-price main-color font-weight-600">
+                                    <span>KSh</span>
+                                    <span class="digit-format">
+                                        @(item.BasePrice.ToString("N0", new System.Globalization.NumberFormatInfo() { NumberGroupSizes = new[] { 3 }, NumberGroupSeparator = "," }))
+                                    </span>
+
+                                </span>
+
+                                </div>
+
+                            }
+                            else
+                            {
+                                <div class="price-container dana-font fontsize-12">
+                                    <div class="option-divider center-align">
+                                        <strong class="font-color-4 fontsize-16 mobile-fontsize-14 font-weight-500">
+                                            Not Available
+                                        </strong>
+                                    </div>
+                                </div>
+                            }
+
+                        }
+                        <!--Time counter of special discount-->
+                        <div class="uk-grid-small uk-child-width-auto margin-top-30 time-counter margin-top-40" uk-grid uk-countdown="date:  @(item.SpecialDiscount.First().ExpirationDate)" dir="ltr">
+                            <div>
+                                <div class="uk-countdown-number uk-countdown-days fontsize-12 icon"></div>
+                                <div class="uk-countdown-label uk-margin-small uk-text-center uk-visible fontsize-12">DAY</div>
+                            </div>
+
+                            <div>
+                                <div class="uk-countdown-number uk-countdown-hours fontsize-12 icon"></div>
+                                <div class="uk-countdown-label uk-margin-small uk-text-center uk-visible fontsize-12">HOUR</div>
+                            </div>
+
+                            <div>
+                                <div class="uk-countdown-number uk-countdown-minutes fontsize-12 icon"></div>
+                                <div class="uk-countdown-label uk-margin-small uk-text-center uk-visible fontsize-12">MIN</div>
+                            </div>
+
+                            <div>
+                                <div class="uk-countdown-number uk-countdown-seconds fontsize-12 icon"></div>
+                                <div class="uk-countdown-label uk-margin-small uk-text-center uk-visible fontsize-12">SEC</div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+        }
+
+    </ul>
+
+
+
+
+}

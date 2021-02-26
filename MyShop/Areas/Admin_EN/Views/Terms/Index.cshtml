@@ -1,0 +1,140 @@
+﻿@model Term
+<!--Breadcrumb for this url-->
+<div class="row p-0 m-0 bg--white py-2 my-3 uk-box-shadow-small uk-border-rounded border position-relative">
+    <div class="col-12" dir="ltr">
+        <ul class="uk-breadcrumb IRANSans_Light fontsize-12 text-left p-0 m-0 d-flex" dir="ltr">
+            <li><a href="~/En/Admin" class="fontsize-12">Dashboard</a></li>
+            <li class="mx-sm-1 uk-active">Terms</li>
+        </ul>
+        <div class="bg--blue-600 position-absolute rounded-right" style="width:8px;right:0;top:-8px;height:calc(100% + 16px);"></div>
+    </div>
+
+</div>
+<!--Terms Creation Form-->
+<div class="row my-2 m-0" dir="ltr" id="main-container">
+    <div class="col-12 uk-background-default  uk-box-shadow-medium border uk-border-rounded py-3">
+        <!--Title of terms page-->
+        <h3 class="Arial fontsize-14 text-left mx-3 my-1 py-2">
+            <span class="blue-600 border-bottom--blue py-2">Terms Page</span>
+        </h3>
+
+        <!--terms Total Information-->
+        <div class="row px-3 py-2 my-4" id="product-tech-description">
+            <div class="col-12">
+                <div class="border border--dashed form-bundle uk-border-rounded">
+                    <label class="IRANSans_Light">Content</label>
+
+                    <div class=" mx-3 my-4">
+                        <div class="IRANSans_Light fontsize-12 text-editor"
+                             style="min-height:120px">
+                             @Html.Raw(Model.Content)
+                        </div>
+                    </div>
+                    <div class="mx-md-3 mr-3 mb-3">
+                        <button class="mdc-button mdc-button--unelevated edit-terms__submit-button
+                                bg--blue-700 border px-0 uk-box-shadow-small" style="height:30px">
+                            <div class="mdc-button__ripple"></div>
+                            <span class="mdc-button__label IRANSans fontsize-10 white px-1 px-sm-2">
+                             Save Changes
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--SEO Settings-->
+        <div class="row px-3 my-4">
+            <div class="col-12 py-2">
+                <div class="border border--dashed form-bundle uk-border-rounded">
+                    <label class="IRANSans_Light">SEO Settings</label>
+                    <div class="row m-0 pt-2" dir="ltr">
+                        <!--Page Title and Meta Description-->
+                        <div class="col-sm-6 my-2 mt-sm-2 mb-sm-0 px-2 order-1 order-sm-0">
+                            <div class="custom-text-field mx-2 my-4">
+                                <label class="uk-form-label IRANSans_Light"
+                                       asp-for="TitlePage">Title</label>
+                                <div class="uk-form-controls d-flex">
+                                    <input class="uk-input IRANSans_Light fontsize-12"
+                                           asp-for="TitlePage" type="text" placeholder="title(60-70 chars)">
+                                </div>
+                            </div>
+                            <div class="custom-text-field mx-2 my-4">
+                                <label class="uk-form-label IRANSans_Light" asp-for="RedirectURL">Redirect URL (301 redirect)</label>
+                                <div class="uk-form-controls d-flex">
+                                    <input class="uk-input IRANSans_Light fontsize-12" asp-for="RedirectURL" type="text" placeholder="enter target page">
+                                </div>
+                            </div>
+                            <div class="custom-text-field mx-2 my-4">
+                                <label class="uk-form-label IRANSans_Light"
+                                       asp-for="MetaDescription">Meta Description</label>
+                                <div class="uk-form-controls d-flex">
+                                    <textarea asp-for="MetaDescription" class="uk-textarea IRANSans_Light fontsize-12 uk-border-rounded" rows="5"
+                                              placeholder="meta description(50-160 chars)">@Model.MetaDescription</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Preview in Google Results-->
+                        <div class="col-sm-6 my-2 order-0 order-sm-1 px-2 py-3" dir="ltr">
+                            <div class="border form-bundle uk-border-rounded m-2">
+                                <label class="IRANSans_Light">Search Engine Preview</label>
+                                <div class="my-3 p-3">
+                                    @if (string.IsNullOrEmpty(Model.TitlePage))
+                                    {
+                                        <div id="title-page-preview"
+                                             class="IRANSans fontsize-14" style="color:#1a0dab">Title</div>
+                                    }
+                                    else
+                                    {
+                                        <div id="title-page-preview"
+                                             class="IRANSans fontsize-14" style="color:#1a0dab">@Model.TitlePage</div>
+                                        }
+                                    @if (string.IsNullOrEmpty(Model.MetaDescription))
+                                    {
+                                <div id="metadescription-page-preview"
+                                     class="IRANSans_Light fontsize-12">If leave empty, it automatically will generate by search engine</div>
+                                    }
+                                    else
+                                    {
+                                        <div id="metadescription-page-preview"
+                                             class="IRANSans_Light fontsize-12">@Model.MetaDescription</div>
+                                        }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Submit button-->
+                    <div class="px-3 mb-3">
+                        <button class="mdc-button mdc-button--unelevated terms-seo-settings__submit-button
+                            bg--blue-700 border px-0 uk-box-shadow-small" data-id="@Model.Id" style="height:30px">
+                            <div class="mdc-button__ripple"></div>
+                            <span class="mdc-button__label IRANSans fontsize-10 white px-1 px-sm-2">
+                               Save Changes
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+       
+    </div>
+</div>
+@section Scripts{
+    <script>
+
+        const mdcButton = $('.mdc-button');
+        for (let i = 0; i < mdcButton.length; i++) {
+            mdc.ripple.MDCRipple.attachTo(document.querySelectorAll('.mdc-button')[i]);
+        }
+
+       
+        const mdcTextField = $('.mdc-text-field');
+        for (let i = 0; i < mdcTextField.length; i++) {
+            mdc.textField.MDCTextField.attachTo(document.querySelectorAll('.mdc-text-field')[i]);
+        }
+
+    </script>
+}

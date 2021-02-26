@@ -1,0 +1,280 @@
+﻿@model ContactUs
+<!--Breadcrumb for this url-->
+<div class="row p-0 m-0 bg--white py-2 my-3 uk-box-shadow-small uk-border-rounded border position-relative">
+    <div class="col-12" dir="rtl">
+        <ul class="uk-breadcrumb IRANSans_Light fontsize-12 text-right p-0 m-0 d-flex" dir="rtl">
+            <li><a href="~/Admin" class="fontsize-12">مدیریت</a></li>
+            <li class="mx-sm-1 uk-active">صفحه تماس باما</li>
+        </ul>
+        <div class="bg--blue-600 position-absolute rounded-left" style="width:8px;left:0;top:-8px;height:calc(100% + 16px);"></div>
+    </div>
+
+</div>
+<!--Product Creation Form-->
+<div class="row my-2 m-0" dir="rtl" id="main-container">
+    <div class="col-12 uk-background-default  uk-box-shadow-medium border uk-border-rounded py-3">
+        <!--Title of contact us page-->
+        <h3 class="iranyekanwebregular fontsize-14 text-right mx-3 my-1 py-2">
+            <span class="blue-600 border-bottom--blue py-2"> صفحه تماس باما</span>
+        </h3>
+        <!--contact us total information-->
+        <form class="row px-3 my-4 py-2" dir="rtl" role="form">
+            <div class="col-12">
+                <div class="border border--dashed form-bundle uk-border-rounded">
+                    <label class="IRANSans_Light">اطلاعات تماس</label>
+                    <div class="row m-0 py-3">
+                        <!--Email-->
+                        <div class="col-md-4 col-sm-4 my-3">
+                            <div class="custom-text-field">
+                                <label class="uk-form-label IRANSans_Light" asp-for="Email">ایمیل</label>
+                                <div class="uk-form-controls">
+                                    <input class="uk-input IRANSans_Light fontsize-12" asp-for="Email" tabindex="0"
+                                           type="text" placeholder="ایمیل را وارد کنید">
+                                </div>
+                            </div>
+                        </div>
+                        <!--Phone-->
+                        <div class="col-md-4 col-sm-4 my-3">
+                            <div class="custom-text-field">
+                                <label class="uk-form-label IRANSans_Light" asp-for="Phone">تلفن</label>
+                                <div class="uk-form-controls">
+                                    <input asp-for="Phone" class="uk-input IRANSans_Light fontsize-12 number-type" type="text"
+                                           placeholder="شماره تلفن را وارد کنید">
+                                </div>
+                            </div>
+                        </div>
+                        <!--Mobile-->
+                        <div class="col-md-4 col-sm-4 my-3">
+                            <div class="custom-text-field">
+                                <label class="uk-form-label IRANSans_Light" asp-for="Mobile">موبایل</label>
+                                <div class="uk-form-controls">
+                                    <input asp-for="Mobile" class="uk-input IRANSans_Light fontsize-12 number-type"
+                                           type="text" placeholder="شماره همراه را وارد کنید">
+                                </div>
+                            </div>
+                        </div>
+                        <!--WhatsApp-->
+                        <div class="col-md-4 col-sm-4 my-3">
+                            <div class="custom-text-field">
+                                <label class="uk-form-label IRANSans_Light" asp-for="WhatsAppNumber">واتس اپ</label>
+                                <div class="uk-form-controls">
+                                    <input class="uk-input IRANSans_Light fontsize-12"
+                                           asp-for="WhatsAppNumber" type="text" placeholder="شماره واتس اپ را وارد کنید">
+                                </div>
+                            </div>
+                        </div>
+                        <!--Google Map-->
+                        <div class="col-md-4 col-sm-4 my-3">
+                            <div class="custom-text-field">
+                                <label class="uk-form-label IRANSans_Light" asp-for="WhatsAppNumber">گوگل مپ</label>
+                                <div class="uk-form-controls">
+                                    <input class="uk-input IRANSans_Light fontsize-12"
+                                           asp-for="GoogleMap" type="text" placeholder="کد نقشه گوگل خود را وارد کنید">
+                                </div>
+                            </div>
+                        </div>
+                        <!--Google Map Link-->
+                        <div class="col-md-4 col-sm-4 my-3">
+                            <div class="custom-text-field">
+                                <label class="uk-form-label IRANSans_Light" asp-for="WhatsAppNumber">لینک گوگل مپ</label>
+                                <div class="uk-form-controls">
+                                    <input class="uk-input IRANSans_Light fontsize-12"
+                                           asp-for="GoogleMapLink" type="text" placeholder="لینک نقشه گوگل خود را وارد کنید">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-100"></div>
+                        <div class="col-sm-8 col-md-6">
+                            <div class="custom-text-field mt-3">
+                                <label class="uk-form-label IRANSans_Light" asp-for="Address">آدرس</label>
+                                <div class="uk-form-controls d-flex">
+                                    <textarea asp-for="Address"
+                                              class="uk-textarea IRANSans_Light fontsize-12 uk-border-rounded" rows="5"
+                                              placeholder="آدرس را وارد کنید">@Model.Address</textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-100"></div>
+                    <!--Submit button-->
+                    <div class="col-12 mt-2 mb-3 mx-2">
+                        <button class="mdc-button mdc-button--unelevated contactus-totalInformation__submit-button
+                                bg--blue-700 border uk-box-shadow-small px-0 h-30">
+                            <div class="mdc-button__ripple"></div>
+                            <span class="mdc-button__label IRANSans fontsize-10 white px-1 px-sm-2">
+                                ویرایش و ذخیره تغییرات
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+        <!--contact us social media-->
+        <form class="row px-3 my-4 py-2" dir="rtl" role="form">
+            <div class="col-12">
+                <div class="border border--dashed form-bundle uk-border-rounded">
+                    <label class="IRANSans_Light">شبکه های اجتماعی</label>
+                    <div class="row m-0 py-3">
+
+                        <!--Facebook-->
+                        <div class="col-md-3 col-sm-4 my-3">
+                            <div class="custom-text-field">
+                                <label class="uk-form-label IRANSans_Light" asp-for="Facebook">فیسبوک</label>
+                                <div class="uk-form-controls">
+                                    <input class="uk-input IRANSans_Light fontsize-12"
+                                           asp-for="Facebook" type="text" placeholder="لینک فیسبوک را وارد کنید">
+                                </div>
+                            </div>
+                        </div>
+                        <!--Instagram-->
+                        <div class="col-md-3 col-sm-4 my-3">
+                            <div class="custom-text-field">
+                                <label class="uk-form-label IRANSans_Light" asp-for="Instagram">آی دی اینستاگرام</label>
+                                <div class="uk-form-controls">
+                                    <input class="uk-input IRANSans_Light fontsize-12"
+                                           asp-for="Instagram" type="text" placeholder="آی دی اینتساگرام را وارد کنید">
+                                </div>
+                            </div>
+                        </div>
+                        <!--Telegram-->
+                        <div class="col-md-3 col-sm-4 my-3">
+                            <div class="custom-text-field">
+                                <label class="uk-form-label IRANSans_Light" asp-for="Telegram">لینک تلگرام</label>
+                                <div class="uk-form-controls">
+                                    <input class="uk-input IRANSans_Light fontsize-12"
+                                           asp-for="Telegram" type="text" placeholder="لینک تلگرام را وارد کنید">
+                                </div>
+                            </div>
+                        </div>
+                        <!--twitter-->
+                        <div class="col-md-3 col-sm-4 my-3">
+                            <div class="custom-text-field">
+                                <label class="uk-form-label IRANSans_Light" asp-for="Twitter">لینک توییتر</label>
+                                <div class="uk-form-controls">
+                                    <input class="uk-input IRANSans_Light fontsize-12"
+                                           asp-for="Twitter" type="text" placeholder="لینک توییتر را وارد کنید">
+                                </div>
+                            </div>
+                        </div>
+                        <!--aparat-->
+                        <div class="col-md-3 col-sm-4 my-3">
+                            <div class="custom-text-field">
+                                <label class="uk-form-label IRANSans_Light" asp-for="Aparat">لینک آپارات</label>
+                                <div class="uk-form-controls">
+                                    <input class="uk-input IRANSans_Light fontsize-12"
+                                           asp-for="Aparat" type="text" placeholder="لینک یوتیوب را وارد کنید">
+                                </div>
+                            </div>
+                        </div>
+                        <!--youtube-->
+                        <div class="col-md-3 col-sm-4 my-3">
+                            <div class="custom-text-field">
+                                <label class="uk-form-label IRANSans_Light" asp-for="YouTube">لینک یوتیوب</label>
+                                <div class="uk-form-controls">
+                                    <input class="uk-input IRANSans_Light fontsize-12"
+                                           asp-for="YouTube" type="text" placeholder="لینک یوتیوب را وارد کنید">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-100"></div>
+                        <!--Submit button-->
+                        <div class="col-12 mt-2 mb-2">
+                            <button type="button" class="mdc-button mdc-button--unelevated contactus-social__submit-button
+                                bg--blue-700 border uk-box-shadow-small px-0 h-30">
+                                <div class="mdc-button__ripple"></div>
+                                <span class="mdc-button__label IRANSans fontsize-10 white px-1 px-sm-2">
+                                    ویرایش و ذخیره تغییرات
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <!--SEO Settings-->
+        <form class="row px-3 my-4 py-2" role="form">
+            <div class="col-12">
+                <div class="border border--dashed form-bundle uk-border-rounded">
+                    <label class="IRANSans_Light">تنظیمات سئو</label>
+                    <!--Create new tags-->
+                    <div class="row m-0 pt-2" dir="rtl">
+                        <div class="col-sm-6 my-2 px-2 order-1 order-sm-0">
+                            <div class="custom-text-field mx-2 my-4">
+                                <label class="uk-form-label IRANSans_Light" asp-for="TitlePage">عنوان</label>
+                                <div class="uk-form-controls d-flex">
+                                    <input class="uk-input IRANSans_Light fontsize-12" asp-for="TitlePage" tabindex="10"
+                                           type="text" placeholder="عنوان (60 تا 70 کاراکتر)">
+                                </div>
+                            </div>
+                            <div class="custom-text-field mx-2 my-4">
+                                <label class="uk-form-label IRANSans_Light" asp-for="RedirectURL">لینک انتقال (redirect 301)</label>
+                                <div class="uk-form-controls d-flex">
+                                    <input class="uk-input IRANSans_Light fontsize-12" asp-for="RedirectURL" type="text" placeholder="لینک صفحه هدف را وارد کنید">
+                                </div>
+                            </div>
+                            <div class="custom-text-field mx-2 my-4">
+                                <label class="uk-form-label IRANSans_Light" asp-for="MetaDescription">توضیحات</label>
+                                <div class="uk-form-controls d-flex">
+                                    <textarea asp-for="MetaDescription" tabindex="11"
+                                              class="uk-textarea IRANSans_Light fontsize-12 uk-border-rounded" rows="5"
+                                              placeholder="توضیحات را وارد کنید / 50 تا 160 کاراکتر">@Model.MetaDescription</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 my-2 order-0 order-sm-1 px-2 py-3" dir="rtl">
+                            <div class="border form-bundle uk-border-rounded m-2">
+                                <label class="IRANSans_Light">پیش نمایش در گوگل</label>
+                                <div class="my-3 p-3">
+                                    @if (string.IsNullOrEmpty(Model.TitlePage))
+                                    {
+                                        <div id="title-page-preview" class="IRANSans fontsize-14" style="color:#1a0dab">عنوان صفحه | پیش فرض</div>
+                                    }
+                                    else
+                                    {
+                                        <div id="title-page-preview" class="IRANSans fontsize-14" style="color:#1a0dab">@Model.TitlePage</div>
+                                    }
+                                    @if (string.IsNullOrEmpty(Model.MetaDescription))
+                                    {
+                                        <div id="metadescription-page-preview" class="IRANSans_Light fontsize-12">توضیحات در صورت خالی بودن به صورت پیش فرض توسط موتور جستجو انتخاب می شود</div>
+                                    }
+                                    else
+                                    {
+                                        <div id="metadescription-page-preview" class="IRANSans_Light fontsize-12">@Model.MetaDescription</div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Submit button-->
+                    <div class="col-12 mb-3 order-2 order-sm-2">
+                        <button type="button" class="mdc-button mdc-button--unelevated contactus-seosetting__submit-button
+                                bg--blue-700 border uk-box-shadow-small px-0 h-30" tabindex="12">
+                            <div class="mdc-button__ripple"></div>
+                            <span class="mdc-button__label IRANSans fontsize-10 white px-1 px-sm-2">
+                                ویرایش و ذخیره تغییرات
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+
+        const mdcButton = $('.mdc-button');
+        for (let i = 0; i < mdcButton.length; i++) {
+            mdc.ripple.MDCRipple.attachTo(document.querySelectorAll('.mdc-button')[i]);
+        }
+
+        const mdcTextField = $('.mdc-text-field');
+        for (let i = 0; i < mdcTextField.length; i++) {
+            mdc.textField.MDCTextField.attachTo(document.querySelectorAll('.mdc-text-field')[i]);
+        }
+
+    </script>
+}

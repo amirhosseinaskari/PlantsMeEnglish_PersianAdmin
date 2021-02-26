@@ -1,0 +1,43 @@
+﻿@import "bourbon"; 
+@import "mixins/custom-mixins";
+#faq-title h1{
+    min-height:100px;
+    
+    span{
+        @include prefixer(transform, translateY(-10px),("webkit","moz","o"));
+        @include multiple-devices-query("Mobile"){
+            font-size:15px;
+        }
+    }
+
+}
+#faq-content {
+    @include prefixer(transform, translateY(-50px),("webkit","moz","o"));
+
+    .uk-accordion-title {
+        display: flex;
+        align-items: center;
+        position: relative;
+
+        &::before {
+            position: absolute;
+            left: 2px;
+
+            @include multiple-devices-query("Mobile") {
+                display:none;
+            }
+        }
+    }
+
+    .faq-question {
+        @include multiple-devices-query("Mobile") {
+            font-size: 14px !important;
+        }
+    }
+
+    .faq-answer {
+        @include multiple-devices-query("Mobile") {
+            font-size: 14px !important;
+        }
+    }
+}

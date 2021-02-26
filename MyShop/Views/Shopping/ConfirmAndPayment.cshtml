@@ -1,0 +1,234 @@
+﻿@model Shopping
+@{
+    ViewData["Title"] = "ConfirmAndPayment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    
+}
+
+
+@section Style{
+    <link href="~/dist/sass/pages/shopping.min.css" rel="stylesheet" />
+}
+@section JavaScript{
+    <script async src="~/dist/js/pages/_shopping.min.js" type="module"></script>
+}
+<section id="container-section" class="uk-overflow-hidden">
+    <!--shopping steps-->
+    <div class="shopping-steps-container" dir="ltr">
+        <hr class="shopping-icon-divider" />
+        <div>
+            <!--review shopping basket (first step)-->
+            <div class="d-flex flex-column align-items-center">
+                <div class="shopping-steps passed-step">
+                    <img src="~/images/icons/product-detail/shopping-cart.svg" />
+                </div>
+                <div class="dana-font fontsize-14 mobile-fontsize-12 font-weight-500 step-text margin-top-10">View Bag</div>
+            </div>
+
+            <div class="divider flex-grow-1"></div>
+            <!--set receiver address (second step)-->
+            <div class="d-flex flex-column align-items-center">
+                <div class="shopping-steps passed-step">
+                    <img src="~/images/icons/product-detail/location.svg" />
+                </div>
+                <div class="dana-font fontsize-14 mobile-fontsize-12 font-weight-500 step-text margin-top-10">Shipping Address</div>
+            </div>
+            <div class="divider flex-grow-1"></div>
+            <!--payment and confirmtion (third step)-->
+            <div class="d-flex flex-column align-items-center">
+                <div class="shopping-steps current-step">
+                    <img src="~/images/icons/product-detail/hand.svg" />
+                </div>
+                <div class="dana-font fontsize-14 mobile-fontsize-12 font-weight-500 step-text margin-top-10">Payment</div>
+            </div>
+        </div>
+    </div>
+
+    
+    <!--main content-->
+    <div id="main-content" class="position-relative" dir="ltr">
+        <div id="confirmtion-information" class="margin-top-5">
+            <div class="confirmtion-item">
+                <vc:shopping-order-list shopping-id="@Model.Id"></vc:shopping-order-list>
+            </div>
+            <div class="confirmtion-item">
+
+                <div class="dana-font fontsize-16 mobile-fontsize-14 line-height-25 digit-format
+                     font-weight-400 padding-y-10 submited-address-container">
+                    <div>
+                        <span class="font-weight-600">Receiver Name:</span>
+                        <span class="margin-left-5">@Model.ReceiverName</span>
+                    </div>
+                    <div>
+                        <div>
+                            <span class="font-weight-600">Phone:</span>
+                            <span class="margin-left-5">@Model.ReceiverMobileNumber</span>
+                        </div>
+                        <span class="fontsize-16 uk-text-muted margin-x-10">|</span>
+                        <div>
+                            <span class="font-weight-600">Postal Code:</span>
+                            <span class="margin-left-5">@Model.PostalCode</span>
+                        </div>
+                    </div>
+                    <div>
+
+                        @Model.AddressInformation
+                    </div>
+                </div>
+                <div class="margin-y-10">
+                    <h3 class="dana-font fontsize-16 mobile-fontsize-14 font-weight-400 uk-text-left font-weight-600 margin-bottom-0">Do you have a voucher?</h3>
+                    <div class="d-flex align-items-center uk-flex-wrap" dir="ltr">
+                        <input class="uk-input uk-form-width-medium dana-font margin-y-5
+                               discount-code-input fontsize-14 mobile-fontsize-12 margin-right-10"
+                               name="discountCode"
+                               type="text" placeholder="Enter voucher code here" >
+                        <button class="uk-button uk-button-default dana-font discount-submit mobile-fontsize-12 margin-y-5
+                                fontsize-14" data-id="@Model.Id">
+                            Add Voucher
+                        </button>
+                    </div>
+                    <span class="success-discount-code dana-font green-text fontsize-12 d-none font-weight-400"></span>
+                    <span class="error-discount-code dana-font red-text fontsize-12 d-none font-weight-400"></span>
+                </div>
+
+                @if (Model.HasLocalPaymentOption)
+                {
+                    <div class="d-flex align-items-end margin-y-15 uk-flex-wrap">
+                        <div class="dana-font fontsize-16 mobile-fontsize-14 font-weight-600 black-text">
+                            Payment Method: 
+                            <div class="font-weight-400 uk-text-secondary fontsize-14 mobile-fontsize-12">
+                                How do you want to pay for your order?
+                            </div>
+                        </div>
+                        <div class="payment-options-container margin-left-25">
+                            <label class="custom-radio-input-container">
+
+                                <input class="uk-radio custom-radio-input margin-top-5 margin-right-5" data-id="@Model.Id"
+                                       type="radio" asp-for="IsLocalPayment" value="false">
+                                <span class="checkmark"></span>
+                                <span class="dana-font fontsize-14 mobile-fontsize-12 margin-left-5">Pay Now</span>
+
+                            </label>
+
+                            <label class="custom-radio-input-container">
+
+                                <input class="uk-radio custom-radio-input margin-top-5 margin-right-5" data-id="@Model.Id"
+                                       type="radio" asp-for="IsLocalPayment" value="true">
+                                <span class="checkmark"></span>
+                                <span class="dana-font fontsize-14 mobile-fontsize-12 margin-left-5">M-PESA On Delivery</span>
+                            </label>
+
+
+                        </div>
+                    </div>
+
+                }
+            </div>
+            <div class="goto-next-button padding-20 position-sticky uk-sticky" dir="ltr">
+                <a asp-action="PaymentGateway" asp-controller="Shopping" asp-route-shoppingId="@Model.Id" class="wave-button uk-box-shadow-medium black border-radius-3 padding-x-15">
+                    <span class="dana-font fontsize-14 xsmobile-fontsize-12 font-weight-500 white-text">
+                        Confirm Order
+                    </span>
+                </a>
+                <div class="">
+                    <div class="dana-font fontsize-16 mobile-fontsize-14 xsmobile-fontsize-12 font-weight-500">
+                        Total
+                    </div>
+                    <div class="d-flex margin-top-5 font-weight-600">
+                        <span class="dana-font fontsize-16 mobile-fontsize-14 xsmobile-fontsize-12">KSh</span>&nbsp;
+                        <span class="dana-font fontsize-16 mobile-fontsize-14 xsmobile-fontsize-12 total-price digit-format">
+                            @Model.TotalPrice.ToString("N0", new System.Globalization
+                        .NumberFormatInfo()
+                        { NumberGroupSizes = new[] { 3 }, NumberGroupSeparator = "," })
+
+                        </span>&nbsp;
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="margin-y-10 d-flex align-items-end">
+                <a asp-action="ShoppingBasket" asp-controller="Shopping" asp-area=""
+                   class="text-decoration-none border-bottom blue-text dana-font fontsize-12 xsmobile-fontsize-12 d-inline-flex">
+                    <span class="margin-left-10">Return to view bag</span>
+                    <span uk-icon="icon:arrow-right"></span>
+                </a>
+                <span class="margin-x-10 uk-text-muted align-self-start">|</span>
+                <a asp-action="AddressInformation" asp-controller="Address"
+                   asp-area=""
+                   asp-route-totalPrice="@Model.TotalPrice"
+                   class="text-decoration-none border-bottom blue-text dana-font fontsize-12 xsmobile-fontsize-12 d-inline-flex">
+                    <span class="margin-left-10">Return to Shipping Address</span>
+                    <span uk-icon="icon:arrow-right"></span>
+                </a>
+            </div>
+        </div>
+        <!--price summary and details-->
+        <div id="price-summary-container">
+            <div id="price-summary" class="margin-y-20 my-uk-sticky" uk-sticky="bottom:true;offset:100">
+                <ul class="uk-list uk-list-divider add-to-buy-bucket--list">
+                    <li dir="ltr" class="d-flex align-items-center">
+                        <div class="dana-font fontsize-14 xsmobile-fontsize-12 font-color-3 font-weight-400 uk-text-left">
+                            <span>Subtotal</span>
+                            <span class="dana-font fontsize-14 xsmobile-fontsize-12 font-weight-500 orders-count digit-format">(@Model.OrdersCount)</span>
+                        </div>
+                        <div class="dana-font fontsize-16 xsmobile-fontsize-14 font-weight-500 uk-text-left digit-format">
+                            <span>KSh</span>
+                            <span class="total-price digit-format">
+                                @Model.BasePrice.ToString("N0", new System.Globalization.NumberFormatInfo() { NumberGroupSizes = new[] { 3 }, NumberGroupSeparator = "," })
+                            </span>
+                            
+                        </div>
+                    </li>
+                    <li dir="ltr" class="d-flex align-items-center">
+                        <div class="dana-font fontsize-14 xsmobile-fontsize-12 font-color-3 font-weight-400">
+                            <span>Shipping</span>
+                        </div>
+                        <div class="dana-font fontsize-16 xsmobile-fontsize-14 font-weight-500 uk-text-left digit-format">
+                            @switch (Model.DeliveryPrice)
+                            {
+                                case 0:
+                                    <text>Free</text>
+                                    break;
+                                case -2:
+                                    <text>Cash on Delivery</text>
+                                    break;
+                                default:
+                                    <text>
+                                        <span>KSh</span> &nbsp;
+                                        <span>@Model.DeliveryPrice.ToString("N0", new System.Globalization.NumberFormatInfo() { NumberGroupSizes = new[] { 3 }, NumberGroupSeparator = "," })</span>
+                                    </text>
+                                    break;
+                            }
+                        </div>
+                    </li>
+                    <li dir="ltr" class="d-flex align-items-center">
+                        <div class="dana-font fontsize-14 xsmobile-fontsize-12 font-color-3 font-weight-400">
+                            <span>Discount</span>
+                        </div>
+                        <div class="dana-font fontsize-14 xsmobile-fontsize-12 font-weight-500 flex-grow-1 digit-format uk-text-left">@Model.DiscountPrice</div>
+                    </li>
+                    <li dir="ltr" class="d-flex align-items-center">
+                        <div class="dana-font fontsize-16 mobile-fontsize-14 font-weight-500">
+                            <span>Total</span>
+                        </div>
+                        <div class="dana-font fontsize-20 xsmobile-fontsize-18 font-weight-600 uk-text-left ">
+                            <span>KSh</span>
+                            <span class="total-price digit-format">@Model.TotalPrice.ToString("N0", new System.Globalization.NumberFormatInfo() { NumberGroupSizes = new[] { 3 }, NumberGroupSeparator = "," })</span>
+                        </div>
+                    </li>
+                </ul>
+                <div class="margin-y-25 dana-font fontsize-14 line-height-25 font-weight-400">
+                    Items in your cart are not reserved until you compelete your purchase.
+                </div>
+                <div class="margin-y-20 go-to-nex--button">
+                    <a asp-action="PaymentGateway" asp-controller="Shopping" asp-route-shoppingId="@Model.Id"
+                       class="wave-button uk-box-shadow-medium black border-radius-3 padding-x-15 ">
+                        <span class="dana-font fontsize-14 xsmobile-fontsize-12 font-weight-500 white-text">
+                            Confirm Order
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

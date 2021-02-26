@@ -1,0 +1,12 @@
+﻿@model IEnumerable<CustomerTitleDropDown>
+@if(Model.Count() < 1)
+{
+    <option class="IRANSans fontsize-12 m-2" value="-1">No User Created</option>
+} 
+@foreach (var item in Model)
+{
+
+    <option class="IRANSans fontsize-12 m-2" value="@item.Name">@item.Name</option>
+
+
+}

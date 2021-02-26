@@ -1,0 +1,11 @@
+﻿@model IEnumerable<Blog>
+<ul id="related-blog-list" class="uk-list uk-list-divider">
+    @foreach (var item in Model)
+    {
+        <li>
+            <a asp-action="BlogDetail" asp-controller="Blog" class="dana-font font-weight-500 fontsize-14 mobile-fontsize-12 font-color-3 line-height-25"
+               asp-area="" asp-route-id="@item.BlogId" 
+               asp-route-blogTitle="@item.Title.Replace(" ","-")">@item.Title</a>
+        </li>
+    }
+</ul>

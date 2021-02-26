@@ -1,0 +1,49 @@
+﻿@import "mixins/custom-mixins";
+/*================== Colors =======================*/
+$my-colors: ("blue-300":#4FC3F7,"blue-700":#0288D1,"blue-600":#039BE5, "purple-1":#6A1B9A,"green-2":#1bd7ab, "blue-500":#2e9dc8, "white":#fff, "red-lighten-1":#ef5350,"red-lighten-2":#e57373,"red-lighten-5":#fff4f5, "red-lighten-6":#FF3D00, "red":#f44336,"red-darken-1":#e53935,"grey-darken-1":#757575, "red-lighten-7":#f73e3a,"red-lighten-8":rgb(236, 43, 0), "grey-darken-4":#212121,"grey-light-1":#efefef,"grey-light-2":#fafafa,"light":#f9f9f9, "light-2":#f9f9f942,"light-3":#f8f8f85c,"green-1":#1bd741,"gold":#ffeb71,"text-black":#555555); 
+@each $color-name, $color-code in $my-colors{
+    .#{$color-name}{
+        color:$color-code !important;
+    }
+    .bg--#{$color-name}{ 
+        background-color:$color-code !important;
+    }
+}
+.bg-gradient--red-light {
+    background: rgba(255,244,245,1);
+    background: -moz-linear-gradient(top, rgba(255,244,245,1) 0%, rgba(255,244,245,1) 48%, rgba(255,255,255,1) 100%);
+    background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(255,244,245,1)), color-stop(48%, rgba(255,244,245,1)), color-stop(100%, rgba(255,255,255,1)));
+    background: -webkit-linear-gradient(top, rgba(255,244,245,1) 0%, rgba(255,244,245,1) 48%, rgba(255,255,255,1) 100%);
+    background: -o-linear-gradient(top, rgba(255,244,245,1) 0%, rgba(255,244,245,1) 48%, rgba(255,255,255,1) 100%);
+    background: -ms-linear-gradient(top, rgba(255,244,245,1) 0%, rgba(255,244,245,1) 48%, rgba(255,255,255,1) 100%);
+    background: linear-gradient(to bottom, rgba(255,244,245,1) 0%, rgba(255,244,245,1) 48%, rgba(255,255,255,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fff4f5', endColorstr='#ffffff', GradientType=0 );
+}
+.bg-gradient--blue {
+    @include gradient(right,(#0288d1,#26c6da));
+}
+.bg-gradient--pink {
+    @include gradient(right,(#ff5252,#f48fb1));
+}
+.bg-gradient--orange {
+    @include gradient(right,(#ff6f00,#ffca28)); 
+}
+.bg-gradient--green {
+    @include gradient(right,(#43a047,#1de9b6));
+}
+.bg-gradient--purple {
+    @include gradient(right,(#9368bb,#7998ff));
+}
+.bg--transparent-black {
+    background-color: transparentize(black, .7); 
+}
+.bg-gradient--darkblue--radial {
+    background: rgb(43,63,91);
+    background: -moz-radial-gradient(circle, rgba(43,63,91,1) 5%, rgba(17,33,54,1) 100%);
+    background: -webkit-radial-gradient(circle, rgba(43,63,91,1) 5%, rgba(17,33,54,1) 100%);
+    background: radial-gradient(circle, rgba(43,63,91,1) 5%, rgba(17,33,54,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#2b3f5b",endColorstr="#112136",GradientType=1);
+}
+.bg--carbon {
+    background: #3a3a3a !important;
+}

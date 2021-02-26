@@ -1,0 +1,45 @@
+﻿#discount-analytics-table {
+    border-collapse: collapse;
+    border-spacing: 0;
+
+    tr {
+        border-collapse: collapse;
+        border-spacing: 0;
+
+        td, th {
+            padding-left: 10px;
+            text-align: left;
+            border: 1px solid #dedede;
+            min-height: 80px;
+            vertical-align: middle;
+
+            div.td--title {
+                min-width: 140px;
+            }
+
+            div.td--name, div.td--date {
+                min-width: 100px;
+            }
+
+            div.td--number {
+                min-width: 70px;
+            }
+
+            div.td--status {
+                min-width: 90px;
+            }
+
+            div.td--row-number {
+                min-width: 80px;
+            }
+
+            div.td--status {
+                min-width: 90px;
+            }
+        }
+
+        th {
+            text-align: center
+        }
+    }
+}

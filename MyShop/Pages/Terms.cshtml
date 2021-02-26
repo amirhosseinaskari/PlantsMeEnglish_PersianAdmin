@@ -1,0 +1,29 @@
+﻿@page
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, MyShop
+@model MyShop.Pages.TermsModel
+
+@{
+    ViewData["Title"] = Model.Term.TitlePage;
+    ViewData["MetaDescription"] = Model.Term.MetaDescription;
+    ViewData["RedirectURL"] = Model.Term.RedirectURL;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Schema{
+    <vc:home-schema></vc:home-schema>
+
+}
+@section Style{
+    <link href="~/dist/sass/pages/aboutus.min.css" rel="stylesheet" />
+}
+@section JavaScript{
+    <script async src="~/dist/js/pages/_contactus.min.js" type="module"></script>
+}
+<section id="about-page" class="padding-y-20">
+    <div class="margin-y-20" dir="ltr">
+        <div class="text-left dana-font fontsize-16 mobile-fontsize-14 line-height-30 uk-text-justify" dir="ltr">
+            @Html.Raw(Model.Term.Content)
+        </div>
+    </div>
+</section>
+

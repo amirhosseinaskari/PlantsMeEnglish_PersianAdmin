@@ -1,0 +1,97 @@
+﻿@model PaginatedList<Ticket>
+@if (Model.TotalPages > 1)
+{
+
+    <div class="uk-text-center digit-format" id="ticket-list__pageination-buttons-container" dir="rtl">
+        <div class="uk-margin">
+            <ul class="unstyled-list d-flex justify-content-center align-items-center pagination-list padding-0 margin-0" dir="ltr">
+
+                @if (Model.HasPreviousPage)
+                {
+                    <li class="margin-x-5">
+                        <button data-page-index="@(Model.PageIndex - 1)" class="uk-button uk-button-default pagination--button">
+
+                            <span class="dana-font fontsize-12 font-weight-500">
+                                قبلی
+                            </span>
+                        </button>
+                    </li>
+                }
+                @{
+                    bool isManyPages = false;
+
+                }
+                @for (int n = 1; n <= Model.TotalPages; n++)
+                {
+
+                    if (isManyPages && (Math.Abs(Model.PageIndex - n) > 1) && n != Model.TotalPages)
+                    {
+                        continue;
+                    }
+                    else if ((Math.Abs(Model.PageIndex - n) > 1)
+                         && n != 1 && n != Model.TotalPages && Model.TotalPages > 6)
+                    {
+                        <li class="margin-x-5">
+                            <button class="uk-button uk-button-default pagination--button">
+
+                                <span class="dana-font fontsize-12 font-weight-500">
+                                    ...
+                                </span>
+                            </button>
+                        </li>
+                        isManyPages = true;
+                        continue;
+                    }
+                    else
+                    {
+                        isManyPages = false;
+
+                    }
+                    if (Model.PageIndex == n)
+                    {
+                        <li class="margin-x-5">
+                            <button class="uk-button uk-button-default pagination--button uk-disabled">
+
+                                <span class="dana-font fontsize-12 font-weight-500">
+                                    @n
+                                </span>
+                            </button>
+                        </li>
+
+                    }
+                    else
+                    {
+                        <li class="margin-x-5">
+                            <button data-page-index="@n" class="uk-button uk-button-default pagination--button">
+
+                                <span class="dana-font fontsize-12 font-weight-500">
+                                    @n
+                                </span>
+                            </button>
+                        </li>
+
+                    }
+
+                }
+
+
+                @if (Model.HasNextPage)
+                {
+                    <li class="margin-x-5">
+                        <button data-page-index="@(Model.PageIndex + 1)" class="uk-button uk-button-default pagination--button">
+
+                            <span class="dana-font fontsize-12 font-weight-500">
+                                بعدی
+                            </span>
+                        </button>
+                    </li>
+
+                }
+
+            </ul>
+        </div>
+    </div>
+
+
+
+}

@@ -1,0 +1,166 @@
+﻿@*Category Page*@
+@model BrandsController
+@{ViewData["brandspage"] = "active"; }
+<!--Breadcrumb for this url-->
+<div class="row p-0 m-0 bg--white py-2 my-3 uk-box-shadow-small uk-border-rounded border position-relative">
+    <div class="col-12" dir="ltr">
+        <ul class="uk-breadcrumb IRANSans_Light fontsize-12 text-left p-0 m-0 d-flex" dir="ltr">
+            <li><a class="fontsize-12" href="~/En/Admin">Dashboard</a></li>
+            <li class="mx-1 uk-active">Brands</li>
+        </ul>
+        <div class="bg--blue-600 position-absolute rounded-right" style="width:8px;right:0;top:-8px;height:calc(100% + 16px);"></div>
+    </div>
+
+</div>
+<!--Brands List-->
+<div class="row my-2 mb-4 m-0" dir="ltr" id="main-container" style="margin-bottom:60px !important">
+    <div class="col-12 uk-background-default uk-box-shadow-medium border uk-border-rounded p-sm-3 p-1 pb-3 bg--white" id="brand">
+        <div class="row">
+            <vc:brand-list></vc:brand-list>
+            <!--Add new Brand-->
+            <div class="col-sm-7 col-md-6 order-0 order-sm-1">
+                <h3 class="Arial fontsize-14 text-left mx-3 my-1 py-2 mb-3">
+                    <span class="blue-600 border-bottom--blue py-2">Add New Brand</span>
+                </h3>
+                <form action="/En/Admin/Brands/CreateBrand" method="post" enctype="multipart/form-data">
+                    <div class="row py-2 mx-1 px-lg-2 uk-border-rounded uk-box-shadow-small border">
+                        <!--Title of Brand-->
+                        <div class="col-12 my-2">
+                            <div class="">
+                                <label class="uk-form-label IRANSans_Light fontsize-12 grey-darken-4" asp-for="Input.Title">Brand Title</label>
+                                <div class="uk-form-controls">
+                                    <input asp-for="Input.Title" class="uk-input IRANSans_Light fontsize-12 uk-border-rounded" type="text" placeholder="enter title of brand">
+                                </div>
+                                <span asp-validation-for="Input.Title" class="uk-text-danger Arial fontsize-12"></span>
+                            </div>
+                        </div>
+
+                        <!--Image of Brand Logo-->
+                        <div class="col-12 my-3">
+                            <div class="border form-bundle uk-border-rounded">
+                                <label class="IRANSans_Light">Brand Image</label>
+
+                                <div class="m-3 p-2">
+                                    <label asp-for="Input.Image" class="d-block">
+                                        <div id="brand-image-container" class="d-flex flex-column">
+                                            <span asp-validation-for="Input.Image" class="uk-text-danger Arial fontsize-12"></span>
+
+                                            <img width="250" src="" id="image-result" class="d-none mw-100 my-3" />
+                                            <input type="file" class="d-none" asp-for="Input.Image" accept="image/*" />
+                                            <div class="js-upload uk-placeholder uk-text-center image-upload--placeholder uk-border-rounded" dir="ltr">
+                                                <div uk-form-custom class="blue-600">
+
+                                                    <span uk-icon="icon: cloud-upload"></span>
+                                                    <label asp-for="Input.Image" class="uk-link IRANSans_Light fontsize-12">اضافه کردن تصویر جدید</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <label class="mdc-button mdc-button--unelevated bg--white border--blue px-0 uk-box-shadow-small" asp-for="Input.Image" style="height:30px">
+                                            <div class="mdc-button__ripple"></div>
+                                            <span class="mdc-button__label IRANSans fontsize-10 blue-600 px-1 px-sm-2">
+                                               Add/Change Image
+                                            </span>
+                                        </label>
+                                    </label>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!--Category description-->
+                        <div class="col-12 my-3">
+                            <div class="border form-bundle uk-border-rounded p-3">
+                                <label class="IRANSans_Light">Description</label>
+                                <input type="hidden" asp-for="Input.Description" />
+                                <div class="IRANSans_Light fontsize-12 text-editor"
+                                     style="min-height:120px">
+                                    <p class="ql-align-right ql-direction-ltr uk-text-muted">
+
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Put in Home Page-->
+                        <div class="col-12 my-2">
+                            <label class="IRANSans_Light fontsize-12" asp-for="Input.PutOnHomePage">
+                                <input asp-for="Input.PutOnHomePage" class="uk-checkbox uk-border-rounded" type="checkbox" checked>
+                                <span class="mr-1">Display in home page</span>
+                            </label>
+                        </div>
+
+                        <!--SEO Settings-->
+                        <div class="col-12 my-2 p-2">
+                            <div class="border border--dashed form-bundle uk-border-rounded m-2">
+                                <label class="IRANSans_Light">SEO Settings</label>
+                                <div class="m-1 m-lg-2">
+                                    <div class="custom-text-field mx-2 my-4">
+                                        <label asp-for="Input.TitlePage" class="uk-form-label IRANSans_Light">Title</label>
+                                        <div class="uk-form-controls d-flex">
+                                            <input asp-for="Input.TitlePage" class="uk-input IRANSans_Light fontsize-12" type="text" placeholder="title(60-70 chars)">
+                                        </div>
+                                    </div>
+                                    <div class="custom-text-field mx-2 my-4">
+                                        <label class="uk-form-label IRANSans_Light" asp-for="Input.RedirectURL">Redirect URL(301 redirect)</label>
+                                        <div class="uk-form-controls d-flex">
+                                            <input class="uk-input IRANSans_Light fontsize-12" asp-for="Input.RedirectURL" type="text" placeholder="enter target link">
+                                        </div>
+                                    </div>
+                                    <span asp-validation-for="Input.TitlePage" class="uk-text-danger Arial fontsize-12"></span>
+                                    <div class="custom-text-field mx-2 my-4">
+                                        <label asp-for="Input.MetaDescription" class="uk-form-label IRANSans_Light">Meta Description</label>
+                                        <div class="uk-form-controls d-flex">
+                                            <textarea asp-for="Input.MetaDescription" class="uk-textarea IRANSans_Light fontsize-12 uk-border-rounded" rows="5"
+                                                      placeholder="meta description(50-160 chars)"></textarea>
+                                        </div>
+                                    </div>
+                                    <span asp-validation-for="Input.MetaDescription" class="uk-text-danger Arial fontsize-12"></span>
+                                    <div class="my-3">
+                                        <div class="border form-bundle uk-border-rounded m-2">
+                                            <label class="IRANSans_Light">Search Engine Preview</label>
+                                            <div class="m-3">
+                                                <div id="title-page-preview" class="IRANSans fontsize-14" style="color:#1a0dab">Title</div>
+                                                <div id="metadescription-page-preview" class="IRANSans_Light fontsize-12">If leave empty, it automatically will generate by search engine</div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!--Submit Button-->
+                        <div class="col-12 mb-3">
+                            <button class="mdc-button mdc-button--unelevated bg--blue-700 uk-box-shadow-medium create-brand__submit-button" type="submit">
+                                <div class="mdc-button__ripple"></div>
+                                <span class="mdc-button__label IRANSans fontsize-12">
+                                   Create
+                                </span>
+                                <i class="material-icons mr-sm-2 fontsize-18 mr-2">
+                                    add
+                                </i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+@section Scripts{
+    <script>
+        const mdcButton = $('.mdc-button');
+        for (let i = 0; i < mdcButton.length; i++) {
+            mdc.ripple.MDCRipple.attachTo(document.querySelectorAll('.mdc-button')[i]);
+        }
+
+
+
+        const mdcTextField = $('.mdc-text-field');
+        for (let i = 0; i < mdcTextField.length; i++) {
+            mdc.textField.MDCTextField.attachTo(document.querySelectorAll('.mdc-text-field')[i]);
+        }
+
+    </script>
+}

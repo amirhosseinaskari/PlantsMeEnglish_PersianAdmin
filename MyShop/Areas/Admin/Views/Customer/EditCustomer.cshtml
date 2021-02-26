@@ -1,0 +1,253 @@
+﻿@model ApplicationUser
+@{
+    ViewData["customerpage"] = "active";
+    var persianDate = new PersianCalendar();
+     var registeredDate = string.Format("{0}/{1}/{2}", persianDate.GetYear(Model.RegisteredDate),
+                                                   persianDate.GetMonth(Model.RegisteredDate),
+                                                   persianDate.GetDayOfMonth(Model.RegisteredDate));
+}
+<!--Breadcrumb for this url-->
+<div class="row p-0 m-0 bg--white py-2 my-3 uk-box-shadow-small uk-border-rounded border position-relative">
+    <div class="col-12" dir="rtl">
+        <ul class="uk-breadcrumb IRANSans_Light fontsize-12 text-right p-0 m-0 d-flex" dir="rtl">
+            <li><a class="fontsize-12" href="~/Admin">مدیریت</a></li>
+            <li class="mx-1"><a class="fontsize-12" href="~/Admin/Customer">کاربران</a></li>
+            <li class="mx-1 uk-active">ویرایش کاربر</li>
+        </ul>
+        <div class="bg--blue-600 position-absolute rounded-left" style="width:8px;left:0;top:-8px;height:calc(100% + 16px);"></div>
+    </div>
+
+</div>
+<div class="row my-2 m-0" dir="rtl" id="main-container">
+    <div class="col-12 uk-background-default uk-box-shadow-medium border uk-border-rounded p-0 bg--white pb-3"
+         id="detail-edit-container--active">
+        <div class="d-flex justify-content-between align-items-center p-3 bg-gradient--purple rounded-top">
+            <h3 class="fontsize-14 iranyekanwebbold font-weight--bold white p-0 m-0 flex-grow-1">
+                ویرایش کاربر
+            </h3>
+            <a href="~/Admin/Customer" class="mdc-button mdc-button--unelevated flex-grow-1 min-width--110 flex-sm-grow-0 flex-shrink-0 pagination--button bg--white
+               uk-box-shadow-small uk-box-shadow-hover-medium border">
+                <div class="mdc-button__ripple"></div>
+                <span class="mdc-button__label blue-700 IRANSans_Light fontsize-12">
+                    <span>بازگشت</span>
+                    <span uk-icon="icon:arrow-left" class="mx-1 mx-sm-2"></span>
+                </span>
+            </a>
+        </div>
+        <!--Customer Edit Form-->
+        <div class="row my-2 m-0" dir="rtl">
+            <div class="col-12 py-3">
+                <!--Customer Total Information-->
+                <form class="row px-3 my-3 mb-4" dir="rtl">
+                    <div class="col-12">
+                        <div class="border border--dashed form-bundle uk-border-rounded">
+                            <label class="IRANSans_Light">مشخصات اصلی</label>
+                            <div class="row p-0 m-0 my-3">
+                                <!--Name-->
+                                <div class="col-md-6 col-sm-6 my-3">
+                                    <div class="custom-text-field">
+                                        <label class="uk-form-label IRANSans_Light" asp-for="FullName">نام کاربر</label>
+                                        <div class="uk-form-controls">
+                                            <input class="uk-input IRANSans_Light fontsize-12" asp-for="FullName" type="text" placeholder="نام کاربر را وارد کنید">
+                                        </div>
+                                    </div>
+                                    <span class="error-total-information__fullname IRANSans fontsize-12 red-lighten-7 d-none"></span>
+                                </div>
+                                <!--Cart Number-->
+                                <div class="col-md-6 col-sm-6 my-3">
+                                    <div class="custom-text-field">
+                                        <label class="uk-form-label IRANSans_Light" asp-for="CartBankNumber">شماره کارت</label>
+                                        <div class="uk-form-controls">
+                                            <input class="uk-input IRANSans_Light fontsize-12" asp-for="CartBankNumber" type="text" placeholder="شماره کارت کاربر را وارد کنید">
+                                        </div>
+                                    </div>
+                                   
+                                </div>
+                                <!--Phone-->
+                                <div class="col-md-6 col-sm-6 my-3">
+                                    <div class="custom-text-field">
+                                        <label class="uk-form-label IRANSans_Light" asp-for="Mobile">شماره همراه کاربر</label>
+                                        <div class="uk-form-controls">
+                                            <input class="uk-input IRANSans_Light fontsize-12 number-type" asp-for="Mobile" type="text" placeholder="شماره همراه کاربر را وارد کنید">
+                                        </div>
+                                    </div>
+                                    <span class="error-total-information__mobile IRANSans fontsize-12 red-lighten-7 d-none"></span>
+                                </div>
+                                <!--Email-->
+                                <div class="col-md-6 col-sm-6 my-3">
+                                    <div class="custom-text-field">
+                                        <label class="uk-form-label IRANSans_Light" asp-for="Email">ایمیل کاربر</label>
+                                        <div class="uk-form-controls">
+                                            <input class="uk-input IRANSans_Light fontsize-12" asp-for="Email" type="email" placeholder="ایمیل کاربر را وارد کنید">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="w-100"></div>
+                                <!--Submit button-->
+                                <div class="col-12">
+                                    <button class="mdc-button mdc-button--unelevated bg--blue-700
+                                            border px-0 uk-box-shadow-small customer-totalInformation__submit-button"
+                                            data-id="@Model.Id" style="height:30px">
+                                        <div class="mdc-button__ripple"></div>
+                                        <span class="mdc-button__label IRANSans fontsize-10 white px-1 px-sm-2">
+                                            ویرایش و ذخیره تغییرات
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+                <!--Customer access and activation-->
+                <div class="row my-3 m-0">
+                    <div class="col-12 py-3">
+                        <div class="border border--dashed form-bundle uk-border-rounded">
+                            <label class="IRANSans_Light">سطح دسترسی و وضعیت حساب</label>
+                            <div class="row p-0 m-0 py-3">
+                                <!--Access-->
+                                <div class="col-md-4 col-sm-6 my-3">
+                                    <div class="mdc-select mdc-select--outlined customer-role" data-id="@Model.Id">
+                                        <div class="mdc-select__anchor w-100 bg--white h-40">
+                                            <i class="mdc-select__dropdown-icon" style="top:5px"></i>
+                                            <div id="demo-selected-text" class="mdc-select__selected-text IRANSans_Light fontsize-12 position-relative" style="top:-5px" aria-labelledby="outlined-select-label"></div>
+                                            <div class="mdc-notched-outline">
+                                                <div class="mdc-notched-outline__leading"></div>
+                                                <div class="mdc-notched-outline__notch">
+                                                    <label id="outlined-select-label" class="mdc-floating-label IRANSans_Light fontsize-14">سطح دسترسی</label>
+                                                </div>
+                                                <div class="mdc-notched-outline__trailing"></div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Select Sort By => Options -->
+                                        <div class="mdc-select__menu mdc-menu mdc-menu-surface w-100" role="listbox">
+                                            <ul class="mdc-list IRANSans_Light fontsize-12">
+                                                @if (Model.ClientRole.Equals(ClientRole.Public))
+                                                {
+                                                    <li class="mdc-list-item mdc-list-item--selected" data-value="@ClientRole.Public" role="option">
+                                                        عمومی
+                                                    </li>
+                                                    <li class="mdc-list-item" data-value="@ClientRole.Admin" role="option">
+                                                        ادمین
+                                                    </li>
+                                                    <li class="mdc-list-item" data-value="@ClientRole.Manager" role="option">
+                                                        مدیر
+                                                    </li>
+                                                }
+                                                else if (Model.ClientRole.Equals(ClientRole.Admin))
+                                                {
+                                                    <li class="mdc-list-item" data-value="@ClientRole.Public" role="option">
+                                                        عمومی
+                                                    </li>
+                                                    <li class="mdc-list-item mdc-list-item--selected" data-value="@ClientRole.Admin" role="option">
+                                                        ادمین
+                                                    </li>
+                                                    <li class="mdc-list-item" data-value="@ClientRole.Manager" role="option">
+                                                        مدیر
+                                                    </li>
+                                                }
+                                                else if (Model.ClientRole.Equals(ClientRole.Manager))
+                                                {
+                                                    <li class="mdc-list-item" data-value="@ClientRole.Public" role="option">
+                                                        عمومی
+                                                    </li>
+                                                    <li class="mdc-list-item" data-value="@ClientRole.Admin" role="option">
+                                                        ادمین
+                                                    </li>
+                                                    <li class="mdc-list-item mdc-list-item--selected" data-value="@ClientRole.Manager" role="option">
+                                                        مدیر
+                                                    </li>
+                                                }
+
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--Activation-->
+                                <div class="col-md-4 col-sm-6 my-3">
+                                    <div class="mdc-select mdc-select--outlined customer-status" data-id="@Model.Id">
+                                        <div class="mdc-select__anchor w-100 bg--white h-40">
+                                            <i class="mdc-select__dropdown-icon" style="top:5px"></i>
+                                            <div id="demo-selected-text" class="mdc-select__selected-text IRANSans_Light fontsize-12 position-relative" style="top:-5px" aria-labelledby="outlined-select-label"></div>
+                                            <div class="mdc-notched-outline">
+                                                <div class="mdc-notched-outline__leading"></div>
+                                                <div class="mdc-notched-outline__notch">
+                                                    <label id="outlined-select-label" class="mdc-floating-label IRANSans_Light fontsize-14">وضعیت</label>
+                                                </div>
+                                                <div class="mdc-notched-outline__trailing"></div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Select customer status => Options -->
+                                        <div class="mdc-select__menu mdc-menu mdc-menu-surface w-100" role="listbox">
+                                            <ul class="mdc-list IRANSans_Light fontsize-12">
+                                                @if (Model.IsMobileConfirmed)
+                                                {
+                                                    <li class="mdc-list-item mdc-list-item--selected" data-value="true" role="option">
+                                                        فعال
+                                                    </li>
+                                                    <li class="mdc-list-item" data-value="false" role="option">
+                                                        غیرفعال
+                                                    </li>
+                                                }
+                                                else
+                                                {
+                                                    <li class="mdc-list-item" data-value="true" role="option">
+                                                        فعال
+                                                    </li>
+                                                    <li class="mdc-list-item mdc-list-item--selected" data-value="false" role="option">
+                                                        غیرفعال
+                                                    </li>
+                                                }
+
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!--Register Date-->
+                                <div class="col-md-4 col-sm-6 my-3">
+                                    <div class="custom-text-field">
+                                        <label class="uk-form-label IRANSans_Light" for="form-stacked-text">تاریخ ثبت نام</label>
+                                        <div class="uk-form-controls">
+                                            <input class="uk-input IRANSans_Light fontsize-12 uk-disabled" id="form-stacked-text" type="text" value="@registeredDate">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--Added Addresses-->
+                <vc:user-addresses user-id="@Model.Id"></vc:user-addresses>
+
+
+                <!--Customer's Orders-->
+                <vc:user-orders user-id="@Model.Id"></vc:user-orders>
+
+            </div>
+        </div>
+
+
+    </div>
+</div>
+@section Scripts{
+    <script>
+        const mdcButton = $('.mdc-button');
+        for (let i = 0; i < mdcButton.length; i++) {
+            mdc.ripple.MDCRipple.attachTo(document.querySelectorAll('.mdc-button')[i]);
+        }
+
+        const mdcTextField = $('.mdc-text-field');
+        for (let i = 0; i < mdcTextField.length; i++) {
+            mdc.textField.MDCTextField.attachTo(document.querySelectorAll('.mdc-text-field')[i]);
+        }
+
+
+
+
+    </script>
+}

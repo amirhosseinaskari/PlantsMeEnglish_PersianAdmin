@@ -1,0 +1,88 @@
+﻿@model IEnumerable<FAQ>
+@if (Model.Count() < 1)
+{
+    <div class="col-12 h-75 d-flex justify-content-center flex-column align-items-center">
+        <div class="Arial fontsize-14 text-center w-75 p-2 my-3 border--blue uk-box-shadow-medium">No FAQ Created</div>
+        <img class="w-75 max-width--600px" src="~/images/large/collection.svg" />
+    </div>
+}
+else
+{
+    <!--Delete Modal for remove faq-->
+    <div id="item-remove-modal" uk-modal dir="ltr">
+        <div class="uk-modal-dialog">
+            <button class="uk-modal-close-default" type="button" uk-close syle="right:unset;left:10px !important;"></button>
+            <div class="uk-modal-header bg--light-3">
+                <h3 class="Arial fontsize-14 red-lighten-7">Warning!</h3>
+            </div>
+            <div class="uk-modal-body">
+                <div class="IRANSans fontsize-12">Are you sure want to this question and answer?</div>
+            </div>
+            <div class="uk-modal-footer uk-text-left">
+                <form id="remove-item-form-on-modal" action="/Admin/FAQ/DeleteFAQ" method="post">
+                    <div class="item-id-container"></div>
+                    <button class="mdc-button mdc-button--unelevated border--blue red-lighten-7 bg--white uk-box-shadow-medium" style="height:30px" type="submit">
+                        <div class="mdc-button__ripple"></div>
+                        <span class="mdc-button__label IRANSans fontsize-12">
+                            Delete
+                        </span>
+                        <span class="material-icons-outlined mx-2 fontsize-16">
+                            delete
+                        </span>
+                    </button>
+                    <button class="mdc-button mdc-button--unelevated border--blue uk-modal-close bg--white uk-box-shadow-medium blue-600 mx-2"
+                            style="height:30px;">
+                        <div class="mdc-button__ripple"></div>
+                        <span class="mdc-button__label IRANSans fontsize-12">
+                           Cancel
+                        </span>
+
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--FAQ List-->
+    <div class="col-12">
+        <h3 class="Arial fontsize-14 text-left mx-3 my-1 py-2">
+            <span class="blue-600 border-bottom--blue py-2">FAQ</span>
+        </h3>
+        <ul class="px-2 px-md-3 uk-list"
+            uk-sortable="handle: .uk-sortable-handle;cls-custom:custom-category-sortable-list"
+            data-url="/Admin/FAQ/ChangeFAQOrder"
+            data-message="FAQ Position Changed" uk-accordion
+            id="faq-list">
+            @foreach (var item in Model)
+            {
+                <li class="bg--white faq-list__list-item mb-3 uk-box-shadow-small border" data-my-id="@item.Id">
+                    <div class="faq-list__list-item__title-sorthandle-container uk-accordion-title
+                       d-flex align-items-center h-100  position-relative" >
+                        <span class="uk-sortable-handle mx-2" uk-icon="icon: table"></span>
+                        <span class="d-flex IRANSans fontsize-12 mx-1 my-2 text-decoration-none blue-600
+                              uk-button uk-button-link sortablelist-item-title"> @item.Question</span>
+                            <div class="action-items-container d-flex align-items-center">
+                                <a data-my-id="@item.Id" href="#" class="delete-icon" uk-tooltip="title:delete">
+                                    <span uk-icon="icon:trash;ratio:.85"></span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="uk-accordion-content p-3 m-0">
+                            <div class="IRANSans_Light fontsize-12">@Html.Raw(item.Answer)</div>
+                        </div>
+                    </li>
+                }
+        </ul>
+    </div>
+}
+
+<script>
+    $('.delete-icon').click(function (e) {
+        let myId = $(this).attr('data-my-id');
+        let input = '<input type="hidden" name="id" id="id" value="' + myId + '" />';
+        $('#remove-item-form-on-modal .item-id-container').html(input);
+        UIkit.modal('#item-remove-modal').show();
+        e.preventDefault();
+        e.stopPropagation();
+    });
+</script>

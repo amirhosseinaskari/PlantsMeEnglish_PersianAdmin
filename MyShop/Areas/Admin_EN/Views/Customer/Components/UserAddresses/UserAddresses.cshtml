@@ -1,0 +1,69 @@
+﻿@model IEnumerable<Address>
+@if (Model.Count() > 0)
+{
+    //Delete Modal for remove address
+    <div id="item-remove-modal" uk-modal dir="ltr">
+        <div class="uk-modal-dialog">
+            <button class="uk-modal-close-default" type="button" uk-close></button>
+            <div class="uk-modal-header bg--light-3">
+                <h3 class="Arial fontsize-14 red-lighten-7">Warning!</h3>
+            </div>
+            <div class="uk-modal-body">
+                <div class="IRANSans fontsize-12 modal-body-text">Are you sure want to delete this address?</div>
+            </div>
+            <div class="uk-modal-footer uk-text-left">
+                <form id="remove-item-form-on-modal" action="/En/Admin/Customer/DeleteAddress" method="post">
+                    <div class="item-id-container"></div>
+                    <input type="hidden" class="d-none" name="userId" value="@ViewData["UserId"]" />
+                    <button class="mdc-button mdc-button--unelevated border--blue red-lighten-7
+                            bg--white uk-box-shadow-medium" style="height:30px" type="submit">
+                        <div class="mdc-button__ripple"></div>
+                        <span class="mdc-button__label IRANSans fontsize-12">
+                            Delete
+                        </span>
+                        <span class="material-icons-outlined mx-2 fontsize-16">
+                            delete
+                        </span>
+                    </button>
+                    <button class="mdc-button mdc-button--unelevated border--blue uk-modal-close
+                            bg--white uk-box-shadow-medium blue-600 mx-2"
+                            style="height:30px;">
+                        <div class="mdc-button__ripple"></div>
+                        <span class="mdc-button__label IRANSans fontsize-12">
+                            Cancel
+                        </span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    int i = 0;
+    <div class="row my-3 m-0">
+        <div class="col-12 py-3">
+            <div class="border border--dashed form-bundle uk-border-rounded">
+                <label class="IRANSans_Light">Addresses</label>
+                <div class="row p-0 m-0 my-3">
+                    <div class="col-12 text-left">
+                        <dl class="uk-description-list uk-description-list-divider fontsize-12 py-3" dir="ltr">
+                            @foreach (var item in Model)
+                            {
+                                i++;
+                                <dt class="IRANSans fontsize-12">
+                                    <span class="mx-2">
+                                        <span>Address</span>
+                                        &nbsp;
+                                        <span>@i</span>
+                                    </span>
+                                    |
+                                    <a href="#" data-my-id="@item.AddressId"
+                                       class="delete-icon uk-button uk-button-text red-lighten-7 mx-2 fontsize-12">Delete</a>
+                                </dt>
+                                <dd class="IRANSans_Light">@item.StateName , @item.CityName , @item.Details</dd>
+                            }
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

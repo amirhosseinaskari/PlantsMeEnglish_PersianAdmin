@@ -1,0 +1,65 @@
+﻿@page
+@model PhoneNumberVerification
+
+@{
+    ViewData["Title"] = "Phone Verification";
+
+}
+@section Style{
+    <link href="~/dist/sass/pages/_account.min.css" rel="stylesheet" />
+}
+<!--Forgot password form-->
+<section class="d-flex uk-box-shadow-small padding-20 white uk-border-rounded margin-x-10">
+    <div class="uk-border-rounded w-100">
+        <div class="text-center margin-y-20">
+            <strong class="font-weight-500 dana-font xsmobile-fontsize-14
+                                fontsize-16 text-center margin-0">Mobile Verification</strong>
+            <div class="uk-text-center margin-top-10" dir="ltr">
+                <span class="dana-font fontsize-14 xsmobile-fontsize-12">Not Registered Yet?</span>
+                <a asp-area="Identity" asp-page="/Account/Register" asp-route-returnUrl="@Model.ReturnUrl" class="main-color text-decoration-none
+                           dana-font border-bottom--red--dashed py-1 fontsize-14 xsmobile-fontsize-12">Sign Up</a>
+            </div>
+
+        </div>
+        <div class="d-flex justify-content-center align-items-center w-100 flex-column" dir="ltr">
+            <div asp-validation-summary="All" class="red-text dana-font fontsize-12 line-height-25 w-100 margin-bottom-20
+                     text-left uk-border-rounded" dir="ltr">
+                <div class="validation-errors-header uk-text-left dana-font fontsize-14 mobile-fontsize-12 white-text">Errors</div>
+            </div>
+            <div class="line-height-10 d-flex justify-content-center flex-column align-items-center">
+                <h3 class="dana-font fontsize-14 mobile-fontsize-12 line-height-20">Enter the 4-digit code we sent you</h3>
+             
+            </div>
+            <form class="margin-y-20" id="verify-form" asp-route-returnUrl="@Model.ReturnUrl" asp-route-userid="@Model.UserId" method="post">
+                <div class="d-flex align-items-center justify-content-center margin-y-20" dir="ltr">
+                    <input class="verify-input-digit" autofocus type="tel" maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" />
+                    <input class="verify-input-digit" type="tel" maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" />
+                    <input class="verify-input-digit" type="tel" maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" />
+                    <input class="verify-input-digit" type="tel" maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" />
+                    <input type="hidden" asp-for="Input.Token" />
+                </div>
+                <div class="uk-margin">
+                    <span asp-validation-for="Input.Token" class="uk-text-danger iranyekanwebregular fontsize-12"></span>
+                </div>
+                <button id="verify-submit-button" class="w-100 uk-box-shadow-medium wave-button black border-radius-3
+                                    submit-button margin-bottom-20 margin-top-40 padding-x-15" type="submit">
+                    <span class="dana-font fontsize-14  xsmobile-fontsize-12 font-weight-500">Confirm</span>
+                </button>
+
+            </form>
+
+            <div class="d-flex flex-column justify-content-center align-items-center margin-y-20 line-height-20">
+                <span class="dana-font fontsize-14 mobile-fontsize-12 font-weight-500">Didn't receive a code?</span><br />
+                <a asp-area="Identity" asp-page="/Account/ResendVerificationCode"
+                   asp-route-returnUrl="@Model.ReturnUrl"
+                   asp-route-userid="@Model.UserId"
+                   asp-route-targetPage="@(null)"
+                   class="dana-font fontsize-14 border-bottom--red--dashed mobile-fontsize-12 red-text font-weight-500 margin-top-10">Resend activation code</a>
+            </div>
+        </div>
+    </div>
+</section>
+@section JavaScript {
+    <script src="~/dist/js/pages/_account.min.js" type="module"></script>
+}
+

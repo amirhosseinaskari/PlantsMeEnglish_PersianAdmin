@@ -1,0 +1,13 @@
+﻿@model IEnumerable<City>
+<li class="mdc-list-item mdc-list-item--selected" data-value="0" role="option">
+    همه شهرها
+</li>
+@foreach (var item in Model)
+{
+
+    <li class="mdc-list-item" data-value="@item.Id" role="option">
+        @item.Title
+    </li>
+
+
+}

@@ -1,0 +1,82 @@
+﻿@model IEnumerable<Shopping>
+<!--Partial Content-->
+<div class="uk-card uk-card-default position-relative customer__partial-card">
+    <div class="uk-card-header d-flex align-items-center border-bottom-grey uk-flex-wrap">
+        <h3 class="dana-font fontsize-14 font-weight-500 margin-bottom-0  margin-y-5
+            flex-grow-1 font-color-3">
+            All Orders
+        </h3>
+        <a asp-controller="Customer" asp-action="Index"
+           class="uk-button uk-button-default uk-border-rounded partial-top-link flex-grow-0 margin-y-5
+           align-items-center d-flex uk-flex-between">
+            <span class="d-flex align-items-center" uk-icon="icon:arrow-left"></span>
+            <span class="dana-font font-weight-400 fontsize-12 margin-left-10">Back</span>
+
+        </a>
+    </div>
+    <div class="uk-card-body padding-x-20">
+        @if (Model.Count() < 1)
+        {
+            <p class="padding-10 dana-font fontsize-14 line-height-25 mobile-fontsize-12 font-weight-400">Your order history is empty</p>
+        }
+        else
+        {
+            foreach (var item in Model)
+            {
+                <div class="uk-overflow-auto margin-y-20 border" dir="ltr">
+                    <table class="uk-table uk-table-hover uk-table-striped">
+                        <thead>
+                            <tr>
+                                <th class="dana-font fontsize-12 xsmobile-fontsize-10 font-weight-400 uk-text-left">Product(s) Name</th>
+                                <th class="dana-font fontsize-12 xsmobile-fontsize-10 font-weight-400 uk-text-left">Date</th>
+                                <th class="dana-font fontsize-12 xsmobile-fontsize-10 font-weight-400 uk-text-left">Qty</th>
+                                <th class="dana-font fontsize-12 xsmobile-fontsize-10 font-weight-400 uk-text-left">Price</th>
+                                <th class="dana-font fontsize-12 xsmobile-fontsize-10 font-weight-400 uk-text-left">Payment Status</th>
+                                <th class="dana-font fontsize-12 xsmobile-fontsize-10 font-weight-400 uk-text-left">Order Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <vc:customer-order-list shopping-id="@item.Id"></vc:customer-order-list>
+                            <tr>
+                                <td class="dana-font fontsize-12 font-weight-400 uk-text-left" colspan="2">
+                                    @if (item.IsLocalPayment ||
+                                    item.Status.Equals(Status.WaitForRegister))
+                                    {
+                                        <strong class="dana-font fontsize-12 font-weight-500">Total:</strong>
+                                    }
+                                    else if (item.Status.Equals(Status.OnlinePaid))
+                                    {
+                                        <strong class="dana-font fontsize-12 font-weight-500">Total Paid:</strong>
+                                    }
+                                    <span class="margin-left-5">KSh</span>
+                                    <span class="digit-format">
+                                        @item.TotalPrice.ToString("N0", new System.Globalization
+                                     .NumberFormatInfo()
+                                     { NumberGroupSizes = new[] { 3 }, NumberGroupSeparator = "," })
+                                    </span>
+
+                                </td>
+                                <td class="dana-font fontsize-12 font-weight-400 uk-text-left" colspan="2">
+                                    <strong class="font-weight-500">Discount:</strong>
+                                    <span class="margin-left-5">KSh</span>
+                                    <span class="margin-right-5 digit-format">
+                                        @item.DiscountPrice.ToString("N0", new System.Globalization
+                                     .NumberFormatInfo()
+                                     { NumberGroupSizes = new[] { 3 }, NumberGroupSeparator = "," })
+                                    </span>
+
+                                </td>
+                                <td class="dana-font fontsize-12 font-weight-400 uk-text-left" colspan="3">
+                                    <strong class="font-weight-500 digit-format">Transaction Id:</strong>
+                                    <span class="margin-left-5 digit-format">@item.TracingCode</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+            </div>
+           
+        }
+    }
+
+    </div>
+    </div>

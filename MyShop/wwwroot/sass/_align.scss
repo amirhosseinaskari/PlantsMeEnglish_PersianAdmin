@@ -1,0 +1,31 @@
+// stylelint-disable declaration-no-important
+
+.align-baseline    { vertical-align: baseline !important; } // Browser default
+.align-top         { vertical-align: top !important; }
+.align-middle      { vertical-align: middle !important; }
+.align-bottom      { vertical-align: bottom !important; }
+.align-text-bottom { vertical-align: text-bottom !important; }
+.align-text-top    { vertical-align: text-top !important; }
+.text-center{
+    text-align:center !important;
+}
+.text-left{
+    text-align:left !important;
+}
+.text-right {
+    text-align: right !important;
+}
+.text-justify {
+    text-align: justify !important;
+}
+
+@media only screen and (min-width: 768px) {
+    .text-md-right {
+        text-align: right !important;
+    }
+}
+@media only screen and (min-width: 576px) {
+    .text-sm-right {
+        text-align: right !important;
+    }
+}

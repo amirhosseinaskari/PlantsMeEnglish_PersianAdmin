@@ -1,0 +1,103 @@
+﻿ @model int
+    <!--Choose Products-->
+
+    <div class="col-12 px-2">
+        <div class="text-left mx-3 fontsize-12 IRANSans red-lighten-6
+                                 border-bottom--red py-1 d-inline-block" style="min-width:150px">
+            <span class="">Categories Covered By this Discount Code</span>
+        </div>
+        <div class="row m-0 py-4 align-items-start">
+            <!--Form-->
+            <div class="col-md-5 col-sm-6 my-2 px-0">
+                <div class="mdc-select mdc-select--outlined category-of-discount">
+                    <div class="mdc-select__anchor w-100 bg--white h-40">
+                        <i class="mdc-select__dropdown-icon" style="top:5px"></i>
+                        <div id="demo-selected-text" class="mdc-select__selected-text IRANSans_Light fontsize-12 position-relative" style="top:-5px" aria-labelledby="outlined-select-label"></div>
+                        <div class="mdc-notched-outline">
+                            <div class="mdc-notched-outline__leading"></div>
+                            <div class="mdc-notched-outline__notch">
+                                <label id="outlined-select-label" class="mdc-floating-label IRANSans_Light fontsize-14">Select Categories</label>
+                            </div>
+                            <div class="mdc-notched-outline__trailing"></div>
+                        </div>
+                    </div>
+
+                    <!-- Select category options -->
+                    <div class="mdc-select__menu mdc-menu mdc-menu-surface w-100" role="listbox">
+                        <ul class="mdc-list IRANSans_Light fontsize-12 product-of-discount__options">
+
+                            <vc:category-list-titles my-id="-1" is-from-product="false"></vc:category-list-titles>
+                        </ul>
+                    </div>
+                </div>
+               
+                <span class="iranyekanwebregular fontsize-12 red-lighten-7 d-none error-category-discount-target"></span>
+            </div>
+            <!--Add Button-->
+            <div class="col-lg-4 col-md-5 col-sm-6 d-flex align-items-center my-1 px-2">
+                <button class="mdc-button mdc-button--unelevated bg--white border px-0 position-relative
+                        add-discounttarget-category__submit-button" style="height:40px;top:5px" data-id="@Model">
+                    <div class="mdc-button__ripple"></div>
+                    <span class="mdc-button__label IRANSans fontsize-12 blue-700 px-1 px-sm-2">
+                        Add
+                    </span>
+                </button>
+            </div>
+            <!--Added Categories-->
+            <div class="col-12 my-2 pr-2" id="discount-target__added-categories">
+                <vc:category-discount-target my-id="@Model"></vc:category-discount-target>
+            </div>
+        </div>
+    </div>
+
+    <script>
+   //Add category of discount target (some categories)
+    try {
+        const MDCCategoryDiscount = mdc.select.MDCSelect;
+        const categoryDiscount = new MDCCategoryDiscount(document.querySelector('.category-of-discount'));
+        $('.add-discounttarget-category__submit-button').click(function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+            let catId = categoryDiscount.value;
+            let disId = $(this).attr('data-id');
+            if (catId === -1) {
+                $('.error-category-discount-target').removeClass('d-none').html('please select a category');
+
+                return false;
+            }
+            $.ajax({
+                url: "/Admin/Discount/AddCategoryDiscountTarget",
+                type: "POST",
+                data: {
+                    categoryId: catId,
+                    discountId: disId
+                },
+                error: function (xhr) { alert(xhr.responseText); },
+                beforeSend: function () { $('#progress-loader').removeClass('d-none'); },
+                success: function (data) {
+                    if (data) {
+                        $('#discount-target__added-categories').html(data);
+                        UIkit.notification({
+                            message: '<span class="material-icons-outlined red-lighten-7 mx-2 position-relative" style="top:6px">notifications_active</span><span class="IRANSans_Light fontsize-14" dir="ltr">category added</span>',
+                            status: 'primary',
+                            pos: 'top-center',
+                            timeout: 5000
+                        });
+                    }
+                }
+
+
+            }).done(function () {
+                $('#progress-loader').addClass('d-none');
+            });
+        });
+
+        //reset error-category-discount-target
+        categoryDiscount.listen('MDCSelect:focus', function () {
+            $('.error-category-discount-target').addClass('d-none').html('');
+
+        });
+    } catch (e) {
+        console.log(e);
+    }
+    </script>

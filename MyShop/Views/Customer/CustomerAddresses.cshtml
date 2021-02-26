@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewData["Title"] = "Customer";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["ActiveLink"] = "addresses-container";
+}
+
+<section class="row bg--light py-4 px-lg-4 px-2 m-0" dir="ltr" style="z-index:3" id="customer-page">
+    <!--Side bar-->
+    <div class="col-lg-3 col-md-4 d-none d-md-block customer-side-bar main-content @ViewData["ActiveLink"]">
+        <vc:customer-side-bar user-name="@User.Identity.Name"></vc:customer-side-bar>
+    </div>
+    <!--Main Content-->
+    <div class="col-lg-9 col-md-8 main-content" dir="rtl">
+        <!--Partial Content-->
+        @await Html.PartialAsync(partialViewName:"_CustomerAddresses")
+    </div>
+</section>
+<div class="bg--light pb-5 pb-md-3">
+    <div id="end" class="bg--light"></div>
+</div>

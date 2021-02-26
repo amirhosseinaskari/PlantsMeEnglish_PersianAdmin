@@ -1,0 +1,94 @@
+﻿.shopping-basket-container
+{
+    width:200px;
+    height:200px;
+    background-image: url('../images/medium/car-clipart-image-7-min.png');
+    background-position:bottom center;
+    background-size:90%;
+    background-repeat:no-repeat;
+}
+.shopping-steps {
+    width: 40px;
+    height: 40px;
+    border: 1px solid #808080;
+    border-radius: 100%;
+    margin: 5px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #808080;
+    &.current-step{
+        border:none;
+    }
+
+}
+.shopping-steps.active {
+    background-color: #62ae50;
+    color: white;
+    border-color:black;
+
+    & + span {
+        color: #62ae50 !important;
+    }
+}
+.current-step{
+    position:relative;
+}
+.current-step::after {
+    content: "";
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    border: 2px dashed #ff6a00;
+    border-radius: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    -moz-animation: rotation 4s linear infinite both;
+    -o-animation: rotation 4s linear infinite both;
+    -webkit-animation: rotation 4s linear infinite both;
+    animation: rotation 4s linear infinite both;
+}
+@keyframes rotation {
+    from {
+        transform: rotate(0);
+    }
+    to {
+       transform:rotate(360deg);
+    }
+}
+
+@-moz-keyframes rotation {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@-webkit-keyframes rotation {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.goto-next-button{
+    z-index:100;
+    bottom:0;
+}
+
+.shopping-icon-divider {
+    top: -10px;
+    min-width: 30px;
+    width: 250px;
+}
+#add-address-form, .edit-address-modal{
+    height:100vh;
+    overflow-y:scroll;
+}
+#add-address-form .uk-modal-dialog, .edit-address-modal .uk-modal-dialog {
+    @media only screen and (max-width: 700px) {
+        position: absolute;
+        width: 94%;
+        right: 3%;
+    }
+}

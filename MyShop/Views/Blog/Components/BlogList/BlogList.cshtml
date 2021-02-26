@@ -1,0 +1,81 @@
+﻿@model PaginatedList<Blog>
+@{
+    ViewData["Title"] = "Blogs";
+}
+@if(Model.Count() < 1)
+{
+
+}
+else
+{
+   
+    <ul id="blog-cards-list">
+        @foreach (var item in Model)
+        {
+          var  blogCreatedDate = item.CreatedDate.ToString("dddd dd MMMM yyyy");
+            <li class="blog-card-container">
+                <a asp-action="BlogDetail" asp-controller="Blog" asp-area=""
+                   asp-route-id="@item.BlogId"
+                   asp-route-blogTitle="@item.Title.Replace(" ","-")" class="blog-card uk-card uk-card-default">
+                    <!--image of blog card-->
+                    <div class="uk-card-media-top w-100 blog-card__image">
+                        @if (item.CoverImage != null)
+                        {
+                            <img class="lazyload" src="~/images/base/placeholderimage.jpg"
+                                 data-src="/images/blogs/small/blog_@(item.BlogId)/@item.CoverImage" alt="" uk-img>
+                        }
+                        else
+                        {
+                            <img class="w-100" src="~/images/base/placeholderimage.jpg" />
+                        }
+                    </div>
+                    <!--blog title and blog summary description-->
+                    <div class="uk-card-body padding-15 align-self-stretch">
+                        <!--blog title-->
+                        <h3 class="uk-card-title line-height-25 dana-font font-weight-600 fontsize-16 mobile-fontsize-14 font-color-1">@item.Title</h3>
+                        @if (!string.IsNullOrWhiteSpace(item.SummaryDescription))
+                        {
+                            <p class="dana-font fontsize-16 xsmobile-fontsize-14 font-color-3 font-weight-400 line-height-30">
+                                @if (item.SummaryDescription.Length > 100)
+                                {
+                                    <text>@item.SummaryDescription.Substring(0, 100) ...</text>
+                                }
+                                else
+                                {
+                                    <text>@item.SummaryDescription</text>
+                                }
+                            </p>
+                        }
+                    </div>
+                    <!--blog rate number and view number and blog created date-->
+                    <div class="uk-card-footer padding-15 align-self-stretch">
+                        <!--blog created date-->
+                        <div class="blog-created-date-container w-100 d-flex align-items-center border-bottom-grey padding-bottom-10" dir="ltr">
+                            <span class="margin-right-10 font-color-4" uk-icon="icon:calendar;ratio:1.1"></span>
+                            <span class="dana-font fontsize-12 font-color-3 font-weight-400 digit-format">
+                                @blogCreatedDate
+                            </span>
+                        </div>
+                        <!--blog view number and blog rate number-->
+                        <div class="blog-rate-view-number-container w-100 d-flex uk-flex-between align-items-center padding-top-10" dir="ltr">
+                            <div class="blog-rate-container d-flex align-items-center">
+                                <span class="margin-right-5 font-color-4" uk-icon="icon:star;ratio:.9"></span>
+                                <span class="digit-format dana-font fontsize-12 font-weight-500 font-color-4">@item.RateNumber</span>
+                            </div>
+                            <div class="blog-view-container d-flex align-items-center">
+                                <img class="margin-right-5" width="16" src="~/images/icons/visibility.svg" />
+                                <span class="digit-format dana-font fontsize-12 font-weight-500 font-color-4">@item.ViewNumber</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+        }
+
+    </ul>
+}
+       
+
+<!--Pageination of blog list-->
+@await Html.PartialAsync(partialViewName: "_BlogPaginationButtons", model: Model)
+

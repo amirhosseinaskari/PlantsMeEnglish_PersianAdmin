@@ -1,0 +1,14 @@
+﻿@model IEnumerable<ProductOption>
+<div class="margin-y-20 padding-10 digit-format w-100">
+    <table class="uk-table product-options-table uk-text-left dana-font fontsize-16 mobile-fontsize-14" dir="ltr">
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="title font-weight-500">@item.OptionTitle</td>
+                    <td class="value">@item.OptionValue</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

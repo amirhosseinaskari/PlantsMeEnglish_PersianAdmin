@@ -1,0 +1,68 @@
+﻿@model IEnumerable<BlogCategory>
+   <!--Delete Modal for remove product-->
+<div id="blogCategory-remove-modal" uk-modal dir="rtl">
+    <div class="uk-modal-dialog">
+        <button class="uk-modal-close-default" type="button" uk-close style="right:unset;left:10px !important;"></button>
+        <div class="uk-modal-header bg--light-3">
+            <h3 class="iranyekanwebregular fontsize-14 red-lighten-7">هشدار!</h3>
+        </div>
+        <div class="uk-modal-body">
+            <div class="IRANSans fontsize-12 modal-body-text">آیا مطمئن هستید که می خواهید این موضوع را حذف کنید؟</div>
+        </div>
+        <div class="uk-modal-footer uk-text-right">
+            <form id="blogCategory-remove-form-on-modal" action="/Admin/BlogCategory/DeleteBlogCategory" method="post">
+                <input type="hidden" name="id" />
+                <button class="mdc-button mdc-button--unelevated 
+                        border--blue red-lighten-7 bg--white uk-box-shadow-medium" 
+                        style="height:30px" type="submit">
+                    <div class="mdc-button__ripple"></div>
+                    <span class="mdc-button__label IRANSans fontsize-12">
+                        حذف
+                    </span>
+                    <span class="material-icons-outlined mx-2 fontsize-16">
+                        delete
+                    </span>
+                </button>
+                <button class="mdc-button mdc-button--unelevated border--blue 
+                        uk-modal-close bg--white uk-box-shadow-medium blue-600 mx-2"
+                        style="height:30px;">
+                    <div class="mdc-button__ripple"></div>
+                    <span class="mdc-button__label IRANSans fontsize-12">
+                        صرف نظر
+                    </span>
+
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="row mx-0 px-1 px-sm-2 px-md-3 " id="blog-category-list"
+     data-url="/Admin/BlogCategory/EditBlogCategoryOrder" dir="rtl"
+     data-message="ترتیب موضوع ها تغییر یافت"
+     uk-sortable="handle: .uk-sortable-handle;cls-custom:text-right direction-rtl">
+    @foreach (var item in Model)
+    {
+        if (item.BlogCategoryId == 1)
+        {
+            <div class="col-xl-2 col-md-3 col-sm-4 my-2 blog-category-item px-1"
+                 data-my-id="@item.BlogCategoryId">
+                <div class="d-flex align-items-center bg--white border w-100 p-2 uk-border-rounded" dir="rtl">
+                    <span class="uk-sortable-handle uk-margin-small-right px-2" uk-icon="icon: table;ratio:.9"></span>
+                    <span class="IRANSans fontsize-12 flex-grow-1">@item.Title</span>
+                </div>
+            </div>
+            continue;
+        }
+        <div class="col-xl-2 col-md-3 col-sm-4 my-2 blog-category-item px-1"
+             data-my-id="@item.BlogCategoryId">
+            <div class="d-flex align-items-center bg--white border w-100 p-2 uk-border-rounded" dir="rtl">
+                <span class="uk-sortable-handle uk-margin-small-right px-2" uk-icon="icon: table;ratio:.9"></span>
+                <span class="IRANSans fontsize-12 flex-grow-1">@item.Title</span>
+                <a href="#blogCategory-remove-modal" uk-toggle data-my-id="@item.BlogCategoryId" class="text-decoration-none red-lighten-7 px-2 delete-blog-category"
+                   uk-tooltip="title:حذف">
+                    <span uk-icon="icon:close;ratio:.7"></span>
+                </a>
+            </div>
+        </div>
+    }
+</div>

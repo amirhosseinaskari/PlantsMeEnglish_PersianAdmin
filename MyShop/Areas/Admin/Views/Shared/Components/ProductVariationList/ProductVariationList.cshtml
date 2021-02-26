@@ -1,0 +1,181 @@
+﻿@model IEnumerable<ProductVariation>
+<!--Delete Modal for remove Product Variation-->
+<div id="product-variation-remove-modal" uk-modal dir="rtl">
+    <div class="uk-modal-dialog">
+        <button class="uk-modal-close-default" type="button"
+                uk-close syle="right:unset;left:10px !important;"></button>
+        <div class="uk-modal-header bg--light-3">
+            <h3 class="iranyekanwebregular fontsize-14 red-lighten-7">هشدار!</h3>
+        </div>
+        <div class="uk-modal-body">
+            <div class="IRANSans fontsize-12">آیا مطمئن هستید که می خواهید این متغیر را حذف کنید؟</div>
+        </div>
+        <div class="uk-modal-footer uk-text-right">
+            <form id="remove-item-form-on-modal" action="/Admin/ProductVariation/DeleteProductVariation" method="post">
+                <div class="item-id-container"></div>
+                <button class="mdc-button mdc-button--unelevated border--blue
+                        red-lighten-7 bg--white uk-box-shadow-medium" style="height:30px" type="submit">
+                    <div class="mdc-button__ripple"></div>
+                    <span class="mdc-button__label IRANSans fontsize-12">
+                        حذف
+                    </span>
+                    <span class="material-icons-outlined mx-2 fontsize-16">
+                        delete
+                    </span>
+                </button>
+                <button class="mdc-button mdc-button--unelevated border--blue
+                        uk-modal-close bg--white uk-box-shadow-medium blue-600 mx-2"
+                        style="height:30px;">
+                    <div class="mdc-button__ripple"></div>
+                    <span class="mdc-button__label IRANSans fontsize-12">
+                        صرف نظر
+                    </span>
+
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+<!--Created Variations-->
+@foreach (var item in Model)
+{
+    <div class="row mt-2 mb-0 mx-0">
+        <div class="col-12 px-2">
+            <div class="text-right mx-3 fontsize-12 IRANSans red-lighten-6 border-bottom--red py-1 d-inline-block" style="min-width:150px">
+                <span class="">@item.Title</span>
+                <span class="mx-2">|</span>
+                <a href="#" class="text-decoration-none
+                   IRANSans_Light fontsize-12 delete-product-variation" data-my-id="@item.ProductVariationId">حذف</a>
+            </div>
+            <div class="py-2">
+                <form class="sub-product-variation-form" data-productVariationId="@item.ProductVariationId">
+                    <div class="row m-0 my-2">
+                        <div class="col-md-5 col-sm-6 my-2 px-0">
+                            <div class="custom-text-field mx-2">
+                                <label class="uk-form-label IRANSans_Light" for="subProVarTitle">عنوان زیر مجموعه</label>
+                                <div class="uk-form-controls d-flex">
+                                    <input class="uk-input IRANSans_Light fontsize-12" required name="subProVarTitle"
+                                           type="text" placeholder="عنوان زیر مجموعه را وارد کنید">
+                                </div>
+                            </div>
+                            <span class="iranyekanwebregular fontsize-12 red-lighten-7 error-subprovar mx-2 d-none"></span>
+                        </div>
+                        <div class="col-lg-4 col-md-5 col-sm-6 d-flex align-items-start my-1 px-2">
+                            <button class="mdc-button mdc-button--unelevated bg--white border px-0 position-relative
+                                    sub-product-variation-form__submit-button" type="button"
+                                    style="height:40px;top:4px;">
+                                <div class="mdc-button__ripple"></div>
+                                <span class="mdc-button__label IRANSans fontsize-12 blue-700 px-1 px-sm-2">
+                                    اضافه کردن
+                                </span>
+                            </button>
+                        </div>
+
+                    </div>
+                </form>
+                <div class="row m-0 mb-2">
+                    <div class="col-12 my-2 pr-2 sub-product-variation-container" data-my-id="@item.ProductVariationId">
+                        <vc:sub-product-variation-list product-variation-id="@item.ProductVariationId"></vc:sub-product-variation-list>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+}
+
+<script>
+   //Add new subproduct variation
+
+    $('.sub-product-variation-form__submit-button').click(function (e) {
+        let subProductVariationForm = $(this).parents('.sub-product-variation-form');
+        let title = $(subProductVariationForm).find('input[name="subProVarTitle"]').val();
+
+        if (title.trim() === "" || title === null) {
+            $(subProductVariationForm).find('.error-subprovar').removeClass('d-none').html('وارد کردن نام الزامی است');
+            return false;
+        }
+        let provarId = $(subProductVariationForm).attr('data-productVariationId');
+        $.ajax({
+            url: "/Admin/SubProductVariation/Create",
+            type: "POST",
+            data: {
+                productVariationId: provarId,
+                proVarTitle: title
+            },
+          
+            error: function (xhr) { alert(xhr.responseText); },
+            beforeSend: function () { $('#progress-loader').removeClass('d-none'); },
+            success: function (data) {
+
+                $('.sub-product-variation-container[data-my-id="' + provarId + '"]').html(data);
+                UIkit.notification({
+                    message: '<span class="material-icons-outlined red-lighten-7 mx-2 position-relative" style="top:6px">notifications_active</span><span class="IRANSans_Light fontsize-14" dir="rtl">زیر مجموعه جدید به متغیر اضافه شد</span>',
+                    status: 'primary',
+                    pos: 'top-center',
+                    timeout: 3000
+                });
+            }
+        }).done(function () {
+            $('#progress-loader').addClass('d-none');
+        });
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+    });
+    //Delete Product Variation
+    $('.delete-product-variation').click(function (e) {
+        let myId = $(this).attr('data-my-id');
+        let input = '<input type="hidden" name="id" id="id" value="' + myId + '" />';
+        $('#product-variation-remove-modal .item-id-container').html(input);
+        UIkit.modal('#product-variation-remove-modal').show();
+        e.stopPropagation();
+        e.preventDefault();
+    });
+    //Delete subproduct variation
+    $('.delete-subProductVariation').click(function (e) {
+       
+        let myId = $(this).attr('data-my-id');
+        let parent = $(this).parents('.admin-chip-tags');
+        $.ajax({
+            url: "/Admin/SubProductVariation/Delete",
+            type: "POST",
+            data: {
+                id:myId
+            },
+            success: function (data) {
+                if (data) {
+                    $(parent).remove();
+                    UIkit.notification({
+                        message: '<span class="material-icons-outlined red-lighten-7 mx-2 position-relative" style="top:6px">notifications_active</span><span class="IRANSans_Light fontsize-14" dir="rtl">زیر مجموعه مورد نظر حذف شد</span>',
+                        status: 'primary',
+                        pos: 'top-center',
+                        timeout: 5000
+                    });
+                    $.ajax({
+                        url: "/Admin/SubProductVariation/Titles",
+                        typ: "POST",
+                        data: {
+                            poducatVariationId: provarId
+                        },
+                        success: function (d) {
+                            $('.sub-product-variation-price-select').html(d);
+                            $('.provar-table-row[data-my-id="' + myId + '"]').remove();
+                            if ($('.sub-product-variation-price-select').find('option').length < 1) {
+                                $('.sub-product-variation-price-select').parents('.set-price-for-subProductVariation').remove();
+                            }
+                        }
+                    });
+                   
+                } 
+            }
+        });
+        e.stopPropagation();
+        e.preventDefault();
+    });
+   
+    $('input[name="subproduct-var-price"]').focus(function () {
+        let parent = $(this).parents('.set-price-for-subProductVariation');
+        $(parent).find('.error-subProductVar-price').html("");
+    });
+</script>

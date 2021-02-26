@@ -1,0 +1,8 @@
+﻿@model Bill
+    <!--Total Price and Bill-->
+<span>KSh</span>&nbsp;
+<span class="total-price digit-format">
+    @(((int)Model.TotalPrice).ToString("N0", new System.Globalization
+   .NumberFormatInfo()
+    { NumberGroupSizes = new[] { 3 }, NumberGroupSeparator = "," }))
+</span>

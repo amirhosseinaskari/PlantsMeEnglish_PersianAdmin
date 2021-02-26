@@ -1,0 +1,27 @@
+﻿@model ReplyTicket
+
+<div class="message-reply pr-1 pr-sm-2 pr-md-4 pr-lg-5 my-3">
+    <div class="message-header" dir="ltr">
+        <span class="material-icons-round fontsize-38" style="color:#808080">
+            account_box
+        </span>
+        <div class="uk-article-header px-2">
+            <div class="IRANSans fontsize-12">@Model.FullName</div>
+            <span class="fontsize-12 uk-text-muted fontsize-12">@Model.SubmitDate.ToString("MM/dd/yyyy")</span>
+        </div>
+        <div class="align-self-start">
+            <span class="mx-1">|</span>
+            <a href="#" data-my-id="@Model.Id" class="reply-ticket-delete message-remove IRANSans_Light fontsize-12 red-lighten-7">Delete</a>
+        </div>
+
+    </div>
+
+    <div class="IRANSans_Light fontsize-12">
+        <span class="IRANSans fontsize-12 blue-600">
+            Reply:
+        </span>
+        <br />
+        @Html.Raw(Model.Description)
+    </div>
+
+</div>

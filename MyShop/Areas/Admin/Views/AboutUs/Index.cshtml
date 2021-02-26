@@ -1,0 +1,214 @@
+﻿@model About
+<!--Breadcrumb for this url-->
+<div class="row p-0 m-0 bg--white py-2 my-3 uk-box-shadow-small uk-border-rounded border position-relative">
+    <div class="col-12" dir="rtl">
+        <ul class="uk-breadcrumb IRANSans_Light fontsize-12 text-right p-0 m-0 d-flex" dir="rtl">
+            <li><a href="~/Admin" class="fontsize-12">مدیریت</a></li>
+            <li class="mx-sm-1 uk-active">صفحه درباره ما</li>
+        </ul>
+        <div class="bg--blue-600 position-absolute rounded-left" style="width:8px;left:0;top:-8px;height:calc(100% + 16px);"></div>
+    </div>
+
+</div>
+<!--Product Creation Form-->
+<div class="row my-2 m-0" dir="rtl" id="main-container">
+    <div class="col-12 uk-background-default  uk-box-shadow-medium border uk-border-rounded py-3">
+        <!--Title of about us page-->
+        <h3 class="iranyekanwebregular fontsize-14 text-right mx-3 my-1 py-2">
+            <span class="blue-600 border-bottom--blue py-2"> صفحه درباره ما</span>
+        </h3>
+
+        <!--About Us Content-->
+        <div class="row px-3 py-2 my-4">
+            <div class="col-12 my-2">
+                <div class="border border--dashed form-bundle uk-border-rounded">
+                    <label class="IRANSans_Light">محتوای صفحه درباره ما</label>
+                    <div class="row m-0 py-3 mx-1">
+                        <div class="col-md-3 col-sm-6 my-2">
+                            <form action="/Admin/AboutUs/AddText" method="post">
+                                <input type="hidden" name="id" value="@Model.Id" />
+                                <button type="submit" class="w-100 border bg--white mdc-button mdc-button--unelevated
+                              uk-box-shadow-small blue-700 p-2 text-decoration-none
+                              IRANSans_Light fontsize-12 add-blog-content-text-button" style="height:40px">
+                                    <div class="mdc-button__ripple"></div>
+                                    <span class="mdc-button__label IRANSans fontsize-12 blue-700 px-1 px-sm-2">
+                                        <span uk-icon="icon:file-text;ratio:.9"></span>
+                                        <span class="mx-2">متن</span>
+                                    </span>
+                                </button>
+                            </form>
+                        </div>
+                        <div class="col-md-3 col-sm-6 my-2">
+                            <form id="about-content-image-form" action="/Admin/AboutUs/AddImage"
+                                  method="post" enctype="multipart/form-data">
+                                <input type="hidden" name="id" value="@Model.Id">
+                                <label class="w-100 border bg--white mdc-button mdc-button--unelevated
+                              uk-box-shadow-small blue-700 p-2 text-decoration-none
+                              IRANSans_Light fontsize-12" for="image">
+                                    <div class="mdc-button__ripple"></div>
+                                    <span class="mdc-button__label IRANSans fontsize-12 blue-700 px-1 px-sm-2">
+                                        <span uk-icon="icon:image;ratio:.9"></span>
+                                        <span class="mx-2">تصویر</span>
+                                    </span>
+
+                                </label>
+                                <input type="file" class="d-none" name="image" id="image"
+                                       onchange="$('#about-content-image-form').submit()" />
+                            </form>
+                        </div>
+                        <div class="col-md-3 col-sm-6 my-2">
+                            <!--Add new video Modal-->
+                            <div id="video-add-modal" uk-modal dir="rtl">
+                                <div class="uk-modal-dialog">
+                                    <button class="uk-modal-close-default" type="button" uk-close syle="right:unset;left:10px !important;"></button>
+                                    <form action="/Admin/AboutUs/AddVideo" method="post">
+                                        <div class="uk-modal-header bg--light-3">
+                                            <h3 class="iranyekanwebregular fontsize-14 uk-text-secondary">اضافه کردن ویدیوی جدید</h3>
+                                        </div>
+                                        <div class="uk-modal-body">
+                                            <input type="hidden" name="id" id="id" value="@Model.Id" />
+                                            <!--Title of product-->
+                                            <div class="uk-magin col-auto">
+                                                <div class="custom-text-field">
+                                                    <label class="uk-form-label IRANSans_Light" for="videoLink">لینک ویدیو در آپارات</label>
+                                                    <div class="uk-form-controls">
+                                                        <input name="videoLink" id="videoLink"
+                                                               class="uk-input IRANSans_Light fontsize-12" type="text" required placeholder="لینک ویدیو را وارد کنید">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="uk-modal-footer uk-text-right">
+                                            <button class="mdc-button mdc-button--unelevated border--blue white bg--blue-600 uk-box-shadow-medium" style="height:30px" type="submit">
+                                                <div class="mdc-button__ripple"></div>
+                                                <span class="mdc-button__label IRANSans fontsize-12">
+                                                    اضافه کردن
+                                                </span>
+                                                <span class="material-icons-outlined mx-2 fontsize-16">
+                                                    add
+                                                </span>
+                                            </button>
+                                            <button class="mdc-button mdc-button--unelevated border--blue uk-modal-close bg--white uk-box-shadow-medium blue-600 mx-2"
+                                                    style="height:30px;">
+                                                <div class="mdc-button__ripple"></div>
+                                                <span class="mdc-button__label IRANSans fontsize-12">
+                                                    صرف نظر
+                                                </span>
+
+                                            </button>
+
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <a uk-toggle="target: #video-add-modal" class="w-100 border bg--white mdc-button mdc-button--unelevated
+                              uk-box-shadow-small blue-700 p-2 text-decoration-none
+                              IRANSans_Light fontsize-12">
+                                <div class="mdc-button__ripple"></div>
+                                <span class="mdc-button__label IRANSans fontsize-12 blue-700 px-1 px-sm-2">
+                                    <span uk-icon="icon:video-camera;ratio:.9"></span>
+                                    <span class="mx-2">ویدیو</span>
+                                </span>
+                            </a>
+                        </div>
+
+                    </div>
+                    <div class="col-12" id="about-content-list">
+                        <vc:about-content-list id="@Model.Id"></vc:about-content-list>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!--SEO Settings-->
+        <div class="row px-3 my-4">
+            <div class="col-12 py-2">
+                <div class="border border--dashed form-bundle uk-border-rounded">
+                    <label class="IRANSans_Light">تنظیمات سئو</label>
+                    <div class="row m-0 pt-2" dir="rtl">
+                        <!--Page Title and Meta Description-->
+                        <div class="col-sm-6 my-2 mt-sm-2 mb-sm-0 px-2 order-1 order-sm-0">
+                            <div class="custom-text-field mx-2 my-4">
+                                <label class="uk-form-label IRANSans_Light" asp-for="TitlePage">عنوان</label>
+                                <div class="uk-form-controls d-flex">
+                                    <input class="uk-input IRANSans_Light fontsize-12" asp-for="TitlePage" type="text" placeholder="عنوان (60 تا 70 کاراکتر)">
+                                </div>
+                            </div>
+                            <div class="custom-text-field mx-2 my-4">
+                                <label class="uk-form-label IRANSans_Light" asp-for="RedirectURL">لینک انتقال (redirect 301)</label>
+                                <div class="uk-form-controls d-flex">
+                                    <input class="uk-input IRANSans_Light fontsize-12" asp-for="RedirectURL" type="text" placeholder="لینک صفحه هدف را وارد کنید">
+                                </div>
+                            </div>
+                            <div class="custom-text-field mx-2 my-4">
+                                <label class="uk-form-label IRANSans_Light" asp-for="MetaDescription">توضیحات</label>
+                                <div class="uk-form-controls d-flex">
+                                    <textarea asp-for="MetaDescription" class="uk-textarea IRANSans_Light fontsize-12 uk-border-rounded" rows="5"
+                                              placeholder="توضیحات را وارد کنید / 50 تا 160 کاراکتر">@Model.MetaDescription</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Preview in Google Results-->
+                        <div class="col-sm-6 my-2 order-0 order-sm-1 px-2 py-3" dir="rtl">
+                            <div class="border form-bundle uk-border-rounded m-2">
+                                <label class="IRANSans_Light">پیش نمایش در گوگل</label>
+                                <div class="my-3 p-3">
+                                    @if (string.IsNullOrEmpty(Model.TitlePage))
+                                    {
+                                        <div id="title-page-preview"
+                                             class="IRANSans fontsize-14" style="color:#1a0dab">عنوان صفحه</div>
+                                    }
+                                    else
+                                    {
+                                        <div id="title-page-preview"
+                                             class="IRANSans fontsize-14" style="color:#1a0dab">@Model.TitlePage</div>
+                                        }
+                                    @if (string.IsNullOrEmpty(Model.MetaDescription))
+                                    {
+                                        <div id="metadescription-page-preview"
+                                             class="IRANSans_Light fontsize-12">توضیحاتی که در نتیجه ی جستجوی موتورهای جستجوگر دیده می شود</div>
+                                    }
+                                    else
+                                    {
+                                        <div id="metadescription-page-preview"
+                                             class="IRANSans_Light fontsize-12">@Model.MetaDescription</div>
+                                        }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Submit button-->
+                    <div class="px-3 mb-3">
+                        <button class="mdc-button mdc-button--unelevated about-seo-settings__submit-button
+                            bg--blue-700 border px-0 uk-box-shadow-small" data-id="@Model.Id" style="height:30px">
+                            <div class="mdc-button__ripple"></div>
+                            <span class="mdc-button__label IRANSans fontsize-10 white px-1 px-sm-2">
+                                ذخیره تغییرات
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+       
+    </div>
+</div>
+@section Scripts{
+    <script>
+
+        const mdcButton = $('.mdc-button');
+        for (let i = 0; i < mdcButton.length; i++) {
+            mdc.ripple.MDCRipple.attachTo(document.querySelectorAll('.mdc-button')[i]);
+        }
+
+        const mdcTextField = $('.mdc-text-field');
+        for (let i = 0; i < mdcTextField.length; i++) {
+            mdc.textField.MDCTextField.attachTo(document.querySelectorAll('.mdc-text-field')[i]);
+        }
+
+    </script>
+}

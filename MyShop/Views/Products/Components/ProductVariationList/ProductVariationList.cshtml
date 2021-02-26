@@ -1,0 +1,19 @@
+﻿@model IEnumerable<ProductVariation>
+@if (Model.Count() > 0)
+{
+    <div class="d-flex align-items-center uk-flex-wrap padding-bottom-10 product-variation-list">
+        @foreach (var item in Model)
+        {
+            <div class="margin-bottom-15">
+                <span class="dana-font fontsize-14 font-weight-500 red darken-1 white-text padding-y-5 padding-x-5 xsmobile-fontsize-12 border-radius-3" dir="ltr">Choose @item.Title</span>
+                <div class="variation-values-container padding-top-5">
+                    <vc:sub-product-variation-list product-variation-id="@item.ProductVariationId"></vc:sub-product-variation-list>
+                </div>
+              
+            </div>
+        }
+    </div>
+    
+
+    
+}

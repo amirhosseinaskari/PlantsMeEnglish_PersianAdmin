@@ -1,0 +1,64 @@
+﻿@model Shopping
+@{
+    ViewData["Title"] = "تکمیل خرید";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Style{
+    <link href="~/dist/sass/pages/shopping.min.css" rel="stylesheet" />
+}
+@section JavaScript{
+    <script async src="~/dist/js/pages/_shopping.min.js" type="module"></script>
+}
+<section id="container-section" class="uk-overflow-hidden">
+    <!--shopping steps-->
+    <div class="shopping-steps-container" dir="rtl">
+        <hr class="shopping-icon-divider" />
+        <div>
+            <!--review shopping basket (first step)-->
+            <div class="d-flex flex-column align-items-center">
+                <div class="shopping-steps passed-step">
+                    <img src="~/images/icons/product-detail/shopping-cart.svg" />
+                </div>
+                <div class="dana-font fontsize-14 mobile-fontsize-12 font-weight-500 step-text margin-top-10">مشاهده سبد خرید</div>
+            </div>
+
+            <div class="divider flex-grow-1"></div>
+            <!--set receiver address (second step)-->
+            <div class="d-flex flex-column align-items-center">
+                <div class="shopping-steps passed-step">
+                    <img src="~/images/icons/product-detail/location.svg" />
+                </div>
+                <div class="dana-font fontsize-14 mobile-fontsize-12 font-weight-500 step-text margin-top-10">ثبت آدرس گیرنده</div>
+            </div>
+            <div class="divider flex-grow-1"></div>
+            <!--payment and confirmtion (third step)-->
+            <div class="d-flex flex-column align-items-center">
+                <div class="shopping-steps passed-step">
+                    <img src="~/images/icons/product-detail/hand.svg" />
+                </div>
+                <div class="dana-font fontsize-14 mobile-fontsize-12 font-weight-500 step-text margin-top-10">تایید نهایی و پرداخت</div>
+            </div>
+        </div>
+    </div>
+     <div id="empty-order-message" dir="rtl">
+
+            <img class="max-width-100" width="200" src="~/images/base/emptyshopping.svg" />
+            <div class="padding-20 white border uk-border-rounded d-flex
+                 flex-column justify-content-center align-items-center line-height-25">
+                <span class="dana-font fontsize-14 mobile-fontsize-12 font-weight-500">
+                    خرید شما با موفقیت ثبت شد
+                </span>
+                <div class="dana-font fontsize-14 mobile-fontsize-12 font-weight-400 margin-y-15">
+                    <span class="margin-left-5">شماره پیگیری پرداخت:</span>
+                    <span class="red-text fontsize-14 font-weight-500 mobile-fontsize-12 digit-format">@Model.TracingCode</span>
+                </div>
+                <div class="d-flex align-items-center justify-content-center margin-y-10">
+                    <a asp-action="AllOrders" asp-controller="Customer" asp-area="" class="text-decoration-none blue-text margin-x-10 dana-font fontsize-14 mobile-fontsize-12 font-weight-500">مشاهده سفارش ها</a>
+                    |
+                    <a asp-action="Index" asp-controller="Home" class="text-decoration-none blue-text margin-x-10 dana-font fontsize-14 mobile-fontsize-12 font-weight-500">بازگشت به صفحه اصلی</a>
+                </div>
+            </div>
+        </div>
+  
+
+</section>

@@ -1,0 +1,162 @@
+﻿@model SEOSettings
+@{ViewData["seosettingspage"] = "active"; }
+<!--Breadcrumb for this url-->
+<div class="row p-0 m-0 bg--white py-2 my-3 uk-box-shadow-small uk-border-rounded border position-relative">
+    <div class="col-12" dir="ltr">
+        <ul class="uk-breadcrumb IRANSans_Light fontsize-12 text-left p-0 m-0 d-flex" dir="ltr">
+            <li><a href="~/En/Admin" class="fontsize-12">Dashboard</a></li>
+            <li class="mx-sm-1 uk-active">SEO Settings</li>
+        </ul>
+        <div class="bg--blue-600 position-absolute rounded-right" style="width:8px;right:0;top:-8px;height:calc(100% + 16px);"></div>
+    </div>
+
+</div>
+<!--SEO Settings Form-->
+<div class="row my-2 m-0" dir="ltr" id="main-container">
+    <div class="col-12 uk-background-default  uk-box-shadow-medium border uk-border-rounded py-3">
+        <!--Title of SEO Setting-->
+        <h3 class="Arial fontsize-14 text-left mx-3 my-1 py-2">
+            <span class="blue-600 border-bottom--blue py-2">SEO Settings</span>
+        </h3>
+
+        <!--SEO Settings Total Information-->
+        <div class="row px-3 my-4" dir="ltr">
+            <form method="post" asp-action="EditSEO" asp-controller="SEO" asp-area="Admin" enctype="multipart/form-data"
+                  role="form" class="col-12">
+                <div class="border border--dashed form-bundle uk-border-rounded">
+                    <label class="IRANSans_Light">Total Information</label>
+                    <div class="row m-0 pt-4 pb-2">
+                        <!--Google Analytics Code-->
+                        <div class="col-lg-3 col-md-4 col-sm-6 my-3">
+                            <div class="custom-text-field">
+                                <label class="uk-form-label IRANSans_Light" asp-for="GoogleAnalytics">Google Analytics</label>
+                                <div class="uk-form-controls">
+                                    <input class="uk-input IRANSans_Light fontsize-12"
+                                           asp-for="GoogleAnalytics" type="text" placeholder="enter google analytics code">
+
+                                </div>
+                            </div>
+                        </div>
+                        <!--Google Search Console-->
+                        <div class="col-lg-3 col-md-4 col-sm-6 my-3">
+                            <div class="custom-text-field">
+                                <label class="uk-form-label IRANSans_Light" asp-for="GoogleSearchConsole">Google Search Console</label>
+                                <div class="uk-form-controls">
+                                    <input class="uk-input IRANSans_Light fontsize-12" asp-for="GoogleSearchConsole" type="text" placeholder="enter google search console code">
+
+                                </div>
+                            </div>
+                        </div>
+                        <!--Google Search Console File-->
+                        <div class="col-lg-3 col-md-4 col-sm-6 my-3">
+                            <div class="custom-text-field">
+                                <label class="uk-form-label IRANSans_Light" for="SiteMap">Site Map</label>
+                                <div uk-form-custom="target: true" class="w-100">
+                                    <input type="file" name="SiteMap" accept="text/xml">
+                                    @if (Model == null)
+                                    {
+                                        <input class="uk-input
+                                           uk-form-width-medium bg--white IRANSans_Light fontsize-12 w-100 h-40"
+                                               asp-for="SiteMap"
+                                               type="text" placeholder="upload site map"
+                                               disabled style="border-color:#9b9b9b">
+                                    }
+                                    else
+                                    {
+                                        if (!string.IsNullOrWhiteSpace(Model.SiteMap))
+                                        {
+                                            <input class="uk-input
+                                           uk-form-width-medium bg--white IRANSans_Light fontsize-12 w-100 h-40"
+                                                   asp-for="SiteMap"
+                                                   type="text" placeholder="@Model.SiteMap"
+                                                   disabled style="border-color:#9b9b9b">
+                                        }
+                                        else
+                                        {
+                                            <input class="uk-input
+                                           uk-form-width-medium bg--white IRANSans_Light fontsize-12 w-100 h-40"
+                                                   asp-for="SiteMap"
+                                                   type="text" placeholder="upload site map"
+                                                   disabled style="border-color:#9b9b9b">
+                                        }
+                                    }
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--Fav Icon File-->
+                        <div class="col-lg-3 col-md-4 col-sm-6 my-3">
+                            <div class="custom-text-field">
+                                <label class="uk-form-label IRANSans_Light" for="FavIcon">fav-icon</label>
+                                <div uk-form-custom="target: true" class="w-100">
+                                    <input type="file" name="FavIcon" accept="image/png">
+                                    @if (Model == null)
+                                    {
+                                        <input class="uk-input uk-form-width-medium bg--white
+                                           IRANSans_Light fontsize-12 w-100" type="text"
+                                               asp-for="FavIcon"
+                                               placeholder="upload fav-icon"
+                                               disabled style="height:40px;border-color:#9b9b9b">
+                                    }
+                                    else
+                                    {
+                                        if (!string.IsNullOrWhiteSpace(Model.FavIcon))
+                                        {
+                                            <input class="uk-input uk-form-width-medium bg--white
+                                           IRANSans_Light fontsize-12 w-100" type="text"
+                                                   asp-for="FavIcon"
+                                                   placeholder="@Model.FavIcon"
+                                                   disabled style="height:40px;border-color:#9b9b9b">
+                                        }
+                                        else
+                                        {
+                                            <input class="uk-input uk-form-width-medium bg--white
+                                           IRANSans_Light fontsize-12 w-100" type="text"
+                                                   asp-for="FavIcon"
+                                                   placeholder="upload fav-icon"
+                                                   disabled style="height:40px;border-color:#9b9b9b">
+                                        }
+                                    }
+                                    
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Submit button-->
+                    <div class="my-3 mx-3">
+                        <button class="mdc-button mdc-button--unelevated bg--blue-700 border
+                                uk-box-shadow-small px-0 h-30 seosettings-submit-button" type="submit">
+                            <div class="mdc-button__ripple"></div>
+                            <span class="mdc-button__label IRANSans fontsize-10 white px-1 px-sm-2">
+                               Save Changes
+                            </span>
+                        </button>
+                    </div>
+                    <div class="row m-0 py-2 mt-3">
+                        <div class="col-auto">
+                            <label class="IRANSans_Light fontsize-12">
+                                <input autocomplete="off" class="uk-checkbox mx-1 uk-border-rounded"
+                                       type="checkbox" asp-for="IsBlock">
+                                Block Search Engines
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script>
+
+        const mdcButton = $('.mdc-button');
+        for (let i = 0; i < mdcButton.length; i++) {
+            mdc.ripple.MDCRipple.attachTo(document.querySelectorAll('.mdc-button')[i]);
+        }
+
+
+
+    </script>
+}

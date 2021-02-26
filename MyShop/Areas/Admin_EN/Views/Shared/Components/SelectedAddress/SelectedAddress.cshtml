@@ -1,0 +1,20 @@
+﻿@model Address
+
+<p class="IRANSans fontsize-14">
+    <span>Receiver:</span>
+    <span>@Model.ReceiverName</span>
+</p>
+<p class="">
+    <div class="d-inline-block ml-sm-2 mx-1 IRANSans fontsize-14 grey-darken-1">
+        <span>Receiver Phone Number:</span>
+        <span>@Model.ReceiverMobileNumber</span>
+    </div>
+    <span class="fontsize-16 uk-text-muted">|</span>
+    <div class="d-inline-block mr-sm-2 mx-1 IRANSans fontsize-14 grey-darken-1">
+        <span>Postal Code:</span>
+        <span>@Model.PostalCode</span>
+    </div>
+</p>
+<p class="IRANSans_Light uk-text-muted fontsize-14">
+    @Model.Details
+</p>

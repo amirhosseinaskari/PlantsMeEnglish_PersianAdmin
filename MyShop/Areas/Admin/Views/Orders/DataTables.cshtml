@@ -1,0 +1,73 @@
+﻿@{
+    var persianDate = new PersianCalendar();
+    var today = string.Format("{0}/{1}/{2}", persianDate.GetYear(System.DateTime.Now),
+        persianDate.GetMonth(System.DateTime.Now),
+        persianDate.GetDayOfMonth(System.DateTime.Now));
+}
+    <div class="col-12 uk-background-default  uk-box-shadow-medium border uk-border-rounded py-3">
+        <!--Title of order list-->
+        <h3 class="iranyekanwebregular fontsize-14 text-right mx-3 my-1 py-2">
+            <span class="blue-600 border-bottom--blue py-2"> لیست سفارشات</span>
+        </h3>
+        <!--Filtering options-->
+        <div class="row uk-background-default py-2 m-0 align-items-center">
+            <!--Search form-->
+            <div class="col-md-4 col-sm-3 my-2">
+                <div class="uk-inline w-100">
+                    <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: search"></span>
+                    <input autocomplete="off" name="myOrderSearch" 
+                           class="uk-input w-100 IRANSans_Light fontsize-14" 
+                           dir="rtl" type="text" placeholder="جستجو کنید">
+                </div>
+            </div>
+
+            <!--Select Sort By-->
+            <div class="col-md-2 col-sm-3 my-2 position-relative order-sort" style="z-index:5;" data-order-sort="0">
+                <div class="mdc-select mdc-select--outlined">
+                    <div class="mdc-select__anchor w-100 bg--white my-2" style="height:40px;">
+                        <i class="mdc-select__dropdown-icon"></i>
+                        <div id="demo-selected-text" class="mdc-select__selected-text IRANSans_Light fontsize-12 position-relative" style="top:-5px" aria-labelledby="outlined-select-label"></div>
+                        <div class="mdc-notched-outline">
+                            <div class="mdc-notched-outline__leading"></div>
+                            <div class="mdc-notched-outline__notch">
+                                <label id="outlined-select-label" class="mdc-floating-label IRANSans_Light fontsize-14">مرتب کردن</label>
+                            </div>
+                            <div class="mdc-notched-outline__trailing"></div>
+                        </div>
+                    </div>
+                    <!-- Select Sort By => Options -->
+                    <div class="mdc-select__menu mdc-menu mdc-menu-surface w-100 my-2" role="listbox">
+                        <ul class="mdc-list IRANSans_Light fontsize-12">
+                            <li class="mdc-list-item mdc-list-item--selected" data-value="0" role="option">
+                                جدیدترین
+                            </li>
+                            <li class="mdc-list-item" data-value="1" role="option">
+                                قدیمی ترین
+                            </li>
+                            <li class="mdc-list-item" data-value="2" role="option">
+                                در انتظار ثبت نهایی
+                            </li>
+                            <li class="mdc-list-item" data-value="3" role="option">
+                                ثبت شدگان نهایی
+                            </li>
+                            <li class="mdc-list-item" data-value="4" role="option">
+                                پرداخت آنلاین
+                            </li>
+                            <li class="mdc-list-item" data-value="5" role="option">
+                                ارسال شده
+                            </li>
+                            <li class="mdc-list-item" data-value="6" role="option">
+                                لغو شده
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+           
+        </div>
+        <div id="order-list-dataTable">
+            <vc:order-data-table sort="0" page-index="1" search-text="@(null)"></vc:order-data-table>
+        </div>
+      
+    </div>

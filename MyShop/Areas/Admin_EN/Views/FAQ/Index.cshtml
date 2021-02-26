@@ -1,0 +1,71 @@
+﻿@model FAQ
+<!--Breadcrumb for this url-->
+<div class="row p-0 m-0 bg--white py-2 my-3 uk-box-shadow-small uk-border-rounded border position-relative">
+    <div class="col-12" dir="ltr">
+        <ul class="uk-breadcrumb IRANSans_Light fontsize-12 text-left p-0 m-0 d-flex" dir="ltr">
+            <li><a href="~/En/Admin" class="fontsize-12">Dashboard</a></li>
+            <li class="mx-sm-1 uk-active">FAQ</li>
+        </ul>
+        <div class="bg--blue-600 position-absolute rounded-right" style="width:8px;right:0;top:-8px;height:calc(100% + 16px);"></div>
+    </div>
+
+</div>
+<!--faq Creation Form-->
+<div class="row my-2 m-0" dir="ltr" id="main-container">
+    <div class="col-12 uk-background-default  uk-box-shadow-medium border uk-border-rounded py-3">
+        <!--Title of FAQ page-->
+        <h3 class="Arial fontsize-14 text-left mx-3 my-1 py-2">
+            <span class="blue-600 border-bottom--blue py-2">Create New Questions And Answers</span>
+        </h3>
+
+        <!--FAQ page Total Information-->
+        <div class="row px-3 py-2 my-4" id="product-tech-description">
+            <div class="col-12">
+                <div class="border border--dashed form-bundle uk-border-rounded">
+                    <label class="IRANSans_Light">Question And Answer</label>
+                    <div class="mx-3 my-4">
+                        <div class="custom-text-field my-3">
+                            <label class="uk-form-label IRANSans_Light" asp-for="Question">Question</label>
+                            <div class="uk-form-controls">
+                                <input class="uk-input IRANSans_Light fontsize-12" asp-for="Question" type="text" placeholder="enter your question">
+                            </div>
+                        </div>
+                        <div class="IRANSans_Light fontsize-12 text-editor" id="Answer"
+                             style="min-height:120px">
+                            <p class="ql-align-right ql-direction-ltr uk-text-muted">write your answer</p>
+                        </div>
+                    </div>
+                    <div class="mx-md-3 mr-3 mb-3">
+                        <button class="mdc-button mdc-button--unelevated add-new-faq__submit-button
+                                bg--blue-700 border px-0 uk-box-shadow-small" style="height:30px">
+                            <div class="mdc-button__ripple"></div>
+                            <span class="mdc-button__label IRANSans fontsize-10 white px-1 px-sm-2">
+                              Add
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row my-2 m-0" id="faq-list-container">
+            <vc:faq-list></vc:faq-list>
+        </div>
+    </div>
+   
+</div>
+
+@section Scripts{
+    <script>
+
+        const mdcButton = $('.mdc-button');
+        for (let i = 0; i < mdcButton.length; i++) {
+            mdc.ripple.MDCRipple.attachTo(document.querySelectorAll('.mdc-button')[i]);
+        }
+
+        const mdcTextField = $('.mdc-text-field');
+        for (let i = 0; i < mdcTextField.length; i++) {
+            mdc.textField.MDCTextField.attachTo(document.querySelectorAll('.mdc-text-field')[i]);
+        }
+
+    </script>
+}

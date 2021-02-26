@@ -1,0 +1,12 @@
+﻿.message-header{
+    display:flex;
+    justify-content:flex-start;
+    align-items:center;
+}
+.message-subject{
+    border-bottom:1px dashed #fe1e1e;
+}
+.message-remove {
+    text-decoration: none;
+    border-bottom: 1px dashed #fe1e1e;
+}

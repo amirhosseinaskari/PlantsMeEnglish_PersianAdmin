@@ -1,0 +1,47 @@
+﻿@model IEnumerable<Order>
+
+@foreach (var item in Model)
+{
+    
+    <tr>
+        <td class="dana-font fontsize-12 font-weight-500 uk-text-left">@item.ProductTitle</td>
+        <td class="dana-font fontsize-12 font-weight-400 uk-text-left digit-format">@item.OrderDate.ToString("dd/MM/yyyy")</td>
+        <td class="dana-font fontsize-12 font-weight-400 uk-text-left digit-format">@item.Number</td>
+        <td class="dana-font fontsize-12 font-weight-400 uk-text-left digit-format">@item.TotalPrice</td>
+        
+        <td class="dana-font fontsize-12 font-weight-400 uk-text-left">
+            @if (item.Status.Equals(Status.OnlinePaid))
+            {
+                <text>Paid</text>
+            }
+            else
+            {
+                <text>Unpaid</text>
+            }
+        </td>
+        <td class="dana-font fontsize-12 font-weight-400 uk-text-left">
+            @if (item.Status.Equals(Status.Registered) || item.Status.Equals(Status.OnlinePaid))
+            {
+                <text>Pending</text>
+            }
+            else if (item.Status.Equals(Status.Shipping))
+            {
+                <text>Shipping</text>
+            }
+            else if (item.Status.Equals(Status.Delivered))
+            {
+                <text>Delivered</text>
+            }
+            else if (item.Status.Equals(Status.Cancelled))
+            {
+                <text>Canceled</text>
+            }
+            else
+            {
+                <a class="dana-font fontsize-12 font-weight-400 uk-text-left text-decoration-none blue-text"
+                   asp-action="ShoppingBasket" asp-controller="Shopping" asp-area="">Click here to complete this purchase</a>
+            }
+        </td>
+    </tr>
+}
+

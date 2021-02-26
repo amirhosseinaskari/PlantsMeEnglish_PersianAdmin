@@ -1,0 +1,60 @@
+﻿@import "../components/uikit-variables-theme.scss";
+@import "../components/Indexuikitcomponents/_indexUikitComponents.scss";
+@import "../main.scss";
+@import "../vendors/_bourbon.scss";
+#about-page,
+#faq-page {
+    padding-left: 90px;
+    padding-right: 90px;
+
+    @media only screen and (max-width: 950px) {
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+
+    @media only screen and (max-width: 768px) {
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+
+    @media only screen and (max-width: 600px) {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    @media only screen and (max-width: 300px) {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}
+#faq-page {
+    background-color: rgba(249, 249, 249, 0.3);
+
+    li {
+        padding: 20px;
+
+        @media only screen and (max-width: 600px) {
+            padding: 15px;
+        }
+
+        .faq-chevron-icon {
+            @include prefixer(transition,all .3s ease-in-out,("webkit","moz","o"));
+            @include prefixer(transform,rotate(0),("webkit","moz","o"));
+            @include prefixer(transform-origin,center center,("webkit","moz","o"));
+        }
+
+        &.uk-open {
+            .faq-chevron-icon {
+                @include prefixer(transition,all .3s ease-in-out,("webkit","moz","o"));
+                @include prefixer(transform,rotate(180deg),("webkit","moz","o"));
+            }
+        }
+    }
+
+
+    .uk-accordion-title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+}

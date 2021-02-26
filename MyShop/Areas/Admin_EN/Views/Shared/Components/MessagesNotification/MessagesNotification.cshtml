@@ -1,0 +1,31 @@
+﻿@model int
+@if (Model>0)
+{
+    <button class="uk-button uk-button-link text-decoration-none grey-darken-4" type="button">
+        <span class="mx-2" uk-icon="icon:mail"></span>
+        <span class="alert-circle position-absolute"></span>
+    </button>
+    <div class="p-0" uk-dropdown="mode: click;pos: bottom-left">
+
+        <ul class="uk-list uk-list-divider m-0 py-0" id="notification-list">
+            @if (Model > 0)
+            {
+                <li class="m-0 p-0">
+                    <a asp-action="Index" asp-controller="Messages" asp-area="Admin" 
+                       class="d-inline-block text-decoration-none IRANSans w-100
+                                       fontsize-12 uk-text-secondary p-3">
+                        <span class="mx-1 blue-600">@Model</span>
+                        <span>New Message</span>
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>
+}
+else
+{
+    <button class="uk-button uk-button-link text-decoration-none grey-darken-4" type="button">
+        <span class="mx-2" uk-icon="icon:mail"></span>
+       
+    </button>
+}

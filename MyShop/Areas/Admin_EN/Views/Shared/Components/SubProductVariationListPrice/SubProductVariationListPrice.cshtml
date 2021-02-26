@@ -1,0 +1,66 @@
+﻿@model IEnumerable<SubProductVariation>
+@if (Model.Count() > 0)
+{
+    <div class="col-12 my-2 px-0">
+        <div class="uk-overflow-auto bg--white border d-flex">
+            <table class="uk-table uk-table-striped uk-table-hover border-0">
+                <thead class="IRANSans fontsize-12">
+                    <tr>
+                        <th class="text-center fontsize-12">@ViewData["ProductVariationTitle"]</th>
+                        <th class="text-center fontsize-12">Price</th>
+                        <th class="text-center fontsize-12">Action</th>
+                    </tr>
+                </thead>
+                <tbody class="IRANSans_Light fontsize-12">
+                    @foreach (var item in Model)
+                    {
+                        <tr data-my-id="@item.SubProductVariationId" class="provar-table-row">
+                            <td class="text-center fontsize-12">@item.Title</td>
+                            <td class="text-center fontsize-12">@item.Price</td>
+                            <td class="text-center fontsize-12">
+                                <a href="#" class="red-lighten-7 delete-subProductVariationPrice"
+                                   data-my-id="@item.SubProductVariationId"
+                                   uk-tooltip="title:delete">
+                                    <span uk-icon="icon:trash;ratio:.85"></span>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+
+<script>
+
+    //Delete Price of SubProductVariation
+    $('.delete-subProductVariationPrice').click(function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        let myId = $(this).attr('data-my-id');
+        let parent = $(this).parents('.provar-table-row');
+        $.ajax({
+            url: "/Admin/SubProductVariation/DeletePrice",
+            type: "POST",
+            data: {
+                id: myId
+            },
+            success: function (data) {
+                if (data) {
+                    $(parent).remove();
+                     UIkit.notification({
+                        message: '<span class="material-icons-outlined red-lighten-7 mx-2 position-relative" style="top:6px">notifications_active</span><span class="IRANSans_Light fontsize-14" dir="rtl">Price Removed</span>',
+                        status: 'primary',
+                        pos: 'top-center',
+                        timeout: 5000
+                    });
+                }
+            }
+
+        });
+    });
+
+</script>

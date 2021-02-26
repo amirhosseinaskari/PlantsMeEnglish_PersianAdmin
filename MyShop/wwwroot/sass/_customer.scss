@@ -1,0 +1,78 @@
+﻿.customer-side-bar {
+    .customer-side-bar__list {
+        li {
+            position: relative;
+
+            .chevron--left {
+                position: absolute;
+                left: 5px;
+                top: 30%;
+            }
+
+            &:hover {
+                i, span {
+                    color: #656565;
+                }
+
+                span.my-title {
+                    font-weight: bold;
+                }
+
+                background-color: rgba(225, 225, 225, 0.20);
+            }
+        }
+
+        li a {
+            i, span.my-icon {
+                color: #d7d7d7;
+            }
+
+            span.my-title {
+                color: #6e6e6e;
+            }
+        }
+
+        
+    }
+
+    .uk-card-footer {
+        a:hover {
+            color: #6e6e6e !important;
+        }
+    }
+}
+.customer-form {
+    label {
+        width: unset !important;
+        min-width:70px;
+    }
+}
+.customer-information-container li.customer-information__list-item,
+.orders-container li.orders-container__list-item,
+.addresses-container li.addresses-container__list-item,
+.messages-container li.messages-container__list-item,
+.support-container li.support-container__list-item,
+.index-default li.index-default__list-item {
+    background-color: rgba(149, 190, 227, 0.10);
+
+    a {
+        i, span.my-icon {
+            color: #38accb;
+        }
+
+        span.my-title {
+            font-weight: bold;
+            color: #38accb;
+        }
+    }
+}
+
+.active-link {
+    background-color: #f1f1f1 !important;
+    color: #38accb !important;
+
+    &:hover {
+        background-color: #ececec !important;
+        color: #43bdde !important;
+    }
+}

@@ -1,0 +1,71 @@
+﻿@model FAQ
+<!--Breadcrumb for this url-->
+<div class="row p-0 m-0 bg--white py-2 my-3 uk-box-shadow-small uk-border-rounded border position-relative">
+    <div class="col-12" dir="rtl">
+        <ul class="uk-breadcrumb IRANSans_Light fontsize-12 text-right p-0 m-0 d-flex" dir="rtl">
+            <li><a href="~/Admin" class="fontsize-12">مدیریت</a></li>
+            <li class="mx-sm-1 uk-active">صفحه راهنمای کاربران</li>
+        </ul>
+        <div class="bg--blue-600 position-absolute rounded-left" style="width:8px;left:0;top:-8px;height:calc(100% + 16px);"></div>
+    </div>
+
+</div>
+<!--faq Creation Form-->
+<div class="row my-2 m-0" dir="rtl" id="main-container">
+    <div class="col-12 uk-background-default  uk-box-shadow-medium border uk-border-rounded py-3">
+        <!--Title of FAQ page-->
+        <h3 class="iranyekanwebregular fontsize-14 text-right mx-3 my-1 py-2">
+            <span class="blue-600 border-bottom--blue py-2"> ایجاد پرسش و پاسخ جدید</span>
+        </h3>
+
+        <!--FAQ page Total Information-->
+        <div class="row px-3 py-2 my-4" id="product-tech-description">
+            <div class="col-12">
+                <div class="border border--dashed form-bundle uk-border-rounded">
+                    <label class="IRANSans_Light">پرسش و پاسخ</label>
+                    <div class="mx-3 my-4">
+                        <div class="custom-text-field my-3">
+                            <label class="uk-form-label IRANSans_Light" asp-for="Question">پرسش</label>
+                            <div class="uk-form-controls">
+                                <input class="uk-input IRANSans_Light fontsize-12" asp-for="Question" type="text" placeholder="پرسش را وارد کنید">
+                            </div>
+                        </div>
+                        <div class="IRANSans_Light fontsize-12 text-editor" id="Answer"
+                             style="min-height:120px">
+                            <p class="ql-align-right ql-direction-rtl uk-text-muted">پاسخ را اینجا بنویسید</p>
+                        </div>
+                    </div>
+                    <div class="mx-md-3 mr-3 mb-3">
+                        <button class="mdc-button mdc-button--unelevated add-new-faq__submit-button
+                                bg--blue-700 border px-0 uk-box-shadow-small" style="height:30px">
+                            <div class="mdc-button__ripple"></div>
+                            <span class="mdc-button__label IRANSans fontsize-10 white px-1 px-sm-2">
+                               اضافه کردن پرسش و پاسخ جدید
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row my-2 m-0" id="faq-list-container">
+            <vc:faq-list></vc:faq-list>
+        </div>
+    </div>
+   
+</div>
+
+@section Scripts{
+    <script>
+
+        const mdcButton = $('.mdc-button');
+        for (let i = 0; i < mdcButton.length; i++) {
+            mdc.ripple.MDCRipple.attachTo(document.querySelectorAll('.mdc-button')[i]);
+        }
+
+        const mdcTextField = $('.mdc-text-field');
+        for (let i = 0; i < mdcTextField.length; i++) {
+            mdc.textField.MDCTextField.attachTo(document.querySelectorAll('.mdc-text-field')[i]);
+        }
+
+    </script>
+}

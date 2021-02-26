@@ -1,0 +1,25 @@
+﻿@page
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, MyShop
+@model MyShop.Pages.AboutUsModel
+@{
+    ViewData["Title"] = Model.About.TitlePage;
+    ViewData["MetaDescription"] = Model.About.MetaDescription;
+    ViewData["RedirectURL"] = Model.About.RedirectURL;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Schema{
+    <vc:home-schema></vc:home-schema>
+
+}
+@section Style{
+    <link href="~/dist/sass/pages/aboutus.min.css" rel="stylesheet" />
+}
+@section JavaScript{
+    <script async src="~/dist/js/pages/_contactus.min.js" type="module"></script>
+}
+<section id="about-page" class="padding-y-20">
+    <vc:aboutus-content-list></vc:aboutus-content-list>
+</section>
+
+

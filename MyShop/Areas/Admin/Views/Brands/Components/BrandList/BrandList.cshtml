@@ -1,0 +1,169 @@
+﻿@model IEnumerable<Brand>
+<!--Brands List-->
+<div class="col-sm-5 col-md-6 order-1 order-sm-0">
+    <h3 class="iranyekanwebregular fontsize-14 text-right mx-3 my-1 py-2">
+        <span class="blue-600 border-bottom--blue py-2"> برندهای موجود</span>
+    </h3>
+    @if (Model.Count() == 0)
+    {
+        <div class="h-75 d-flex justify-content-start flex-column align-items-center mt-md-4">
+            <div class="iranyekanwebregular fontsize-14 text-center w-75 p-2 my-3 border--blue uk-box-shadow-medium">هنوز هیچ برندی ایجاد نشده است</div>
+            <img class="w-75" src="~/images/large/product2.svg" />
+        </div>
+    }
+    else
+    {
+        //Delete Modal for remove brand
+        <div id="item-remove-modal" uk-modal dir="rtl">
+            <div class="uk-modal-dialog">
+                <button class="uk-modal-close-default" type="button" uk-close syle="right:unset;left:10px !important;"></button>
+                <div class="uk-modal-header bg--light-3">
+                    <h3 class="iranyekanwebregular fontsize-14 red-lighten-7">هشدار!</h3>
+                </div>
+                <div class="uk-modal-body">
+                    <div class="IRANSans fontsize-12">آیا مطمئن هستید که می خواهید این برند را حذف کنید؟</div>
+                </div>
+                <div class="uk-modal-footer uk-text-right">
+                    <form id="remove-item-form-on-modal" action="/Admin/Brands/DeleteBrand" method="post">
+                        <div class="item-id-container"></div>
+                        <button class="mdc-button mdc-button--unelevated border--blue red-lighten-7 bg--white uk-box-shadow-medium" style="height:30px" type="submit">
+                            <div class="mdc-button__ripple"></div>
+                            <span class="mdc-button__label IRANSans fontsize-12">
+                                حذف
+                            </span>
+                            <span class="material-icons-outlined mx-2 fontsize-16">
+                                delete
+                            </span>
+                        </button>
+                        <button class="mdc-button mdc-button--unelevated border--blue uk-modal-close bg--white uk-box-shadow-medium blue-600 mx-2"
+                                style="height:30px;">
+                            <div class="mdc-button__ripple"></div>
+                            <span class="mdc-button__label IRANSans fontsize-12">
+                                صرف نظر
+                            </span>
+
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!--List of brands-->
+        <ul class="px-2 px-md-3 uk-list"
+            uk-sortable="handle: .uk-sortable-handle;cls-custom:custom-category-sortable-list"
+            data-url="/Admin/Brands/ChangeBrandOrder"
+            data-message="ترتیب برند ها تغییر یافت"
+            id="brand-list">
+            @foreach (var item in Model)
+            {
+                <li class="bg--white category-list__list-item mb-3 uk-box-shadow-small border"
+                    data-my-id="@item.BrandId">
+                    <div class="category-list__list-item__title-sorthandle-container
+                       d-flex align-items-center h-100  position-relative">
+                        <span class="uk-sortable-handle mx-2" uk-icon="icon: table"></span>
+                        <span class="IRANSans fontsize-12 mx-1 text-decoration-none d-flex sortablelist-item-title
+                              uk-button uk-button-link uk-text-muted">@item.Title</span>
+                            <div class="action-items-container d-md-flex align-items-center d-none">
+                                @if (item.IsPublished)
+                                {
+                                    <a href="#" data-my-id="@item.BrandId" data-state="publish"
+                                       data-message="انتشار برند مورد نظر لغو گردید"
+                                       data-changed-message="برند مورد نظر انتشار یافت"
+                                       data-url="/Admin/Brands/UnPublish"
+                                       data-changed-url="/Admin/Brands/Publish"
+                                       class="publish-icon" uk-tooltip="title:لغو انتشار">
+                                        <i class="material-icons-outlined fontsize-18">
+                                            visibility
+                                        </i>
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a href="#" data-my-id="@item.BrandId" data-state="unpublish"
+                                       data-url="/Admin/Brands/Publish"
+                                       data-changed-url="/Admin/Brands/UnPublish"
+                                       data-message="برند مورد نظر انتشار یافت"
+                                       data-changed-message="انتشار برند مورد نظر لغو گردید"
+                                       class="publish-icon" uk-tooltip="title:انتشار">
+                                        <i class="material-icons-outlined fontsize-18 uk-text-muted">
+                                            visibility_off
+                                        </i>
+                                    </a>
+                                }
+                                <a asp-area="Admin" asp-controller="Brands"
+                                   asp-action="EditBrand"
+                                   asp-route-id="@item.BrandId"
+                                   class="edit-icon"
+                                   uk-tooltip="title:ویرایش">
+                                    <span uk-icon="icon:pencil;ratio:.85"></span>
+                                </a>
+                                <!--Delete action (fire delete modal show)-->
+                                <a href="#" data-my-id="@item.BrandId" class="delete-icon"
+                                   uk-tooltip="title:حذف">
+                                    <span uk-icon="icon:trash;ratio:.85"></span>
+                                </a>
+                            </div>
+                            <div class="action-items-container--mobile d-flex d-md-none align-items-center">
+                                <button class="text-decoration-none uk-text-muted uk-button uk-button-link" type="button">
+                                    <span uk-icon="icon:more-vertical;ratio:.9"></span>
+                                </button>
+                                <div class="action-items-container--mobile__dropdown" uk-dropdown="mode: click" dir="rtl">
+                                    <ul class="uk-list uk-list-divider text-center">
+                                        <li>
+                                            @if (item.IsPublished)
+                                            {
+                                                <a href="#" data-my-id="@item.BrandId" data-state="publish"
+                                                   data-message="انتشار برند مورد نظر لغو گردید"
+                                                   data-changed-message="برند مورد نظر انتشار یافت"
+                                                   data-url="/Admin/Brands/UnPublish"
+                                                   data-changed-url="/Admin/Category/Publish"
+                                                   class="publish-icon" uk-tooltip="title:لغو انتشار">
+                                                    <i class="material-icons-outlined fontsize-18">
+                                                        visibility
+                                                    </i>
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                <a href="#" data-my-id="@item.BrandId" data-state="unpublish"
+                                                   data-url="/Admin/Brands/Publish"
+                                                   data-changed-url="/Admin/Brands/UnPublish"
+                                                   data-message="برند مورد نظر انتشار یافت"
+                                                   data-changed-message="انتشار برند مورد نظر لغو گردید"
+                                                   class="publish-icon" uk-tooltip="title:انتشار">
+                                                    <i class="material-icons-outlined fontsize-18 uk-text-muted">
+                                                        visibility_off
+                                                    </i>
+                                                </a>
+                                            }
+                                        </li>
+                                        <li>
+                                            <a asp-area="Admin" asp-controller="Brands"
+                                               asp-action="EditBrand"
+                                               asp-route-id="@item.BrandId"
+                                               class="edit-icon"
+                                               uk-tooltip="title:ویرایش">
+                                                <span uk-icon="icon:pencil;ratio:.85"></span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <!--Delete action (fire delete modal show)-->
+                                            <a href="#" class="delete-icon" data-my-id="@item.BrandId" uk-tooltip="title:حذف">
+                                                <span uk-icon="icon:trash;ratio:.85"></span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </li>
+                }
+        </ul>
+    }
+
+</div>
+
+

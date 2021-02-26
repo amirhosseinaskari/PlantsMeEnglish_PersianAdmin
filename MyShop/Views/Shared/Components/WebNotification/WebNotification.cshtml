@@ -1,0 +1,10 @@
+﻿@model Notification
+@if (Model.IsPublished &&
+   
+   !string.IsNullOrWhiteSpace(Model.MainText))
+{
+    <a href="@Model.LinkText" class="dana-font fontsize-16 mobile-fontsize-14 black
+               white-text font-weight-600 digit-format" id="top-notification">
+        <span class="">@*Model.MainText*@ 30% Special discount for this weekend</span>
+    </a>
+}

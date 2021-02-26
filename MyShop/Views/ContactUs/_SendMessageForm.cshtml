@@ -1,0 +1,52 @@
+﻿@model ContactMessage
+
+        <form class="padding-left-20" method="post" role="form"
+              asp-action="SendMessage" asp-controller="ContactUs" asp-area="" >
+            <div class="form-row">
+                <!--Name-->
+                <div class="margin-right-20 w-100 margin-bottom-25">
+                    <label asp-for="FullName" class="dana-font fontsize-12 main-color">Full Name</label>
+                    <div class="">
+                        <input asp-for="FullName" required class="uk-input dana-font w-100 fontsize-14 xsmobile-fontsize-12"
+                               type="text" placeholder="Full Name">
+                    </div>
+                </div>
+                <!--Mobile-->
+                <div class="w-100 margin-bottom-25">
+                    <label asp-for="Mobile" class="dana-font fontsize-12 main-color">Mobile Number</label>
+                    <div class="">
+                        <input asp-for="Mobile" required class="uk-input dana-font w-100 fontsize-14 xsmobile-fontsize-12"
+                               type="tel" placeholder="Mobile Number">
+                    </div>
+                </div>
+            </div>
+            <div class="form-row margin-bottom-25">
+                <!--Email-->
+                <div class="w-100">
+                    <label asp-for="Email" class="dana-font fontsize-12 main-color">Email</label>
+                    <div class="">
+                        <input asp-for="Email" required class="uk-input dana-font w-100 fontsize-14 xsmobile-fontsize-12"
+                               type="email" placeholder="Email">
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <!--Message Text-->
+                <div class="w-100">
+                    <label asp-for="Description" class="dana-font fontsize-12 main-color">Message</label>
+                    <textarea asp-for="Description" required class="uk-textarea dana-font w-100 fontsize-14 xsmobile-fontsize-12"
+                              rows="1" placeholder="Message"></textarea>
+                </div>
+            </div>
+            <div class="form-row margin-top-40 justify-content-first">
+                <!--Form Button-->
+                <div class="uk-margin w-100">
+                    <button type="submit" class="wave-button black padding-x-25 min-width--110 border-radius-3">
+                        <span class="dana-font fontsize-16 mobile-fontsize-14 font-weight-500 white-text">
+                            Send Message
+                        </span>
+                    </button>
+                </div>
+            </div>
+           
+        </form>

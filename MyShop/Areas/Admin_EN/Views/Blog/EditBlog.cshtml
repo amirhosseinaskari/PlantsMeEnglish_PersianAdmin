@@ -1,0 +1,396 @@
+﻿@model Blog
+@{ViewData["blogpage"] = "active"; }
+<!--Breadcrumb for this url-->
+<div class="row p-0 m-0 bg--white py-2 my-3 uk-box-shadow-small uk-border-rounded border position-relative">
+    <div class="col-12" dir="ltr">
+        <ul class="uk-breadcrumb IRANSans_Light fontsize-12 text-left p-0 m-0 d-flex" dir="ltr">
+            <li><a href="~/En/Admin" class="fontsize-12">Dashboard</a></li>
+            <li class="mx-sm-1"><a href="~/En/Admin/Blog" class="fontsize-12">Blogs</a></li>
+            <li class="mx-sm-1 uk-active">Edit</li>
+        </ul>
+        <div class="bg--blue-600 position-absolute rounded-right" style="width:8px;right:0;top:-8px;height:calc(100% + 16px);"></div>
+    </div>
+
+</div>
+<!--Blog Creation Form-->
+<div class="uk-background-default  uk-box-shadow-medium border uk-border-rounded">
+    <!--Title of create Blog-->
+    <div class="d-flex justify-content-between align-items-center p-3 bg-gradient--purple rounded-top">
+        <h3 class="fontsize-14 Arial font-weight--bold white p-0 m-0 flex-grow-1">
+          Edit Blog
+        </h3>
+        <a href="~/En/Admin/Blog" class="mdc-button mdc-button--unelevated flex-grow-1 min-width--110 flex-sm-grow-0 flex-shrink-0 pagination--button bg--white
+               uk-box-shadow-small uk-box-shadow-hover-medium border">
+            <div class="mdc-button__ripple"></div>
+            <span class="mdc-button__label blue-700 IRANSans_Light fontsize-12">
+                <span>Back</span>
+                <span uk-icon="icon:arrow-right" class="mx-1 mx-sm-2"></span>
+            </span>
+        </a>
+    </div>
+    <!--Blog Total Information-->
+    <div class="row px-3 my-4" dir="ltr">
+        <!--Title and Summary of blog-->
+        <div class="col-sm-6 my-3">
+            <div class="border border--dashed form-bundle uk-border-rounded px-md-2 h-100">
+                <label class="IRANSans_Light">Blog Information</label>
+                <div class="row m-0 py-3">
+                    <!--Title of Blog-->
+                    <div class="col-12 my-3">
+                        <div class="custom-text-field">
+                            <label class="uk-form-label IRANSans_Light" asp-for="Title">Blog Title</label>
+                            <div class="uk-form-controls">
+                                <input class="uk-input IRANSans_Light fontsize-12" asp-for="Title"
+                                       type="text" placeholder="enter title of blog">
+                            </div>
+                        </div>
+                        <span class="error-blog-title fontsize-12 IRANSans red-lighten-7 d-none"></span>
+                    </div>
+                    <!--Blog Category-->
+                    <div class="uk-magin col-12 my-2 mt-4">
+                        <input type="hidden" asp-for="BlogCategoryId" />
+                        <div class="mdc-select mdc-select--outlined blog-category-title w-100">
+                            <div class="mdc-select__anchor w-100 bg--white h-40">
+                                <i class="mdc-select__dropdown-icon" style="top:5px"></i>
+                                <div id="demo-selected-text" class="mdc-select__selected-text IRANSans_Light fontsize-12 position-relative" style="top:-5px" aria-labelledby="outlined-select-label"></div>
+                                <div class="mdc-notched-outline">
+                                    <div class="mdc-notched-outline__leading"></div>
+                                    <div class="mdc-notched-outline__notch min-width--90">
+                                        <label id="outlined-select-label" class="mdc-floating-label IRANSans_Light fontsize-14">Select Topic</label>
+                                    </div>
+                                    <div class="mdc-notched-outline__trailing"></div>
+                                </div>
+                            </div>
+
+                            <!-- Select category options -->
+                            <div class="mdc-select__menu mdc-menu mdc-menu-surface w-100" role="listbox">
+                                <ul class="mdc-list IRANSans_Light fontsize-12">
+                                    <vc:blog-category-titles id="@Model.BlogCategoryId"></vc:blog-category-titles>
+                                </ul>
+                            </div>
+                        </div>
+                        <span class="IRANSans fontsize-12 red-lighten-7 error-select-category d-none"></span>
+                    </div>
+                    <!--Summary of Blog-->
+                    <div class="col-12 my-3 mt-4">
+                        <div class="custom-text-field">
+                            <label class="uk-form-label IRANSans_Light" asp-for="SummaryDescription">Summary</label>
+                            <div class="uk-form-controls d-flex">
+                                <textarea asp-for="SummaryDescription" class="uk-textarea IRANSans_Light fontsize-12 uk-border-rounded py-2" rows="5"
+                                          placeholder="50-160 chars">
+                                    
+                                </textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-100"></div>
+                    <!--Submit button-->
+                    <div class="col-12">
+                        <button class="mdc-button mdc-button--unelevated bg--blue-700
+                                border px-0 uk-box-shadow-small blog-totalInformation-edit__submit-button"
+                                data-id="@Model.BlogId"
+                                style="height:30px">
+                            <div class="mdc-button__ripple"></div>
+                            <span class="mdc-button__label IRANSans fontsize-10 white px-1 px-sm-2">
+                                Save Changes
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Main image of blog-->
+        <div class="col-sm-6 my-3">
+            <div class="border border--dashed form-bundle uk-border-rounded
+                 p-3 h-100 d-flex align-self-center">
+                <label class="IRANSans_Light">Cover Image</label>
+                <div class="d-flex flex-column justify-content-center align-items-center w-100 py-2">
+                    <div class="uk-card-media-top w-100 justify-content-center w-75 text-center product-media-card text-center flex-grow-1
+                                 d-flex align-items-start bg--white">
+                        @if (string.IsNullOrEmpty(Model.CoverImage))
+                        {
+                            <img id="blog-cover-image"
+                                 class="mw-100 mh-100"
+                                 src="~/images/base/placeholderimage.jpg" alt="">
+                        }
+                        else
+                        {
+                            <img id="blog-cover-image"
+                                 class="mw-100 mh-100"
+                                 src="~/images/blogs/medium/blog_@Model.BlogId/@Model.CoverImage" alt="">
+                        }
+
+                    </div>
+
+                    <div class="p-2 my-3 text-center">
+                        <label for="CoverImage" class="mdc-button mdc-button--unelevated bg--blue-700
+                                border px-0 uk-box-shadow-small" style="height:30px">
+                            <div class="mdc-button__ripple"></div>
+                            <span class="mdc-button__label IRANSans fontsize-10 white px-1 px-sm-2">
+                                Change Image
+                            </span>
+                        </label>
+                        <input type="file" data-id="@Model.BlogId" class="d-none" id="CoverImage" name="CoverImage" />
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!--Blog Tags (chips)-->
+    <div class="row px-3 my-4">
+        <div class="col-12">
+            <div class="border border--dashed form-bundle uk-border-rounded">
+                <label class="IRANSans_Light">Tags</label>
+                <!--Create new tags-->
+                <div class="row m-0 pt-4 align-items-start">
+                    <div class="col-lg-4 col-md-5 col-sm-6 my-2 px-2">
+                        <div class="custom-text-field mx-2">
+                            <label class="uk-form-label IRANSans_Light"
+                                   for="blogTags">Tag Title</label>
+                            <div class="uk-form-controls d-flex">
+                                <input class="uk-input IRANSans_Light fontsize-12"
+                                       name="blogTags" id="blogTags" type="text"
+                                       placeholder="enter title of tag">
+                            </div>
+                        </div>
+                        <span class="IRANSans fontsize-12 error-blog-tag-title red-lighten-7 d-none mr-3"></span>
+                    </div>
+
+                    <div class="col-lg-4 col-md-5 my-2 col-sm-6 d-flex align-items-center">
+                        <button class="mdc-button mdc-button--unelevated bg--white position-relative blog-tags__submit-button
+                                border px-0" style="height:40px" data-id="@Model.BlogId">
+                            <div class="mdc-button__ripple"></div>
+                            <span class="mdc-button__label IRANSans fontsize-12 blue-700 px-1 px-sm-2">
+                               Add
+                            </span>
+                        </button>
+                    </div>
+                </div>
+
+                <!--Created Tags-->
+                <div class="row m-0">
+                    <div class="col-12 py-3" id="blog-tag-list-container">
+                        <vc:blog-tag-list blog-id="@Model.BlogId"></vc:blog-tag-list>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--SEO Settings-->
+    <div class="row px-3 my-4">
+        <div class="col-12 py-2">
+            <div class="border border--dashed form-bundle uk-border-rounded">
+                <label class="IRANSans_Light">SEO Settings</label>
+                <div class="row m-0 pt-2" dir="ltr">
+                    <!--Page Title and Meta Description-->
+                    <div class="col-sm-6 my-2 mt-sm-2 mb-sm-0 px-2 order-1 order-sm-0">
+                        <div class="custom-text-field mx-2 my-4">
+                            <label class="uk-form-label IRANSans_Light" asp-for="TitlePage">Title</label>
+                            <div class="uk-form-controls d-flex">
+                                <input class="uk-input IRANSans_Light fontsize-12" asp-for="TitlePage" type="text" placeholder="title(60-70 chars)">
+                            </div>
+                        </div>
+                        <div class="custom-text-field mx-2 my-4">
+                            <label class="uk-form-label IRANSans_Light" asp-for="RedirectURL">Redirect URL (301 redirect)</label>
+                            <div class="uk-form-controls d-flex">
+                                <input class="uk-input IRANSans_Light fontsize-12" asp-for="RedirectURL" type="text" placeholder="enter target page">
+                            </div>
+                        </div>
+                        <div class="custom-text-field mx-2 my-4">
+                            <label class="uk-form-label IRANSans_Light" asp-for="MetaDescription">Meta Description</label>
+                            <div class="uk-form-controls d-flex">
+                                <textarea asp-for="MetaDescription" class="uk-textarea IRANSans_Light fontsize-12 uk-border-rounded" rows="5"
+                                          placeholder="meta description(50-160 chars)">@Model.MetaDescription</textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Preview in Google Results-->
+                    <div class="col-sm-6 my-2 order-0 order-sm-1 px-2 py-3" dir="ltr">
+                        <div class="border form-bundle uk-border-rounded m-2">
+                            <label class="IRANSans_Light">Search Engine Preview</label>
+                            <div class="my-3 p-3">
+                                @if (string.IsNullOrEmpty(Model.TitlePage))
+                                {
+                                    <div id="title-page-preview"
+                                         class="IRANSans fontsize-14" style="color:#1a0dab">Title</div>
+                                }
+                                else
+                                {
+                                    <div id="title-page-preview"
+                                         class="IRANSans fontsize-14" style="color:#1a0dab">@Model.TitlePage</div>
+                                    }
+                                @if (string.IsNullOrEmpty(Model.MetaDescription))
+                                {
+                            <div id="metadescription-page-preview"
+                                 class="IRANSans_Light fontsize-12">If leave empty, it automatically will generate by search engine</div>
+                                }
+                                else
+                                {
+                                    <div id="metadescription-page-preview"
+                                         class="IRANSans_Light fontsize-12">@Model.MetaDescription</div>
+                                    }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--Submit button-->
+                <div class="px-3 mb-3">
+                    <button class="mdc-button mdc-button--unelevated blog-seo-settings__submit-button
+                            bg--blue-700 border px-0 uk-box-shadow-small" data-id="@Model.BlogId" style="height:30px">
+                        <div class="mdc-button__ripple"></div>
+                        <span class="mdc-button__label IRANSans fontsize-10 white px-1 px-sm-2">
+                            Save Changes
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Publish Settings-->
+    <div class="row px-3 my-4">
+        <div class="col-12 py-2">
+            <div class="border border--dashed form-bundle uk-border-rounded">
+                <label class="IRANSans_Light">Publishment</label>
+                <div class="row m-0 py-2">
+                    <div class="col-12 my-2 px-2">
+                        <label class="IRANSans_Light fontsize-12">
+                            <input autocomplete="off" data-id="@Model.BlogId"
+                                   class="uk-checkbox mx-1 uk-border-rounded blog-ispublished"
+                                   type="checkbox" asp-for="IsPublished">
+                           Publish
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--Blog Content-->
+    <div class="row px-3 py-2 my-4">
+        <div class="col-12 my-2">
+            <div class="border border--dashed form-bundle uk-border-rounded">
+                <label class="IRANSans_Light">Blog Content</label>
+                <div class="row m-0 py-3 mx-1">
+                    <div class="col-md-3 col-sm-6 my-2">
+                        <form action="/En/Admin/BlogContent/AddText" method="post">
+                            <input type="hidden" name="id" value="@Model.BlogId" />
+                            <button type="submit" class="w-100 border bg--white mdc-button mdc-button--unelevated
+                              uk-box-shadow-small blue-700 p-2 text-decoration-none
+                              IRANSans_Light fontsize-12 add-blog-content-text-button" style="height:40px">
+                                <div class="mdc-button__ripple"></div>
+                                <span class="mdc-button__label IRANSans fontsize-12 blue-700 px-1 px-sm-2">
+                                    <span uk-icon="icon:file-text;ratio:.9"></span>
+                                    <span class="mx-2">Text</span>
+                                </span>
+                            </button>
+                        </form>
+                    </div>
+                    <div class="col-md-3 col-sm-6 my-2">
+                        <form id="blog-content-image-form" action="/En/Admin/BlogContent/AddImage"
+                              method="post" enctype="multipart/form-data">
+                            <input type="hidden" name="id" value="@Model.BlogId">
+                            <label class="w-100 border bg--white mdc-button mdc-button--unelevated
+                              uk-box-shadow-small blue-700 p-2 text-decoration-none
+                              IRANSans_Light fontsize-12" for="image">
+                                <div class="mdc-button__ripple"></div>
+                                <span class="mdc-button__label IRANSans fontsize-12 blue-700 px-1 px-sm-2">
+                                    <span uk-icon="icon:image;ratio:.9"></span>
+                                    <span class="mx-2">Image</span>
+                                </span>
+
+                            </label>
+                            <input type="file" class="d-none" name="image" id="image"
+                                   onchange="$('#blog-content-image-form').submit()" />
+                        </form>
+                    </div>
+                    <div class="col-md-3 col-sm-6 my-2">
+                        <!--Add new video Modal-->
+                        <div id="video-add-modal" uk-modal dir="ltr">
+                            <div class="uk-modal-dialog">
+                                <button class="uk-modal-close-default" type="button" uk-close></button>
+                                <form action="/En/Admin/BlogContent/AddVideo" method="post">
+                                    <div class="uk-modal-header bg--light-3">
+                                        <h3 class="iranyekanwebregular fontsize-14 uk-text-secondary">Add New Video</h3>
+                                    </div>
+                                    <div class="uk-modal-body">
+                                        <input type="hidden" name="id" id="id" value="@Model.BlogId" />
+                                        <!--Title of product-->
+                                        <div class="uk-magin col-auto">
+                                            <div class="custom-text-field">
+                                                <label class="uk-form-label IRANSans_Light" for="videoLink">YouTube Video Link</label>
+                                                <div class="uk-form-controls">
+                                                    <input name="videoLink" id="videoLink"
+                                                           class="uk-input IRANSans_Light fontsize-12" type="text" required placeholder="enter youtube link">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="uk-modal-footer uk-text-left">
+                                        <button class="mdc-button mdc-button--unelevated border--blue white bg--blue-600 uk-box-shadow-medium" style="height:30px" type="submit">
+                                            <div class="mdc-button__ripple"></div>
+                                            <span class="mdc-button__label IRANSans fontsize-12">
+                                                Add
+                                            </span>
+                                            <span class="material-icons-outlined mx-2 fontsize-16">
+                                                add
+                                            </span>
+                                        </button>
+                                        <button class="mdc-button mdc-button--unelevated border--blue uk-modal-close bg--white uk-box-shadow-medium blue-600 mx-2"
+                                                style="height:30px;">
+                                            <div class="mdc-button__ripple"></div>
+                                            <span class="mdc-button__label IRANSans fontsize-12">
+                                               Cancel
+                                            </span>
+
+                                        </button>
+
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <a uk-toggle="target: #video-add-modal" class="w-100 border bg--white mdc-button mdc-button--unelevated
+                              uk-box-shadow-small blue-700 p-2 text-decoration-none
+                              IRANSans_Light fontsize-12">
+                            <div class="mdc-button__ripple"></div>
+                            <span class="mdc-button__label IRANSans fontsize-12 blue-700 px-1 px-sm-2">
+                                <span uk-icon="icon:video-camera;ratio:.9"></span>
+                                <span class="mx-2">Video</span>
+                            </span>
+                        </a>
+                    </div>
+
+                </div>
+                <div class="col-12" id="blog-content-list">
+                    <vc:blog-content-list id="@Model.BlogId"></vc:blog-content-list>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+   
+</div>
+
+@section Scripts{
+    <script>
+
+        const mdcButton = $('.mdc-button');
+        for (let i = 0; i < mdcButton.length; i++) {
+            mdc.ripple.MDCRipple.attachTo(document.querySelectorAll('.mdc-button')[i]);
+        }
+
+        const mdcTextField = $('.mdc-text-field');
+        for (let i = 0; i < mdcTextField.length; i++) {
+            mdc.textField.MDCTextField.attachTo(document.querySelectorAll('.mdc-text-field')[i]);
+        }
+
+    </script>
+}

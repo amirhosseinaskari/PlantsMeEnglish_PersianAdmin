@@ -1,0 +1,21 @@
+﻿@import "../components/uikit-variables-theme.scss";
+@import "../components/Indexuikitcomponents/_indexUikitComponents.scss";
+@import "../main.scss";
+@import "../vendors/_bourbon.scss";
+
+.error-container{
+    width:100%;
+    min-height:500px;
+    background-color:none;
+    padding:20px;
+    box-sizing:border-box;
+    .error-image-container {
+        width:100%;
+        max-width:300px;
+    }
+    .error-text-container{
+        width:100%;
+        max-width:600px;
+        
+    }
+}

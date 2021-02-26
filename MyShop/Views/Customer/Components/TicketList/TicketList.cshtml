@@ -1,0 +1,97 @@
+﻿@model PaginatedList<Ticket>
+@if (Model.Count() < 1)
+{
+    <p class="dana-font fontsize-16 margin-y-20 padding-x-20">You don't have any message yet</p>
+}
+else
+{
+    <!--Delete Modal for remove Ticket-->
+    <div id="item-remove-modal" uk-modal>
+        <form asp-action="DeleteTicket" asp-controller="Customer" asp-area="" method="post"
+              class="uk-modal-dialog border-radius-3">
+
+            <button class="uk-modal-close-default custom-close--button" type="button" uk-close></button>
+            <div class="uk-modal-header uk-text-left align-items-center grey lighten-5" dir="ltr">
+                <h3 class="dana-font fontsize-14 xsmobile-fontsize-12 font-weight-500">
+                    Delete Message
+                </h3>
+
+            </div>
+            <div class="uk-modal-body" dir="ltr">
+                <div class="dana-font fontsize-14 mobile-fontsize-12 font-weight-400 line-height-25">
+                    Are you sure want to delete this message?
+                </div>
+                <div class="item-id-container">
+                    <input type="hidden" class="d-none" name="id" />
+                </div>
+            </div>
+            <div class="uk-modal-footer uk-text-left" dir="ltr">
+
+                <button type="submit" class="red-button">
+                    <span class="dana-font fontsize-14 xsmobile-fontsize-12 font-weight-500">
+                        Delete
+                    </span>
+                </button>
+                <button class="white-button remove-button uk-modal-close">
+                    <span class="dana-font fontsize-14 xsmobile-fontsize-12 font-weight-500">
+                        Cancel
+                    </span>
+                </button>
+            </div>
+        </form>
+    </div>
+    <div class="uk-overflow-auto margin-y-20 border" dir="ltr">
+        <table class="uk-table uk-table-hover uk-table-striped">
+            <thead>
+                <tr>
+                    <th class="dana-font fontsize-12 xsmobile-fontsize-10 font-weight-400 uk-text-left" role="columnheader">Subject</th>
+                    <th class="dana-font fontsize-12 xsmobile-fontsize-10 font-weight-400 uk-text-left" role="columnheader">Created on</th>
+                    <th class="dana-font fontsize-12 xsmobile-fontsize-10 font-weight-400 uk-text-left" role="columnheader">Status</th>
+                    <th class="dana-font fontsize-12 xsmobile-fontsize-10 font-weight-400 uk-text-left">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    
+                    <tr>
+                        <td class="dana-font fontsize-12 font-weight-400 uk-text-left">
+                            @item.Subject
+                        </td>
+                        <td class="dana-font fontsize-12 font-weight-400 uk-text-left digit-format">@item.SubmitDate.ToString("dd/MM/yyyy")</td>
+                        <td class="dana-font fontsize-12 font-weight-400 uk-text-left">
+                            @switch (item.TicketStatus)
+                            {
+                                case TicketStatus.WaitForReply:
+                                    <text>Under review</text>
+                                    break;
+                                case TicketStatus.Closed:
+                                    <text>Closed</text>
+                                    break;
+                                case TicketStatus.Replied:
+                                    <text>Answered</text>
+                                    break;
+                                default:
+                                    <text>----</text>
+                                    break;
+                            }
+                        </td>
+                        <td class="dana-font fontsize-12 font-weight-400 uk-text-left">
+                            <a href="#" data-target-url="/Customer/MessageDetail?id=@(item.Id)"
+                               class="uk-button-link text-decoration-none partial-top-link">Detail</a>
+                            |
+                            <a href="#item-remove-modal" uk-toggle data-id="@item.Id"
+                               class="uk-button-link red-lighten-6 text-decoration-none delete-ticket-link">Delete</a>
+                        </td>
+                    </tr>
+                }
+
+
+            </tbody>
+        </table>
+    </div>
+    <!--Pageination of ticket list-->
+    <div id="ticket-pagination-buttons-container" class="mt-3 text-center">
+        @await Html.PartialAsync(partialViewName: "_TicketPaginationButtons", model: Model)
+    </div>
+}

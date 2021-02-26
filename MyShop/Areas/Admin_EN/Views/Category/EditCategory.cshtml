@@ -1,0 +1,218 @@
+﻿@model CategoryController.InputModel
+@{ViewData["categoriespage"] = "active"; }
+<!--Breadcrumb for this url-->
+<div class="row p-0 m-0 bg--white py-2 my-3 uk-box-shadow-small uk-border-rounded border position-relative">
+    <div class="col-12" dir="ltr">
+        <ul class="uk-breadcrumb IRANSans_Light fontsize-12 text-left p-0 m-0 d-flex" dir="ltr">
+            <li><a class="fontsize-12" href="~/En/Admin">Dashboard</a></li>
+            <li class="mx-1">
+                <a class="fontsize-12" href="~/En/Admin/CreateCategory">Categories</a>
+            </li>
+            <li class="mx-1 uk-active">Edit</li>
+        </ul>
+        <div class="bg--blue-600 position-absolute rounded-right" style="width:8px;right:0;top:-8px;height:calc(100% + 16px);"></div>
+    </div>
+
+</div>
+<div class="uk-background-default uk-box-shadow-medium border uk-border-rounded p-0 bg--white pb-3"
+     id="detail-edit-container--active">
+    <div class="d-flex justify-content-between align-items-center p-3 bg-gradient--purple rounded-top">
+        <h3 class="fontsize-14 Arial font-weight--bold white p-0 m-0 flex-grow-1">
+            Edit Category
+        </h3>
+        <a href="/Admin/Category" class="mdc-button mdc-button--unelevated flex-grow-1 min-width--110 flex-sm-grow-0 flex-shrink-0 pagination--button bg--white
+               uk-box-shadow-small uk-box-shadow-hover-medium border">
+            <div class="mdc-button__ripple"></div>
+            <span class="mdc-button__label blue-700 IRANSans_Light fontsize-12">
+                <span>Back</span>
+                <span uk-icon="icon:arrow-right" class="mx-1 mx-sm-2"></span>
+            </span>
+        </a>
+    </div>
+    <div class="m-sm-2 m-1">
+        <!--Edit Category Form-->
+        <form action="/En/Admin/Category/EditCategory/@ViewData["CategoryId"]" method="post" enctype="multipart/form-data">
+            <input type="hidden" class="d-none" value="@Model.ParentId" asp-for="ParentId" />
+            <div class="row py-2 mx-1 px-lg-2 align-items-center">
+                <!--Category Title-->
+                <div class="col-sm-6 my-2">
+                    <div class="">
+                        <label class="uk-form-label IRANSans_Light fontsize-12 grey-darken-4" asp-for="Title">عنوان دسته بندی</label>
+                        <div class="uk-form-controls">
+                            <input asp-for="Title" class="uk-input IRANSans_Light fontsize-12 uk-border-rounded" type="text" placeholder="عنوان را بنویسید">
+                        </div>
+                        <span asp-validation-for="Title" class="uk-text-danger iranyekanwebregular fontsize-12"></span>
+                    </div>
+                </div>
+                <!--Category parent-->
+                <div class="col-sm-6 my-2 align-self-end">
+                    <div class="mdc-select mdc-select--outlined parent-of-category" data-value="@Model.ParentId">
+                        <div class="mdc-select__anchor w-100 bg--white h-40">
+                            <i class="mdc-select__dropdown-icon" style="top:5px"></i>
+                            <div id="demo-selected-text" class="mdc-select__selected-text IRANSans_Light fontsize-12 position-relative" style="top:-5px" aria-labelledby="outlined-select-label"></div>
+                            <div class="mdc-notched-outline">
+                                <div class="mdc-notched-outline__leading"></div>
+                                <div class="mdc-notched-outline__notch">
+                                    <label id="outlined-select-label" class="mdc-floating-label IRANSans_Light fontsize-14">Choose Parent Category</label>
+                                </div>
+                                <div class="mdc-notched-outline__trailing"></div>
+                            </div>
+                        </div>
+
+
+                        <div class="mdc-select__menu mdc-menu mdc-menu-surface w-100" role="listbox">
+                            <ul class="mdc-list IRANSans_Light fontsize-12">
+                                <vc:category-list-titles my-id="@Model.ParentId" is-from-product="true"></vc:category-list-titles>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!--Category description-->
+                <div class="col-sm-6 my-3 mt-4 align-self-stretch">
+                    <div class="border form-bundle uk-border-rounded p-3 d-flex flex-column h-100">
+                        <label class="IRANSans_Light">Description</label>
+                        <input type="hidden" asp-for="Description" />
+                        <div class="IRANSans_Light fontsize-12 text-editor"
+                             style="min-height:120px">
+                            <p class="ql-align-right ql-direction-ltr uk-text-muted">
+                                @Html.Raw(Model.Description)
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!--Category image-->
+                <div class="col-sm-6 my-3 mt-4 align-self-stretch">
+                    <div class="border border--dashed form-bundle uk-border-rounded h-100">
+                        <label class="IRANSans_Light">Category Image</label>
+
+                        <div class="p-3">
+                            <label asp-for="CategoryImage" class=" mt-1 text-center">
+                                <div id="category-image-container" class="d-flex flex-column align-items-center justify-content-center my-3">
+                                    @if (string.IsNullOrEmpty((string)ViewData["ImageName"]))
+                                    {
+                                        <img width="250" src="" id="image-result" class="d-none mw-100 my-3" />
+                                        <input type="file" class="d-none" asp-for="CategoryImage" accept="image/*" />
+                                        <div class="js-upload uk-placeholder uk-text-center image-upload--placeholder uk-border-rounded w-100" dir="ltr">
+                                            <div uk-form-custom class="blue-600">
+
+                                                <span uk-icon="icon: cloud-upload"></span>
+                                                <label asp-for="CategoryImage" class="uk-link IRANSans_Light fontsize-12">Add New Image</label>
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <img width="250" id="image-result" class="mw-100 my-3"
+                                             src="~/images/categories/medium/@ViewData["ImageName"]" />
+                                        <input type="file" class="d-none" asp-for="CategoryImage" accept="image/*" />
+                                    }
+                                </div>
+                                <label class="mdc-button mdc-button--unelevated bg--white border--blue 
+                                       px-0 uk-box-shadow-small" style="height:30px" asp-for="CategoryImage">
+                                    <div class="mdc-button__ripple"></div>
+                                    <span class="mdc-button__label IRANSans fontsize-10 blue-600 px-1 px-sm-2">
+                                       Add/Change Image
+                                    </span>
+                                </label>
+                            </label>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-md-6 my-2 mt-3">
+                    <!--Category can add product option-->
+                    <div class="my-3">
+                        <label class="IRANSans_Light fontsize-12 mx-2" asp-for="CanAddProduct"><input asp-for="CanAddProduct" class="uk-checkbox uk-border-rounded" type="checkbox"> <span class="mr-1">Ability to add product</span></label>
+                        <div class="w-100 d-sm-none"></div>
+                        <label class="IRANSans_Light fontsize-12 mx-2" asp-for="PutOnHomePage"><input asp-for="PutOnHomePage" class="uk-checkbox uk-border-rounded" type="checkbox"> <span class="mr-1">Display in home page</span></label>
+                    </div>
+
+                </div>
+                <!--SEO Settings-->
+                <div class="col-12 my-2 p-2">
+                    <div class="border border--dashed form-bundle uk-border-rounded m-2">
+                        <label class="IRANSans_Light">SEO Settings</label>
+                        <div class="row p-sm-3 p-2">
+                            <div class="col-sm-6 col-md-5">
+                                <div class="custom-text-field mx-2 my-4">
+                                    <label class="uk-form-label IRANSans_Light" asp-for="TitlePage">Title</label>
+                                    <div class="uk-form-controls d-flex">
+                                        <input asp-for="TitlePage" class="uk-input IRANSans_Light fontsize-12" type="text" placeholder="title(60-70 chars)">
+                                    </div>
+                                </div>
+                                <div class="custom-text-field mx-2 my-4">
+                                    <label class="uk-form-label IRANSans_Light" asp-for="RedirectURL">Redirect URL (301 redirect)</label>
+                                    <div class="uk-form-controls d-flex">
+                                        <input class="uk-input IRANSans_Light fontsize-12" asp-for="RedirectURL" type="text" placeholder="enter target link">
+                                    </div>
+                                </div>
+                                <div class="custom-text-field mx-2 my-4">
+                                    <label class="uk-form-label IRANSans_Light" asp-for="MetaDescription">Meta Description</label>
+                                    <div class="uk-form-controls d-flex">
+                                        <textarea asp-for="MetaDescription" class="uk-textarea IRANSans_Light fontsize-12 uk-border-rounded" rows="5"
+                                                  placeholder="meta description(50-160 chars)"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-7">
+                                <div class="my-3 pt-1">
+                                    <div class="border form-bundle uk-border-rounded m-2">
+                                        <label class="IRANSans_Light">Search Engine Preview</label>
+                                        <div class="m-3">
+
+                                            <div id="title-page-preview" class="IRANSans fontsize-14" style="color:#1a0dab">
+                                                @if (string.IsNullOrEmpty(Model.TitlePage))
+                                                {
+                                                    <text>Title</text>
+                                                }
+                                                else
+                                                {
+                                                    <text> @Model.TitlePage</text>
+                                                }
+                                            </div>
+                                            <div id="metadescription-page-preview" class="IRANSans_Light fontsize-12">
+                                                @if (string.IsNullOrEmpty(Model.MetaDescription))
+                                                {
+                                                    <text>If leave empty, it automatically will generate by search engine</text>
+                                                }
+                                                else
+                                                {
+                                                    <text>@Model.MetaDescription</text>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!--Edit button-->
+                <div class="col-12 mb-3">
+                    <button class="mdc-button mdc-button--unelevated bg--blue-700
+                            uk-box-shadow-medium edit-category-submit-button" type="submit">
+                        <div class="mdc-button__ripple"></div>
+                        <span class="mdc-button__label IRANSans fontsize-12">
+                            Save Changes
+                        </span>
+                    </button>
+                </div>
+</form>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        const mdcButton = $('.mdc-button');
+        for (let i = 0; i < mdcButton.length; i++) {
+            mdc.ripple.MDCRipple.attachTo(document.querySelectorAll('.mdc-button')[i]);
+        }
+
+
+        const mdcTextField = $('.mdc-text-field');
+        for (let i = 0; i < mdcTextField.length; i++) {
+            mdc.textField.MDCTextField.attachTo(document.querySelectorAll('.mdc-text-field')[i]);
+        }
+
+    </script>
+}

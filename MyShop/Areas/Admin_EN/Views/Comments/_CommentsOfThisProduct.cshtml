@@ -1,0 +1,75 @@
+﻿@model IEnumerable<Comment>
+@foreach (var item in Model)
+{
+   
+    <li class="comment-and-reply-container" data-id="@item.Id">
+        <div class="d-flex flex-column py-2">
+            <div class="uk-box-shadow-medium user-comment-box IRANSans_Light fontsize-12 my-2 border--red">
+                <div class="d-flex justify-content-between flex-wrap text-left Arial fontsize-10 border-bottom w-100 pb-2">
+
+                    <span>@item.FullName</span>
+                    <span class="uk-text-muted">@item.SubmitedDate.ToString("yyyy/MM/dd")</span>
+                </div>
+                <div class="py-2">
+                    <p>@item.Description</p>
+                    <div class="d-flex align-items-center star-rating-container">
+                        @for (int i = 0; i < 5; i++)
+                        {
+                            if (i < item.Rate)
+                            {
+                                <span class="material-icons-round checked">
+                                    grade
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="material-icons-round">
+                                    grade
+                                </span>
+                            }
+                        }
+
+
+                    </div>
+                </div>
+                <div class="d-flex align-items-center justify-content-start comment-actions w-100 pt-2">
+                    <a href="#" data-id="@item.Id" class="comment-publish-icon"
+                       data-publish="@item.IsPublished" uk-tooltip="title:publish">
+                        @if (item.IsPublished)
+                        {
+                            <i class="material-icons-outlined fontsize-16">
+                                visibility
+                            </i>
+                        }
+                        else
+                        {
+                            <i class="material-icons-outlined fontsize-16">
+                                visibility_off
+                            </i>
+                        }
+
+                    </a>
+                    <a href="#reply-comment-modal" data-id="@item.Id"
+                       data-fullname="@item.FullName"
+                       data-description="@item.Description"
+                       class="reply-to-comment-button" uk-tooltip="title:reply" uk-toggle>
+                        <span uk-icon="icon:reply;ratio:.7"></span>
+                    </a>
+                    <a href="#delete-comment-modal" data-id="@item.Id"
+                       uk-toggle
+                       class="comment-delete"
+                       uk-tooltip="title:delete">
+                        <span uk-icon="icon:trash;ratio:.7"></span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="my-reply-comments" data-id="@item.Id">
+                <!--Replied comments to this comment-->
+                <vc:product-reply-comment-review comment-id="@item.Id"></vc:product-reply-comment-review>
+            </div>
+
+        </div>
+    </li>
+    
+}

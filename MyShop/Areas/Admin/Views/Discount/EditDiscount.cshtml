@@ -1,0 +1,412 @@
+﻿@model Discount
+@{
+    var persianDate = new PersianCalendar();
+    var today = string.Format("{0}/{1}/{2}", persianDate.GetYear(System.DateTime.Now),
+        persianDate.GetMonth(System.DateTime.Now),
+        persianDate.GetDayOfMonth(System.DateTime.Now));
+
+    string activationDate = null;
+    if (Model.ActivationDate != null)
+    {
+        activationDate = string.Format("{0}/{1}/{2}", persianDate.GetYear(Model.ActivationDate),
+        persianDate.GetMonth(Model.ActivationDate),
+        persianDate.GetDayOfMonth(Model.ActivationDate));
+    }
+
+    string expirationDate = null;
+    if (Model.ExpirationDate != null)
+    {
+        expirationDate = string.Format("{0}/{1}/{2}", persianDate.GetYear(Model.ExpirationDate),
+        persianDate.GetMonth(Model.ExpirationDate),
+        persianDate.GetDayOfMonth(Model.ExpirationDate));
+    }
+    ViewData["discountpage"] = "active"; 
+}
+<!--Breadcrumb for this url-->
+<div class="row p-0 m-0 bg--white py-2 my-3 uk-box-shadow-small uk-border-rounded border position-relative">
+    <div class="col-12" dir="rtl">
+        <ul class="uk-breadcrumb IRANSans_Light fontsize-12 text-right p-0 m-0 d-flex" dir="rtl">
+            <li><a class="fontsize-12" href="~/Admin">مدیریت</a></li>
+            <li class="mx-1"><a class="fontsize-12" href="~/Admin/Discount">تخفیف ها</a></li>
+            <li class="mx-1 uk-active">ویرایش کد تخفیف</li>
+        </ul>
+        <div class="bg--blue-600 position-absolute rounded-left" style="width:8px;left:0;top:-8px;height:calc(100% + 16px);"></div>
+    </div>
+
+</div>
+<div class="row my-2 m-0 mb-5" dir="rtl" id="main-container">
+    <div class="col-12 uk-background-default uk-box-shadow-medium border uk-border-rounded p-0 bg--white pb-3"
+         id="detail-edit-container--active">
+        <div class="d-flex justify-content-between align-items-center p-3 bg-gradient--purple rounded-top">
+            <h3 class="fontsize-14 iranyekanwebbold font-weight--bold white p-0 m-0 flex-grow-1">
+                ویرایش کد تخفیف
+            </h3>
+            <a href="~/Admin/Discount" class="mdc-button mdc-button--unelevated flex-grow-1
+                    min-width--110 flex-sm-grow-0 flex-shrink-0 pagination--button bg--white
+               uk-box-shadow-small uk-box-shadow-hover-medium border">
+                <div class="mdc-button__ripple"></div>
+                <span class="mdc-button__label blue-700 IRANSans_Light fontsize-12">
+                    <span>بازگشت</span>
+                    <span uk-icon="icon:arrow-left" class="mx-1 mx-sm-2"></span>
+                </span>
+            </a>
+        </div>
+        <!--Discount Edit Form-->
+        <!--Discount main parameters-->
+        <div class="row px-3 my-4" dir="rtl">
+            <div class="col-12">
+                <div class="border border--dashed form-bundle uk-border-rounded">
+                    <label class="IRANSans_Light">مشخصات اصلی</label>
+                    <div class="row m-0 py-3">
+                        <!--Discount Code-->
+                        <div class="col-md-4 col-sm-6 my-3">
+                            <div class="custom-text-field">
+                                <label class="uk-form-label IRANSans_Light" asp-for="Code">کد تخفیف</label>
+                                <div class="uk-form-controls">
+                                    <input class="uk-input IRANSans_Light fontsize-12"
+                                           asp-for="Code" type="text"
+                                           placeholder="کد تخفیف را وارد کنید">
+                                </div>
+                            </div>
+                            <span class="iranyekanwebregular fontsize-12 error-code d-none red-lighten-7"></span>
+                        </div>
+                        <!--Discount Percent-->
+                        <div class="col-md-4 col-sm-6 my-3">
+                            <div class="custom-text-field">
+                                <label class="uk-form-label IRANSans_Light" asp-for="Percent">درصد تخفیف (از یک تا صد)</label>
+                                <div class="uk-form-controls">
+                                    <input class="uk-input IRANSans_Light fontsize-12" asp-for="Percent"
+                                           type="text" placeholder="درصد تخفیف را وارد کنید">
+                                </div>
+                            </div>
+                            <span class="iranyekanwebregular fontsize-12 error-percent d-none red-lighten-7"></span>
+                        </div>
+                        <!--Discount Number-->
+                        <div class="col-md-4 col-sm-6 my-3">
+                            <div class="custom-text-field">
+                                <label class="uk-form-label IRANSans_Light" asp-for="Number">تعداد</label>
+                                <div class="uk-form-controls">
+                                    <input class="uk-input IRANSans_Light fontsize-12" asp-for="Number" type="text" placeholder="تعداد تخفیف را وارد کنید">
+                                </div>
+                            </div>
+                            <span class="iranyekanwebregular fontsize-12 error-number d-none red-lighten-7"></span>
+                        </div>
+                        <div class="w-100"></div>
+                        <!--Submit button-->
+                        <div class="col-md-4 col-sm-6 mt-2">
+                            <button class="mdc-button mdc-button--unelevated
+                                    bg--blue-700 border px-0 total-information__submit-button
+                                    uk-box-shadow-small" style="height:30px" data-id="@Model.Id">
+                                <div class="mdc-button__ripple"></div>
+                                <span class="mdc-button__label IRANSans fontsize-10 white px-1 px-sm-2">
+                                    ویرایش و ذخیره تغییرات
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Discount's products/categories-->
+        <div class="row px-3 my-4">
+            <div class="col-12">
+                <div class="border border--dashed form-bundle uk-border-rounded">
+                    <label class="IRANSans_Light">هدف کد تخفیف</label>
+                    <div class="row m-0 py-3">
+                        <div class="col-md-3 col-sm-6 my-2 px-2">
+                            <label class="IRANSans_Light fontsize-12">
+                                <input autocomplete="off" data-id="@Model.Id"
+                                       class="uk-radio mx-1 uk-border-rounded" type="radio"
+                                       asp-for="DiscountTarget" value="@DiscountTarget.AllProducts">
+                                همه محصولات
+                            </label>
+                        </div>
+                        <div class="col-md-3 col-sm-6 my-2 px-2">
+                            <label class="IRANSans_Light fontsize-12">
+                                <input autocomplete="off" data-id="@Model.Id"
+                                       class="uk-radio mx-1 uk-border-rounded"
+                                       type="radio"
+                                       asp-for="DiscountTarget" value="@DiscountTarget.SomeProducts">
+                                بعضی از محصولات
+                            </label>
+                        </div>
+                        <div class="col-md-3 col-sm-6 my-2 px-2">
+                            <label class="IRANSans_Light fontsize-12">
+                                <input autocomplete="off" data-id="@Model.Id"
+                                       class="uk-radio mx-1 uk-border-rounded"
+                                       type="radio"
+                                       asp-for="DiscountTarget" value="@DiscountTarget.SomeCategories">
+                                بعضی از دسته بندی ها
+                            </label>
+                        </div>
+                        <div class="col-md-3 col-sm-6 my-2 px-2">
+                            <label class="IRANSans_Light fontsize-12">
+                                <input autocomplete="off" data-id="@Model.Id"
+                                       class="uk-radio mx-1 uk-border-rounded"
+                                       type="radio"
+                                       asp-for="DiscountTarget" value="@DiscountTarget.SomeBrands">
+                                بعضی از برندها
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row my-2 mx-0" id="discount-target-details">
+                        @if (Model.DiscountTarget.Equals(DiscountTarget.SomeProducts))
+                        {
+                            <!--Choose products-->
+                            @await Html.PartialAsync("_ChooseProductsForDiscountTarget", model: Model.Id)
+                        }
+                        else if (Model.DiscountTarget.Equals(DiscountTarget.SomeCategories))
+                        {
+                            <!--Choose categories-->
+                            @await Html.PartialAsync("_ChooseCategoriesForDiscountTarget", model: Model.Id)
+                        }
+                        else if (Model.DiscountTarget.Equals(DiscountTarget.SomeBrands))
+                        {
+                            <!--Choose brands-->
+                            @await Html.PartialAsync("_ChooseBrandsForDiscountTarget", model: Model.Id)
+                        }
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!--Discount Conditions-->
+        <div class="row px-3 my-4">
+            <div class="col-12">
+                <div class="border border--dashed form-bundle uk-border-rounded">
+                    <label class="IRANSans_Light">شرایط استفاده از کد تخفیف</label>
+                    <div class="row m-0 py-3">
+                        <div class="col-md-3 col-sm-6 my-2 px-2">
+                            <label class="IRANSans_Light fontsize-12">
+                                <input autocomplete="off" class="uk-checkbox mx-1 uk-border-rounded"
+                                       data-id="@Model.Id"
+                                       type="checkbox" asp-for="IsForMinBuyValue">
+                                حداقل مبلغ خرید
+                            </label>
+                            @if (Model.IsForMinBuyValue)
+                            {
+                                <div class="mt-1 mb-3 pl-sm-3 pl-2">
+                                    <input autocomplete="off"
+                                           class="uk-input mx-1 uk-border-rounded IRANSans_Light fontsize-10 number-type"
+                                           asp-for="MinBuyValue" type="text" placeholder="حداقل مبلغ خرید را وارد کنید" />
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="mt-1 mb-3 pl-sm-3 pl-2">
+                                    <input autocomplete="off"
+                                           class="uk-input uk-disabled mx-1 uk-border-rounded IRANSans_Light fontsize-10 number-type"
+                                           asp-for="MinBuyValue" type="text"
+                                           value="" placeholder="حداقل مبلغ خرید را وارد کنید" />
+                                </div>
+                            }
+
+                        </div>
+                        <div class="col-md-3 col-sm-6 my-2 px-2">
+                            <label class="IRANSans_Light fontsize-12">
+                                <input autocomplete="off"
+                                       class="uk-checkbox mx-1 uk-border-rounded"
+                                       type="checkbox" data-id="@Model.Id"
+                                       asp-for="IsForMinBuyNumber">
+                                حداقل تعداد خرید
+                            </label>
+                            @if (Model.IsForMinBuyNumber)
+                            {
+                                <div class="mt-1 mb-3 pl-sm-3 pl-2">
+                                    <input autocomplete="off"
+                                           class="uk-input mx-1 uk-border-rounded IRANSans_Light fontsize-10 number-type"
+                                           asp-for="MinBuyNumber" type="text" placeholder="حداقل تعداد خرید را وارد کنید" />
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="mt-1 mb-3 pl-sm-3 pl-2">
+                                    <input autocomplete="off"
+                                           class="uk-input uk-disabled mx-1 uk-border-rounded IRANSans_Light fontsize-10 number-type"
+                                           asp-for="MinBuyNumber" type="text"
+                                           value="" placeholder="حداقل تعداد خرید را وارد کنید" />
+                                </div>
+                            }
+
+                        </div>
+                        <div class="w-100"></div>
+                        <!--Submit button-->
+                        <div class="col-md-4 col-sm-6">
+                            <button class="mdc-button mdc-button--unelevated bg--blue-700
+                                    discount-conditions__submit-button
+                                    border px-0 uk-box-shadow-small" style="height:30px" data-id="@Model.Id">
+                                <div class="mdc-button__ripple"></div>
+                                <span class="mdc-button__label IRANSans fontsize-10 white px-1 px-sm-2">
+                                    ویرایش و ذخیره تغییرات
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!--Discount's Customers-->
+        <div class="row px-3 my-4">
+            <div class="col-12">
+                <div class="border border--dashed form-bundle uk-border-rounded">
+                    <label class="IRANSans_Light">مشتریان هدف</label>
+                    <div class="row m-0 py-3">
+                        <div class="col-md-3 col-sm-6 my-2 px-2">
+                            <label class="IRANSans_Light fontsize-12">
+                                <input autocomplete="off" class="uk-radio mx-1 uk-border-rounded"
+                                       type="radio" asp-for="IsForAllCustomers" value="true" data-id="@Model.Id">
+                                همه مشتریان
+                            </label>
+                        </div>
+                        <div class="col-md-3 col-sm-6 my-2 px-2">
+                            <label class="IRANSans_Light fontsize-12">
+                                <input autocomplete="off" class="uk-radio mx-1 uk-border-rounded"
+                                       type="radio" asp-for="IsForAllCustomers" value="false" data-id="@Model.Id">
+                                بعضی از مشتریان
+                            </label>
+                        </div>
+                    </div>
+                    <!--Choose Customers-->
+                    <div class="row my-2 mx-0" id="discount-customer-container">
+                        @if (!Model.IsForAllCustomers)
+                        {
+                            @await Html.PartialAsync("_ChoosenCustomerForDiscount", model: Model.Id)
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Date Settings-->
+        <div class="row px-3 my-4">
+            <div class="col-12">
+                <div class="border border--dashed form-bundle uk-border-rounded">
+                    <label class="IRANSans_Light">تاریخ فعال سازی و انقضا</label>
+                    <!--Date Pickers-->
+                    <div class="row m-0 py-2 my-2">
+                        <!--Activation Date-->
+                        <div class="col-md-4 col-sm-6 my-2 position-relative" style="z-index:4;">
+                            <div class="custom-text-field">
+                                <label class="uk-form-label IRANSans_Light" asp-for="ActivationDate">تاریخ فعالسازی</label>
+                                <div class="uk-form-controls">
+
+                                    @if (activationDate == null)
+                                    {
+                                        <input class="uk-input IRANSans_Light fontsize-12" name="ActivationDate" id="ActivationDate"
+                                               type="text" value="@today">
+                                    }
+                                    else
+                                    {
+                                        <input class="uk-input IRANSans_Light fontsize-12" name="ActivationDate" id="ActivationDate"
+                                               type="text" value="@activationDate">
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <!--Expired Date-->
+                        <div class="col-md-4 col-sm-6 my-2 position-relative" style="z-index:3;">
+                            <div class="custom-text-field">
+                                <label class="uk-form-label IRANSans_Light" asp-for="ExpirationDate">تاریخ انقضا</label>
+                                <div class="uk-form-controls">
+
+                                    @if (expirationDate == null)
+                                    {
+                                        <input class="uk-input IRANSans_Light fontsize-12" name="ExpirationDate" id="ExpirationDate"
+                                               type="text" value="@today">
+                                    }
+                                    else
+                                    {
+                                        <input class="uk-input IRANSans_Light fontsize-12" name="ExpirationDate" id="ExpirationDate"
+                                               type="text" value="@expirationDate">
+                                    }
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="w-100 pr-3">
+                            <span class="IRANSans fontsize-12 error-discount-date red-lighten-7 d-none"></span>
+                        </div>
+
+                        <!--Submit button-->
+                        <div class="col-md-4 col-sm-6 mt-3">
+                            <button class="mdc-button mdc-button--unelevated
+                                    bg--blue-700 discount-date__submit-button
+                                    border px-0 uk-box-shadow-small" data-id="@Model.Id" style="height:30px">
+                                <div class="mdc-button__ripple"></div>
+                                <span class="mdc-button__label IRANSans fontsize-10 white px-1 px-sm-2">
+                                    ویرایش و ذخیره تغییرات
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Publish Settings-->
+        <div class="row px-3 my-4">
+            <div class="col-12">
+                <div class="border border--dashed form-bundle uk-border-rounded">
+                    <label asp-for="IsPublished" class="IRANSans_Light">انتشار</label>
+                    <div class="row m-0 py-2">
+                        <div class="col-12 my-2 px-2">
+                            <label class="IRANSans_Light fontsize-12">
+                                <input autocomplete="off" class="uk-checkbox mx-1 uk-border-rounded discount-publishment"
+                                       type="checkbox" asp-for="IsPublished" data-id="@Model.Id">
+                                انتشار تخفیف در سایت
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+
+        kamaDatepicker('ExpirationDate', {
+            buttonsColor: "red",
+            forceFarsiDigits: true,
+            markToday: true,
+            markHolidays: true,
+            closeAfterSelect: true,
+            highlightSelectedDay: true,
+            sync: true,
+            gotoToday: true
+        });
+        kamaDatepicker('ActivationDate', {
+            buttonsColor: "red",
+            forceFarsiDigits: true,
+            markToday: true,
+            markHolidays: true,
+            closeAfterSelect: true,
+            highlightSelectedDay: true,
+            sync: true,
+            gotoToday: true
+        });
+        const mdcButton = $('.mdc-button');
+        for (let i = 0; i < mdcButton.length; i++) {
+            mdc.ripple.MDCRipple.attachTo(document.querySelectorAll('.mdc-button')[i]);
+        }
+
+        const mdcTextField = $('.mdc-text-field');
+        for (let i = 0; i < mdcTextField.length; i++) {
+            mdc.textField.MDCTextField.attachTo(document.querySelectorAll('.mdc-text-field')[i]);
+        }
+        mdc.tabBar.MDCTabBar.attachTo(document.querySelector('.my-tab-list'));
+        const MDCTABLE = $('.mdc-data-table');
+        for (let i = 0; i < MDCTABLE.length; i++) {
+            mdc.dataTable.MDCDataTable.attachTo(document.querySelectorAll('.mdc-data-table')[i]);
+        }
+    </script>
+}

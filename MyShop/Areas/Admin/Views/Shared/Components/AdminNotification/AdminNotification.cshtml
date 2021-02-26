@@ -1,0 +1,43 @@
+﻿@model AdminNotificationCounts
+@if (Model.Comments > 0 || Model.Orders > 0)
+{
+    <button class="uk-button uk-button-link text-decoration-none grey-darken-4" type="button">
+        <span class="mx-2" uk-icon="icon:bell"></span>
+        <span class="alert-circle position-absolute"></span>
+    </button>
+    <div class="p-0" uk-dropdown="mode: click;pos: bottom-right">
+
+        <ul class="uk-list uk-list-divider m-0 py-0" id="notification-list">
+            @if (Model.Orders > 0)
+            {
+                <li class="m-0 p-0">
+                    <a asp-action="Index" asp-controller="Orders" asp-area="Admin" 
+                       class="d-inline-block text-decoration-none IRANSans w-100
+                                       fontsize-12 uk-text-secondary p-3">
+                        <span class="mx-1 blue-600">@Model.Orders</span>
+                        <span>سفارش جدید</span>
+                    </a>
+                </li>
+            }
+            @if (Model.Comments > 0)
+            {
+                <li class="m-0 p-0">
+                    <a asp-action="Index" asp-controller="Comments" asp-area="Admin"
+                       class="d-inline-block text-decoration-none w-100
+                                       IRANSans fontsize-12 uk-text-secondary p-3">
+                        <span class="mx-1 blue-600">@Model.Comments</span>
+                        <span>کامنت جدید</span>
+                    </a>
+                </li>
+            }
+
+        </ul>
+    </div>
+}
+else
+{
+    <button class="uk-button uk-button-link text-decoration-none grey-darken-4" type="button">
+        <span class="mx-2" uk-icon="icon:bell"></span>
+       
+    </button>
+}

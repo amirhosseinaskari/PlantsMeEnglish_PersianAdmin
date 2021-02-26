@@ -1,0 +1,18 @@
+﻿@mixin custom-animation($name) {
+    @keyframes #{$name} {
+        @content
+    }
+
+
+    @-webkit-keyframes #{$name} {
+        @content
+    }
+
+    @-moz-keyframes #{$name} {
+        @content
+    }
+
+    @-o-keyframes #{$name} {
+        @content
+    }
+}

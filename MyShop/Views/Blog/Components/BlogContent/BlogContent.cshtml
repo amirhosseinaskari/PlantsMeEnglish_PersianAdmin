@@ -1,0 +1,40 @@
+﻿@model IEnumerable<BlogContent>
+@if (Model.Count() > 0)
+{
+   
+   
+        @foreach (var item in Model)
+        {
+            if (item.ContentType.Equals(ContentType.Text))
+            {
+               
+                     <div class="uk-text-right dana-font fontsize-16 mobile-fontsize-14 line-height-25 font-color-3 font-weight-400 margin-y-15" dir="ltr">
+                         @Html.Raw(item.Content)
+                     </div>
+             
+            }
+            else if (item.ContentType.Equals(ContentType.Image))
+            {
+               
+                    <img class="lazyload w-100 margin-y-15" src="~/images/small/product_placeholder.jpg"
+                         data-src="/images/blog_content/medium/blog_@ViewData["BlogId"]/@item.Content"
+                         data-srcset="/images/blog_content/small/blog_@ViewData["BlogId"]/@item.Content 600w,
+                         /images/blog_content/medium/blog_@ViewData["BlogId"]/@item.Content 800w,
+                         /images/blog_content/large/blog_@ViewData["BlogId"]/@item.Content 1200w"
+                         alt="@item.AltTextForImage">
+               
+            }
+            else if (item.ContentType.Equals(ContentType.Video))
+            {
+               
+                    <div class="text-center w-100 margin-y-15">
+                        @Html.Raw(item.Content)
+                    </div>
+               
+            }
+
+        }
+
+
+    
+}

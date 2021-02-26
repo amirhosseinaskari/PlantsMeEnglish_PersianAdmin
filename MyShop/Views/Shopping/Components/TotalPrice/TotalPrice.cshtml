@@ -1,0 +1,6 @@
+﻿@model Bill
+    <!--Total Price and Bill-->
+ 
+        @(((int)Model.TotalPrice).ToString("N0", new System.Globalization
+       .NumberFormatInfo() { NumberGroupSizes = new[] { 3 }, NumberGroupSeparator = "," }))
+ 

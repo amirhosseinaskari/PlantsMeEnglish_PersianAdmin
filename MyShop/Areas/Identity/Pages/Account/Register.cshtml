@@ -1,0 +1,71 @@
+﻿@page "/Account/Register"
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+@section Style{
+    <link href="~/dist/sass/pages/_account.min.css" rel="stylesheet" />
+}
+<!--Register form-->
+<section class="d-flex uk-box-shadow-small padding-20 white uk-border-rounded margin-x-10">
+    <div class="uk-border-rounded w-100">
+        <div class="text-center margin-y-20">
+            <strong class="font-weight-500 dana-font xsmobile-fontsize-14
+                                fontsize-16 text-center margin-0">Create New Account</strong>
+            <div class="uk-text-center margin-top-10" dir="ltr">
+                <span class="dana-font fontsize-14 xsmobile-fontsize-12">Already have an account?</span>
+                <a asp-area="Identity" asp-page="/Account/Login" class="main-color text-decoration-none
+                           dana-font border-bottom--red--dashed py-1 fontsize-14 xsmobile-fontsize-12">Login</a>
+            </div>
+        </div>
+        <div class="d-flex justify-content-center" dir="ltr">
+            <form asp-route-returnUrl="@Model.ReturnUrl" method="post" class="w-100 register-form">
+                <div asp-validation-summary="All" class="red-text dana-font fontsize-12 line-height-25
+                     text-left uk-border-rounded" dir="ltr">
+                    <div class="validation-errors-header uk-text-left dana-font fontsize-14 mobile-fontsize-12 white-text">Errors</div>
+                </div>
+                <div class="uk-margin w-100" dir="ltr">
+                    <div class="uk-inline w-100" dir="ltr">
+                        <span class="uk-form-icon" uk-icon="icon: user"></span>
+                        <input asp-for="Input.FullName" class="uk-input dana-font fontsize-14 xsmobile-fontsize-12 w-100 uk-border-rounded" type="text" placeholder="Enter your full name">
+
+                    </div>
+                    <span asp-validation-for="Input.FullName" class="red-text dana-font fontsize-12"></span>
+                </div>
+                <div class="uk-margin w-100" dir="ltr">
+                    <div class="uk-inline w-100" dir="ltr">
+                        <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: phone"></span>
+                        <input asp-for="Input.Mobile" class="uk-input digit-format dana-font fontsize-14 type-number
+                               xsmobile-fontsize-12 w-100 uk-border-rounded" type="tel" placeholder="Enter your mobile number">
+
+                    </div>
+                    <span asp-validation-for="Input.Mobile" class="red-text dana-font fontsize-12"></span>
+                </div>
+                <div class="uk-margin w-100 mb-0" dir="ltr">
+                    <div class="uk-inline w-100" dir="ltr">
+                        <span class="uk-form-icon" uk-icon="icon: lock"></span>
+                        <a href="#" class="uk-form-icon uk-form-icon-flip text-decoration-none visible-password-icon" uk-tooltip="title:visible">
+                            <img data-second-src="/images/icons/visibility_off.svg" width="18" src="~/images/icons/visibility.svg" />
+                        </a>
+                        <input asp-for="Input.Password" class="uk-input dana-font fontsize-14 xsmobile-fontsize-12 w-100 uk-border-rounded" type="password" placeholder="Enter your password">
+
+                    </div>
+                    <span asp-validation-for="Input.Password" class="red-text dana-font fontsize-12"></span>
+                </div>
+                <div class="margin-top-40" dir="ltr">
+                    <label class="d-flex justify-content-first align-items-center checkbox-type-a ripple-input">
+                        <input class="uk-checkbox" type="checkbox" asp-for="Input.AcceptTerms" checked>
+                        <span class="dana-font font-weight-400 fontsize-14  xsmobile-fontsize-12 font-color-2 margin-x-10 line-height-25">By creating an account, you agree to our terms of use and privacy policy.</span>
+                    </label>
+                </div>
+                <button class="w-100 register--button black white-text border-radius-3 uk-box-shadow-medium wave-button
+                                    submit-button margin-y-20 padding-x-15">
+                    <span class="dana-font fontsize-14  xsmobile-fontsize-12 font-weight-500">Register</span>
+                </button>
+            </form>
+        </div>
+    </div>
+</section>
+@section JavaScript {
+    <script src="~/dist/js/pages/_account.min.js" type="module"></script>
+}

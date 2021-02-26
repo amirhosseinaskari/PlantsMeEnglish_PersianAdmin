@@ -1,0 +1,8 @@
+﻿@model CategoryTitleDropDown
+<div class="added-related-category-chip d-inline-block border uk-border-rounded bg--white uk-box-shadow-small py-1 ml-2 my-1" dir="ltr">
+    <a href="#" data-category-id="@Model.Id" data-product-id="@ViewData["ProductId"]" class="text-decoration-none red-lighten-7 px-2 delete-related-category-icon"
+       uk-tooltip="title:delete">
+        <span uk-icon="icon:close;ratio:.7"></span>
+    </a>
+    <span class="IRANSans_Light fontsize-12 border-right px-2 grey-darken-4">@Model.Title</span>
+</div>

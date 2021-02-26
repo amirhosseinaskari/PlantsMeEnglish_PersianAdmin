@@ -1,0 +1,418 @@
+﻿
+
+@import "../components/uikit-variables-theme.scss";
+@import "../components/Indexuikitcomponents/_indexUikitComponents.scss";
+@import "../components/_pageLoading.scss";
+@import "../main.scss";
+@import "../vendors/_bourbon.scss";
+@import "../components/_progress.scss";
+//bread crumb container
+.breadcrumb-container, .description-container {
+    padding-left: 90px;
+    padding-right: 90px;
+
+    @media only screen and (max-width: 950px) {
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+
+    @media only screen and (max-width: 768px) {
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+
+    @media only screen and (max-width: 600px) {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    @media only screen and (max-width: 300px) {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}
+.description-container, #main-content {
+    background-color: $gray-background-color;
+}
+
+//main content
+#main-content {
+    display: flex;
+    flex-direction: row;
+    direction: ltr;
+    padding-left: 90px;
+    padding-right: 90px;
+
+    @media only screen and (max-width: 950px) {
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+
+    @media only screen and (max-width: 768px) {
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+
+    @media only screen and (max-width: 600px) {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    @media only screen and (max-width: 300px) {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    @media only screen and (max-width: 1100px) {
+        flex-wrap: wrap;
+    }
+    //products container (include filters trigger buttons)
+    #products-container {
+        width: 75%;
+
+        @media only screen and (max-width: 975px) {
+            width: 70%;
+        }
+
+        @media only screen and (max-width: 866px) {
+            width: 100%;
+        }
+        //filter triggers container
+        #filter-triggers-container {
+        }
+        //product sort
+        //mobile product sort
+        #mobile-products-sort {
+            align-items: flex-end;
+            padding: 0 0 5px 0;
+            height: 67px;
+            display: none;
+            visibility: hidden;
+
+            @media only screen and (max-width: 866px) {
+                display: flex;
+                visibility: visible;
+            }
+
+            button .chevron-down-icon {
+                @include prefixer(transition,all .3s ease-in-out,("webkit","moz","o"));
+                @include prefixer(transform,rotate(0),("webkit","moz","o"));
+            }
+
+            button.uk-open .chevron-down-icon {
+                @include prefixer(transition,all .3s ease-in-out,("webkit","moz","o"));
+                @include prefixer(transform,rotate(180deg),("webkit","moz","o"));
+            }
+
+            .uk-radio {
+                border-color: $main-color;
+                border-width: 1px;
+                width: 16px;
+                height: 16px;
+                background-size: 0 0;
+                @include prefixer(transition,all .3s ease-in-out,("webkit","moz","o"));
+
+                @media only screen and (max-width: 400px) {
+                    width: 14px;
+                    height: 14px;
+                }
+            }
+
+            .uk-radio:checked {
+                background-color: white;
+                background-image: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle fill='%23f97349 ' cx='8' cy='8' r='2' /%3E%3C/svg%3E");
+                background-size: 220% 220%;
+                @include prefixer(transition,all .3s ease-in-out,("webkit","moz","o"));
+            }
+
+            #mobile-sortList-options {
+                right: 0 !important;
+                border-radius: 6px;
+            }
+        }
+        //desktop product sort
+        #desktop-products-sort {
+            display: flex;
+            align-items: flex-end;
+            padding: 0 0 15px 0;
+            border-bottom: 1px solid #d0d0d0;
+            height: 67px;
+
+
+            @media only screen and (max-width: 866px) {
+                display: none;
+                visibility: hidden;
+            }
+
+            #desktop-sortList-options {
+                display: flex;
+                align-items: center;
+                list-style: none;
+                padding: 0;
+                margin: 0;
+
+                .sortList-options__list-item {
+                    margin-left: 15px;
+
+                    a {
+                        font-family: Arial, sans-serif;
+                        font-size: 14px;
+                        font-weight: 400;
+                        text-decoration: none;
+                        color: #878787;
+                        border-radius: 3px;
+                        padding: 4px 6px;
+                        @include prefixer(transition,all .3s ease-in-out,("webkit","moz","o"));
+
+                        &:hover {
+                            background-color: #f6f6f6;
+                        }
+                    }
+                }
+
+                .sortList-options__list-item--selected {
+                    a {
+                        background-color: black;
+                        color: white;
+                        @include prefixer(transition,all .3s ease-in-out,("webkit","moz","o"));
+
+                        &:hover {
+                            background-color: $main-color;
+                        }
+                    }
+                }
+            }
+        }
+        //product list
+        ul#product-cards-list {
+            display: flex;
+            align-items: stretch;
+            list-style: none;
+            flex-wrap: wrap;
+            padding: 0;
+        }
+        //li of each product-card
+        .product-card-container {
+            position: relative;
+            flex: 0 0 25%;
+            max-width: 25%;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+            padding-right: 5px;
+            padding-left: 5px;
+
+            &:nth-child(4n) {
+                padding-right: 5px;
+                padding-left: 5px;
+            }
+
+            @include prefixer(transition,all .2s ease-out,("webkit","moz","o"));
+
+            @media only screen and (max-width: 1200px) {
+                flex: 0 0 20%;
+                max-width: 20%;
+            }
+
+            @media only screen and (max-width: 930px) {
+                flex: 0 0 25%;
+                max-width: 25%;
+            }
+
+            @media only screen and (max-width: 866px) {
+                flex: 0 0 33.33%;
+                max-width: 33.33%;
+            }
+
+            @media only screen and (max-width: 660px) {
+                flex: 0 0 50%;
+                max-width: 50%;
+            }
+
+            @media only screen and (max-width: 600px) {
+                margin-bottom: 10px;
+            }
+
+            @media only screen and (max-width: 300px) {
+                flex: 0 0 100%;
+                max-width: 100%;
+                padding: 0 !important;
+            }
+            //product card actions (view, buy and set to favorits)
+            .product-card__actions {
+                height: 85px;
+                width: 50px;
+                position: absolute;
+                top: 10px;
+                left: 0px;
+                z-index: 1;
+                overflow: hidden;
+                //save and buy icon over product card
+                //these icons will be shown when hover fired
+                .icons-container {
+                    display: flex;
+                    flex-direction: column;
+
+                    a {
+                        position: absolute;
+                        top: -50px;
+                        left: 10px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        padding: 4px;
+                        border-radius: 2px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        width: 25px;
+                        height: 25px;
+                        margin-bottom: 10px;
+
+                        @include prefixer(transition,all .2s ease-out,("webkit","moz","o"));
+                    }
+                }
+            }
+
+            &:hover {
+                .product-card {
+                    @include prefixer(transition,all .27s ease-in-out,("webkit","moz","o"));
+                    border-color: $main-color;
+                }
+
+                .product-card__actions a {
+
+                    &:nth-child(1) {
+                        top: 0;
+                        @include prefixer(transition-delay,.2s,("webkit","moz","o"));
+                    }
+
+                    &:nth-child(2) {
+                        top: 42px;
+                        @include prefixer(transition-delay,.1s,("webkit","moz","o"));
+                    }
+
+                    &:nth-child(3) {
+                        top: 74px;
+                        @include prefixer(transition-delay,.0,("webkit","moz","o"));
+                    }
+                }
+            }
+        }
+        //product card
+        .product-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            //border: 1px solid #e5e5e5;
+            //border-radius: 6px;
+            //padding: 6px;
+            height: 100%;
+            -moz-box-shadow: none;
+            -webkit-box-shadow: none;
+            box-shadow: none;
+            //title of product within product card
+            h3 {
+                line-height: 26px;
+
+                @media only screen and (max-width: 500px) {
+                    font-size: 12px;
+                }
+            }
+            //product image container within product card
+            .uk-card-media-top {
+                text-align: center;
+                overflow: hidden;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                outline: none !important;
+                //image of product within product card
+                img {
+                }
+            }
+            //old price of product
+            .old-price {
+                text-decoration: line-through;
+            }
+            //the parent of old price and new price within product card
+            .price-container {
+                display: flex;
+                flex-wrap: nowrap;
+                justify-content: start;
+                align-items: center;
+
+                @media only screen and (max-width: 500px) {
+                    font-size: 11px;
+                }
+            }
+            //discount badge (the badge that is on top right of product card)
+            .discount-badge {
+                position: absolute;
+                background-color: #c70505;
+                width: 40px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+                top: 10px;
+                right: 0;
+
+                @media only screen and (max-width: 400px) {
+                    width: 40px;
+                }
+
+                @media only screen and (max-width: 300px) {
+                    width: 40px;
+                }
+            }
+        }
+    }
+}
+
+
+
+
+//time counter of special discount
+.time-counter {
+    justify-content: center;
+    flex-wrap: nowrap;
+
+    @media only screen and (max-width: 600px) {
+        margin-top: 20px;
+        padding-bottom: 0;
+    }
+}
+
+.uk-countdown-label {
+    font-weight: 500;
+}
+
+.icon {
+    $button-border: #8F9092;
+    $button-text: #606060;
+    -webkit-appearance: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    outline: none;
+    cursor: pointer;
+    width: 33px;
+    height: 33px;
+    border-radius: 0;
+    background-color: #fafafa82;
+    transition: all .2s ease;
+    font-family: "Source Sans Pro", sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: $button-text;
+    text-shadow: 0 1px #fff;
+
+    &.uk-countdown-seconds span {
+        color: map-get($red, "base");
+    }
+
+    @media only screen and (max-width: 400px) {
+        height: 30px;
+    }
+}

@@ -1,0 +1,29 @@
+﻿@model ContactUs
+
+    <ul class="dana-font fontsize-14 fontsize-sm-12 uk-text-left margin-top-20" id="footer-list-items__contact">
+        @if (!string.IsNullOrEmpty(Model.Phone))
+        {
+            <li>
+                <span>Phone:</span>
+                <a href="tel:@Model.Phone" class="font-color-2 digit-format">@Model.Phone</a>
+            </li>
+        }
+        @if (!string.IsNullOrEmpty(Model.Email))
+        {
+            <li>
+                <span>Email:</span>
+                <a href="mailto:@(Model.Email)" class="font-color-2"> @Model.Email</a>
+            </li>
+
+        }
+        @if (!string.IsNullOrEmpty(Model.Address))
+        {
+            <li class="align-items-center">
+                <span>Address:</span>
+                <address class="font-color-2">
+                    @Model.Address
+                </address>
+            </li>
+        }
+       
+    </ul>

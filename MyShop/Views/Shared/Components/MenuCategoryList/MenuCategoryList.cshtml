@@ -1,0 +1,39 @@
+﻿@model IEnumerable<Category>
+<div id="main-category-list" class="active white">
+    <ul class="uk-list uk-list-divider dropdown-list-container__list white margin-bottom-0">
+        @foreach (var item in Model)
+        {
+            <li class="sub-category-list__items d-flex uk-flex-between margin-left-0 align-items-center" dir="ltr">
+
+                @if (item.SubCategories.Count() < 1)
+                {
+                    <a class="dropdown-list-container__list__link w-100 uk-text-left" asp-route-id="@item.CategoryId"
+                       asp-route-categoryTitle="@item.Title.Replace(" ","-")"
+                       asp-action="CategoryDetail" asp-controller="Category" asp-area="">
+                        <h2 class="font-weight-500 dana-font fontsize-14 margin-bottom-0">@item.Title</h2>
+                    </a>
+                }
+                else
+                {
+                    <a class="dropdown-list-container__list__link category-has-subcat d-flex align-items-center w-100 uk-text-left" asp-route-id="@item.CategoryId"
+                       asp-route-categoryTitle="@item.Title.Replace(" ","-")"
+                       asp-action="CategoryDetail" asp-controller="Category" asp-area="" data-id="@item.CategoryId">
+                        <h2 class="font-weight-500 dana-font fontsize-14 margin-bottom-0"> @item.Title</h2>
+                    </a>
+                    <a href="#sub-category-@(item.CategoryId)" class="desktop-category-navigation uk-text-right font-color-2 margin-right-10">
+                        <span uk-icon="icon:chevron-right"></span>
+                    </a>
+                }
+
+            </li>
+        }
+
+    </ul>
+</div>
+@foreach (var item in Model)
+{
+    if (item.SubCategories.Count() > 0)
+    {
+        <vc:menu-sub-category-list parent-id="item.CategoryId"></vc:menu-sub-category-list>
+    }
+}

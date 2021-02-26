@@ -1,0 +1,29 @@
+﻿@model Delivery
+<div class="col-12 px-2">
+    <div class="text-left mx-3 fontsize-12 IRANSans red-lighten-6 border-bottom--red py-1 d-inline-block" style="min-width:150px">
+        <span class="">Free Based On Purchase Amount</span>
+    </div>
+    <div class="row m-0 py-4 align-items-start">
+
+        <div class="col-lg-3 col-md-4 col-sm-6 my-2 px-2">
+            <div class="custom-text-field">
+                <label class="uk-form-label IRANSans_Light" for="amount">Minimum Purchase Amount</label>
+                <div class="uk-form-controls d-flex">
+                    <input class="uk-input IRANSans_Light fontsize-12" asp-for="MinAmountForFreeDelivery" type="text" placeholder="enter purchase amount">
+                </div>
+            </div>
+            <span class="Arial fontsize-12 red-lighten-7 d-none error-delivery-amount"></span>
+        </div>
+        <div class="col-lg-auto col-md-4 col-sm-6 d-flex align-items-center my-1 px-2">
+            <button class="mdc-button mdc-button--unelevated bg--white border px-0 position-relative set-min-amount-for-free-delivery--button" 
+                    style="height:40px;top:5px">
+                <div class="mdc-button__ripple"></div>
+                <span class="mdc-button__label IRANSans fontsize-12 blue-700 px-1 px-sm-2">
+                    Save Changes
+                </span>
+            </button>
+        </div>
+
+    </div>
+</div>
+

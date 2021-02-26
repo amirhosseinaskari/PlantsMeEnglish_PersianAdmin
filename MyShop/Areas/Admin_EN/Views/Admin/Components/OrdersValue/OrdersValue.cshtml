@@ -1,0 +1,26 @@
+﻿@model OrdersValueClass
+    <div class="col-lg-3 col-6 pr-1 pr-md-2">
+        <div class="uk-card analytics-cards-container__analytics-card orders-card uk-box-shadow-medium
+             uk-border-rounded d-flex align-items-center bg--white uk-flex-between px-lg-3" dir="ltr">
+            <div class="analytics-card__icon-container d-flex flex-column">
+                <div class="uk-border-circle p-3 bg-gradient--blue d-flex align-items-center icon-container__icon">
+                    <i class="material-icons-outlined white">
+                        add_shopping_cart
+                    </i>
+                </div>
+                <div class="mt-2 IRANSans fontsize-14 text-center">
+                    Orders
+                </div>
+            </div>
+            <div class="analytics-card__number-container d-flex flex-column mt-2">
+                <span class="IRANSans fontsize-20 text-center lineheight-10">
+                   @Model.NewOrdersCount
+
+                </span>
+                <span class="IRANSans fontsize-12 text-center uk-text-muted">New</span>
+                <div class="IRANSans fontsize-16 text-center mt-3">
+                    @Model.AllOrders
+                </div>
+            </div>
+        </div>
+    </div>

@@ -1,0 +1,27 @@
+﻿@model IEnumerable<ProductOption>
+
+    <table class="uk-table uk-table-striped uk-table-hover" style="border-collapse:unset">
+        <thead class="IRANSans fontsize-12">
+            <tr class="thead-light">
+                <th class="text-right fontsize-12 border-left">عنوان مشخصه</th>
+                <th class="text-right fontsize-12 border-left">مقدار مشخصه</th>
+                <th class="text-center fontsize-12">حذف مشخصه</th>
+            </tr>
+        </thead>
+        <tbody class="IRANSans_Light fontsize-12 product-options-table__body">
+            @foreach (var item in Model)
+            {
+                <tr data-my-id="@item.ProductOptionId" class="proOption-table-row">
+                    <td class="text-right fontsize-12 border-left" style="min-width:100px">@item.OptionTitle</td>
+                    <td class="text-right fontsize-12 border-left" style="min-width:100px">@item.OptionValue</td>
+                    <td class="text-center fontsize-12" style="min-width:100px">
+                        <a href="#" class="red-lighten-7 delete-productOptions"
+                           data-my-id="@item.ProductOptionId"
+                           uk-tooltip="title:حذف">
+                            <span uk-icon="icon:trash;ratio:.85"></span>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>

@@ -1,0 +1,215 @@
+﻿@model Ticket
+@{
+    ViewData["ticketspage"] = "active"; 
+}
+<!--Breadcrumb for this url-->
+<div class="row p-0 m-0 bg--white py-2 my-3 uk-box-shadow-small uk-border-rounded border position-relative">
+    <div class="col-12" dir="ltr">
+        <ul class="uk-breadcrumb IRANSans_Light fontsize-12 text-left p-0 m-0 d-flex" dir="ltr">
+            <li><a class="fontsize-12" href="~/En/Admin">Dashboard</a></li>
+            <li class="mx-1"><a class="fontsize-12" asp-action="Index" asp-controller="Messages" asp-area="Admin">پیام ها</a></li>
+            <li class="mx-1 uk-active">Message Details</li>
+        </ul>
+        <div class="bg--blue-600 position-absolute rounded-right" style="width:8px;right:0;top:-8px;height:calc(100% + 16px);"></div>
+    </div>
+</div>
+<!--Delete Modal for remove message-->
+<div id="item-remove-modal" uk-modal dir="ltr">
+    <div class="uk-modal-dialog">
+        <button class="uk-modal-close-default" type="button"
+                uk-close syle="right:unset;left:10px !important;"></button>
+        <div class="uk-modal-header bg--light-3">
+            <h3 class="Arial fontsize-14 red-lighten-7">Delete Message</h3>
+        </div>
+        <div class="uk-modal-body">
+            <div class="IRANSans fontsize-12 modal-body-text">Are you sure want to delete this message?</div>
+        </div>
+        <div class="uk-modal-footer uk-text-left">
+            <form id="remove-item-form-on-modal"
+                  action="/En/Admin/Messages/DeleteTicket" method="post">
+                <div class="item-id-container"></div>
+                <button class="mdc-button mdc-button--unelevated border--blue red-lighten-7
+                            bg--white uk-box-shadow-medium h-30" type="submit">
+                    <div class="mdc-button__ripple"></div>
+                    <span class="mdc-button__label IRANSans fontsize-12">
+                        Delete
+                    </span>
+                    <span class="material-icons-outlined mx-2 fontsize-16">
+                        delete
+                    </span>
+                </button>
+                <button class="mdc-button mdc-button--unelevated border--blue uk-modal-close
+                            bg--white uk-box-shadow-medium blue-600 mx-2 h-30 message-delete__submit-button">
+                    <div class="mdc-button__ripple"></div>
+                    <span class="mdc-button__label IRANSans fontsize-12">
+                        Cancel
+                    </span>
+
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--Delete Modal for remove reply ticket-->
+<div id="reply-ticket-remove-modal" uk-modal dir="ltr">
+    <div class="uk-modal-dialog">
+        <button class="uk-modal-close-default" type="button"
+                uk-close syle="right:unset;left:10px !important;"></button>
+        <div class="uk-modal-header bg--light-3">
+            <h3 class="Arial fontsize-14 red-lighten-7">Delete Message</h3>
+        </div>
+        <div class="uk-modal-body">
+            <div class="IRANSans fontsize-12 modal-body-text">Are you sure want to delete this message?</div>
+        </div>
+        <div class="uk-modal-footer uk-text-left">
+            <form id="remove-replty-ticket-form-on-modal"
+                  action="/Admin/Messages/DeleteReplyTicket" method="post">
+                <div class="item-id-container"></div>
+                <button class="mdc-button mdc-button--unelevated border--blue red-lighten-7
+                            bg--white uk-box-shadow-medium h-30" type="submit">
+                    <div class="mdc-button__ripple"></div>
+                    <span class="mdc-button__label IRANSans fontsize-12">
+                        Delete
+                    </span>
+                    <span class="material-icons-outlined mx-2 fontsize-16">
+                        delete
+                    </span>
+                </button>
+                <button class="mdc-button mdc-button--unelevated border--blue uk-modal-close
+                            bg--white uk-box-shadow-medium blue-600 mx-2 h-30 message-delete__submit-button">
+                    <div class="mdc-button__ripple"></div>
+                    <span class="mdc-button__label IRANSans fontsize-12">
+                       Cancel
+                    </span>
+
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="row my-2 m-0" dir="ltr" id="main-container">
+    <div class="col-12 uk-background-default uk-box-shadow-medium border uk-border-rounded p-0 bg--white pb-3"
+         id="detail-edit-container--active">
+        <div class="d-flex justify-content-between align-items-center p-3 bg-gradient--purple rounded-top">
+            <h3 class="fontsize-14 iranyekanwebbold font-weight--bold white p-0 m-0 flex-grow-1">
+                Message Details
+            </h3>
+            <a asp-action="Index" asp-controller="Messages" asp-area="Admin"
+               class="mdc-button mdc-button--unelevated flex-grow-1
+                    min-width--110 flex-sm-grow-0 flex-shrink-0 pagination--button bg--white
+               uk-box-shadow-small uk-box-shadow-hover-medium border">
+                <div class="mdc-button__ripple"></div>
+                <span class="mdc-button__label blue-700 IRANSans_Light fontsize-12">
+                    <span>Back</span>
+                    <span uk-icon="icon:arrow-left" class="mx-1 mx-sm-2"></span>
+                </span>
+            </a>
+        </div>
+
+        <div class="row p-0 m-0">
+            <div class="col-12 my-2 px-4">
+                <ul class="uk-list uk-list-divider">
+                    <li class="my-2 py-3">
+                        <div class="message-header" dir="ltr">
+                            <span class="material-icons-round fontsize-38" style="color:#808080">
+                                account_box
+                            </span>
+                            <div class="uk-article-header mx-2">
+                                <div class="IRANSans fontsize-12">@Model.FullName</div>
+                                <span class="fontsize-12 uk-text-muted fontsize-12">@Model.SubmitDate.ToString("MM/dd/yyyy")</span>
+                            </div>
+                            <div class="align-self-start">
+                                <span class="mx-1">|</span>
+                                <a href="#" data-my-id="@Model.Id" class="delete-icon message-remove IRANSans_Light fontsize-12 red-lighten-7">Delete</a>
+                            </div>
+                        </div>
+                        <div class="message-body mt-3" dir="ltr">
+
+                            <div class="message-title">
+                                <span class="IRANSans fontsize-12 mx-1 ">Subject:</span>
+                                <span class="IRANSans_Light fontsize-12 mx-1 message-subject blue-600">@Model.Subject</span>
+                            </div>
+                            <div class="message-description">
+                                <p class="IRANSans_Light fontsize-12">
+                                    @Model.Description
+                                </p>
+                            </div>
+
+                        </div>
+                        <div id="reply-tickets-container">
+                            @foreach (var item in Model.ReplyTickets)
+                            {
+                               
+
+                                <div class="message-reply pr-1 pr-sm-2 pr-md-4 pr-lg-5 my-3">
+                                    <div class="message-header" dir="ltr">
+                                        <span class="material-icons-round fontsize-38" style="color:#808080">
+                                            account_box
+                                        </span>
+                                        <div class="uk-article-header px-2">
+                                            <div class="IRANSans fontsize-12">@item.FullName</div>
+                                            <span class="fontsize-12 uk-text-muted fontsize-12">@item.SubmitDate.ToString("MM/dd/yyyy")</span>
+                                        </div>
+                                        <div class="align-self-start">
+                                            <span class="mx-1">|</span>
+                                            <a href="#" data-my-id="@item.Id" class="reply-ticket-delete message-remove IRANSans_Light fontsize-12 red-lighten-7">حذف</a>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="IRANSans_Light fontsize-12">
+                                        <span class="IRANSans fontsize-12 blue-600">
+                                            Reply:
+                                        </span>
+                                        <br />
+                                        @Html.Raw(item.Description)
+                                    </div>
+
+                                </div>
+                            }
+                        </div>
+
+
+
+                        <!--Reply to this ticket (form)-->
+                        <form role="form" class="message-reply pr-1 mt-4">
+                            <div class="uk-margin replyTicketDescription">
+                                <div class="IRANSans_Light fontsize-12 text-editor"
+                                     style="min-height:120px">
+
+                                </div>
+
+                            </div>
+                            <span class="mb-2 red-lighten-7 IRANSans fontsize-12 error-replyTicketDescription"></span>
+                            <!--Submit button-->
+                            <div class="">
+                                <button class="mdc-button mdc-button--unelevated
+                                        bg--blue-700 border px-0 uk-box-shadow-small h-30 reply-ticket__submit-button"
+                                        data-id="@Model.Id"
+                                        type="submit">
+                                    <div class="mdc-button__ripple"></div>
+                                    <span class="mdc-button__label IRANSans fontsize-10 white px-2">
+                                        <span>Send</span>
+                                        <span class="mx-2" uk-icon="icon:reply"></span>
+                                    </span>
+                                </button>
+                            </div>
+                        </form>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script>
+
+
+        const mdcButton = $('.mdc-button');
+        for (let i = 0; i < mdcButton.length; i++) {
+            mdc.ripple.MDCRipple.attachTo(document.querySelectorAll('.mdc-button')[i]);
+        }
+    </script>
+}

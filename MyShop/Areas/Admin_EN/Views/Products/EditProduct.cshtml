@@ -1,0 +1,697 @@
+﻿@model ProductsController.InputModel
+@{ViewData["productspage"] = "active"; }
+<!--Breadcrumb for this url-->
+<div class="row p-0 m-0 bg--white py-2 my-3 uk-box-shadow-small uk-border-rounded border position-relative">
+    <div class="col-12" dir="ltr">
+        <ul class="uk-breadcrumb IRANSans_Light fontsize-12 text-left p-0 m-0 d-flex" dir="ltr">
+            <li><a class="fontsize-12" href="~/En/Admin">Dashboard</a></li>
+            <li class="mx-1"><a class="fontsize-12" href="~/En/Admin/Products">Products</a></li>
+            <li class="mx-1 uk-active">Edit Product</li>
+        </ul>
+        <div class="bg--blue-600 position-absolute rounded-right" style="width:8px;right:0;top:-8px;height:calc(100% + 16px);"></div>
+    </div>
+
+</div>
+<div class="row my-2 m-0" dir="ltr" id="main-container">
+    <div class="col-12 uk-background-default uk-box-shadow-medium border uk-border-rounded p-0 bg--white pb-3"
+         id="detail-edit-container--active">
+        <div class="d-flex justify-content-between align-items-center p-3 bg-gradient--purple rounded-top">
+            <h3 class="fontsize-14 Arial font-weight--bold white p-0 m-0 flex-grow-1">
+                Edit Product
+            </h3>
+            <a href="~/En/Admin/Products" class="mdc-button mdc-button--unelevated flex-grow-1 min-width--110 flex-sm-grow-0 flex-shrink-0 pagination--button bg--white
+               uk-box-shadow-small uk-box-shadow-hover-medium border">
+                <div class="mdc-button__ripple"></div>
+                <span class="mdc-button__label blue-700 IRANSans_Light fontsize-12">
+                    <span>Back</span>
+                    <span uk-icon="icon:arrow-left" class="mx-1 mx-sm-2"></span>
+                </span>
+            </a>
+        </div>
+        <!--Product Edit Form-->
+        <div class="row my-2 m-0" dir="ltr">
+            <div class="col-12 py-3">
+                <!--Product Total Information-->
+                <form action="/En/Admin/Products/EditTotalInformation/@Model.ProductId" method="post">
+
+                    <div class="row px-3 my-3 mb-4" dir="ltr">
+                        <div class="col-12">
+                            <div class="border border--dashed form-bundle uk-border-rounded">
+                                <label class="IRANSans_Light">Product Information</label>
+                                <div class="row p-0 m-0 my-3">
+                                    <!--Title of Product-->
+                                    <div class="col-md-4 col-sm-6 my-3">
+                                        <div class="custom-text-field">
+                                            <label class="uk-form-label IRANSans_Light" asp-for="Title">Title</label>
+                                            <div class="uk-form-controls">
+                                                <input asp-for="Title" class="uk-input IRANSans_Light fontsize-12" type="text" placeholder="enter title">
+                                            </div>
+                                        </div>
+                                        <span asp-validation-for="Title" class="uk-text-danger Arial fontsize-12"></span>
+                                    </div>
+                                    <!--Category of Product-->
+                                    <div class="col-md-4 col-sm-6 my-3">
+                                        <input type="hidden" asp-for="CategoryId" />
+                                        <div class="mdc-select mdc-select--outlined product-category-title">
+                                            <div class="mdc-select__anchor w-100 bg--white h-40">
+                                                <i class="mdc-select__dropdown-icon" style="top:5px"></i>
+                                                <div id="demo-selected-text" class="mdc-select__selected-text IRANSans_Light fontsize-12 position-relative" style="top:-5px" aria-labelledby="outlined-select-label"></div>
+                                                <div class="mdc-notched-outline">
+                                                    <div class="mdc-notched-outline__leading"></div>
+                                                    <div class="mdc-notched-outline__notch">
+                                                        <label id="outlined-select-label" class="mdc-floating-label IRANSans_Light fontsize-14">Category</label>
+                                                    </div>
+                                                    <div class="mdc-notched-outline__trailing"></div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Select customer status => Options -->
+                                            <div class="mdc-select__menu mdc-menu mdc-menu-surface w-100" role="listbox">
+                                                <ul class="mdc-list IRANSans_Light fontsize-12">
+
+                                                    <vc:category-list-titles my-id="@Model.CategoryId" is-from-product="true"></vc:category-list-titles>
+                                                </ul>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                    <!--Brand of Product-->
+                                    <div class="col-md-4 col-sm-6 my-3">
+                                        <input type="hidden" asp-for="BrandId" />
+                                        <div class="mdc-select mdc-select--outlined product-brand-title">
+                                            <div class="mdc-select__anchor w-100 bg--white h-40">
+                                                <i class="mdc-select__dropdown-icon" style="top:5px"></i>
+                                                <div id="demo-selected-text" class="mdc-select__selected-text IRANSans_Light fontsize-12 position-relative" style="top:-5px" aria-labelledby="outlined-select-label"></div>
+                                                <div class="mdc-notched-outline">
+                                                    <div class="mdc-notched-outline__leading"></div>
+                                                    <div class="mdc-notched-outline__notch">
+                                                        <label id="outlined-select-label" class="mdc-floating-label IRANSans_Light fontsize-14">Brand</label>
+                                                    </div>
+                                                    <div class="mdc-notched-outline__trailing"></div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Select brand Options -->
+                                            <div class="mdc-select__menu mdc-menu mdc-menu-surface w-100" role="listbox">
+                                                <ul class="mdc-list IRANSans_Light fontsize-12">
+                                                    <vc:brand-list-titles my-id="@Model.BrandId"></vc:brand-list-titles>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="w-100"></div>
+                                    <!--Submit button-->
+                                    <div class="col-md-4 col-sm-6">
+                                        <button class="mdc-button mdc-button--unelevated
+                                                bg--blue-700 border px-0 uk-box-shadow-small
+                                                product-totalInformation__submit-button" type="submit"
+                                                style="height:30px">
+                                            <div class="mdc-button__ripple"></div>
+                                            <span class="mdc-button__label IRANSans fontsize-10 white px-1 px-sm-2">
+                                                Save Changes
+                                            </span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <!--Related Category-->
+                <div class="row px-3 my-3 mb-4" dir="ltr">
+                    <div class="col-12">
+                        <div class="border border--dashed form-bundle uk-border-rounded">
+                            <label class="IRANSans_Light">Relevant Categories</label>
+                            <div class="row p-0 m-0 my-3">
+                                <p class="col-12 IRANSans_Light fontsize-14" dir="ltr">
+                                    By specifying the relevant categories, products are also displayed in their results
+                                </p>
+                                <!--Category of Product-->
+                                <div class="col-md-4 col-sm-6 my-3">
+                                    <input type="hidden" name="relatedCategoryId" id="relatedCategoryId" />
+                                    <div class="mdc-select mdc-select--outlined all-categories">
+                                        <div class="mdc-select__anchor w-100 bg--white h-40">
+                                            <i class="mdc-select__dropdown-icon" style="top:5px"></i>
+                                            <div class="mdc-select__selected-text IRANSans_Light fontsize-12 position-relative" style="top:-5px" aria-labelledby="outlined-select-label"></div>
+                                            <div class="mdc-notched-outline">
+                                                <div class="mdc-notched-outline__leading"></div>
+                                                <div class="mdc-notched-outline__notch">
+                                                    <label id="outlined-select-label" class="mdc-floating-label IRANSans_Light fontsize-14">Category</label>
+                                                </div>
+                                                <div class="mdc-notched-outline__trailing"></div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Select customer status => Options -->
+                                        <div class="mdc-select__menu mdc-menu mdc-menu-surface w-100" role="listbox">
+                                            <ul class="mdc-list IRANSans_Light fontsize-12">
+                                                <vc:category-list-titles my-id="-1" is-from-product="true"></vc:category-list-titles>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--Submit button-->
+                                <div class="col-md-4 col-sm-6 d-flex align-items-center">
+                                    <button class="mdc-button mdc-button--unelevated
+                                                bg--blue-700 border px-0 uk-box-shadow-small
+                                                relatedCategory__submit-button" type="submit" data-productId="@Model.ProductId"
+                                            style="height:40px">
+                                        <div class="mdc-button__ripple"></div>
+                                        <span class="mdc-button__label IRANSans fontsize-10 white px-1 px-sm-2">
+                                            Add
+                                        </span>
+                                    </button>
+                                </div>
+                                <div class="col-12" id="related-categories-container">
+                                    <vc:related-categories product-id="@Model.ProductId"></vc:related-categories>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Product Images-->
+                <div class="row px-3 my-4">
+                    <div class="col-12">
+                        <div class="border border--dashed form-bundle uk-border-rounded">
+                            <label class="IRANSans_Light">Product Image</label>
+                            <div class="row p-0 m-0 my-3">
+                                <!--Upload / Change Image-->
+                                <div class="col-lg-3 col-md-4 col-sm-6 px-3 my-2">
+                                    <form id="uploader" method="post"
+                                          enctype="multipart/form-data">
+                                        <div class="js-upload uk-placeholder uk-text-center image-upload--placeholder uk-border-rounded" dir="ltr">
+                                            <div uk-form-custom class="blue-600">
+                                                <input name="Images" id="Images" type="file" multiple accept="image/*">
+                                                <span uk-icon="icon: cloud-upload"></span>
+                                                <span class="uk-link IRANSans_Light fontsize-12">Add New Image</span>
+                                            </div>
+                                        </div>
+                                        <input type="hidden" name="productId" id="productId" value="@Model.ProductId" />
+                                        <progress class="uk-progress" id="upload-progress" value="0" max="100"></progress>
+                                    </form>
+                                </div>
+                                <div class="col-12 my-2" id="productImage-list-container">
+                                    <vc:product-image-list pro-id="@(Model.ProductId)"></vc:product-image-list>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--Product Pricing-->
+                <div class="row px-3 my-4">
+                    <div class="col-12">
+                        <form action="/En/Admin/Products/EditProductPricing/@Model.ProductId" method="post">
+                            <div class="border border--dashed form-bundle uk-border-rounded">
+                                <label class="IRANSans_Light">Price and Stock</label>
+                                <div class="row m-0 py-3">
+                                    <div class="col-md-4 col-sm-6 my-3">
+                                        <div class="custom-text-field">
+                                            <label asp-for="BasePrice" class="uk-form-label IRANSans_Light">Price</label>
+                                            <div class="uk-form-controls">
+                                                <input asp-for="BasePrice" class="uk-input IRANSans_Light fontsize-12 number-type" type="text" placeholder="price">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-sm-6 my-3">
+                                        <div class="custom-text-field">
+                                            <label asp-for="Discount" class="uk-form-label IRANSans_Light">Old Price</label>
+                                            @if (Model.Discount == 0)
+                                            {
+                                                <div class="uk-form-controls">
+                                                    <input asp-for="Discount" class="uk-input IRANSans_Light fontsize-12 number-type" type="text" value="" placeholder="old price">
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="uk-form-controls">
+                                                    <input asp-for="Discount" class="uk-input IRANSans_Light fontsize-12 number-type" type="text" placeholder="old price">
+                                                </div>
+                                            }
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 col-sm-6 my-3">
+                                        <div class="custom-text-field">
+                                            <label asp-for="Stock" class="uk-form-label IRANSans_Light">Stock</label>
+                                            <div class="uk-form-controls">
+                                                <input asp-for="Stock" class="uk-input IRANSans_Light fontsize-12 number-type" type="text" placeholder="stock">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 col-sm-6 my-3">
+                                        <div class="custom-text-field">
+                                            <label asp-for="Unit" class="uk-form-label IRANSans_Light">Product Unit</label>
+                                            <div class="uk-form-controls">
+                                                <input asp-for="Unit" class="uk-input IRANSans_Light fontsize-12" type="text" placeholder="product unit">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="w-100"></div>
+                                    <!--Submit button-->
+                                    <div class="col-md-4 col-sm-6 mt-3 mb-2">
+                                        <button class="mdc-button mdc-button--unelevated bg--blue-700 border uk-box-shadow-small px-0" type="submit"
+                                                style="height:30px">
+                                            <div class="mdc-button__ripple"></div>
+                                            <span class="mdc-button__label IRANSans fontsize-10 white px-1 px-sm-2">
+                                               Save Changes
+                                            </span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+
+                <!--Product Features-->
+                <div class="row px-3 my-3">
+                    <div class="col-12">
+                        <div class="border border--dashed form-bundle uk-border-rounded">
+                            <label class="IRANSans_Light">Extras for the Product</label>
+                            <div class="row m-0 py-3">
+                                <div class="col-lg-3 col-md-4 col-sm-6 my-2 px-2">
+                                    <label class="IRANSans_Light fontsize-12">
+                                        <input asp-for="HasFreeDelivery" autocomplete="off" data-productId="@Model.ProductId"
+                                               class="uk-checkbox mx-1 uk-border-rounded" type="checkbox">
+                                       Free Shipping
+                                    </label>
+                                </div>
+                                <div class="col-lg-3 col-md-4 col-sm-6 my-2 px-2">
+                                    <label class="IRANSans_Light fontsize-12">
+                                        <input asp-for="AuthotityGuarantee" autocomplete="off" data-productId="@Model.ProductId"
+                                               class="uk-checkbox mx-1 uk-border-rounded" type="checkbox">
+                                        Waranty
+                                    </label>
+                                </div>
+                                <div class="col-lg-3 col-md-4 col-sm-6 my-2 px-2">
+                                    <label class="IRANSans_Light fontsize-12">
+                                        <input asp-for="LocalPayment" autocomplete="off" data-productId="@Model.ProductId"
+                                               class="uk-checkbox mx-1 uk-border-rounded" type="checkbox">
+                                       Cash On Delivery
+                                    </label>
+                                </div>
+                             
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--Product Variations-->
+                <div class="row px-3 my-3">
+                    <div class="col-12 my-3">
+                        <div class="border border--dashed form-bundle uk-border-rounded">
+                            <label class="IRANSans_Light">Variants</label>
+                            <!--Create New Product Variation-->
+                            <form id="product-variation-form" data-productId="@Model.ProductId">
+                                <div class="row m-0 py-4 align-items-start">
+                                    <div class="col-md-4 col-sm-6 my-2 px-2">
+                                        <div class="custom-text-field mx-2">
+                                            <label class="uk-form-label IRANSans_Light" for="varTitle">Title</label>
+                                            <div class="uk-form-controls d-flex">
+                                                <input name="varTitle" class="uk-input IRANSans_Light fontsize-12" required
+                                                       id="varTitle" type="text" placeholder="title">
+                                            </div>
+                                        </div>
+                                        <span class="Arial fontsize-10 red-lighten-7 mx-2 d-none" id="var-title-error"></span>
+                                    </div>
+                                    <div class="col-md-3 col-sm-4 my-2 px-2">
+                                        <div class="mdc-select mdc-select--outlined product-variation-hasDifPrice">
+                                            <div class="mdc-select__anchor w-100 bg--white h-40">
+                                                <i class="mdc-select__dropdown-icon" style="top:5px"></i>
+                                                <div id="demo-selected-text" class="mdc-select__selected-text IRANSans_Light fontsize-12 position-relative" style="top:-5px" aria-labelledby="outlined-select-label"></div>
+                                                <div class="mdc-notched-outline">
+                                                    <div class="mdc-notched-outline__leading"></div>
+                                                    <div class="mdc-notched-outline__notch">
+                                                        <label id="outlined-select-label" class="mdc-floating-label IRANSans_Light fontsize-14">Pricing Status</label>
+                                                    </div>
+                                                    <div class="mdc-notched-outline__trailing"></div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Select brand Options -->
+                                            <div class="mdc-select__menu mdc-menu mdc-menu-surface w-100" role="listbox">
+                                                <ul class="mdc-list IRANSans_Light fontsize-12">
+                                                    <li class="mdc-list-item mdc-list-item--selected" data-value="false" role="option">
+                                                        Same Price
+                                                    </li>
+                                                    <li class="mdc-list-item" data-value="true" role="option">
+                                                        Different Prices
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-sm-6 d-flex align-items-center">
+                                        <button class="mdc-button mdc-button--unelevated bg--white border px-0
+                                                product-variation-form__submit-button" style="height:40px;top:8px">
+                                            <div class="mdc-button__ripple"></div>
+                                            <span class="mdc-button__label IRANSans fontsize-12 blue-700 px-1 px-sm-2">
+                                               Add
+                                            </span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                            <!--Created Variations-->
+                            <div id="created-variations-list">
+                                <vc:product-variation-list product-id="@(Model.ProductId)"></vc:product-variation-list>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!--Product Description-->
+                <div class="row px-3 my-3">
+                    <div class="col-12">
+                        <form class="product-description-form" data-productId="@Model.ProductId">
+                            <div class="border border--dashed form-bundle uk-border-rounded">
+                                <label class="IRANSans_Light">Short Description</label>
+                                <div class="row m-0 py-2">
+                                    <div class="col-12 py-3">
+                                        <div class="">
+                                            <div id="summary-description"
+                                                 class="IRANSans_Light fontsize-12 text-editor"
+                                                 style="min-height:120px">
+                                                @Html.Raw(Model.Summary)
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="w-100"></div>
+                                    <!--Submit button-->
+                                    <div class="col-md-4 col-sm-6 my-3">
+                                        <button class="mdc-button mdc-button--unelevated
+                                                bg--blue-700 border uk-box-shadow-small product-description-form__submit-button"
+                                                type="button" style="height:30px">
+                                            <div class="mdc-button__ripple"></div>
+                                            <span class="mdc-button__label IRANSans fontsize-10 white px-1 px-sm-2">
+                                                Save Changes
+                                            </span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!--Product Options-->
+                <div class="row px-3 my-3 pt-3">
+                    <div class="col-12">
+                        <div class="border border--dashed form-bundle uk-border-rounded">
+                            <label class="IRANSans_Light">Product Options</label>
+                            <form class="product-option-form">
+                                <div class="row m-0 py-4 align-items-start">
+                                    <div class="col-md-4 col-sm-6 my-2 px-2">
+                                        <div class="custom-text-field mx-2">
+                                            <label class="uk-form-label IRANSans_Light" for="proOptionTitle">Option Title</label>
+                                            <div class="uk-form-controls d-flex">
+                                                <input name="proOptionTitle" class="uk-input IRANSans_Light fontsize-12" required
+                                                       id="proOptionTitle" type="text" placeholder="option title">
+                                            </div>
+                                        </div>
+                                        <span class="Arial fontsize-10 red-lighten-7 mx-2 d-none" id="productOption-title-error"></span>
+                                    </div>
+                                    <div class="col-md-4 col-sm-6 my-2 px-2">
+                                        <div class="custom-text-field mx-2">
+                                            <label class="uk-form-label IRANSans_Light" for="proOptionValue">Option Value</label>
+                                            <div class="uk-form-controls d-flex">
+                                                <input name="proOptionValue" class="uk-input IRANSans_Light fontsize-12" required
+                                                       id="proOptionValue" type="text" placeholder="option value">
+                                            </div>
+                                        </div>
+                                        <span class="Arial fontsize-10 red-lighten-7 mx-2 d-none" id="productOption-value-error"></span>
+                                    </div>
+                                    <div class="col-md-4 col-sm-6 d-flex align-items-center">
+                                        <button class="mdc-button mdc-button--unelevated bg--white border px-0
+                                                product-option-form__submit-button" style="height:40px;top:8px" data-productId="@Model.ProductId">
+                                            <div class="mdc-button__ripple"></div>
+                                            <span class="mdc-button__label IRANSans fontsize-12 blue-700 px-1 px-sm-2">
+                                                Add
+                                            </span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                            <!--Added product options-->
+                            <div class="added-product-options mx-md-3 mx-2 mb-3 uk-overflow-auto border">
+                                <vc:added-product-options product-id="@(Model.ProductId)"></vc:added-product-options>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Product Technical Description-->
+                <div class="row px-3 py-2 my-4" id="product-tech-description">
+                    <div class="col-12 my-2">
+                        <div class="border border--dashed form-bundle uk-border-rounded">
+                            <label class="IRANSans_Light">Product Description</label>
+                            <div class="row m-0 py-3 mx-1">
+                                <div class="col-md-3 col-sm-6 my-2">
+                                    <form action="/En/Admin/ProductTechnicalContent/AddText" method="post">
+                                        <input type="hidden" name="id" value="@Model.ProductId" />
+                                        <button type="submit" class="w-100 border bg--white mdc-button mdc-button--unelevated
+                              uk-box-shadow-small blue-700 p-2 text-decoration-none
+                              IRANSans_Light fontsize-12 add-product-content-text-button">
+                                            <div class="mdc-button__ripple"></div>
+                                            <span class="mdc-button__label IRANSans fontsize-12 blue-700 px-1 px-sm-2">
+                                                <span uk-icon="icon:file-text;ratio:.9"></span>
+                                                <span class="mx-2">Text</span>
+                                            </span>
+                                        </button>
+                                    </form>
+                                </div>
+                                <div class="col-md-3 col-sm-6 my-2">
+                                    <form id="product-content-image-form" action="/En/Admin/ProductTechnicalContent/AddImage"
+                                          method="post" enctype="multipart/form-data">
+                                        <input type="hidden" name="id" value="@Model.ProductId">
+                                        <label class="w-100 border bg--white mdc-button mdc-button--unelevated
+                              uk-box-shadow-small blue-700 p-2 text-decoration-none
+                              IRANSans_Light fontsize-12" for="image">
+                                            <div class="mdc-button__ripple"></div>
+                                            <span class="mdc-button__label IRANSans fontsize-12 blue-700 px-1 px-sm-2">
+                                                <span uk-icon="icon:image;ratio:.9"></span>
+                                                <span class="mx-2">Image</span>
+                                            </span>
+
+                                        </label>
+                                        <input type="file" class="d-none" name="image" id="image"
+                                               onchange="$('#product-content-image-form').submit()" />
+                                    </form>
+                                </div>
+                                <div class="col-md-3 col-sm-6 my-2">
+                                    <!--Add new video Modal-->
+                                    <div id="video-add-modal" uk-modal dir="ltr">
+                                        <div class="uk-modal-dialog">
+                                            <button class="uk-modal-close-default" type="button" uk-close syle="right:unset;left:10px !important;"></button>
+                                            <form action="/En/Admin/ProductTechnicalContent/AddVideo" method="post">
+                                                <div class="uk-modal-header bg--light-3">
+                                                    <h3 class="Arial fontsize-14 uk-text-secondary">Add New Video</h3>
+                                                </div>
+                                                <div class="uk-modal-body">
+                                                    <input type="hidden" name="id" id="id" value="@Model.ProductId" />
+                                                    <!--Title of product-->
+                                                    <div class="uk-magin col-auto">
+                                                        <div class="custom-text-field">
+                                                            <label class="uk-form-label IRANSans_Light" for="videoLink">Video Link</label>
+                                                            <div class="uk-form-controls">
+                                                                <input name="videoLink" id="videoLink"
+                                                                       class="uk-input IRANSans_Light fontsize-12" type="text" required placeholder="video link">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="uk-modal-footer uk-text-left">
+                                                    <button class="mdc-button mdc-button--unelevated border--blue white bg--blue-600 uk-box-shadow-medium" style="height:30px" type="submit">
+                                                        <div class="mdc-button__ripple"></div>
+                                                        <span class="mdc-button__label IRANSans fontsize-12">
+                                                           Add
+                                                        </span>
+                                                        <span class="material-icons-outlined mx-2 fontsize-16">
+                                                            add
+                                                        </span>
+                                                    </button>
+                                                    <button class="mdc-button mdc-button--unelevated border--blue uk-modal-close bg--white uk-box-shadow-medium blue-600 mx-2"
+                                                            style="height:30px;">
+                                                        <div class="mdc-button__ripple"></div>
+                                                        <span class="mdc-button__label IRANSans fontsize-12">
+                                                          Cancel
+                                                        </span>
+
+                                                    </button>
+
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <a uk-toggle="target: #video-add-modal" class="w-100 border bg--white mdc-button mdc-button--unelevated
+                              uk-box-shadow-small blue-700 p-2 text-decoration-none
+                              IRANSans_Light fontsize-12">
+                                        <div class="mdc-button__ripple"></div>
+                                        <span class="mdc-button__label IRANSans fontsize-12 blue-700 px-1 px-sm-2">
+                                            <span uk-icon="icon:video-camera;ratio:.9"></span>
+                                            <span class="mx-2">Video</span>
+                                        </span>
+                                    </a>
+                                </div>
+
+                            </div>
+                            <div class="col-12" id="product-description-content-list">
+                                <vc:product-technical-content-list id="@(Model.ProductId)"></vc:product-technical-content-list>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!--Product Tags (chips)-->
+                <div class="row px-3 my-3">
+                    <div class="col-12">
+                        <div class="border border--dashed form-bundle uk-border-rounded">
+                            <label class="IRANSans_Light">Tags</label>
+                            <!--Create new tags-->
+                            <div class="row m-0 pt-4 product-tag-form align-items-start">
+                                <div class="col-lg-4 col-md-5 col-sm-6 my-2 px-2">
+                                    <div class="custom-text-field mx-2">
+                                        <label class="uk-form-label IRANSans_Light" for="text">Tag Title</label>
+                                        <div class="uk-form-controls d-flex">
+                                            <input class="uk-input IRANSans_Light fontsize-12" name="text" id="text" type="text" placeholder="title">
+                                        </div>
+                                    </div>
+                                    <span class="Arial fontsize-10 mx-2 error-tag-title d-none red-lighten-7"></span>
+                                </div>
+
+                                <div class="col-lg-4 col-md-5 col-sm-6 d-flex align-items-center">
+                                    <button class="mdc-button mdc-button--unelevated bg--white border px-0 product-tag-form__submit-button"
+                                            data-pro-id="@Model.ProductId"
+                                            style="height:40px;top:8px">
+                                        <div class="mdc-button__ripple"></div>
+                                        <span class="mdc-button__label IRANSans fontsize-12 blue-700 px-1 px-sm-2">
+                                          Add
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!--Created Tags-->
+                            <div class="row m-0">
+                                <div class="col-12 py-3" id="product-tag-list-container">
+                                    <vc:product-tag-list id="@(Model.ProductId)"></vc:product-tag-list>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--SEO Settings-->
+                <div class="row px-3 my-3">
+                    <div class="col-12 my-4">
+                        <div class="border border--dashed form-bundle uk-border-rounded seo-setting-form">
+                            <label class="IRANSans_Light">SEO Settings</label>
+                            <!--Create new tags-->
+                            <div class="row m-0 pt-2" dir="ltr">
+                                <div class="col-sm-6 my-2 px-2 order-1 order-sm-0">
+                                    <div class="custom-text-field mx-2 my-4">
+                                        <label class="uk-form-label IRANSans_Light" asp-for="TitlePage">Title</label>
+                                        <div class="uk-form-controls d-flex">
+                                            <input class="uk-input IRANSans_Light fontsize-12" asp-for="TitlePage"
+                                                   id="TitlePage" type="text" placeholder="title(60-70 chars)">
+                                        </div>
+                                    </div>
+                                    <div class="custom-text-field mx-2 my-4">
+                                        <label class="uk-form-label IRANSans_Light" asp-for="RedirectURL">Redirect URL (301 redirect)</label>
+                                        <div class="uk-form-controls d-flex">
+                                            <input class="uk-input IRANSans_Light fontsize-12" asp-for="RedirectURL" type="text" placeholder="target link">
+                                        </div>
+                                    </div>
+                                    <div class="custom-text-field mx-2 my-4">
+                                        <label class="uk-form-label IRANSans_Light" asp-for="MetaDescription">Meta Description</label>
+                                        <div class="uk-form-controls d-flex">
+                                            <textarea asp-for="MetaDescription" class="uk-textarea IRANSans_Light fontsize-12 uk-border-rounded" rows="5"
+                                                      placeholder="meta description(50-160 chars)">@Model.MetaDescription</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 my-2 order-0 order-sm-1 px-2 py-3" dir="ltr">
+                                    <div class="border form-bundle uk-border-rounded m-2">
+                                        <label class="IRANSans_Light">Search Engine Preview</label>
+                                        <div class="my-3 p-3">
+                                            @if (string.IsNullOrEmpty(Model.TitlePage))
+                                            {
+                                                <div id="title-page-preview" class="IRANSans fontsize-14" style="color:#1a0dab">Title</div>
+                                            }
+                                            else
+                                            {
+                                                <div id="title-page-preview" class="IRANSans fontsize-14" style="color:#1a0dab">@Model.TitlePage</div>
+                                            }
+                                            @if (string.IsNullOrEmpty(Model.MetaDescription))
+                                            {
+                                        <div id="metadescription-page-preview" class="IRANSans_Light fontsize-12">If leave empty, it automatically will generate by search engine</div>
+                                            }
+                                            else
+                                            {
+                                                <div id="metadescription-page-preview" class="IRANSans_Light fontsize-12">@Model.MetaDescription</div>
+                                            }
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="w-100"></div>
+                            <!--Submit button-->
+                            <div class="my-3 mx-3">
+                                <button class="mdc-button mdc-button--unelevated bg--blue-700 seo-setting-form__submit-button
+                                        border uk-box-shadow-small px-0" style="height:30px" data-pro-id="@Model.ProductId">
+                                    <div class="mdc-button__ripple"></div>
+                                    <span class="mdc-button__label IRANSans fontsize-10 white px-1 px-sm-2">
+                                        Save Changes
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--Publish Settings-->
+                <div class="row px-3 my-2">
+                    <div class="col-12">
+                        <div class="border border--dashed form-bundle uk-border-rounded">
+                            <label class="IRANSans_Light">Publish</label>
+                            <div class="row m-0 py-2">
+                                <div class="col-12 my-2 px-2">
+                                    <label class="IRANSans_Light fontsize-12">
+                                        <input asp-for="IsPublished" autocomplete="off" data-pro-id="@Model.ProductId"
+                                               class="uk-checkbox mx-1 uk-border-rounded product-publishment" type="checkbox">
+                                       Publish on Website
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        const mdcButton = $('.mdc-button');
+        for (let i = 0; i < mdcButton.length; i++) {
+            mdc.ripple.MDCRipple.attachTo(document.querySelectorAll('.mdc-button')[i]);
+        }
+
+
+
+        const mdcTextField = $('.mdc-text-field');
+        for (let i = 0; i < mdcTextField.length; i++) {
+            mdc.textField.MDCTextField.attachTo(document.querySelectorAll('.mdc-text-field')[i]);
+        }
+
+    </script>
+}

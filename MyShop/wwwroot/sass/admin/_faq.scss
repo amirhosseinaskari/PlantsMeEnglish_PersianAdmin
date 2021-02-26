@@ -1,0 +1,27 @@
+﻿#faq-list {
+    .action-items-container--mobile, .action-items-container {
+        left: 55px;
+    } 
+}
+.faq-list__list-item {
+    position: relative;
+    min-height: 60px;
+    
+
+    .faq-list__list-item__title-sorthandle-container {
+        min-height: 60px;
+        overflow: visible;
+    }
+
+    .uk-sortable-handle {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .uk-accordion-title::before {
+        position: absolute;
+        left: 20px;
+        top: 20px;
+    }
+}

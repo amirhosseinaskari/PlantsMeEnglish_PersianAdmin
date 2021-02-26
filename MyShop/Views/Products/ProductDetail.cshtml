@@ -1,0 +1,517 @@
+﻿@model Product
+@{
+    ViewData["Title"] = Model.TitlePage;
+    ViewData["MetaDescription"] = Model.MetaDescription;
+    ViewData["RedirectURL"] = Model.RedirectURL;
+    ViewData["CanonicalURL"] = "https://www.shopikardemo.ir/Products/" + Model.Id + "/" + Model.Title;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Schema{
+    <script type="application/ld+json" class="">
+        {
+        "@@context": "https://www.schema.org",
+        "@@type": "Product",
+        "url":"http://www.shopikardemo.ir/Products/@Model.Id/@Html.Raw(Model.Title)",
+        "name": "@Html.Raw(Model.Title)",
+        "alternateName": null,
+        "image": [
+        @foreach (var item in Model.Images)
+        {
+            if (Model.Images.Last().Equals(item))
+            {
+                <text>
+                    "http://www.shopikardemo.ir/images/products/medium/product_@(Model.Id)/@(item.ImageName)"
+                </text>
+                break;
+            }
+
+            <text>
+                "http://www.shopikardemo.ir/images/products/medium/product_@(Model.Id)/@(item.ImageName)",
+            </text>
+        }
+
+        ],
+        "description": "@Model.MetaDescription",
+        "sku": @Model.Id,
+        "review": {
+        "@@type": "Review",
+        "reviewRating": {
+        "@@type": "Rating",
+        @if (Model.RateNumber < 1)
+        {
+            <text>"ratingValue": "1",</text>
+        }
+        else
+        {
+            <text>"ratingValue": "@Model.RateNumber",</text>
+        }
+        "bestRating": "5"
+        },
+        "author": {
+        "@@type": "Person",
+        "name": "Fred Benson"
+        }
+        },
+        "aggregateRating": {
+        "@@type": "AggregateRating",
+        @if (Model.RateNumber < 1)
+        {
+            <text>"ratingValue": "1",</text>
+        }
+        else
+        {
+            <text>"ratingValue": "@Model.RateNumber",</text>
+        }
+        @if (Model.NumberOfUserRater < 1)
+        {
+            <text>"reviewCount":"1",</text>
+        }
+        else
+        {
+            <text>"reviewCount": @Html.Raw(Model.NumberOfUserRater),</text>
+        }
+
+        "bestRating": 5,
+        "worstRating": 0
+        },
+        "brand": {
+        "@@type": "Thing",
+        "name": "@Html.Raw(Model.CategoryName)"
+        },
+        "offers": {
+        "@@type": "Offer",
+        "url":"http://www.shopikardemo.ir/Products/@Model.Id/@Html.Raw(Model.Title)",
+        "priceCurrency": "IRR",
+        "price": @Model.BasePrice,
+        "itemCondition": "https://schema.org/UsedCondition",
+        "availability": "https://schema.org/InStock",
+        "seller": {
+        "@@type": "Organization",
+        "name": "@Html.Raw(Model.Title)"
+        }
+        }
+        }
+    </script>
+}
+@section Style{
+    <link href="~/dist/sass/pages/productDetail.min.css" rel="stylesheet" />
+}
+@section JavaScript{
+    <script async src="~/dist/js/pages/_productDetail.min.js" type="module"></script>
+}
+
+<!--alert for log in before action-->
+<div id="login-alert-modal" uk-modal dir="ltr">
+    <div class="uk-modal-dialog">
+        <button class="uk-modal-close-default" type="button" uk-close></button>
+
+        <div class="uk-modal-header border-bottom-grey">
+            <span class="dana-font font-color-1 fontsize-16 font-weight-600">Added To Favorits</span>
+        </div>
+        <div class="uk-modal-body">
+            <div class="uk-magin margin-y-20 dana-font font-weight-500 fontsize-16 mobile-fontsize-14 line-height-30 uk-text-left" dir="ltr">
+                <span>To add to your favorit list, you must first</span>
+                <a href="#login--modal" uk-toggle class="text-decoration-none main-color">login</a>
+                <span>to your account or</span>
+                <a href="#register--modal" uk-toggle class="text-decoration-none main-color">sign up</a>
+                <span>if you have not yet registered</span>
+            </div>
+
+        </div>
+    </div>
+</div>
+<section id="container-section" class="uk-overflow-hidden">
+    <!--Breadcrumb for this url-->
+    <vc:product-category-bread-crumb id="@Model.CategoryId" product-title="@Model.Title"></vc:product-category-bread-crumb>
+
+    <!--Product detail top section-->
+    <article id="top-section" dir="ltr" class="padding-y-20">
+        <!--image container-->
+        <div id="top-section__image-container">
+            <div>
+                <!--share and save buttons on the product image-->
+                <div class="product-detail-icons-container align-self-start">
+
+
+                    <a class="uk-box-shadow-small font-color-4 product-share-button-trigger" uk-tooltip="title:Share;pos:right" rel="nofollow" href="#">
+                        <span uk-icon="icon:social;ratio:1.3"></span>
+                    </a>
+                    <a class="uk-box-shadow-small font-color-4 whatsapp-share-button product-share-button"
+                       rel="nofollow" target="_blank" href="https://wa.me?text=@Context.Request.Host@Context.Request.Path" uk-tooltip="title:WhatsApp;pos:right">
+                        <span uk-icon="icon:whatsapp;ratio:1.3"></span>
+                    </a>
+                    <a class="uk-box-shadow-small font-color-4 twitter-share-button product-share-button" rel="nofollow" target="_blank"
+                       href="https://twitter.com/intent/tweet/?url=@Context.Request.Host@Context.Request.Path" uk-tooltip="title:Twitter;pos:right">
+                        <span uk-icon="icon:twitter;ratio:1.3"></span>
+                    </a>
+                    <a class="uk-box-shadow-small font-color-4 facebook-share-button product-share-button" rel="nofollow" target="_blank"
+                       href="https://www.facebook.com/sharer/sharer.php?u=@Context.Request.Host@Context.Request.Path" uk-tooltip="title:Facebook;pos:right">
+                        <span uk-icon="icon:facebook;ratio:1.3"></span>
+                    </a>
+                    <a class="uk-box-shadow-small font-color-4 telegram-share-button product-share-button" rel="nofollow" target="_blank"
+                       href="https://telegram.me/share/url?url=@Context.Request.Host@Context.Request.Path" uk-tooltip="title:Telegram;pos:right">
+                        <img width="20" class="max-width-100" src="~/images/icons/telegram.svg" />
+                    </a>
+                    <!--Test Text-->
+                    <a class="uk-box-shadow-small font-color-4 link-share-button product-share-button copy-url-link"
+                       href="#" data-url="@Context.Request.Host/محصولات/@Model.Id/@Model.Title.Replace(" ","-")" uk-tooltip="title:Copy Link;pos:right">
+                        <span uk-icon="icon:link;ratio:1.3"></span>
+                    </a>
+                </div>
+                @{
+                    var orderedImages = Model.Images.OrderBy(c => c.ImageOrder).ToList();
+                    string imageName = null;
+                    if (orderedImages.FirstOrDefault() != null)
+                    {
+                        imageName = orderedImages.First().ImageName;
+                    }
+
+                }
+                <!--First image on desktop-->
+                <div class="product-image__image-container position-relative uk-text-center">
+                    @if (string.IsNullOrEmpty(imageName))
+                    {
+                        <img class="max-height-100 max-width-100" src="~/images/base/placeholderimage.jpg" data-url="/images/small/product_placeholder.jpg">
+                    }
+                    else
+                    {
+                        var firstImage = orderedImages.First();
+                        <img class="max-height-100 max-width-100 lazyload" src="~/images/base/placeholderimage.jpg"
+                             data-url="/images/products/large/product_@(Model.Id)/@firstImage.ImageName"
+                             data-src="/images/products/medium/product_@(Model.Id)/@firstImage.ImageName"
+                             data-srcset="/images/products/small/product_@(Model.Id)/@firstImage.ImageName 600w, /images/products/medium/product_@(Model.Id)/@firstImage.ImageName 800w"
+                             alt="@firstImage.AltText" loading="lazy">
+                    }
+                    <div class="magnifier-glass-box"></div>
+                </div>
+                <div class="product-image__big-image-container uk-box-shadow-medium"></div>
+
+                <!--First image on mobile-->
+                <div class="product-image__image-container--mobile position-relative uk-text-center">
+                    @if (string.IsNullOrEmpty(imageName))
+                    {
+                        <img class="max-height-100 max-width-100" src="~/images/base/placeholderimage.jpg" data-url="/images/small/product_placeholder.jpg">
+                    }
+                    else
+                    {
+                        var firstImage = orderedImages.First();
+                        <a href="#">
+                            <img class="max-height-100 max-width-100 lazyload" src="~/images/base/placeholderimage.jpg"
+                                 data-url="/images/products/large/product_@(Model.Id)/@firstImage.ImageName"
+                                 data-src="/images/products/medium/product_@(Model.Id)/@firstImage.ImageName"
+                                 data-srcset="/images/products/small/product_@(Model.Id)/@firstImage.ImageName 600w,
+                                                        /images/products/medium/product_@(Model.Id)/@firstImage.ImageName 800w"
+                                 alt="@firstImage.AltText" loading="lazy">
+                        </a>
+                    }
+                </div>
+            </div>
+
+            <!--Other pictures of product-->
+            <div class="product-image__other-images margin-y-15 uk-text-center uk-visible@s">
+                <div uk-slider>
+
+                    <div class="uk-position-relative">
+
+                        <div class="uk-slider-container uk-light">
+                            <ul class="uk-slider-items uk-child-width-1-2 uk-child-width-1-3@s uk-child-width-1-4@m">
+                                @if (Model.Images.Count() > 1)
+                                {
+                                    var orderedImages02 = Model.Images.OrderBy(c => c.ImageOrder).ToList();
+                                    @foreach (var item in orderedImages02)
+                                    {
+                                        @if (item.Equals(orderedImages02.First()))
+                                        {
+                                            <li>
+                                                <a href="#" class="margin-right-10 margin-bottom-10 active uk-disabled"
+                                                   data-url="/images/products/large/product_@(Model.Id)/@(item.ImageName)"
+                                                   data-src="/images/products/medium/product_@(Model.Id)/@(item.ImageName)"
+                                                   data-srcset="/images/products/small/product_@(Model.Id)/@item.ImageName 600w,
+                                                        /images/products/medium/product_@(Model.Id)/@item.ImageName 800w">
+                                                    <img class="lazyload w-100" src="~/images/base/placeholderimage.jpg"
+                                                         data-src="/images/products/small/product_@(Model.Id)/@(item.ImageName)"
+                                                         alt="@item.AltText" loading="lazy">
+                                                </a>
+                                            </li>
+                                        }
+                                        else
+                                        {
+                                            <li>
+                                                <a href="#" class="margin-right-10 margin-bottom-10"
+                                                   data-url="/images/products/large/product_@(Model.Id)/@(item.ImageName)"
+                                                   data-src="/images/products/medium/product_@(Model.Id)/@(item.ImageName)"
+                                                   data-srcset="/images/products/small/product_@(Model.Id)/@item.ImageName 600w, /images/products/medium/product_@(Model.Id)/@item.ImageName 800w">
+                                                    <img class="lazyload w-100" src="~/images/base/placeholderimage.jpg"
+                                                         data-src="/images/products/small/product_@(Model.Id)/@(item.ImageName)"
+                                                         data-srcset="/images/products/small/product_@(Model.Id)/@(item.ImageName) 600w,
+                                                /images/products/medium/product_@(Model.Id)/@(item.ImageName) 800"
+                                                         alt="@item.AltText" loading="lazy">
+                                                </a>
+                                            </li>
+                                        }
+
+                                    }
+                                }
+
+
+                            </ul>
+                        </div>
+
+
+                        <div class="uk-visible@s">
+                            <a class="uk-position-center-left uk-position-small" href="#" uk-slidenav-previous uk-slider-item="previous"></a>
+                            <a class="uk-position-center-right uk-position-small" href="#" uk-slidenav-next uk-slider-item="next"></a>
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="">
+
+
+
+            </div>
+
+
+
+            <!--Other pictures of product-->
+            <div class="product-image__other-images--mobile margin-y-15 uk-text-center"
+                 uk-lightbox="animation: slide">
+                @if (Model.Images.Count() > 1)
+                {
+                    var orderedImages02 = Model.Images.OrderBy(c => c.ImageOrder).ToList();
+                    @foreach (var item in orderedImages02)
+                    {
+                        @if (item.Equals(orderedImages02.First()))
+                        {
+                            <a href="/images/products/medium/product_@(Model.Id)/@(item.ImageName)"
+                               class="uk-inline margin-right-10 margin-bottom-10 active uk-disabled first-image">
+                                <img class="lazyload w-100"
+                                     src="~/images/base/placeholderimage.jpg"
+                                     data-src="/images/products/small/product_@(Model.Id)/@(item.ImageName)"
+                                     alt="@item.AltText" loading="lazy">
+                            </a>
+                        }
+                        else
+                        {
+                            <a href="/images/products/medium/product_@(Model.Id)/@(item.ImageName)"
+                               class="uk-inline margin-left-10 margin-bottom-10">
+                                <img class="lazyload w-100"
+                                     src="~/images/base/placeholderimage.jpg"
+                                     data-src="/images/products/small/product_@(Model.Id)/@(item.ImageName)"
+                                     data-srcset="/images/products/small/product_@(Model.Id)/@(item.ImageName) 600w,
+                                                /images/products/medium/product_@(Model.Id)/@(item.ImageName) 800"
+                                     alt="@item.AltText" loading="lazy">
+                            </a>
+                        }
+
+                    }
+                }
+
+
+
+            </div>
+        </div>
+
+        <!--Product detail description-->
+        <div id="top-section__product-description">
+            <strong class="d-block dana-font fontsize-22 mobile-fontsize-20 margin-bottom-10 line-height-25">
+                @Model.Title
+            </strong>
+            <div class="star-rating-container d-flex align-items-center">
+                @for (int i = 1; i < 6; i++)
+                {
+                    if (i <= Model.RateNumber)
+                    {
+                        <span class="gold-star margin-right-5" uk-icon="icon:star"></span>
+                    }
+                    else
+                    {
+                        <span uk-icon="icon:star" class="margin-right-5"></span>
+                    }
+                }
+                <span class="black white-text font-weight-500 fontsize-16 d-inline-flex border-radius-3 align-items-center justify-content-center padding-x-5 margin-left-10">@Model.RateNumber</span>
+                <span class="margin-right-10 dana-font fontsize-12 font-weight-500 font-color-3 digit-format margin-left-10">
+                    Reviews(@Model.NumberOfUserRater)
+                </span>
+            </div>
+            <div class="margin-top-5">
+                <a class="dana-font fontsize-12 uk-text-bolder text-decoration-none border-bottom--blue--dashed blue-text margin-right-15 go-to-comment" href="#">Write Your Comment</a>
+            </div>
+            <div class="margin-y-10">
+                <div class="margin-x-10 margin-y-5">
+                    @if (Model.Discount > 0)
+                    {
+                        <div>
+                            <span class="font-color-4 mid-line dana-font fontsize-14" dir="ltr">
+                                <span class="">KSh</span>@((Model.Discount).ToString("N0", new System.Globalization
+                                                .NumberFormatInfo() { NumberGroupSizes = new[] { 3 }, NumberGroupSeparator = "," }))
+                            </span>
+                        </div>
+                    }
+                </div>
+                <div class="margin-y-5 main-color">
+                    @if (Model.SpecialDiscount.Where(c => c.ExpirationDate > System.DateTime.Now).Count() > 0)
+                    {
+                        double discountPrice = Model.SpecialDiscount
+                            .Select(c => c.DiscountPrice).First();
+                        <span class="fontsize-18 font-weight-500">KSh</span>
+                        <span class="main-color font-weight-600 dana-font fontsize-18 product-price" data-discount-price="@discountPrice">
+                            @((Model.BasePrice - discountPrice)
+                                                .ToString("N0", new System.Globalization
+                                                .NumberFormatInfo() { NumberGroupSizes = new[] { 3 }, NumberGroupSeparator = "," }))
+                        </span>
+
+                        <strong class="digit-format fontsize-16 dana-font font-weight-600
+                            discount-text">@(Math.Round(Model.SpecialDiscount.First().DiscountPrice * 100 / Model.BasePrice))%</strong>
+                    }
+                    else
+                    {
+                        <span class="fontsize-18 font-weight-500">KSh</span><span class="font-weight-600 dana-font fontsize-18 product-price" data-discount-price="0">
+                            @Model.BasePrice.ToString("N0", new System.Globalization.NumberFormatInfo() { NumberGroupSizes = new[] { 3 }, NumberGroupSeparator = "," })
+                        </span>
+                        if (Model.Discount > 0)
+                        {
+                            <strong class="digit-format fontsize-16 dana-font font-weight-600 discount-text">@(Math.Round((Model.Discount - Model.BasePrice) * 100 / Model.Discount))%</strong>
+                        }
+
+                    }
+
+                </div>
+            </div>
+            <div class="margin-top-20 margin-bottom-0">
+                <div class="dana-font fontsize-16 font-color-3 mobile-fontsize-14 font-weight-400 line-height-25 margin-top-10">
+                    @Html.Raw(Model.Summary)
+                </div>
+            </div>
+
+            <!--Select Boxes (options)-->
+            <vc:product-variation-list product-id="@Model.Id"></vc:product-variation-list>
+            <!--Add to card button -->
+            <form asp-action="AddNewOrder"
+                  asp-controller="Shopping" asp-area=""
+                  method="get" id="addneworder-form">
+                <div class="addneworder-form__ids-container d-none">
+                    <vc:sub-product-variation-input product-id="@Model.Id"></vc:sub-product-variation-input>
+                </div>
+                <input class="d-none" type="hidden" name="productId" value="@Model.Id" />
+
+                <div class="add-button d-flex">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        if (Model.IsProductSaved)
+                        {
+                            <a class="uk-box-shadow-small white black-text border padding-x-10 product-saving saved-product" data-id="@Model.Id" uk-tooltip="title:Save;pos:right" href="#">
+                                <span uk-icon="icon:heart"></span>
+                            </a>
+                        }
+                        else
+                        {
+                            <a class="uk-box-shadow-small white black-text border padding-x-10 product-saving" data-id="@Model.Id" uk-tooltip="title:Save;pos:right" href="#">
+                                <span uk-icon="icon:heart"></span>
+                            </a>
+                        }
+                    }
+                    else
+                    {
+                        <a class="uk-box-shadow-small white black-text border padding-x-10" uk-tooltip="title:Save;pos:right" href="#login-alert-modal" uk-toggle>
+                            <span uk-icon="icon:heart"></span>
+                        </a>
+                    }
+                    @if (Model.Stock > 0)
+                    {
+                        <button class="uk-box-shadow-medium wave-button border white black-text margin-left-10 flex-grow-1" type="submit">
+                            <span class="dana-font fontsize-16 xsmobile-fontsize-14 font-weight-500 black-text">Add To Card</span>
+                        </button>
+                    }
+                    else
+                    {
+                        <button class="uk-box-shadow-medium wave-button border white black-text margin-left-10 flex-grow-1" type="button">
+                            <span class="dana-font fontsize-16 xsmobile-fontsize-14 font-weight-500 black-text">Not Available</span>
+                        </button>
+                    }
+                </div>
+
+            </form>
+
+        </div>
+        <!--Product detail price summary-->
+        <div id="top-section__product-price-summary">
+            <div class="uk-card uk-card-body w-100
+                 uk-border-rounded h-100 d-flex flex-column justify-content-start">
+                <ul class="uk-list uk-list-divider add-to-buy-bucket--list">
+                    @if (Model.AuthotityGuarantee)
+                    {
+                        <li dir="ltr" class="d-flex align-items-center margin-top-0 padding-y-5">
+                            <div class="d-inline-block icon-wrapper uk-box-shadow-small
+                             garanty-icon white padding-10 margin-right-10">
+
+                            </div>
+                            <span class="dana-font fontsize-14 xsmobile-fontsize-12">Waranty</span>
+                        </li>
+                    }
+                    @if (Model.HasFreeDelivery)
+                    {
+                        <li dir="ltr" class="d-flex align-items-center margin-top-0 padding-y-5">
+                            <div class="d-inline-block icon-wrapper uk-box-shadow-small
+                             delivery-icon white padding-10 margin-right-10">
+
+                            </div>
+                            <span class="dana-font fontsize-14 xsmobile-fontsize-12">Free Delivery</span>
+                        </li>
+                    }
+                    @if (Model.LocalPayment)
+                    {
+                        <li dir="ltr" class="d-flex align-items-center margin-top-0 padding-y-5">
+                            <div class="d-inline-block icon-wrapper uk-box-shadow-small
+                             localpayment-icon white padding-10 margin-right-10">
+
+                            </div>
+                            <span class="dana-font fontsize-14 xsmobile-fontsize-12">You Can Cash On Delivery</span>
+                        </li>
+                    }
+                    <li dir="ltr" class="d-flex align-items-center margin-top-0 padding-y-5">
+
+                    </li>
+
+
+                </ul>
+
+            </div>
+        </div>
+    </article>
+
+
+    <!--Product Tags-->
+    <vc:product-tag-list-client product-id="@Model.Id"></vc:product-tag-list-client>
+
+    <!--Comments and Details-->
+    <div id="comment-and-details" class="padding-bottom-30" dir="ltr">
+        <ul uk-tab>
+            <li class="uk-active">
+                <a href="#" data-id="@Model.Id"
+                   class="fontsize-14 xsmobile-fontsize-12 dana-font text-decoration-none font-weight-500"
+                   id="product-description-trigger">Description</a>
+            </li>
+            <li class="uk-active">
+                <a href="#" data-id="@Model.Id"
+                   class="fontsize-14 xsmobile-fontsize-12 dana-font text-decoration-none font-weight-500"
+                   id="product-options-trigger">Product Specifications</a>
+            </li>
+            <li>
+                <a href="#" data-id="@Model.Id"
+                   class="fontsize-14 xsmobile-fontsize-12 dana-font text-decoration-none font-weight-500"
+                   id="product-comment-trigger">Reviews</a>
+            </li>
+        </ul>
+        <div Id="product-main-content" class="my-2 container d-flex justify-content-center uk-flex-wrap">
+            <!--Product Description-->
+            <vc:product-technical-content product-id="@Model.Id"></vc:product-technical-content>
+        </div>
+    </div>
+
+    <!--Other related products-->
+    <vc:related-product-list category-id="@Model.CategoryId"></vc:related-product-list>
+</section>

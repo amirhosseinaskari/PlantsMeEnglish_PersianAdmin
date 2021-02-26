@@ -1,0 +1,134 @@
+﻿@model Blog
+@{
+    ViewData["Title"] = Model.TitlePage;
+    ViewData["MetaDescription"] = Model.MetaDescription;
+    ViewData["RedirectURL"] = Model.RedirectURL;
+    ViewData["CanonicalURL"] = "http://www.shopikardemo.ir/Blog/" + Model.Title;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var blogCreatedDate = Model.CreatedDate.ToString("dddd dd MMMM yyyy");
+}
+@section Schema{
+    <script type="application/ld+json">
+        {
+        "@@context": "https://schema.org",
+        "@@type": "NewsArticle",
+        "mainEntityOfPage": {
+        "@@type": "WebPage",
+        "@@id": "http://www.shopikardemo.ir/Blog/@Html.Raw(Model.Title)"
+        },
+        "headline": "@Html.Raw(Model.Title)",
+        "image": [
+        "http://www.shopikardemo.ir/images/blogs/small/blog_@(Model.BlogId)/@(Model.CoverImage)"
+        ],
+        "datePublished": "@Model.CreatedDate",
+        "dateModified": "@Model.CreatedDate",
+        "author": {
+        "@@type": "Person",
+        "name": "PlantsMe"
+        },
+        "publisher": {
+        "@@type": "Organization",
+        "name": "PlantsMe",
+        "logo": {
+        "@@type": "ImageObject",
+        "url": "http://shopikardemo.ir/apple-touch-icon.png"
+        }
+
+        }
+        }
+    </script>
+}
+@section Style{
+    <link href="~/dist/sass/pages/blogDetail.min.css" rel="stylesheet" />
+}
+@section JavaScript{
+    <script async src="~/dist/js/pages/_blogDetail.js" type="module"></script>
+}
+<section id="container-section">
+    <!--Breadcrumb for this url-->
+    <div class="breadcrumb-container grey lighten-5 padding-y-15" dir="ltr">
+        <ul class="uk-breadcrumb text-left padding-0 margin-0 d-flex align-items-center" dir="ltr">
+            <li>
+                <a class="fontsize-14 mobile-fontsize-12 dana-font font-weight-500 font-color-4" asp-action="Index" asp-controller="Home" asp-area="">Home</a>
+            </li>
+            <li>
+                <a class="fontsize-14 mobile-fontsize-12 dana-font font-weight-500 font-color-4" asp-action="BlogList" asp-controller="Blog" asp-area="">Blogs</a>
+            </li>
+            <li class="uk-active"><h1 class="margin-bottom-0 font-weight-600 dana-font fontsize-14 mobile-fontsize-12 font-color-1">@Model.Title</h1></li>
+        </ul>
+    </div>
+    <!--Main Content-->
+    <div id="main-content" class="padding-y-20">
+
+        <!--blog content container-->
+        <article id="blog-content-container" class="white uk-border-rounded border margin-right-10 margin-right-0 margin-y-15 padding-20">
+            <div class="blog-header border-bottom-grey padding-bottom-20 margin-bottom-20">
+                <!--Blog title-->
+                <div class="blog-header__blog-title">
+                    <strong class="dana-font fontsize-20 mobile-fontsize-18 font-color-2 border-bottom-grey padding-bottom-10
+                            font-weight-600 line-height-25">
+                        @Model.Title
+                    </strong>
+                    <div class="d-flex align-items-center margin-top-20" dir="ltr">
+                        <div class="d-flex align-items-center">
+                            <span uk-icon="icon:calendar"></span>
+                            <span class="digit-format margin-right-10 fontsize-14 mobile-fontsize-12">@blogCreatedDate</span>
+                        </div>
+                        <div class="d-flex align-items-center margin-left-15">
+                            @for (int i = 0; i < 5; i++)
+                            {
+                                if (i < Model.RateNumber)
+                                {
+                                    <span class="gold-star margin-left-5" uk-icon="icon:star"></span>
+                                }
+                                else
+                                {
+                                    <span class="margin-left-5" uk-icon="icon:star"></span>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+                <!--Cover image of blog-->
+                <div class="blog-header__cover-image margin-y-25">
+                    @if (Model.CoverImage != null)
+                    {
+                        <img class="lazyload w-100" src="~/images/base/placeholderimage.jpg"
+                             data-src="/images/blogs/medium/blog_@(Model.BlogId)/@Model.CoverImage" alt="" uk-img>
+                    }
+                    else
+                    {
+                        <img class="w-100" src="~/images/base/placeholderimage.jpg" />
+                    }
+                </div>
+
+                <!--Blog summary description-->
+                <div class="blog-header__blog-sumamry-description">
+                    <p class="dana-font fontsize-16 mobile-fontsize-14 line-height-30 font-weight-400">
+                        @Model.SummaryDescription
+                    </p>
+                </div>
+            </div>
+            <div class="blog-body">
+                <!--Blog content-->
+                <vc:blog-content blog-id="@Model.BlogId"></vc:blog-content>
+                <!--Blog tags-->
+                <vc:blog-tag-list-client blog-id="@Model.BlogId"></vc:blog-tag-list-client>
+            </div>
+            <!--Blog Comments-->
+            <div id="blog-comments-container">
+                <vc:blog-comment-list blog-id="@Model.BlogId" page-index="1"></vc:blog-comment-list>
+            </div>
+        </article>
+        <!--related blogs container-->
+        <div id="related-blogs-container" class="margin-y-15 margin-right-10 margin-left-0">
+            <div class="uk-margin padding-20 white uk-border-rounded border my-uk-sticky" uk-sticky="bottom: true;offset: 110">
+                <span class="dana-font font-color-1 fontsize-16 mobile-fontsize-14 font-weight-600 border-bottom-grey padding-bottom-15">Related Blogs</span>
+                <vc:related-blog-list blog-cat-id="@Model.BlogCategoryId"></vc:related-blog-list>
+            </div>
+        </div>
+    </div>
+</section>
+
+

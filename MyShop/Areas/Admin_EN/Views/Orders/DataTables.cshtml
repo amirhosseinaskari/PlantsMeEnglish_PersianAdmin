@@ -1,0 +1,68 @@
+﻿
+    <div class="col-12 uk-background-default  uk-box-shadow-medium border uk-border-rounded py-3">
+        <!--Title of order list-->
+        <h3 class="Arial fontsize-14 text-left mx-3 my-1 py-2">
+            <span class="blue-600 border-bottom--blue py-2">Orders</span>
+        </h3>
+        <!--Filtering options-->
+        <div class="row uk-background-default py-2 m-0 align-items-center">
+            <!--Search form-->
+            <div class="col-md-4 col-sm-3 my-2">
+                <div class="uk-inline w-100">
+                    <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: search"></span>
+                    <input autocomplete="off" name="myOrderSearch" 
+                           class="uk-input w-100 IRANSans_Light fontsize-14" 
+                           dir="ltr" type="text" placeholder="search">
+                </div>
+            </div>
+
+            <!--Select Sort By-->
+            <div class="col-md-2 col-sm-3 my-2 position-relative order-sort" style="z-index:5;" data-order-sort="0">
+                <div class="mdc-select mdc-select--outlined">
+                    <div class="mdc-select__anchor w-100 bg--white my-2" style="height:40px;">
+                        <i class="mdc-select__dropdown-icon"></i>
+                        <div id="demo-selected-text" class="mdc-select__selected-text IRANSans_Light fontsize-12 position-relative" style="top:-5px" aria-labelledby="outlined-select-label"></div>
+                        <div class="mdc-notched-outline">
+                            <div class="mdc-notched-outline__leading"></div>
+                            <div class="mdc-notched-outline__notch">
+                                <label id="outlined-select-label" class="mdc-floating-label IRANSans_Light fontsize-14">Sort</label>
+                            </div>
+                            <div class="mdc-notched-outline__trailing"></div>
+                        </div>
+                    </div>
+                    <!-- Select Sort By => Options -->
+                    <div class="mdc-select__menu mdc-menu mdc-menu-surface w-100 my-2" role="listbox">
+                        <ul class="mdc-list IRANSans_Light fontsize-12">
+                            <li class="mdc-list-item mdc-list-item--selected" data-value="0" role="option">
+                                Newest
+                            </li>
+                            <li class="mdc-list-item" data-value="1" role="option">
+                                Oldest
+                            </li>
+                            <li class="mdc-list-item" data-value="2" role="option">
+                                Pending
+                            </li>
+                            <li class="mdc-list-item" data-value="3" role="option">
+                                Processing
+                            </li>
+                            <li class="mdc-list-item" data-value="4" role="option">
+                                Paid Online
+                            </li>
+                            <li class="mdc-list-item" data-value="5" role="option">
+                                Delivered
+                            </li>
+                            <li class="mdc-list-item" data-value="6" role="option">
+                               Canceled
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+           
+        </div>
+        <div id="order-list-dataTable">
+            <vc:order-data-table sort="0" page-index="1" search-text="@(null)"></vc:order-data-table>
+        </div>
+      
+    </div>

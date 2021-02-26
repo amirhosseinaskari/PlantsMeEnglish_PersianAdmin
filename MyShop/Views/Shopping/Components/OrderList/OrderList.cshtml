@@ -1,0 +1,38 @@
+﻿@model IEnumerable<Order>
+ <!--List of orders-->
+@{ double totalPrice = 0;
+    int ordersCount = 0;
+}
+<ul class="list-unstyled">
+    @foreach (var item in Model)
+    {
+        ordersCount += item.Number;
+        totalPrice += item.TotalPrice * item.Number;
+        <li class="row pb-3 my-3 px-md-3 px-2 order-item" dir="ltr">
+            <div class="col-md-3 col-sm-5">
+                <div class="uk-card-media-top w-100 justify-content-center
+                                     text-center d-flex align-items-center bg--white py-2 product-media-card">
+                    <vc:order-product-image product-id="@item.ProductId"></vc:order-product-image>
+                </div>
+            </div>
+            <div class="col-md-9 col-sm-7">
+                <h2 class="iranyekanwebbold fontsize-14 mb-2">
+                    @item.ProductTitle
+                </h2>
+                <!--Product Variation Selected-->
+                <vc:order-product-sub-variation sub-ids="@item.SubProductVariationIds"></vc:order-product-sub-variation>
+                <div class="my-2 IRANSans fontsize-12" dir="rtl">
+                    <span>تعداد:</span>
+                    <span>@item.Number</span>
+                </div>
+                <div class="my-2 IRANSans fontsize-12" dir="rtl">
+                    <span>قیمت واحد:</span>
+                    <span>@item.TotalPrice</span>
+                    <span class="mr-1">تومان</span>
+                </div>
+            </div>
+        </li>
+
+       }
+
+</ul>

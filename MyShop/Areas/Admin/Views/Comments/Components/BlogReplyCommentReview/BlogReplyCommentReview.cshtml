@@ -1,0 +1,79 @@
+﻿@model IEnumerable<BlogReplyComment>
+@foreach (var item in Model)
+{
+    var persianDate = new PersianCalendar();
+    string submitDate = null;
+    if (item.SubmitedDate != null)
+    {
+        submitDate = string.Format("{0}/{1}/{2}", persianDate.GetYear(item.SubmitedDate),
+        persianDate.GetMonth(item.SubmitedDate),
+        persianDate.GetDayOfMonth(item.SubmitedDate));
+    }
+    if (item.IsFromAdmin)
+    {
+        <div class="uk-box-shadow-medium admin-comment-box IRANSans_Light fontsize-12 my-2 reply-comment-box" data-id="@item.Id">
+            <div class="d-flex justify-content-between flex-wrap text-right iranyekanwebregular fontsize-10 border-bottom w-100 pb-2">
+
+                <span>@item.FullName</span>
+                <span class="uk-text-muted">@submitDate</span>
+            </div>
+            <div class="py-2">
+                <p>@item.Description</p>
+
+            </div>
+            <div class="d-flex align-items-center justify-content-start comment-actions w-100 pt-2">
+                <a href="#" data-id="@item.Id" data-publish="@item.IsPublished" class="blog-reply-comment-publish" uk-tooltip="title:انتشار">
+                    @if (item.IsPublished)
+                    {
+                        <i class="material-icons-outlined fontsize-16">
+                            visibility
+                        </i>
+                    }
+                    else
+                    {
+                        <i class="material-icons-outlined fontsize-16">
+                            visibility_off
+                        </i>
+                    }
+                </a>
+
+                <a href="#blog-delete-reply-comment-modal" data-id="@item.Id" class="blog-delete-reply-comment" uk-tooltip="title:حذف" uk-toggle>
+                    <span uk-icon="icon:trash;ratio:.7"></span>
+                </a>
+            </div>
+        </div>
+        continue;
+    }
+    <div class="uk-box-shadow-medium user-comment-box IRANSans_Light fontsize-12 my-2 reply-comment-box" data-id="@item.Id">
+        <div class="d-flex justify-content-between flex-wrap text-right iranyekanwebregular fontsize-10 border-bottom w-100 pb-2">
+
+            <span>@item.FullName</span>
+            <span class="uk-text-muted">@submitDate</span>
+        </div>
+        <div class="py-2">
+            <p>@item.Description</p>
+
+        </div>
+        <div class="d-flex align-items-center justify-content-start comment-actions w-100 pt-2">
+            <a href="#" data-id="@item.Id" data-publish="@item.IsPublished" class="blog-reply-comment-publish" uk-tooltip="title:انتشار">
+                @if (item.IsPublished)
+                {
+                    <i class="material-icons-outlined fontsize-16">
+                        visibility
+                    </i>
+                }
+                else
+                {
+                    <i class="material-icons-outlined fontsize-16">
+                        visibility_off
+                    </i>
+                }
+            </a>
+
+            <a href="#blog-delete-reply-comment-modal" data-id="@item.Id" class="blog-delete-reply-comment" uk-toggle
+               uk-tooltip="title:حذف">
+                <span uk-icon="icon:trash;ratio:.7"></span>
+            </a>
+        </div>
+    </div>
+}

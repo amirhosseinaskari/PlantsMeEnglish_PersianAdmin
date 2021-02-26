@@ -1,0 +1,13 @@
+﻿@model Address
+
+<div class="d-inline-flex flex-column m-2 text-right">
+    <span class="fontsize-10 uk-text-muted IRANSans">شماره تماس گیرنده</span>
+    <span class="fontsize-12 IRANSans_Light">@Model.ReceiverMobileNumber</span>
+</div>
+
+<div class="d-inline-flex flex-column m-2 text-right">
+    <span class="fontsize-10 uk-text-muted IRANSans">آدرس گیرنده</span>
+    <span class="fontsize-12 IRANSans_Light">
+      @Model.StateName , @Model.CityName ,  @Model.Details
+    </span>
+</div>

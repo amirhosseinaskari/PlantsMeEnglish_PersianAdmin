@@ -1,0 +1,197 @@
+﻿@model PaginatedList<Blog>
+@{
+    ViewData["Title"] = "Blogs";
+}
+@section Schema{
+    <vc:home-schema></vc:home-schema>
+
+}
+@section Style{
+    <link href="~/dist/sass/pages/blogList.min.css" rel="stylesheet" />
+}
+@section JavaScript{
+    <script async src="~/dist/js/pages/_blogList.min.js" type="module"></script>
+}
+<section id="container-section">
+    <!--Breadcrumb for this url-->
+    <div class="breadcrumb-container grey lighten-5 padding-y-15" dir="ltr">
+        <ul class="uk-breadcrumb text-left padding-0 margin-0 d-flex align-items-center" dir="ltr">
+            <li>
+                <a class="fontsize-14 mobile-fontsize-12 dana-font font-weight-500 font-color-4" asp-action="Index" asp-controller="Home" asp-area="">Home</a>
+            </li>
+            <li class="uk-active"><h1 class="margin-bottom-0 font-weight-600 dana-font fontsize-14 mobile-fontsize-12 font-color-1">Blogs</h1></li>
+        </ul>
+
+    </div>
+    <!--Main Content-->
+    <div id="main-content">
+        <!--side filter box container (Desktop)-->
+        <div id="filters-container" dir="ltr">
+            <div class="filter-box-title d-flex uk-flex-between align-items-end">
+                <span class="dana-font fontsize-14 font-weight-600">Filters</span>
+                <a href="#" id="desktop-filter-reset" class="red-text dana-font fontsize-14 font-weight-500 text-decoration-none">Clear Filters</a>
+            </div>
+            <!--Search blogs-->
+            <div class="filter-list-item margin-top-20">
+                <span class="dana-font font-color-3 fontsize-16 mobile-fontsize-14 font-weight-600 padding-bottom-15 border-bottom-grey">Search a Blog</span>
+                <div class="uk-margin padding-top-15">
+                    <form role="search" class="uk-inline w-100" dir="ltr">
+                        <input id="desktop-blog-search-text" class="uk-input dana-font fontsize-14 border-radius-3 w-100" type="text" placeholder="Search a Blog">
+                        <button type="submit" id="desktop-blog-search" class="uk-form-icon uk-form-icon-flip outline-0" uk-icon="icon: search" role="search"></button>
+                    </form>
+                </div>
+            </div>
+            <ul uk-accordion="multiple:true">
+                <!--Category filter-->
+                <li class="filter-list-item category-filter uk-open">
+                    <a href="#" class="uk-accordion-title dana-font font-color-3 fontsize-16 mobile-fontsize-14 font-weight-600">
+                        <span>Topics</span>
+                        <span class="accordion-chevron-icon" uk-icon="icon:chevron-down;ratio:.9"></span>
+                    </a>
+                    <div class="uk-accordion-content">
+                        <ul class="filter-subitem-list">
+                            <vc:filter-blog-category-list></vc:filter-blog-category-list>
+                        </ul>
+                    </div>
+                </li>
+
+            </ul>
+            <!--Blogs banners-->
+            <vc:blog-page-banners></vc:blog-page-banners>
+        </div>
+        <!--blogs container (include sort buttons and filter box trigger button)-->
+        <div id="blogs-container">
+            <!--filters buttons / sort button-->
+            <div id="filter-triggers-container">
+                <!--desktop sort buttons-->
+                <div id="desktop-blogs-sort" dir="ltr" class="uk-text-left">
+                    <span class="dana-font fontsize-14 font-weight-600 margin-x-10">Sort By:</span>
+                    <!--desktop sort options-->
+                    <ul id="desktop-sortList-options">
+                        <li class="sortList-options__list-item sortList-options__list-item--selected" data-value="0" role="option">
+                            <a href="#" class="dana-font">Recommended</a>
+                        </li>
+                        <li class="sortList-options__list-item" data-value="1" role="option">
+                            <a href="#">Newest</a>
+                        </li>
+                        <li class="sortList-options__list-item" data-value="2" role="option">
+                            <a href="#">Most Popular</a>
+                        </li>
+                        <li class="sortList-options__list-item" data-value="3" role="option">
+                            <a href="#">Most View</a>
+                        </li>
+                    </ul>
+                </div>
+                <div id="mobile-blogs-sort">
+                    <!--mobile sort button-->
+                    <div class="uk-inline margin-right-10">
+                        <!--sort button => trigger button-->
+                        <button class="uk-button uk-button-default padding-x-10 padding-y-0 uk-border-rounded white" type="button" dir="ltr">
+                            <span class="margin-right-10 icon-reverse" uk-icon="icon:list;ratio:.8"></span>
+                            <span class="dana-font fontsize-14 mobile-fontsize-12 font-color-2">Sort By</span>
+                            <span class="margin-left-15 chevron-down-icon" uk-icon="icon:chevron-down"></span>
+                        </button>
+                        <!--sort button => sort content (sort options)-->
+                        <div id="mobile-sortList-options" class="padding-20"
+                             uk-dropdown="mode: click;animation: uk-animation-slide-top-small; duration: 300">
+                            <ul class="uk-list uk-list-divider">
+                                <li class="sortList-options__list-item sortList-options__list-item--selected" data-value="0" role="option">
+                                    <label class="custom-radio-input-container">
+
+                                        <input class="uk-radio custom-radio-input" type="radio" name="product-sort" checked>
+                                        <span class="checkmark"></span>
+                                        <span class="dana-font fontsize-14 mobile-fontsize-12 margin-left-10">Recomended</span>
+                                    </label>
+                                </li>
+                                <li class="sortList-options__list-item" data-value="1" role="option">
+                                    <label class="custom-radio-input-container">
+
+                                        <input class="uk-radio custom-radio-input" type="radio" name="product-sort">
+                                        <span class="checkmark"></span>
+                                        <span class="dana-font fontsize-14 mobile-fontsize-12 margin-left-10">Newest</span>
+                                    </label>
+                                </li>
+                                <li class="sortList-options__list-item" data-value="2" role="option">
+                                    <label class="custom-radio-input-container">
+
+                                        <input class="uk-radio custom-radio-input" type="radio" name="product-sort">
+                                        <span class="checkmark"></span>
+                                        <span class="dana-font fontsize-14 mobile-fontsize-12 margin-left-10">Most Popular</span>
+                                    </label>
+                                </li>
+                                <li class="sortList-options__list-item" data-value="3" role="option">
+                                    <label class="custom-radio-input-container">
+
+                                        <input class="uk-radio custom-radio-input" type="radio" name="product-sort">
+                                        <span class="checkmark"></span>
+                                        <span class="dana-font fontsize-14 mobile-fontsize-12 margin-left-10">Most View</span>
+                                    </label>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!--mobile filter box-->
+                    <div id="mobile-filters-box">
+                        <!--mobile filter box trigger button-->
+                        <button uk-toggle="target:#mobile-filter-box__modal" class="white uk-button uk-button-default padding-x-10 padding-y-0 uk-border-rounded" type="button" dir="ltr">
+                            <span class="margin-right-10 icon-reverse" uk-icon="icon:settings;ratio:.8"></span>
+                            <span class="dana-font fontsize-14 mobile-fontsize-12 font-color-2">Filters</span>
+                        </button>
+                        <div id="mobile-filter-box__modal" class="uk-modal-full" uk-modal>
+                            <div class="uk-modal-dialog h-100 uk-overflow-auto">
+                                <button class="uk-modal-close-full uk-close-large" type="button" uk-close></button>
+
+                                <div class="uk-modal-body">
+                                    <div id="mobile-filters-container" dir="ltr">
+                                        <div class="filter-box-title d-flex uk-flex-between align-items-end border-bottom-grey padding-bottom-10 margin-y-20">
+                                            <span class="dana-font fontsize-14 font-weight-600">Filters</span>
+                                            <a href="#" id="mobile-filter-reset" class="red-text dana-font fontsize-12 font-weight-500 text-decoration-none">Clear Filters</a>
+                                        </div>
+                                        <!--Search blogs-->
+                                        <div class="filter-list-item margin-top-20">
+                                            <span class="dana-font font-color-3 fontsize-16 mobile-fontsize-14 font-weight-600 padding-bottom-15 border-bottom-grey">Search Blog</span>
+                                            <div class="uk-margin padding-top-15">
+                                                <form role="search" class="uk-inline w-100" dir="ltr">
+                                                    <input id="mobile-blog-search-text" class="uk-input dana-font fontsize-14 uk-border-rounded w-100" type="text" placeholder="Search a blog">
+                                                    <button type="submit" id="mobile-blog-search" role="search" class="uk-form-icon uk-form-icon-flip outline-0" uk-icon="icon: search"></button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <ul uk-accordion="multiple:true">
+                                            <!--Category filter-->
+                                            <li class="filter-list-item category-filter">
+                                                <a href="#" class="uk-accordion-title dana-font font-color-3 fontsize-16 mobile-fontsize-14 font-weight-600">
+                                                    <span>Topics</span>
+                                                    <span class="accordion-chevron-icon" uk-icon="icon:chevron-down;ratio:.9"></span>
+                                                </a>
+                                                <div class="uk-accordion-content">
+                                                    <ul class="filter-subitem-list">
+                                                        <vc:filter-blog-category-list></vc:filter-blog-category-list>
+                                                    </ul>
+                                                </div>
+                                            </li>
+
+                                        </ul>
+                                        <button class="w-100 wave-button filter-submit--button margin-top-20 black white-text border-radius-3">
+                                            <span class="dana-font fontsize-16 mobile-fontsize-14  xsmobile-fontsize-12 font-weight-500">Filter</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--blog cards-->
+            <section class="d-flex justify-content-start flex-column margin-top-20 category-detail__blog-list"
+                     data-blog-cat-id="" data-search-text="" data-page-index="1" dir="ltr">
+                <vc:blog-list page-index="1" sort="0" blog-cat-ids="@(null)" search-text="@(null)"></vc:blog-list>
+            </section>
+        </div>
+
+    </div>
+
+</section>
+
+

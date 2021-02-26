@@ -1,0 +1,74 @@
+﻿@model Notification
+@{ViewData["notificationpage"] = "active"; }
+<!--Breadcrumb for this url-->
+<div class="row p-0 m-0 bg--white py-2 my-3 uk-box-shadow-small uk-border-rounded border position-relative">
+    <div class="col-12" dir="rtl">
+        <ul class="uk-breadcrumb IRANSans_Light fontsize-12 text-right p-0 m-0 d-flex" dir="rtl">
+            <li><a class="fontsize-12" href="~/Admin">مدیریت</a></li>
+            <li class="mx-1 uk-active">اعلان ویژه</li>
+        </ul>
+        <div class="bg--blue-600 position-absolute rounded-left" style="width:8px;left:0;top:-8px;height:calc(100% + 16px);"></div>
+    </div>
+
+</div>
+<!--Orders List-->
+<div class="row my-2 m-0" dir="rtl" id="main-container">
+    <div class="col-12 uk-background-default  uk-box-shadow-medium border uk-border-rounded py-3">
+
+        <h3 class="iranyekanwebregular fontsize-14 text-right mx-3 my-1 py-2">
+            <span class="blue-600 border-bottom--blue py-2"> اعلان ویژه بالای وب سایت</span>
+        </h3>
+        <form class="row px-3 my-4 py-2" dir="rtl" role="form">
+            <!--Is published-->
+            <div class="col-12 my-2">
+                <label class="IRANSans_Light fontsize-12">
+                    <input autocomplete="off" class="uk-checkbox mx-1 uk-border-rounded web-notification"
+                           type="checkbox" asp-for="IsPublished">
+                    نمایش اعلان ویژه
+                </label>
+            </div>
+            <!--Main Text of notification-->
+            <div class="col-md-8 col-sm-7 my-2">
+                <div class="custom-text-field">
+                    <label class="uk-form-label IRANSans_Light" asp-for="MainText">متن اعلان ویژه</label>
+                    <div class="uk-form-controls">
+                        <input class="uk-input IRANSans_Light fontsize-12" asp-for="MainText" tabindex="0"
+                               type="text" placeholder="متن اعلان را وارد کنید">
+                    </div>
+                </div>
+            </div>
+            <!--Link Text of notification-->
+            <div class="col-md-4 col-sm-5 my-2">
+                <div class="custom-text-field">
+                    <label class="uk-form-label IRANSans_Light" asp-for="LinkText">لینک هدف اعلان ویژه</label>
+                    <div class="uk-form-controls">
+                        <input class="uk-input IRANSans_Light fontsize-12" asp-for="LinkText" tabindex="0"
+                               type="text" placeholder="لینک هدف را وارد کنید">
+                    </div>
+                </div>
+            </div>
+            <!--Submit button-->
+            <div class="col-12 mt-2 mb-3 mx-2">
+                <button class="mdc-button mdc-button--unelevated notification__submit-button
+                                bg--blue-700 border uk-box-shadow-small px-0 h-30">
+                    <div class="mdc-button__ripple"></div>
+                    <span class="mdc-button__label IRANSans fontsize-10 white px-1 px-sm-2">
+                        ویرایش و ذخیره تغییرات
+                    </span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts{
+    <script>
+
+
+        const mdcButton = $('.mdc-button');
+        for (let i = 0; i < mdcButton.length; i++) {
+            mdc.ripple.MDCRipple.attachTo(document.querySelectorAll('.mdc-button')[i]);
+        }
+
+
+    </script>
+}

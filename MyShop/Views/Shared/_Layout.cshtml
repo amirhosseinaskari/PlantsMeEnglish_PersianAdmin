@@ -1,0 +1,439 @@
+﻿<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <title>@ViewData["Title"]</title>
+    <meta name="description" content="@ViewData["MetaDescription"]">
+    @if (!string.IsNullOrWhiteSpace((string)ViewData["RedirectURL"]))
+    {
+    <meta http-equiv="Refresh" content="0; url='@ViewData["RedirectURL"]'" />
+    }
+    @if (ViewData["CanonicalURL"] != null)
+    {
+    <meta rel="canonical" href="@ViewData["CanonicalURL"]" />
+    }
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="enamad" content="430892" />
+
+    <vc:seo-setting-info></vc:seo-setting-info>
+
+    @RenderSection(name: "Schema", required: false)
+<script type="application/ld+json">
+    {
+    "@@context": "https://schema.org",
+    "@@type": "WebSite",
+    "url": "http://www.plantsme.com",
+    "potentialAction": {
+    "@@type": "SearchAction",
+    "target": "http://www.plantsme.com/SearchDetail?searchText={search_term_string}",
+    "query-input": "required name=search_term_string"
+    }
+    }
+</script>
+    @RenderSection("Style")
+
+
+</head>
+<body class="white">
+    <div class="uk-container-expan">
+        <!--Header of Website-->
+        <header id="header">
+            <!--Top notification-->
+            <vc:web-notification></vc:web-notification>
+            <!--Desktop Menu-->
+            <nav id="desktop-menu">
+                <!--First section of menu-->
+                <div id="menu-first-section" class="d-flex">
+                    <!--Website Title-->
+                    <a id="website-title" class="text-decoration-none" href="~/">
+                        <h1 class="font-color-1 font-weight-600 fontsize-16 dana-font">
+                            PlantsMe.com
+                        </h1>
+                    </a>
+                    <ul class="d-flex align-items-center justify-content-center padding-x-0 h-100" dir="ltr">
+                        <!--product link-->
+                        <li class="menu-first-section__nav-link">
+                            <a asp-action="AllProducts" asp-controller="Products" asp-area="" class="font-color-1">
+                                <h2>All Products</h2>
+                            </a>
+                        </li>
+                        <!--Blog link-->
+                        <li class="menu-first-section__nav-link">
+                            <a asp-action="BlogList" asp-controller="Blog" asp-area="" class="font-color-1">
+                                <h2>Blogs</h2>
+                            </a>
+                        </li>
+
+                        <!--Aboutus link-->
+                        <li class="menu-first-section__nav-link">
+                            <a href="~/AboutUs" class="font-color-1">
+                                <h2>About Us</h2>
+                            </a>
+                        </li>
+                        <!--Contact us link-->
+                        <li class="menu-first-section__nav-link">
+                            <a asp-action="Index" asp-controller="ContactUs" asp-area="" class="font-color-1">
+                                <h2>Contact Us</h2>
+                            </a>
+                        </li>
+                        <!--FAQ link-->
+                        <li class="menu-first-section__nav-link">
+                            <a href="~/FAQ" class="font-color-1">
+                                <h2>FAQ</h2>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <!--Second section of menu-->
+                <ul id="menu-second-section" uk-sticky
+                    class="d-flex align-items-center justify-content-first padding-top-10 padding-bottom-10 white" dir="ltr">
+                    <!--logo-->
+                    <li class="menu-second-section__nav-link margin-left-0">
+                        <a class="" href="~/"> <img class="max-width-100 logo-image" alt="plantshop" src="~/images/base/logo.png" /></a>
+                    </li>
+                    <!--Category List-->
+                    <li class="menu-second-section__nav-link">
+                        <div class="uk-inline">
+                            <button id="category-dropdown-trigger" class="uk-button uk-button-default border-radius-3"
+                                    type="button" dir="ltr">
+                                <span class="margin-right-15" uk-icon="icon:list"></span>
+                                <span class="dana-font fontsize-14 font-color-2">Categories</span>
+                                <span class="margin-left-15 chevron-down-icon" uk-icon="icon:chevron-down"></span>
+                            </button>
+                            <div id="category-dropdown-content" class="padding-0 border-radius-3"
+                                 uk-dropdown="mode: click;animation: uk-animation-slide-top-small; duration: 300">
+                                <vc:menu-category-list></vc:menu-category-list>
+                            </div>
+                        </div>
+                    </li>
+                    <!--Search form-->
+                    <li class="menu-second-section__nav-link uk-flex-1">
+                        <form method="get" asp-action="SearchDetail" asp-controller="Search" asp-area=""
+                              class="uk-inline w-100" dir="ltr" role="search">
+
+                            <input class="uk-input text-left dana-font fontsize-14 border-radius-3 xsmobile-fontsize-12 padding-right-40" name="searchText"
+                                   type="text" placeholder="Search products, brands and categories" dir="ltr">
+                            <button type="submit" class="uk-form-icon uk-form-icon-flip outline-0 border-radius-0"
+                                    uk-icon="icon: search" role="search"></button>
+
+                        </form>
+                    </li>
+                    <!--Login/Register button-->
+                    <li class="menu-second-section__nav-link" dir="ltr">
+                        @await Html.PartialAsync(partialViewName: "_LoginPartial", model: null)
+                    </li>
+                    <!--Buy bucket button-->
+                    <li class="menu-second-section__nav-link">
+                        <a asp-action="ShoppingBasket" asp-controller="Shopping" asp-area="" rel="nofollow"
+                           class="uk-button uk-button-default black border-radius-3 d-flex align-items-center" type="button" dir="ltr">
+                            <img width="20" class="margin-right-15" alt="shopping-basket" src="~/images/icons/shopping-bag01.svg" />
+                            <span class="dana-font fontsize-14 white-text font-weight-500 mytext digit-format">Cart (<vc:shopping-basket-count></vc:shopping-basket-count>)</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <!--Mobile menu-->
+            <nav id="mobile-menu">
+                <!--First section of mobile menu-->
+                <ul id="mobile-menu-first-section" class="d-flex align-items-center padding-x-20 h-100 margin-bottom-0 margin-top-20" dir="ltr">
+                    <!--Side mobile menu trigger-->
+                    <li class="mobile-menu-first-section__nav-link uk-flex-1 uk-align-right margin-0">
+                        <button type="button" uk-toggle="target: #mobile-menu"
+                                class="uk-button uk-button-text border-0 text-decoration-none border-radius-3">
+                            <span uk-icon="icon:menu;ratio:1.2"></span>
+                        </button>
+
+                    </li>
+                    <!--Logo container-->
+                    <li class="mobile-menu-first-section__nav-link uk-flex-1 margin-0">
+                        <a class="text-decoration-none d-flex align-items-center uk-align-left margin-0" href="~/">
+                            <h1 class="font-color-1 margin-bottom-0
+                                font-weight-600 fontsize-16">
+                                PlantsMe.com
+                            </h1>
+                        </a>
+                    </li>
+                </ul>
+
+                <!--Mobile menu body-->
+                <div class="" id="mobile-menu" uk-offcanvas="overlay: true;">
+                    <div class="uk-offcanvas-bar uk-box-shadow-medium mobile-menu__body padding-top-60 padding-x-0">
+                        <button class="uk-offcanvas-close" type="button" uk-close></button>
+                        <div>
+                            <a href="~/" class="text-decoration-none mobile-logo-container uk-text-center padding-x-15 d-flex flex-column">
+                                <img class="logo-image" data-src="/images/base/logo.png"
+                                     alt="plantshop" uk-img>
+                                <h1 class="dana-font fontsize-16 font-weight-600 margin-y-20 font-color-2">
+                                    PlantsMe.com
+                                </h1>
+                            </a>
+                        </div>
+                        <div id="mobile-menu__list-container" class="margin-top-40 position-relative">
+                            <ul class="uk-list uk-list-divider mt-3 active" id="main-mobile-menu">
+                                <li class="mobile-menu__list-item">
+                                    <a asp-action="AllProducts" asp-controller="Products" asp-area="" class="fontsize-14 font-weight-500">
+                                        All Products
+                                    </a>
+                                </li>
+                                <li class="mobile-menu__list-item">
+                                    <a href="~/FAQ" class="fontsize-14 font-weight-500">
+                                        FAQ
+                                    </a>
+                                </li>
+                                <li class="mobile-menu__list-item">
+                                    <a href="#" class="fontsize-14 mobile-menu__main-category d-flex align-items-center font-weight-500">
+                                        <span>Categories</span>
+
+                                    </a>
+                                    <a href="#main-mobile-category-list" class="category-navigation">
+                                        <span uk-icon="icon:chevron-right"></span>
+                                    </a>
+                                </li>
+                                <li class="mobile-menu__list-item">
+                                    <a asp-action="BlogList" asp-controller="Blog" asp-area="" class="fontsize-14 font-weight-500">
+                                        Blogs
+                                    </a>
+                                </li>
+                                <li class="mobile-menu__list-item">
+                                    <a asp-action="Index" asp-controller="ContactUs" asp-area="" class="fontsize-14 font-weight-500">
+                                        Contact Us
+                                    </a>
+                                </li>
+                                <li class="mobile-menu__list-item">
+                                    <a href="~/AboutUs" class="fontsize-14 font-weight-500">
+                                        About Us
+                                    </a>
+                                </li>
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    <li class="mobile-menu__list-item">
+                                        <a asp-area="Identity" asp-page="/Account/Logout"
+                                           asp-route-returnUrl="@Context.Request.Path" uk-toggle class="fontsize-14 font-weight-500">
+                                            Logout
+                                        </a>
+
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li class="mobile-menu__list-item">
+                                        <a href="#login--modal" uk-toggle class="fontsize-14">
+                                            Login / Register
+                                        </a>
+
+                                    </li>
+                                }
+
+                            </ul>
+                            <vc:mobile-menu-category-list></vc:mobile-menu-category-list>
+                        </div>
+                    </div>
+                </div>
+                <!--Second section of mobile menu-->
+                <ul id="mobile-menu-second-section" uk-sticky
+                    class="d-flex white align-items-center justify-content-first padding-x-20 margin-bottom-0 margin-top-0 padding-y-20" dir="ltr">
+                    <!--User profile in mobile menu-->
+                    <li class="mobile-menu-second-section__nav-link margin-right-10">
+                        @await Html.PartialAsync(partialViewName: "_LoginPartial", model: null)
+                    </li>
+                    <!--Buy bucket in mobile menu-->
+                    <li class="mobile-menu-second-section__nav-link margin-right-10">
+                        <a asp-action="ShoppingBasket" asp-controller="Shopping" asp-area="" rel="nofollow"
+                           class="uk-button uk-button-default position-relative border-radius-3
+                                black padding-x-10" dir="ltr">
+                            <span class="bg-main-color digit-format mobile-shopping-cart-count dana-font fontsize-12 font-weight-600 white-text"><vc:shopping-basket-count></vc:shopping-basket-count></span>
+                            <img width="25" alt="shopping-basket" src="~/images/icons/shopping-bag01.svg" />
+                        </a>
+                    </li>
+                    <!--Search form in mobile menu-->
+                    <li class="mobile-menu-second-section__nav-link uk-flex-1">
+                        <form method="get" asp-action="SearchDetail" asp-controller="Search" asp-area="">
+                            <div class="uk-inline w-100">
+                                <input class="uk-input text-left dana-font fontsize-14 xsmobile-fontsize-12 border-radius-3" placeholder="Search on plantshop" name="searchText"
+                                       dir="ltr" type="text">
+                                <button type="submit" class="uk-form-icon uk-form-icon-flip white"
+                                        style="margin:2px" role="search" uk-icon="icon: search"></button>
+                            </div>
+                        </form>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+        <!--Main Content-->
+        <main class="">
+            @RenderBody()
+        </main>
+        <footer id="layout-footer" class="padding-top-30 font-color-1">
+            <ul id="footer-list-container" class="uk-text-right" dir="ltr">
+                <!--website description-->
+                <li class="footer-list-items flex-shrink-1 footer__website-description flex-grow-1 uk-text-left">
+                    <strong class="footer-list-items__title dana-font fontsize-16 xsmobile-fontsize-14 font-weight-600">About The Website</strong>
+                    <div class="dana-font fontsize-14 font-weight-400 padding-top-15 line-height-25 fontsize-sm-12 uk-text-justify font-color-2">
+                        <vc:footer-description></vc:footer-description>
+                    </div>
+                </li>
+                <!--contact links-->
+                <li class="footer-list-items flex-shrink-0 footer__contact-info uk-text-left">
+                    <strong class="footer-list-items__title dana-font fontsize-16 xsmobile-fontsize-14 font-weight-600">Contact Info</strong>
+                    <vc:footer-info></vc:footer-info>
+                </li>
+                <!--main links-->
+                <li class="footer-list-items flex-shrink-0 footer__main-links uk-text-left">
+                    <strong class="footer-list-items__title dana-font fontsize-16 xsmobile-fontsize-14 font-weight-600">Fast Links</strong>
+
+                    <ul class="uk-list dana-font uk-text-left margin-top-20">
+                        <li>
+                            <a href="~/">
+                                <h2 class="dana-font fontsize-14 xsmobile-fontsize-12 font-weight-500">Home</h2>
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-controller="Products" asp-action="AllProducts" asp-area="">
+                                <h2 class="dana-font fontsize-14 xsmobile-fontsize-12 font-weight-500">Products</h2>
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-action="BlogList" asp-controller="Blog" asp-area="">
+                                <h2 class="dana-font fontsize-14 xsmobile-fontsize-12 font-weight-500">Blogs</h2>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="~/FAQ">
+                                <h2 class="dana-font fontsize-14 xsmobile-fontsize-12 font-weight-500">Buy Guide</h2>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="~/AboutUs">
+                                <h2 class="dana-font fontsize-14 xsmobile-fontsize-12 font-weight-500">About Us</h2>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="~/Terms">
+                                <h2 class="dana-font fontsize-14 xsmobile-fontsize-12 font-weight-500">Terms</h2>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <!--Google Map-->
+                <li class="footer-list-items flex-shrink-0 footer__map-info uk-text-left">
+
+                    <vc:map-info></vc:map-info>
+                </li>
+            </ul>
+
+            <!--social networks-->
+            <div id="footer__social-networks">
+                <strong id="footer__social-networks__title" class=" font-weight-500 fontsize-16 xsmobile-fontsize-14">Connect With Us</strong>
+                <vc:social-networks></vc:social-networks>
+            </div>
+        </footer>
+        <a id="totop-button--scroller" href="#" uk-totop uk-scroll></a>
+    </div>
+    <script src="~/dist/library/uikit-3.5.6/js/uikit.min.js"></script>
+    <script src="~/dist/library/uikit-3.5.6/js/uikit-icons.min.js"></script>
+    @await RenderSectionAsync("JavaScript")
+    @RenderSection("Scripts", false)
+    @{
+        int messageCode = -1;
+        if (Context.Session.GetInt32("Message") != null)
+        {
+            messageCode = (int)Context.Session.GetInt32("Message");
+        }
+
+    }
+    @switch (messageCode)
+    {
+        case (int)Messages.LoggedIn:
+            <script>
+                UIkit.notification({
+                    message: `<span class="margin-right-10 position-relative" uk-icon="icon:bell;ratio:1.2"></span><span class="dana-font fontsize-14" dir="ltr">You've successfully logged in</span>`,
+                    status: 'primary',
+                    pos: 'top-center',
+                    timeout: 3000
+                });
+            </script>
+            Context.Session.Remove("Message");
+            break;
+        case (int)Messages.LoggedInBefore:
+            <script>
+                UIkit.notification({
+                    message: '<span class="margin-right-10 position-relative" uk-icon="icon:bell;ratio:1.2"></span><span class="dana-font fontsize-14" dir="ltr">You are logged in</span>',
+                    status: 'primary',
+                    pos: 'top-center',
+                    timeout: 3000
+                });
+            </script>
+            Context.Session.Remove("Message");
+            break;
+        case (int)Messages.InformationChangedSuccessfully:
+            <script>
+                UIkit.notification({
+                    message: '<span class="margin-right-10 position-relative" uk-icon="icon:bell;ratio:1.2"></span><span class="dana-font fontsize-14" dir="ltr">Changes saved</span>',
+                    status: 'primary',
+                    pos: 'top-center',
+                    timeout: 3000
+                });
+            </script>
+            Context.Session.Remove("Message");
+            break;
+        case (int)Messages.DeletedSuccessfully:
+            <script>
+                UIkit.notification({
+                    message: '<span class="margin-right-10 position-relative" uk-icon="icon:bell;ratio:1.2"></span><span class="dana-font fontsize-14" dir="ltr">Selected item removed</span>',
+                    status: 'primary',
+                    pos: 'top-center',
+                    timeout: 3000
+                });
+            </script>
+            Context.Session.Remove("Message");
+            break;
+        case (int)Messages.AddedAddressSuccessfully:
+            <script>
+                UIkit.notification({
+                    message: '<span class="margin-right-10 position-relative" uk-icon="icon:bell;ratio:1.2"></span><span class="dana-font fontsize-14" dir="ltr">New address added</span>',
+                    status: 'primary',
+                    pos: 'top-center',
+                    timeout: 3000
+                });
+            </script>
+            Context.Session.Remove("Message");
+            break;
+        case (int)Messages.EditedSuccessfully:
+            <script>
+                UIkit.notification({
+                    message: '<span class="margin-right-10 position-relative" uk-icon="icon:bell;ratio:1.2"></span><span class="dana-font fontsize-14" dir="ltr">Changes saved</span>',
+                    status: 'primary',
+                    pos: 'top-center',
+                    timeout: 3000
+                });
+            </script>
+            Context.Session.Remove("Message");
+            break;
+        case (int)Messages.MessageSentSuccessfully:
+            <script>
+                UIkit.notification({
+                    message: '<span class="margin-right-10 position-relative" uk-icon="icon:bell;ratio:1.2"></span><span class="dana-font fontsize-14" dir="ltr">Your message sent successfully</span>',
+                    status: 'primary',
+                    pos: 'top-center',
+                    timeout: 3000
+                });
+            </script>
+            Context.Session.Remove("Message");
+            break;
+        case (int)Messages.ErrorSendingEmail:
+            <script>
+                UIkit.notification({
+                    message: '<span class="margin-right-10 position-relative" uk-icon="icon:bell;ratio:1.2"></span><span class="dana-font fontsize-14" dir="ltr">Error in sending message</span>',
+                    status: 'primary',
+                    pos: 'top-center',
+                    timeout: 3000
+                });
+            </script>
+            Context.Session.Remove("Message");
+            break;
+        default:
+            break;
+    }
+
+</body>
+</html>

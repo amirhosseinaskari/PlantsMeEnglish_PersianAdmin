@@ -1,0 +1,163 @@
+﻿@import "../layout/_layoutcolors.scss";
+@import "../vendors/_bourbon.scss";
+@import "../vendors/_custommixin.scss";
+.checkbox-type-a {
+    position: relative;
+
+    input {
+        position: relative;
+        z-index: 10;
+        flex-shrink: 0;
+        width: 20px;
+        height: 20px;
+        
+        background-color: white;
+        -moz-transition: all .4s linear !important;
+        -o-transition: all .4s linear !important;
+        -webkit-transition: all .5s linear !important;
+        transition: all .4s linear !important;
+
+        &:checked, &:indeterminate {
+            @include prefixer(transition,all .4s linear,("webkit","moz","o"));
+            background-color: $main-color !important;
+        }
+    }
+}
+
+.form-modal--type-a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 500px;
+    overflow: hidden;
+    width: 500px;
+
+    @media only screen and (max-width: 400px) {
+        min-height: 450px;
+    }
+
+    & > div {
+        width: 100%;
+    }
+
+    form {
+        width: 400px;
+        max-width: calc(100% - 30px);
+    }
+
+   
+}
+//custom radio buttons
+.custom-radio-input-container {
+    color: rgba(0,0,0,0.75);
+    display: inline-flex;
+    align-items: center;
+    margin-right: 15px;
+    position: relative;
+    line-height: 25px;
+    cursor: pointer;
+    font-size: 18px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+    .checkmark {
+        position: relative;
+        display: inline-block;
+        top: 0;
+        left: 0;
+        width: 16px;
+        height: 16px;
+        background-color: rgba(0,0,0,0);
+        border-radius: 50%;
+        border: 1px solid rgba(0,0,0,0.25);
+        transition: all 0.3s;
+        margin-left: 5px;
+    }
+
+    .checkmark:after {
+        content: "";
+        position: absolute;
+        display: none;
+    }
+    /* Show the indicator (dot/circle) when checked */
+    & input:checked ~ .checkmark:after {
+        display: inline-block;
+        @include prefixer(animation,checkmark .2s ease-in forwards,("webkit","moz","o"));
+        @include custom-animation(checkmark) {
+            from {
+                @include prefixer(transfomr,scale(0,0),("webkit","moz","o"));
+            }
+
+            to {
+                @include prefixer(transfomr,scale(1,1),("webkit","moz","o"));
+            }
+        }
+    }
+    /* When the radio button is checked */
+    & input:checked ~ .checkmark {
+        background-color: rgba(0,0,0,0);
+        border-color: $main-color;
+    }
+    /* Style the indicator (dot/circle) */
+    & .checkmark:after {
+        top: 3px;
+        left: 3px;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: $main-color;
+    }
+
+    .custom-radio-input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+    }
+}
+
+
+.custom-text-field {
+    position:relative;
+    & > label{
+        position:absolute;
+        z-index:2;
+        top:-8px;
+        left:5px;
+        padding:0 4px;
+        background-color:white;
+        color:$main-color;
+    }
+    textarea{
+        height:unset;
+    }
+}
+
+.form-row {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 15px !important;
+    & > div {
+        width: 50%;
+        flex-grow: 1;
+
+        &:not(:last-child) {
+            margin-right: 15px;
+        }
+    }
+
+    @media only screen and (max-width: 500px) {
+        flex-wrap: wrap;
+        margin-bottom:0 !important;
+        & > div{
+            width:100%;
+            margin-right:0 !important;
+        }
+        textarea{
+            line-height:20px !important;
+            padding-top:10px !important;
+        }
+    }
+}

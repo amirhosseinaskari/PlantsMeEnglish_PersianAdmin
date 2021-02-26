@@ -1,0 +1,105 @@
+﻿ @model int
+    <!--Choose Products-->
+
+    <div class="col-12 px-2">
+        <div class="text-right mx-3 fontsize-12 IRANSans red-lighten-6
+                                 border-bottom--red py-1 d-inline-block" style="min-width:150px">
+            <span class="">محصولات شامل این تخفیف</span>
+        </div>
+        <div class="row m-0 py-4 align-items-start">
+            <!--Form-->
+            <div class="col-md-5 col-sm-6 my-2 px-0">
+                <div class="mdc-select mdc-select--outlined product-of-discount">
+                    <div class="mdc-select__anchor w-100 bg--white h-40">
+                        <i class="mdc-select__dropdown-icon" style="top:5px"></i>
+                        <div id="demo-selected-text" class="mdc-select__selected-text IRANSans_Light fontsize-12 position-relative" style="top:-5px" aria-labelledby="outlined-select-label"></div>
+                        <div class="mdc-notched-outline">
+                            <div class="mdc-notched-outline__leading"></div>
+                            <div class="mdc-notched-outline__notch">
+                                <label id="outlined-select-label" class="mdc-floating-label IRANSans_Light fontsize-14">انتخاب محصول</label>
+                            </div>
+                            <div class="mdc-notched-outline__trailing"></div>
+                        </div>
+                    </div>
+
+                    <!-- Select product options -->
+                    <div class="mdc-select__menu mdc-menu mdc-menu-surface w-100" role="listbox">
+                        <ul class="mdc-list IRANSans_Light fontsize-12 product-of-discount__options">
+
+                            <vc:product-list-title my-id="-1"></vc:product-list-title>
+                        </ul>
+                    </div>
+                </div>
+               
+                <span class="iranyekanwebregular fontsize-12 red-lighten-7 d-none error-product-discount-target"></span>
+            </div>
+            <!--Add Button-->
+            <div class="col-lg-4 col-md-5 col-sm-6 d-flex align-items-center my-1 px-2">
+                <button class="mdc-button mdc-button--unelevated bg--white border px-0 position-relative
+                        add-discounttarget-product__submit-button"
+                        data-id="@Model"
+                        style="height:40px;top:5px;">
+                    <div class="mdc-button__ripple"></div>
+                    <span class="mdc-button__label IRANSans fontsize-12 blue-700 px-1 px-sm-2">
+                        اضافه کردن
+                    </span>
+                </button>
+            </div>
+            <!--Added Products-->
+            <div class="col-12 my-2 pr-2" id="discount-target__added-products">
+                <vc:product-discount-target my-id="@Model"></vc:product-discount-target>
+            </div>
+        </div>
+    </div>
+
+<script>
+   //Add product of discount target (some products)
+    try {
+        const MDCProductDiscount = mdc.select.MDCSelect;
+        const productDiscount = new MDCProductDiscount(document.querySelector('.product-of-discount'));
+        $('.add-discounttarget-product__submit-button').click(function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+            let proId = productDiscount.value;
+            let disId = $(this).attr('data-id');
+            if (proId === -1) {
+                $('.error-product-discount-target').removeClass('d-none').html('انتخاب محصول الزامی است');
+
+                return false;
+            }
+            $.ajax({
+                url: "/Admin/Discount/AddProductDiscountTarget",
+                type: "POST",
+                data: {
+                    productId: proId,
+                    discountId: disId
+                },
+                error: function (xhr) { alert(xhr.responseText); },
+                beforeSend: function () { $('#progress-loader').removeClass('d-none'); },
+                success: function (data) {
+                    if (data) {
+                        $('#discount-target__added-products').html(data);
+                        UIkit.notification({
+                            message: '<span class="material-icons-outlined red-lighten-7 mx-2 position-relative" style="top:6px">notifications_active</span><span class="IRANSans_Light fontsize-14" dir="rtl">محصول مورد نظر اضافه شد</span>',
+                            status: 'primary',
+                            pos: 'top-center',
+                            timeout: 5000
+                        });
+                    }
+                }
+
+
+            }).done(function () {
+                $('#progress-loader').addClass('d-none');
+            });
+        });
+
+        //reset error-product-discount-target
+        productDiscount.listen('MDCSelect:focus', function () {
+            $('.error-product-discount-target').addClass('d-none').html('');
+
+        });
+    } catch (e) {
+        console.log(e);
+    }
+</script>

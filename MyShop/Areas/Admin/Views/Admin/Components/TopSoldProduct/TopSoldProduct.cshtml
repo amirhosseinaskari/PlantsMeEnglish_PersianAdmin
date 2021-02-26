@@ -1,0 +1,62 @@
+﻿@model Product
+<div class="col-xl-3 col-lg-4 col-md-6 pr-lg-3 my-2 order-lg-0 order-md-1 order-1">
+    <div class="uk-card uk-card-default uk-border-rounded h-100 d-flex flex-column justify-content-between">
+        <div class="uk-card-header text-center border-0 pb-3">
+            <span class="IRANSans fontsize-14 red-lighten-7">
+                پر فروش ترین محصول
+            </span>
+        </div>
+        @if (Model == null)
+        {
+            <a href="#"
+               target="_blank"
+               class="uk-card-body d-flex flex-column pt-2 align-items-center text-decoration-none">
+                <div class="p-2 rounded-circle border d-flex align-items-center justify-content-center
+                 uk-box-shadow-medium uk-box-shadow-hover-small" id="top-sold-product">
+                    <img class="w-75" src="~/images/large/placeholderimage.jpg" />
+                </div>
+                <div class="my-2 IRANSans fontsize-12 grey-darken-4">
+                    محصولی هنوز ساخته نشده است
+                </div>
+            </a>
+        }
+        else
+        {
+            <a asp-action="ProductDetail" asp-controller="Products" asp-area="" 
+               asp-route-id="@Model.Id" asp-route-title="@Model.Title.Replace(" ","-")"
+               target="_blank"
+               class="uk-card-body d-flex flex-column pt-2 align-items-center text-decoration-none">
+                <div class="p-2 rounded-circle border d-flex align-items-center justify-content-center
+                 uk-box-shadow-medium uk-box-shadow-hover-small" id="top-sold-product">
+                    @if (Model.Images.Count() < 1)
+                    {
+                        <img class="w-75" src="~/images/large/placeholderimage.jpg" />
+                    }
+                    else
+                    {
+                        var firstOrderedImage = Model.Images.OrderBy(c => c.ImageOrder).First();
+                        <img class="mh-100 mw-100 lazyload uk-border-circle" src="~/images/small/product_placeholder.jpg"
+                             data-src="/images/products/small/product_@(Model.Id)/@firstOrderedImage.ImageName"
+                             alt="@firstOrderedImage.AltText" loading="lazy">
+                    }
+                </div>
+                <div class="my-2 IRANSans fontsize-12 grey-darken-4">
+                    @Model.Title
+                </div>
+            </a>
+        }
+
+        <div class="uk-card-footer d-flex uk-flex-between px-2" dir="rtl">
+            <span class="IRANSans fontsize-14 blue-600">
+                کل میزان فروش:
+            </span>
+            <span class="Nazanin fontsize-20" dir="rtl">
+                @if (Model != null)
+                {
+                    <text> @Model.SellNumber عدد</text>
+                }
+
+            </span>
+        </div>
+    </div>
+</div>

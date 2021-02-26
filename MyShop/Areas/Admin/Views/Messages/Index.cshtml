@@ -1,0 +1,60 @@
+﻿@{ViewData["ticketspage"] = "active"; }
+<!--Breadcrumb for this url-->
+<div class="row p-0 m-0 bg--white py-2 my-3 uk-box-shadow-small uk-border-rounded border position-relative">
+    <div class="col-12" dir="rtl">
+        <ul class="uk-breadcrumb IRANSans_Light fontsize-12 text-right p-0 m-0 d-flex" dir="rtl">
+            <li><a class="fontsize-12" href="~/Admin">مدیریت</a></li>
+            <li class="mx-1 uk-active">پیام ها</li>
+        </ul>
+        <div class="bg--blue-600 position-absolute rounded-left" style="width:8px;left:0;top:-8px;height:calc(100% + 16px);"></div>
+    </div>
+
+</div>
+<!--Orders List-->
+<div class="row my-2 m-0" dir="rtl" id="main-container">
+    @await Html.PartialAsync("DataTables")
+</div>
+@section Scripts{
+    <script>
+
+        kamaDatepicker('from-date-input', {
+            buttonsColor: "red",
+            forceFarsiDigits: true,
+            markToday: true,
+            markHolidays: true,
+            closeAfterSelect: true,
+            highlightSelectedDay: true,
+            sync: true,
+            gotoToday: true
+        });
+        kamaDatepicker('to-date-input', {
+            buttonsColor: "red",
+            forceFarsiDigits: true,
+            markToday: true,
+            markHolidays: true,
+            closeAfterSelect: true,
+            highlightSelectedDay: true,
+            sync: true,
+            gotoToday: true
+        });
+        const mdcButton = $('.mdc-button');
+        for (let i = 0; i < mdcButton.length; i++) {
+            mdc.ripple.MDCRipple.attachTo(document.querySelectorAll('.mdc-button')[i]);
+        }
+
+        const mdcSelect = $('.mdc-select');
+        for (let i = 0; i < mdcSelect.length; i++) {
+            mdc.select.MDCSelect.attachTo(document.querySelectorAll('.mdc-select')[i]);
+        }
+
+        const mdcTextField = $('.mdc-text-field');
+        for (let i = 0; i < mdcTextField.length; i++) {
+            mdc.textField.MDCTextField.attachTo(document.querySelectorAll('.mdc-text-field')[i]);
+        }
+        mdc.tabBar.MDCTabBar.attachTo(document.querySelector('.my-tab-list'));
+        const MDCTABLE = $('.mdc-data-table');
+        for (let i = 0; i < MDCTABLE.length; i++) {
+            mdc.dataTable.MDCDataTable.attachTo(document.querySelectorAll('.mdc-data-table')[i]);
+        }
+    </script>
+}

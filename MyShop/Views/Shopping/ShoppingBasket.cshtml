@@ -1,0 +1,229 @@
+﻿@model IEnumerable<Order>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Style{
+    <link href="~/dist/sass/pages/shopping.min.css" rel="stylesheet" />
+}
+@section JavaScript{
+    <script async src="~/dist/js/pages/_shopping.min.js" type="module"></script>
+}
+<section id="container-section" class="uk-overflow-hidden">
+    <!--shopping steps-->
+    <div class="shopping-steps-container" dir="ltr">
+        <hr class="shopping-icon-divider" />
+        <div>
+            <!--review shopping basket (first step)-->
+            <div class="d-flex flex-column align-items-center">
+                <div class="shopping-steps current-step">
+                    <img src="~/images/icons/product-detail/shopping-cart.svg" />
+                </div>
+                <div class="dana-font fontsize-14 mobile-fontsize-12 font-weight-500 step-text margin-top-10">View Bag</div>
+            </div>
+
+            <div class="divider flex-grow-1"></div>
+            <!--set receiver address (second step)-->
+            <div class="d-flex flex-column align-items-center">
+                <div class="shopping-steps">
+                    <img src="~/images/icons/product-detail/location.svg" />
+                </div>
+                <div class="dana-font fontsize-14 mobile-fontsize-12 font-weight-500 step-text margin-top-10">Shipping Address</div>
+            </div>
+            <div class="divider flex-grow-1"></div>
+            <!--payment and confirmtion (third step)-->
+            <div class="d-flex flex-column align-items-center">
+                <div class="shopping-steps">
+                    <img src="~/images/icons/product-detail/hand.svg" />
+                </div>
+                <div class="dana-font fontsize-14 mobile-fontsize-12 font-weight-500 step-text margin-top-10">Payment</div>
+            </div>
+        </div>
+    </div>
+    @if (Model.Count() < 1)
+    {
+        <div id="empty-order-message" dir="ltr">
+
+            <img class="max-width-100" width="200" src="~/images/base/emptyshopping.svg" />
+            <div class="padding-20 white border uk-border-rounded d-flex 
+                 flex-column justify-content-center align-items-center line-height-25">
+                <span class="dana-font fontsize-14 mobile-fontsize-12 font-weight-500">
+                    Your Shopping Cart Is Empty!
+                </span>
+                <div class="d-flex align-items-center justify-content-center margin-y-10">
+                    <a  asp-action="AllProducts" asp-controller="Products" asp-area="" class="text-decoration-none blue-text margin-x-10 dana-font fontsize-14 mobile-fontsize-12 font-weight-500">Return to Shopping</a>
+                    |
+                    <a  asp-action="Index" asp-controller="Home" class="text-decoration-none blue-text margin-x-10 dana-font fontsize-14 mobile-fontsize-12 font-weight-500">Return to Home Page</a>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        double totalPrice = 0;
+        int ordersCount = 0;
+        <!--main content-->
+        <div id="main-content" class="position-relative" dir="ltr">
+            <!--list of orders-->
+            <div id="orders-list" class="margin-top-5">
+                <ul class="list-unstyled padding-0 margin-0 uk-list uk-list-divider">
+                    @foreach (var item in Model)
+                    {
+                        ordersCount += item.Number;
+                        totalPrice += item.TotalPrice * item.Number;
+                        <li class="order-item" dir="ltr">
+                            <div class="d-flex align-items-center title-image-container">
+                                <div class="product-image-container">
+                                    <div class="uk-card-media-top w-100 justify-content-center uk-text-center d-flex align-items-center white padding-y-5 product-media-card">
+                                        <vc:order-product-image product-id="@item.ProductId"></vc:order-product-image>
+                                    </div>
+                                </div>
+                                <div class="product-information-container flex-grow-1">
+                                    <h2 class="dana-font fontsize-16 mobile-fontsize-14 font-weight-500 margin-bottom-10">
+                                        @item.ProductTitle
+                                    </h2>
+                                    <!--Product Variation Selected-->
+                                    <vc:order-product-sub-variation sub-ids="@item.SubProductVariationIds"></vc:order-product-sub-variation>
+
+
+                                </div>
+                            </div>
+                            <div class="margin-x-10 uk-text-center flex-grow-1 each-product-price-container">
+                                <span class="dana-font fontsize-18 font-weight-600 xsmobile-fontsize-16">KSh</span>
+                                <span data-price="@item.TotalPrice" class="dana-font font-color-1 order-price font-weight-600 digit-format fontsize-18 xsmobile-fontsize-16" data-id="@item.Id">
+                                    @((item.TotalPrice * item.Number)
+                                            .ToString("N0", new System.Globalization.NumberFormatInfo() { NumberGroupSizes = new[] { 3 }, NumberGroupSeparator = "," }))
+                                </span>
+                                
+
+                                <div class="d-flex justify-content-center margin-top-25 w-100">
+                                    <div class="w-100">
+                                        <button class="uk-button uk-button-link uk-button-small increase-order uk-box-shadow-small click-button-effect"
+                                                uk-tooltip="title:Plus" data-id="@item.Id">
+                                            <span uk-icon="icon:plus;ratio:.8"></span>
+                                        </button>
+                                        <input class="dana-font fontsize-14 text-center border-0 uk-input digit-format type-number
+                                              d-inline-block blue-600 order-count" data-id="@item.Id" value="@item.Number" data-count="@item.Number" />
+                                        <button class="uk-button uk-button-link uk-button-small decrease-order uk-box-shadow-small click-button-effect" uk-tooltip="title:Minus" data-id="@item.Id">
+                                            <span uk-icon="icon:minus;ratio:.8"></span>
+                                        </button>
+                                        <a href="#delete--modal" data-id="@item.Id"
+                                           uk-toggle class="uk-border-rounded red uk-box-shadow-small margin-left-15 delete-order">
+                                            <span class="dana-font fontsize-12 white-text font-weight-500">Delete</span>
+                                        </a>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </li>
+
+                    }
+
+                </ul>
+                <div class="goto-next-button padding-20 position-sticky uk-sticky" dir="ltr">
+                    <a asp-action="AddressInformation" asp-controller="Address" asp-area="" asp-route-totalPrice="@totalPrice" class="wave-button black border-radius-3 uk-box-shadow-medium padding-x-15">
+                        <span class="dana-font fontsize-14 xsmobile-fontsize-12 font-weight-500 white-text">
+                            Proceed to Checkout
+                        </span>
+                    </a>
+                    <div class="">
+                        <div class="dana-font fontsize-16 mobile-fontsize-14 xsmobile-fontsize-12 font-weight-500">
+                            Total
+                        </div>
+                        <div class="d-flex margin-top-5 font-weight-600">
+                            <span class="dana-font fontsize-16 mobile-fontsize-14 xsmobile-fontsize-12">KSh</span>&nbsp;
+                            <span class="dana-font fontsize-16 mobile-fontsize-14 xsmobile-fontsize-12 total-price digit-format">
+                                @totalPrice.ToString("N0", new System.Globalization.NumberFormatInfo()
+                                { NumberGroupSizes = new[] { 3 }, NumberGroupSeparator = "," })
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--Remove product from list -- Modal-->
+            <div id="delete--modal" uk-modal dir="ltr">
+                <form method="post" asp-action="DeleteOrder" asp-controller="Shopping" asp-area=""
+                      class="uk-modal-dialog uk-border-rounded">
+                    <input name="orderId" type="hidden" class="d-none" />
+                    <button class="uk-modal-close-default custom-close--button" type="button" uk-close></button>
+                    <div class="uk-modal-header uk-text-left grey lighten-5" dir="ltr">
+                        <h3 class="dana-font uk-text-left fontsize-14 xsmobile-fontsize-12 font-weight-500">
+                            Warning!
+                        </h3>
+                    </div>
+                    <div class="uk-modal-body" dir="ltr">
+                        <p class="dana-font fontsize-14 uk-text-left line-height-25 xsmobile-fontsize-12">Are you sure want to remove this item?</p>
+                    </div>
+                    <div class="uk-modal-footer uk-text-left" dir="ltr">
+                        <button type="submit" class="red-button border-radius-3 margin-right-10 uk-box-shadow-small">
+
+                            <span class="dana-font fontsize-14 font-weight-500">
+                                Yes
+                            </span>
+                        </button>
+                        <button class="white-button border border-radius-3 remove-button uk-modal-close uk-box-shadow-small" type="button">
+
+                            <span class="dana-font font-color-1 font-weight-500 fontsize-14">
+                                Cancel
+                            </span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!--price summary and details-->
+            <div id="price-summary-container">
+                <div id="price-summary" class="margin-y-20 my-uk-sticky" uk-sticky="bottom:true;offset:80">
+                    <ul class="uk-list uk-list-divider add-to-buy-bucket--list">
+                        <li dir="ltr" class="d-flex align-items-center">
+                            <div class="dana-font fontsize-14 xsmobile-fontsize-12 font-color-3 font-weight-400 uk-text-left">
+                                <span>Subtotal</span>
+                                <span class="dana-font fontsize-14 xsmobile-fontsize-12 font-weight-500 orders-count digit-format">(@ordersCount)</span>
+                            </div>
+                            <div class="dana-font fontsize-16 xsmobile-fontsize-14 font-weight-500 uk-text-left">
+                               <span>KSh</span>
+                                <span class="total-price digit-format">
+                                    @totalPrice.ToString("N0", new System.Globalization.NumberFormatInfo() { NumberGroupSizes = new[] { 3 }, NumberGroupSeparator = "," })
+                                </span>
+                               
+                            </div>
+                        </li>
+                        <li dir="ltr" class="d-flex align-items-center">
+                            <div class="dana-font fontsize-14 xsmobile-fontsize-12 font-color-3 font-weight-400">
+                                <span>Shipping</span>
+                            </div>
+                            <div class="dana-font fontsize-14 xsmobile-fontsize-12 uk-text-left digit-format font-weight-500">Will be calculated in the next step</div>
+                        </li>
+                        <li dir="ltr" class="d-flex align-items-center">
+                            <div class="dana-font fontsize-14 xsmobile-fontsize-12 font-color-3 font-weight-400">
+                                <span>Discount</span>
+                            </div>
+                            <div class="dana-font fontsize-16 xsmobile-fontsize-14 font-weight-500 digit-format uk-text-left">0</div>
+                        </li>
+                        <li dir="ltr" class="d-flex align-items-center uk-flex-between">
+                            <div class="dana-font fontsize-16 mobile-fontsize-14 font-weight-500">
+                                <span>Total</span>
+                            </div>
+                            <div class="dana-font fontsize-20 xsmobile-fontsize-18 font-weight-600 uk-text-left ">
+                                <span>KSh</span>&nbsp;
+                                <span class="total-price digit-format">@totalPrice.ToString("N0", new System.Globalization.NumberFormatInfo() { NumberGroupSizes = new[] { 3 }, NumberGroupSeparator = "," })</span>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="margin-y-25 dana-font fontsize-14 line-height-25 font-weight-400">
+                       Items in your cart are not reserved until you compelete your purchase. 
+                    </div>
+                    <div class="margin-y-20 go-to-nex--button">
+                        <a asp-action="AddressInformation" asp-controller="Address" asp-area="" asp-route-totalPrice="@totalPrice"
+                           class="wave-button uk-box-shadow-medium black border-radius-3 padding-x-15">
+                            <span class="dana-font fontsize-14 xsmobile-fontsize-12 font-weight-500 white-text">
+                                Proceed to Checkout
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+</section>

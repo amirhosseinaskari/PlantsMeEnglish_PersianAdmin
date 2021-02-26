@@ -1,0 +1,40 @@
+﻿@model IEnumerable<City>
+@if (((int)ViewData["SelectedCityId"]).Equals(-1))
+{
+    @foreach (var item in Model)
+    {
+        if (item.Equals(Model.First()))
+        {
+            <option class="city-item" data-city-name="@item.Title" role="option" value="@item.Id" selected>
+                @item.Title
+            </option>
+            continue;
+        }
+        <option class="city-item" data-city-name="@item.Title" role="option" value="@item.Id">
+            @item.Title
+        </option>
+
+
+    }
+
+}
+else
+{
+    @foreach (var item in Model)
+    {
+        if (item.Id.Equals((int)ViewData["SelectedCityId"]))
+        {
+            <option class="city-item" data-city-name="@item.Title" role="option" value="@item.Id" selected>
+                @item.Title
+            </option>
+            continue;
+        }
+
+        <option class="city-item" data-city-name="@item.Title" role="option" value="@item.Id">
+            @item.Title
+        </option>
+
+
+    }
+
+}

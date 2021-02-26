@@ -1,0 +1,424 @@
+﻿@model int
+@{
+    ViewData["Title"] = "All Products of Plants Me";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int num =(int)ViewData["MaxPrice"];
+}
+@section Schema{
+    <vc:home-schema></vc:home-schema>
+
+}
+@section Style{
+    <link href="~/dist/sass/pages/productList.min.css" rel="stylesheet" />
+}
+@section JavaScript{
+    <script async src="~/dist/js/pages/_productList.min.js" type="module"></script>
+}
+
+
+<!--alert for log in before action-->
+<div id="login-alert-modal" uk-modal dir="ltr">
+    <div class="uk-modal-dialog">
+        <button class="uk-modal-close-default" type="button" uk-close></button>
+
+        <div class="uk-modal-header border-bottom-grey">
+            <span class="dana-font font-color-1 fontsize-16 font-weight-600">Added To Favorits</span>
+        </div>
+        <div class="uk-modal-body">
+            <div class="uk-magin margin-y-20 dana-font font-weight-500 fontsize-16 mobile-fontsize-14 line-height-30 uk-text-left" dir="ltr">
+                <span>To add to your favorit list, you must first</span>
+                <a href="#login--modal" uk-toggle class="text-decoration-none main-color">login</a>
+                <span>to your account or</span>
+                <a href="#register--modal" uk-toggle class="text-decoration-none main-color">sign up</a>
+                <span>if you have not yet registered</span>
+            </div>
+
+        </div>
+    </div>
+</div>
+<section id="container-section">
+    <!--Breadcrumb for this url-->
+    <div class="breadcrumb-container grey lighten-5 padding-y-15" dir="ltr">
+        <ul class="uk-breadcrumb text-right padding-0 margin-0 d-flex align-items-center" dir="ltr">
+            <li>
+                <a class="fontsize-14 mobile-fontsize-12 dana-font font-weight-500 font-color-4" asp-action="Index" asp-controller="Home" asp-area="">Home</a>
+            </li>
+            <li class="uk-active"><h1 class="margin-bottom-0 font-weight-600 dana-font fontsize-14 mobile-fontsize-12 font-color-1">All Productss</h1></li>
+        </ul>
+
+    </div>
+    <!--Main Content-->
+    <div id="main-content">
+        <!--side filter box container (Desktop)-->
+        <div id="filters-container" dir="ltr">
+            <div class="filter-box-title d-flex uk-flex-between align-items-end">
+                <span class="dana-font fontsize-14 font-weight-600">Filters</span>
+                <a href="#" id="desktop-filter-reset" class="red-text dana-font fontsize-14 font-weight-500 text-decoration-none">Clear Filters</a>
+            </div>
+            <ul uk-accordion="multiple:true">
+                <!--Brand filter-->
+                <li class="filter-list-item brand-filter">
+                    <a href="#" class="uk-accordion-title dana-font font-color-3 fontsize-14 mobile-fontsize-12 font-weight-600">
+                        <span>Brands</span>
+                        <span class="accordion-chevron-icon" uk-icon="icon:chevron-down;ratio:.9"></span>
+                    </a>
+                    <div class="uk-accordion-content">
+                        <ul class="filter-subitem-list">
+                            <vc:filter-brand-list></vc:filter-brand-list>
+                        </ul>
+                    </div>
+                </li>
+                <!--Category filter-->
+                <li class="filter-list-item category-filter">
+                    <a href="#" class="uk-accordion-title dana-font font-color-3 fontsize-14 mobile-fontsize-12 font-weight-600">
+                        <span>Categories</span>
+                        <span class="accordion-chevron-icon" uk-icon="icon:chevron-down;ratio:.9"></span>
+                    </a>
+                    <div class="uk-accordion-content">
+                        <ul class="filter-subitem-list">
+                            <vc:filter-category-list></vc:filter-category-list>
+                        </ul>
+                    </div>
+                </li>
+                <!--Range price filter-->
+                <li class="filter-list-item price-range-filter">
+                    <a href="#" class="uk-accordion-title dana-font font-color-3 fontsize-14 mobile-fontsize-12 font-weight-600">
+                        <span>Price Range</span>
+                        <span class="accordion-chevron-icon" uk-icon="icon:chevron-down;ratio:.9"></span>
+                    </a>
+                    <div class="uk-accordion-content">
+                        <div class="range-slider-container padding-x-10 padding-top-20">
+                            <div class="multi-range-slider margin-bottom-15">
+                                <input type="range" dir="ltr" class="input-left" name="input-left" min="0" step="1" max="@ViewData["MaxPrice"]" value="0">
+                                <input type="range" dir="ltr" class="input-right" name="input-right" min="0" step="1" max="@ViewData["MaxPrice"]" value="@ViewData["MaxPrice"]">
+                                <div class="slider">
+                                    <div class="track"></div>
+                                    <div class="range"></div>
+                                </div>
+                            </div>
+                            <div class="range-price-values" dir="ltr">
+                                <div class="price-from-container uk-text-center">
+                                    <span class="dana-font fontsize-16 font-weight-500 margin-bottom-10" dir="ltr">From:</span>
+                                    <span class="price-from digit-format dana-font fontsize-14 mobile-fontsize-12 font-weight-500">0</span>
+                                </div>
+                                <hr class="uk-divider-vertical">
+                                <div class="price-to-container uk-text-center">
+                                    <span class="dana-font fontsize-16 font-weight-500 margin-bottom-10" dir="ltr">To:</span>
+                                    <span class="price-to digit-format dana-font fontsize-14 mobile-fontsize-12 font-weight-500">@ViewData["MaxPrice"]</span>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <!--free delivery filter-->
+                <li class="filter-list-item free-delivery-filter">
+                    <div class="dana-font font-color-3 fontsize-14 mobile-fontsize-12 font-weight-500 d-flex align-items-center">
+                        <label class="filter-switcher flex-grow-1 d-flex align-items-center">
+                            <input type="checkbox" value="true" name="has_free_delivery" id="has_free_delivery" />
+                            <span class="filter-switcher__slider">
+                                <span class="filter-switcher__slider__toggle"></span>
+                            </span>
+                            <span class="margin-left-10">Just Free Shiping</span>
+                        </label>
+                    </div>
+
+                </li>
+                <!--has selling stock-->
+                <li id="free-delivery-filter" class="filter-list-item">
+                    <div class="dana-font font-color-3 fontsize-14 mobile-fontsize-12 font-weight-500 d-flex align-items-center">
+                        <label class="filter-switcher flex-grow-1 d-flex align-items-center">
+                            <input type="checkbox" value="true" name="has_selling_stock" id="has_selling_stock" />
+                            <span class="filter-switcher__slider">
+                                <span class="filter-switcher__slider__toggle"></span>
+                            </span>
+                            <span class="margin-left-10">Just In Stock</span>
+                        </label>
+                    </div>
+
+                </li>
+            </ul>
+
+        </div>
+        <!--products container (include sort buttons and filter box trigger button)-->
+        <div id="products-container">
+            <!--filters buttons / sort button-->
+            <div id="filter-triggers-container">
+                <!--desktop sort buttons-->
+                <div id="desktop-products-sort" dir="ltr" class="uk-text-left">
+                    <span class="dana-font fontsize-14 font-weight-600 margin-x-10">Sort By:</span>
+                    <!--desktop sort options-->
+                    <ul id="desktop-sortList-options">
+                        @if (Model == 1)
+                        {
+                            <li class="sortList-options__list-item" data-value="0" role="option">
+                                <a href="#">Newest</a>
+                            </li>
+                            <li class="sortList-options__list-item sortList-options__list-item--selected" data-value="1" role="option">
+                                <a href="#">Best Sellers</a>
+                            </li>
+                            <li class="sortList-options__list-item" data-value="2" role="option">
+                                <a href="#">Most View</a>
+                            </li>
+                            <li class="sortList-options__list-item" data-value="3" role="option">
+                                <a href="#">Price: High-Low</a>
+                            </li>
+                            <li class="sortList-options__list-item" data-value="4" role="option">
+                                <a href="#">Price: Low-High</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="sortList-options__list-item sortList-options__list-item--selected" data-value="0" role="option">
+                                <a href="#">Newest</a>
+                            </li>
+                            <li class="sortList-options__list-item" data-value="1" role="option">
+                                <a href="#">Best Sellers</a>
+                            </li>
+                            <li class="sortList-options__list-item" data-value="2" role="option">
+                                <a href="#">Most View</a>
+                            </li>
+                            <li class="sortList-options__list-item" data-value="3" role="option">
+                                <a href="#">Price: High-Low</a>
+                            </li>
+                            <li class="sortList-options__list-item" data-value="4" role="option">
+                                <a href="#">Price: Low-High</a>
+                            </li>
+                        }
+
+                    </ul>
+                </div>
+                <div id="mobile-products-sort">
+                    <!--mobile sort button-->
+                    <div class="uk-inline margin-right-10">
+                        <!--sort button => trigger button-->
+                        <button class="uk-button uk-button-default padding-x-10 padding-y-0 border-radius-3 white" type="button" dir="ltr">
+                            <span class="margin-right-10" uk-icon="icon:list;ratio:.8"></span>
+                            <span class="dana-font fontsize-14 mobile-fontsize-12 font-color-2">Sort By</span>
+                            <span class="margin-left-15 chevron-down-icon" uk-icon="icon:chevron-down"></span>
+                        </button>
+                        <!--sort button => sort content (sort options)-->
+                        <div id="mobile-sortList-options" class="padding-20"
+                             uk-dropdown="mode: click;animation: uk-animation-slide-top-small; duration: 300">
+                            <ul class="uk-list uk-list-divider">
+                                @if (Model == 1)
+                                {
+                                    <li class="sortList-options__list-item" data-value="0" role="option">
+                                        <label class="custom-radio-input-container">
+
+                                            <input class="uk-radio custom-radio-input" type="radio" name="product-sort">
+                                            <span class="checkmark"></span>
+                                            <span class="dana-font fontsize-14 mobile-fontsize-12 margin-left-10">Newest</span>
+                                        </label>
+
+                                    </li>
+                                    <li class="sortList-options__list-item sortList-options__list-item--selected" data-value="1" role="option">
+                                        <label class="custom-radio-input-container">
+
+                                            <input class="uk-radio custom-radio-input" type="radio" name="product-sort" checked>
+                                            <span class="checkmark"></span>
+                                            <span class="dana-font fontsize-14 mobile-fontsize-12 margin-left-10">Best Sellers</span>
+                                        </label>
+
+                                    </li>
+                                    <li class="sortList-options__list-item" data-value="2" role="option">
+                                        <label class="custom-radio-input-container">
+
+                                            <input class="uk-radio custom-radio-input" type="radio" name="product-sort">
+                                            <span class="checkmark"></span>
+                                            <span class="dana-font fontsize-14 mobile-fontsize-12 margin-left-10">Most View</span>
+                                        </label>
+
+                                    </li>
+                                    <li class="sortList-options__list-item" data-value="3" role="option">
+                                        <label class="custom-radio-input-container">
+
+                                            <input class="uk-radio custom-radio-input" type="radio" name="product-sort">
+                                            <span class="checkmark"></span>
+                                            <span class="dana-font fontsize-14 mobile-fontsize-12 margin-left-10">Price: High-Low</span>
+                                        </label>
+
+                                    </li>
+                                    <li class="sortList-options__list-item" data-value="4" role="option">
+                                        <label class="custom-radio-input-container">
+
+                                            <input class="uk-radio custom-radio-input" type="radio" name="product-sort">
+                                            <span class="checkmark"></span>
+                                            <span class="dana-font fontsize-14 mobile-fontsize-12 margin-left-10">Price: Low-High</span>
+                                        </label>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li class="sortList-options__list-item sortList-options__list-item--selected" data-value="0" role="option">
+                                        <label class="custom-radio-input-container">
+
+                                            <input class="uk-radio custom-radio-input" type="radio" name="product-sort" checked>
+                                            <span class="checkmark"></span>
+                                            <span class="dana-font fontsize-14 mobile-fontsize-12 margin-left-10">Newest</span>
+                                        </label>
+                                    </li>
+                                    <li class="sortList-options__list-item" data-value="1" role="option">
+                                        <label class="custom-radio-input-container">
+
+                                            <input class="uk-radio custom-radio-input" type="radio" name="product-sort">
+                                            <span class="checkmark"></span>
+                                            <span class="dana-font fontsize-14 mobile-fontsize-12 margin-left-10">Best Sellers</span>
+                                        </label>
+                                    </li>
+                                    <li class="sortList-options__list-item" data-value="2" role="option">
+                                        <label class="custom-radio-input-container">
+
+                                            <input class="uk-radio custom-radio-input" type="radio" name="product-sort">
+                                            <span class="checkmark"></span>
+                                            <span class="dana-font fontsize-14 mobile-fontsize-12 margin-left-10">Most View</span>
+                                        </label>
+                                    </li>
+                                    <li class="sortList-options__list-item" data-value="3" role="option">
+                                        <label class="custom-radio-input-container">
+
+                                            <input class="uk-radio custom-radio-input" type="radio" name="product-sort">
+                                            <span class="checkmark"></span>
+                                            <span class="dana-font fontsize-14 mobile-fontsize-12 margin-left-10">Price: High-Low</span>
+                                        </label>
+
+                                    </li>
+
+                                    <li class="sortList-options__list-item" data-value="4" role="option">
+                                        <label class="custom-radio-input-container">
+
+                                            <input class="uk-radio custom-radio-input" type="radio" name="product-sort">
+                                            <span class="checkmark"></span>
+                                            <span class="dana-font fontsize-14 mobile-fontsize-12 margin-left-10">Price: Low-High</span>
+                                        </label>
+                                    </li>
+                                }
+
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!--mobile filter box-->
+                    <div id="mobile-filters-box">
+                        <!--mobile filter box trigger button-->
+                        <button uk-toggle="target:#mobile-filter-box__modal" class="white uk-button uk-button-default padding-x-10 padding-y-0 border-radius-3" type="button" dir="ltr">
+                            <span class="margin-right-10" uk-icon="icon:settings;ratio:.8"></span>
+                            <span class="dana-font fontsize-14 mobile-fontsize-12 font-color-2">Filters</span>
+                        </button>
+                        <div id="mobile-filter-box__modal" class="uk-modal-full" uk-modal>
+                            <div class="uk-modal-dialog h-100 uk-overflow-auto">
+                                <button class="uk-modal-close-full uk-close-large" type="button" uk-close></button>
+
+                                <div class="uk-modal-body">
+                                    <div id="mobile-filters-container" dir="ltr">
+                                        <div class="filter-box-title d-flex uk-flex-between align-items-end border-bottom-grey padding-bottom-10 margin-y-20">
+                                            <span class="dana-font fontsize-12 font-weight-600">Filter Products</span>
+                                            <a href="#" id="mobile-filter-reset" class="red-text dana-font fontsize-12 font-weight-500 text-decoration-none">Clear Filters</a>
+                                        </div>
+                                        <ul uk-accordion="multiple:true">
+                                            <!--Brand filter-->
+                                            <li class="filter-list-item brand-filter">
+                                                <a href="#" class="uk-accordion-title dana-font font-color-3 fontsize-14 mobile-fontsize-12 font-weight-600">
+                                                    <span>Brands</span>
+                                                    <span class="accordion-chevron-icon" uk-icon="icon:chevron-down;ratio:.9"></span>
+                                                </a>
+                                                <div class="uk-accordion-content">
+                                                    <ul class="filter-subitem-list">
+                                                        <vc:filter-brand-list></vc:filter-brand-list>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                            <!--Category filter-->
+                                            <li class="filter-list-item category-filter">
+                                                <a href="#" class="uk-accordion-title dana-font font-color-3 fontsize-14 mobile-fontsize-12 font-weight-600">
+                                                    <span>Categories</span>
+                                                    <span class="accordion-chevron-icon" uk-icon="icon:chevron-down;ratio:.9"></span>
+                                                </a>
+                                                <div class="uk-accordion-content">
+                                                    <ul class="filter-subitem-list">
+                                                        <vc:filter-category-list></vc:filter-category-list>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                            <!--Range price filter-->
+                                            <li class="filter-list-item price-range-filter">
+                                                <a href="#" class="uk-accordion-title dana-font font-color-3 fontsize-14 mobile-fontsize-12 font-weight-600">
+                                                    <span>Price Range</span>
+                                                    <span class="accordion-chevron-icon" uk-icon="icon:chevron-down;ratio:.9"></span>
+                                                </a>
+                                                <div class="uk-accordion-content">
+                                                    <div class="range-slider-container padding-x-10 padding-top-20">
+                                                        <div class="multi-range-slider margin-bottom-15">
+                                                            <input type="range" dir="ltr" class="input-left" name="input-left" min="0" step="1" max="@ViewData["MaxPrice"]" value="0">
+                                                            <input type="range" dir="ltr" class="input-right" name="input-right" min="0" step="1" max="@ViewData["MaxPrice"]" value="@ViewData["MaxPrice"]">
+                                                            <div class="slider">
+                                                                <div class="track"></div>
+                                                                <div class="range"></div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="range-price-values" dir="ltr">
+                                                            <div class="price-from-container uk-text-center">
+                                                                <span class="dana-font fontsize-16 font-weight-500 margin-bottom-10" dir="ltr">From:</span>
+                                                                <span class="price-from digit-format dana-font fontsize-14 mobile-fontsize-12 font-weight-500">0</span>
+                                                            </div>
+                                                            <hr class="uk-divider-vertical">
+                                                            <div class="price-to-container uk-text-center">
+                                                                <span class="dana-font fontsize-16 font-weight-500 margin-bottom-10" dir="ltr">To:</span>
+                                                                <span class="price-to digit-format dana-font fontsize-14 mobile-fontsize-12 font-weight-500">@ViewData["MaxPrice"]</span>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <!--free delivery filter-->
+                                            <li class="filter-list-item free-delivery-filter">
+                                                <div class="dana-font font-color-3 fontsize-14 mobile-fontsize-12 font-weight-500 d-flex align-items-center">
+                                                    <label class="filter-switcher flex-grow-1 d-flex align-items-center">
+                                                        <input type="checkbox" value="true" name="has_free_delivery" id="mobile-has_free_delivery" />
+                                                        <span class="filter-switcher__slider">
+                                                            <span class="filter-switcher__slider__toggle"></span>
+                                                        </span>
+                                                        <span class="margin-left-10">Just Free Delivery Products</span>
+                                                    </label>
+                                                </div>
+
+                                            </li>
+                                            <!--has selling stock-->
+                                            <li id="free-delivery-filter" class="filter-list-item">
+                                                <div class="dana-font font-color-3 fontsize-14 mobile-fontsize-12 font-weight-500 d-flex align-items-center">
+                                                    <label class="filter-switcher flex-grow-1 d-flex align-items-center">
+                                                        <input type="checkbox" value="true" name="has_selling_stock" id="mobile-has_selling_stock" />
+                                                        <span class="filter-switcher__slider">
+                                                            <span class="filter-switcher__slider__toggle"></span>
+                                                        </span>
+                                                        <span class="margin-left-10">Just In Stock Products</span>
+                                                    </label>
+                                                </div>
+
+                                            </li>
+                                        </ul>
+                                        <button class="w-100 wave-button filter-submit--button margin-top-20 black border-radius-3 uk-box-shadow-medium">
+                                            <span class="dana-font fontsize-16 mobile-fontsize-14  xsmobile-fontsize-12 font-weight-500">Filter</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--product cards-->
+            <section class="d-flex justify-content-start flex-column margin-top-20 category-detail__product-list"
+                     data-cat-id="" data-search-text="" data-page-index="1"
+                     data-brand-id="" dir="ltr" data-max-value-price="@((int)ViewData["MaxPrice"])">
+                <vc:category-product-list default-category-id="-1" search-text="@(null)"
+                                          cat-ids="@(null)" brand-ids="@(null)" default-brand-id="-1" min-value-price="0"
+                                          max-value-price="@((int)ViewData["MaxPrice"])" has-free-delivery="false" has-selling-stock="false"
+                                          page-index="1" sort="@Model"></vc:category-product-list>
+            </section>
+        </div>
+
+    </div>
+
+</section>

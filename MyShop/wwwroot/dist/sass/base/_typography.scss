@@ -1,0 +1,86 @@
+/*----Typography----*/
+//font-sizes
+$font-sizes:10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40;
+//font line-heights
+$line-heights:10,20,22,25,30,40,50;
+//font weight
+$font-weights:100,200,300,400,500,600,900;
+//font colors
+$font-colors:#010101,#333333,#666666,#808080;
+//define font family
+
+.dana-font{
+    font-family: Arial, sans-serif !important;
+}
+
+//generate fontsize classes based on font-sizes
+@each $item in $font-sizes {
+    .fontsize-#{$item}{
+        font-size:#{$item}px !important;
+    }
+}
+//generate line-heights classes based on line-heights
+@each $item in $line-heights {
+    .line-height-#{$item}{
+        line-height: #{$item}px;
+    }
+}
+
+//font-sizes for tablet:
+@media (max-width:800px) {
+    @each $item in $font-sizes {
+        .tablet-fontsize-#{$item} {
+            font-size: #{$item}px !important;
+        }
+    }
+}
+//font-sizes for mobile:
+@media (max-width:600px){
+    @each $item in $font-sizes {
+        .mobile-fontsize-#{$item}{
+            font-size:#{$item}px !important;
+        }
+    }
+}
+//font-sizes for small mobile
+@media (max-width:320px) {
+    @each $item in $font-sizes {
+        .xsmobile-fontsize-#{$item} {
+            font-size: #{$item}px !important;
+        }
+    }
+}
+
+
+//font-colors
+@for $i from 1 to 5 {
+    .font-color-#{$i}{
+        color:nth($font-colors, $i) !important;
+    }
+} 
+
+//font-weights
+@each $item in $font-weights {
+    .font-weight-#{$item}{
+        font-weight: $item;
+    }
+}
+
+h2 {
+    @media only screen and (max-width: 800px) {
+        font-size:12px !important;
+    }
+}
+
+//font size for small screen
+@media only screen and (max-width: 500px)  {
+    .fontsize-sm-14 {
+        font-size: 14px !important;
+    }
+    .fontsize-sm-12{
+        font-size:12px !important;
+    }
+    .fontsize-sm-10 {
+        font-size: 10px !important;
+    }
+}

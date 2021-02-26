@@ -1,0 +1,26 @@
+$padding:0,5,10,15,20,25,30,35,40,50,60,70;
+@each $item in $padding {
+    .padding-#{$item} {
+        padding: #{$item}px !important;
+    }
+    .padding-x-#{$item} {
+        padding-left: #{$item}px !important;
+        padding-right: #{$item}px !important;
+    }
+    .padding-right-#{$item} {
+        padding-right: #{$item}px !important;
+    }
+    .padding-left-#{$item} {
+        padding-left: #{$item}px !important;
+    }
+    .padding-y-#{$item} {
+        padding-top: #{$item}px !important;
+        padding-bottom: #{$item}px !important;
+    }
+    .padding-top-#{$item} {
+        padding-top: #{$item}px !important;
+    }
+    .padding-bottom-#{$item} {
+        padding-bottom: #{$item}px !important;
+    }
+}

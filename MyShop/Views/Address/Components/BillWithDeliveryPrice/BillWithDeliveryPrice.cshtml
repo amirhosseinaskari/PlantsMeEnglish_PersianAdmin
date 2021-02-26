@@ -1,0 +1,61 @@
+﻿@model Bill
+    <!--Total Price and Bill-->
+<ul class="uk-list uk-list-divider add-to-buy-bucket--list">
+    <li dir="ltr" class="d-flex align-items-center uk-flex-between">
+        <div class="dana-font fontsize-14 mobile-fontsize-12 font-color-3 font-weight-400">
+            <span>Sub Total</span>
+            <span class="dana-font fontsize-14 mobile-fontsize-12 font-weight-500 orders-count digit-format">(@Model.OrdersCount)</span>
+        </div>
+        <div class="dana-font fontsize-14 xsmobile-fontsize-12 font-weight-500 uk-text-right">
+            <span>KSh</span>&nbsp;
+            <span class="total-price digit-format">
+                @((Model.TotalPrice - Model.DeliveryPrice).ToString("N0", new System.Globalization.NumberFormatInfo() { NumberGroupSizes = new[] { 3 }, NumberGroupSeparator = "," }))
+            </span>
+            
+        </div>
+    </li>
+    <li dir="ltr" class="d-flex align-items-center uk-flex-between">
+        <div class="dana-font fontsize-14 mobile-fontsize-12 font-color-3 font-weight-400">
+            <span>Shipping</span>
+        </div>
+        <div class="dana-font fontsize-14 xsmobile-fontsize-12 flex-grow-1 uk-text-right digit-format font-weight-500">
+            @switch (Model.DeliveryPrice)
+            {
+                case 0:
+                    <text>Free</text>
+                    break;
+                case -1:
+                    <text>0</text>
+                    break;
+                case -2:
+                    <text>محاسبه هزینه ارسال با هماهنگی و پرداخت هزینه ارسال در محل</text>
+                    break;
+                case -3:
+                    <text>محاسبه هزینه ارسال با هماهنگی قبل از ارسال</text>
+                    break;
+                default:
+                    <text>
+            <span>KSh</span>&nbsp;
+                        <span>@Model.DeliveryPrice</span>
+                    </text>
+                    break;
+            }
+            </div>
+</li>
+    <li dir="ltr" class="d-flex align-items-center uk-flex-between">
+        <div class="dana-font fontsize-14 xsmobile-fontsize-12 font-color-3 font-weight-400">
+            <span>Discount</span>
+        </div>
+        <div class="dana-font fontsize-14 xsmobile-fontsize-12 font-weight-500 digit-format uk-text-right">0</div>
+    </li>
+    <li dir="ltr" class="d-flex align-items-center uk-flex-between">
+        <div class="dana-font fontsize-14 mobile-fontsize-12 font-weight-500">
+            <span>Total</span>
+        </div>
+        <div class="dana-font fontsize-20 xsmobile-fontsize-18 font-weight-600 uk-text-right total-price-container digit-format">
+            <span>KSh</span>
+            <span class="total-price digit-format"> @Model.TotalPrice.ToString("N0", new System.Globalization.NumberFormatInfo() { NumberGroupSizes = new[] { 3 }, NumberGroupSeparator = "," })</span>
+        </div>
+    </li>
+</ul>
+

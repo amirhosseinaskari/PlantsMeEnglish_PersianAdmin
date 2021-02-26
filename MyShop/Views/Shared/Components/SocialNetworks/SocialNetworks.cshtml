@@ -1,0 +1,68 @@
+﻿@model ContactUs
+    <ul id="social-network-list">
+        @if (!string.IsNullOrEmpty(Model.WhatsAppNumber))
+        {
+            <!--WhatsApp icon-->
+            <li>
+                <a href="https://api.whatsapp.com/send?phone=@(Model.WhatsAppNumber)" rel="nofollow" class="whatsapp-link">
+                    <span uk-icon="icon:whatsapp;ratio:1.2"></span>
+                </a>
+                <span class="font-color-3 fontsize-12 font-weight-500">WhatsApp</span>
+            </li>
+        }
+        @if (!string.IsNullOrEmpty(Model.Instagram))
+        {
+            <li>
+                <a href="https://www.instagram.com/@(Model.Instagram)/" rel="nofollow" class="instagram-link">
+                    <span uk-icon="icon:instagram;ratio:1.2"></span>
+                </a>
+                <span class="font-color-3 fontsize-12 font-weight-500">Instagram</span>
+            </li>
+        }
+        @if (!string.IsNullOrEmpty(Model.Twitter))
+        {
+            <li>
+                <a href="@Model.Twitter" rel="nofollow" class="twitter-link">
+                    <span uk-icon="icon:twitter;ratio:1.2"></span>
+                </a>
+                <span class="font-color-3 fontsize-12 font-weight-500">Twitter</span>
+            </li>
+        }
+        @if (!string.IsNullOrEmpty(Model.Telegram))
+        {
+            <li>
+                <a href="@Model.Telegram" rel="nofollow" class="telegram-link">
+                    <img width="20" src="~/images/icons/telegram.svg" />
+                </a>
+                <span class="font-color-3 fontsize-12 font-weight-500">Telegram</span>
+            </li>
+        }
+        @if (!string.IsNullOrEmpty(Model.Aparat))
+        {
+            <li>
+                <a href="@Model.Aparat" class="youtube-link">
+                    <img width="20" src="~/images/icons/aparat-logo.svg" />
+                </a>
+                <span class="font-color-3 fontsize-12 font-weight-500">Aparat</span>
+            </li>
+        }
+        @if (!string.IsNullOrEmpty(Model.YouTube))
+        {
+            <li>
+                <a href="@Model.YouTube" class="youtube-link">
+                    <span uk-icon="icon:youtube;ratio:1.2"></span>
+                </a>
+                <span class="font-color-3 fontsize-12 font-weight-500">YouTube</span>
+            </li>
+        }
+        @if (!string.IsNullOrEmpty(Model.Facebook))
+        {
+            <li>
+                <a href="@Model.Facebook" class="facebook-link">
+                    <span uk-icon="icon:facebook;ratio:1.2"></span>
+                </a>
+                <span class="font-color-3 fontsize-12 font-weight-500">Facebook</span>
+            </li>
+        }
+
+    </ul>

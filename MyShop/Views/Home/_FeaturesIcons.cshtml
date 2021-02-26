@@ -1,0 +1,61 @@
+﻿@model HomePage
+    <section id="icons-container" dir="ltr">
+        <div class="uk-text-center">
+            @if (Model.HasFastDeliveryOption)
+            {
+                <!--fast delivery icon-->
+                <div class="uk-animation-toggle dana-font uk-overflow-hidden uk-animation-fast" tabindex="0">
+                    <div class="uk-animation-slide-top">
+                        <img src="~/images/icons/delivery.svg" />
+                    </div>
+                    <strong class="fontsize-14 mobile-fontsize-12">Fastest Delivery</strong>
+                    <p class="fontsize-12">
+                        Send your product immediately
+                    </p>
+                </div>
+            }
+            @if (Model.HasLocalPaymentOption)
+            {
+                <!--local payment icon-->
+                <div class="uk-animation-toggle dana-font uk-overflow-hidden uk-animation-fast" tabindex="0">
+                    <div class="uk-animation-slide-top">
+                        <img src="~/images/icons/localpayment.svg" />
+                    </div>
+                    <strong class="fontsize-14 mobile-fontsize-12">Local Payment</strong>
+                    <p class="fontsize-12">
+                       You can pay at your location
+                    </p>
+                </div>
+            }
+            <!--support icon-->
+            @if (Model.Has24Support)
+            {
+                <div class="uk-animation-toggle dana-font uk-overflow-hidden uk-animation-fast" tabindex="0">
+                    <div class="uk-animation-slide-top">
+                        <img src="~/images/icons/headset.svg" />
+                    </div>
+                    <strong class="fontsize-14 mobile-fontsize-12 digit-format">Customer Service</strong>
+                    <p class="fontsize-12" dir="ltr">
+                        24/7 Online support
+                    </p>
+                </div>
+            }
+            @if (Model.HasOriginalWarranty)
+            {
+                <!--waranty icon-->
+                <div class="uk-animation-toggle dana-font uk-overflow-hidden uk-animation-fast" tabindex="0">
+                    <div class="uk-animation-slide-top">
+                        <img src="~/images/icons/waranty.svg" />
+                    </div>
+                    <strong class="fontsize-14 mobile-fontsize-12">Return Exchange</strong>
+                    <p class="fontsize-12">
+                        100% Money back gurantee
+                    </p>
+                </div>
+            }
+
+
+
+        </div>
+    </section>
+   

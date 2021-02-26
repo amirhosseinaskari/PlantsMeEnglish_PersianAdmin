@@ -1,0 +1,321 @@
+﻿@model HomePage
+<!--Breadcrumb for this url-->
+<div class="row p-0 m-0 bg--white py-2 my-3 uk-box-shadow-small uk-border-rounded border position-relative">
+    <div class="col-12" dir="rtl">
+        <ul class="uk-breadcrumb IRANSans_Light fontsize-12 text-right p-0 m-0 d-flex" dir="rtl">
+            <li><a href="~/Admin" class="fontsize-12">مدیریت</a></li>
+            <li class="mx-sm-1 uk-active">صفحه اصلی وب سایت</li>
+        </ul>
+        <div class="bg--blue-600 position-absolute rounded-left" style="width:8px;left:0;top:-8px;height:calc(100% + 16px);"></div>
+    </div>
+
+</div>
+<!--Product Creation Form-->
+<div class="row my-2 m-0" dir="rtl" id="main-container">
+    <div class="col-12 uk-background-default  uk-box-shadow-medium border uk-border-rounded py-3">
+        <!--Title of create product-->
+        <h3 class="iranyekanwebregular fontsize-14 text-right mx-3 my-1 py-2">
+            <span class="blue-600 border-bottom--blue py-2"> تنظیمات صفحه اصلی وب سایت</span>
+        </h3>
+
+        <!--Home Page Top Banner Title-->
+        <div class="row px-3 my-4" dir="rtl">
+            <div class="col-12">
+                <div class="border border--dashed form-bundle uk-border-rounded">
+                    <label class="IRANSans_Light">عنوان وب سایت</label>
+                    <div class="row m-0 py-3">
+                        <div class="col-auto my-3">
+                            <div class="custom-text-field">
+                                <label class="uk-form-label IRANSans_Light" asp-for="Title">عنوان</label>
+                                <div class="uk-form-controls">
+                                    <input class="uk-input IRANSans_Light fontsize-12 uk-width-medium" asp-for="Title" type="text" placeholder="عنوان را وارد کنید">
+                                </div>
+                            </div>
+                        </div>
+                        <!--Submit button-->
+                        <div class="col-auto my-3">
+                            <button class="mdc-button mdc-button--unelevated homepage-totalinformation__submit-button
+                                bg--blue-700 border uk-box-shadow-small px-0" style="height:30px">
+                                <div class="mdc-button__ripple"></div>
+                                <span class="mdc-button__label IRANSans fontsize-10 white px-1 px-sm-2">
+                                    ویرایش و ذخیره تغییرات
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!--Home Page Instagram API-->
+        <div class="row px-3 my-4" dir="rtl">
+            <div class="col-12">
+                <div class="border border--dashed form-bundle uk-border-rounded">
+                    <label class="IRANSans_Light">لوگو</label>
+                    <div class="row m-0 py-3">
+                        <div class="col-auto my-3">
+                            <div class="">
+                                <label class="uk-form-label IRANSans_Light" for="siteLogo">
+                                    <img id="siteLogoPreview" width="200" class="mw-100" src="/images/base/logo.png" />
+                                    <div uk-spinner="ratio:2" class="my-spinner position-absolute d-none" style="top:45%;left:45%"></div>
+                                    <div class="uk-hidden">
+                                        <input class="uk-input IRANSans_Light fontsize-12 uk-width-medium" accept="image/png" name="siteLogo" id="siteLogo" type="file">
+                                    </div>
+                                </label>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Home Page Instagram API-->
+        <div class="row px-3 my-4" dir="rtl">
+            <div class="col-12">
+                <div class="border border--dashed form-bundle uk-border-rounded">
+                    <label class="IRANSans_Light">انتشار پست های اینستاگرام</label>
+                    <div class="row m-0 py-3">
+                        <div class="col-auto my-3">
+                            <div class="custom-text-field">
+                                <label class="uk-form-label IRANSans_Light" asp-for="InstagramAPI">کداتصال اینستاگرام</label>
+                                <div class="uk-form-controls">
+                                    <input class="uk-input IRANSans_Light fontsize-12 uk-width-medium" asp-for="InstagramAPI" type="text" placeholder="کد اینستاگرام را وارد کنید">
+                                </div>
+                            </div>
+                        </div>
+                        <!--Submit button-->
+                        <div class="col-auto my-3">
+                            <button class="mdc-button mdc-button--unelevated homepage-instagramapi__submit-button
+                                bg--blue-700 border uk-box-shadow-small px-0" style="height:30px">
+                                <div class="mdc-button__ripple"></div>
+                                <span class="mdc-button__label IRANSans fontsize-10 white px-1 px-sm-2">
+                                    ویرایش و ذخیره تغییرات
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!--Home Page Top Slide Show-->
+        <div class="row px-3 my-4">
+            <div class="col-12">
+                <div class="border border--dashed form-bundle uk-border-rounded">
+                    <label class="IRANSans_Light">اسلاید شوی بالای صفحه در حالت Desktop</label>
+                    <div class="row p-0 m-0 my-3">
+                        <!--Upload / Change Image-->
+                        <div class="col-lg-3 col-md-4 col-sm-6 px-3 my-2">
+                            <form id="uploader" method="post"
+                                  enctype="multipart/form-data">
+                                <div class="js-upload uk-placeholder uk-text-center image-upload--placeholder uk-border-rounded" dir="rtl">
+                                    <div uk-form-custom class="blue-600">
+                                        <input name="HomeSliderImages" id="HomeSliderImages"
+                                               type="file" multiple accept="image/*" data-id="@Model.Id">
+                                        <span uk-icon="icon: cloud-upload"></span>
+                                        <span class="uk-link IRANSans_Light fontsize-12">اضافه کردن تصویر جدید</span>
+                                    </div>
+                                </div>
+
+                                <progress class="uk-progress" id="upload-progress" value="0" max="100"></progress>
+                            </form>
+                        </div>
+                        <div class="col-12 my-2" id="homeSliderImage-list-container">
+                            <vc:home-slider-image-list home-id="@Model.Id"></vc:home-slider-image-list>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Home Page Top Slide Show in Mobile-->
+        <div class="row px-3 my-4">
+            <div class="col-12">
+                <div class="border border--dashed form-bundle uk-border-rounded">
+                    <label class="IRANSans_Light">اسلاید شوی بالای صفحه در حالت Mobile</label>
+                    <div class="my-1 fontsize-10 IRANSans_Light mr-2">(در صورت خالی بودن اسلایدر دسکتاپ جایگزین می شود)</div>
+                    <div class="row p-0 m-0 my-3">
+                        <!--Upload / Change Image-->
+                        <div class="col-lg-3 col-md-4 col-sm-6 px-3 my-2">
+                            <form id="mobileuploader" method="post"
+                                  enctype="multipart/form-data">
+                                <div class="js-upload uk-placeholder uk-text-center image-upload--placeholder uk-border-rounded" dir="rtl">
+                                    <div uk-form-custom class="blue-600">
+                                        <input name="MobileHomeSliderImages" id="MobileHomeSliderImages"
+                                               type="file" multiple accept="image/*" data-id="@Model.Id">
+                                        <span uk-icon="icon: cloud-upload"></span>
+                                        <span class="uk-link IRANSans_Light fontsize-12">اضافه کردن تصویر جدید</span>
+                                    </div>
+                                </div>
+
+                                <progress class="uk-progress" id="mobile-upload-progress" value="0" max="100"></progress>
+                            </form>
+                        </div>
+                        <div class="col-12 my-2" id="mobileHomeSliderImage-list-container">
+                            <vc:mobile-home-slider-image-list home-id="@Model.Id"></vc:mobile-home-slider-image-list>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Home Page Features-->
+        <div class="row px-3 my-4">
+            <div class="col-12">
+                <div class="border border--dashed form-bundle uk-border-rounded">
+                    <label class="IRANSans_Light">ویژگی های وب سایت</label>
+                    <div class="row m-0 pt-4">
+                        <div class="col-lg-3 col-md-4 col-sm-6 my-2 px-2">
+                            <label class="IRANSans_Light fontsize-12">
+                                <input autocomplete="off" class="uk-checkbox mx-1 uk-border-rounded" type="checkbox" asp-for="HasFastDeliveryOption">
+                                ارسال سریع
+                            </label>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-6 my-2 px-2">
+                            <label class="IRANSans_Light fontsize-12">
+                                <input autocomplete="off" class="uk-checkbox mx-1 uk-border-rounded" type="checkbox" asp-for="HasOriginalWarranty">
+                                ضمانت اصل بودن کالا
+                            </label>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-6 my-2 px-2">
+                            <label class="IRANSans_Light fontsize-12">
+                                <input autocomplete="off" class="uk-checkbox mx-1 uk-border-rounded" type="checkbox" asp-for="HasLocalPaymentOption">
+                                امکان پرداخت در محل
+                            </label>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-6 my-2 px-2">
+                            <label class="IRANSans_Light fontsize-12">
+                                <input autocomplete="off" class="uk-checkbox mx-1 uk-border-rounded" type="checkbox" asp-for="Has24Support">
+                                پشتیبانی 24 ساعته
+                            </label>
+                        </div>
+                    </div>
+                    <div class="w-100"></div>
+
+                </div>
+            </div>
+        </div>
+
+        <!--Home description-->
+        <div class="row px-3 py-2 my-4" id="home-description">
+            <div class="col-12">
+                <div class="border border--dashed form-bundle uk-border-rounded">
+                    <label class="IRANSans_Light">توضیحات درباره ی وب سایت</label>
+
+                    <div class=" mx-3 my-4">
+                        <div class="IRANSans_Light fontsize-12 text-editor"
+                             style="min-height:120px">
+                            @Html.Raw(Model.Description)
+                        </div>
+                    </div>
+                    <div class="mx-md-3 mr-3 mb-3">
+                        <button class="mdc-button mdc-button--unelevated edit-home-description__submit-button
+                                bg--blue-700 border px-0 uk-box-shadow-small" style="height:30px">
+                            <div class="mdc-button__ripple"></div>
+                            <span class="mdc-button__label IRANSans fontsize-10 white px-1 px-sm-2">
+                                ذخیره تغییرات
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Footer description-->
+        <div class="row px-3 py-2 my-4" id="footer-description">
+            <div class="col-12">
+                <div class="border border--dashed form-bundle uk-border-rounded">
+                    <label class="IRANSans_Light">توضیحات قسمت فوتر</label>
+
+                    <div class=" mx-3 my-4">
+                        <div class="IRANSans_Light fontsize-12 text-editor"
+                             style="min-height:120px">
+                            @Html.Raw(Model.FooterDescription)
+                        </div>
+                    </div>
+                    <div class="mx-md-3 mr-3 mb-3">
+                        <button class="mdc-button mdc-button--unelevated edit-footer-description__submit-button
+                                bg--blue-700 border px-0 uk-box-shadow-small" style="height:30px">
+                            <div class="mdc-button__ripple"></div>
+                            <span class="mdc-button__label IRANSans fontsize-10 white px-1 px-sm-2">
+                                ذخیره تغییرات
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--SEO Settings-->
+        <div class="row px-3 my-4">
+            <div class="col-12">
+                <div class="border border--dashed form-bundle uk-border-rounded">
+                    <label class="IRANSans_Light">تنظیمات سئو</label>
+                    <!--Create new tags-->
+                    <div class="row m-0 pt-2" dir="rtl">
+                        <div class="col-sm-6 my-2 px-2 order-1 order-sm-0">
+                            <div class="custom-text-field mx-2 my-4">
+                                <label class="uk-form-label IRANSans_Light" asp-for="TitlePage">عنوان</label>
+                                <div class="uk-form-controls d-flex">
+                                    <input class="uk-input IRANSans_Light fontsize-12" asp-for="TitlePage" type="text" placeholder="عنوان (60 تا 70 کاراکتر)">
+                                </div>
+                            </div>
+                            <div class="custom-text-field mx-2 my-4">
+                                <label class="uk-form-label IRANSans_Light" asp-for="MetaDescription">توضیحات</label>
+                                <div class="uk-form-controls d-flex">
+                                    <textarea class="uk-textarea IRANSans_Light fontsize-12 uk-border-rounded" rows="5" asp-for="MetaDescription"
+                                              placeholder="توضیحات را وارد کنید / 50 تا 160 کاراکتر">@Model.MetaDescription</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 my-2 order-0 order-sm-1 px-2 py-3" dir="rtl">
+                            <div class="border form-bundle uk-border-rounded m-2">
+                                <label class="IRANSans_Light">پیش نمایش در گوگل</label>
+                                <div class="my-3 p-3">
+                                    @if (string.IsNullOrEmpty(Model.TitlePage))
+                                    {
+                                        <div id="title-page-preview" class="IRANSans fontsize-14" style="color:#1a0dab">عنوان صفحه | پیش فرض</div>
+                                    }
+                                    else
+                                    {
+                                        <div id="title-page-preview" class="IRANSans fontsize-14" style="color:#1a0dab">@Model.TitlePage</div>
+                                    }
+                                    @if (string.IsNullOrEmpty(Model.MetaDescription))
+                                    {
+                                        <div id="metadescription-page-preview" class="IRANSans_Light fontsize-12">توضیحات در صورت خالی بودن به صورت پیش فرض توسط موتور جستجو انتخاب می شود</div>
+                                    }
+                                    else
+                                    {
+                                        <div id="metadescription-page-preview" class="IRANSans_Light fontsize-12">@Model.MetaDescription</div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Submit button-->
+                    <div class=" mb-3 mx-3">
+                        <button class="mdc-button mdc-button--unelevated bg--blue-700 homepage-seosetting__submit-button
+                                border uk-box-shadow-small px-0" style="height:30px">
+                            <div class="mdc-button__ripple"></div>
+                            <span class="mdc-button__label IRANSans fontsize-10 white px-1 px-sm-2">
+                                ویرایش و ذخیره تغییرات
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script>
+
+        const mdcButton = $('.mdc-button');
+        for (let i = 0; i < mdcButton.length; i++) {
+            mdc.ripple.MDCRipple.attachTo(document.querySelectorAll('.mdc-button')[i]);
+        }
+
+        const mdcTextField = $('.mdc-text-field');
+        for (let i = 0; i < mdcTextField.length; i++) {
+            mdc.textField.MDCTextField.attachTo(document.querySelectorAll('.mdc-text-field')[i]);
+        }
+
+    </script>
+}

@@ -1,0 +1,213 @@
+﻿  @model IEnumerable<Comment>
+    <!--Comment items (target of comment)-->
+<div class="col-lg-4 col-md-5 bg--white py-3 uk-border-rounded border-right" id="comment-list-items">
+   
+    <ul class="uk-list uk-list-divider uk-comment-list">
+        <vc:products-have-comment></vc:products-have-comment>
+    </ul>
+</div>
+<!--Comment contents and reply-->
+<div class="col-lg-8 col-md-7 bg--grey-light-2 py-3 uk-border-rounded position-relative" id="comment-list-contents">
+
+    <div class="w-100 p-2 d-md-none text-left mb-2">
+        <button class="mdc-button mdc-button--unelevated bg--white blue-600 uk-box-shadow-medium h-30" id="comment-back-button">
+            <div class="mdc-button__ripple"></div>
+            <span class="material-icons-round">
+                keyboard_backspace
+            </span>
+            <span class="mdc-button__label IRANSans fontsize-12">
+                Back
+            </span>
+
+        </button>
+    </div>
+
+    <!--Add reply to a comment modal-->
+    <div id="reply-comment-modal" uk-modal dir="ltr">
+        <div class="uk-modal-dialog">
+            <button class="uk-modal-close-default" type="button" uk-close syle="left:10px;right:unset"></button>
+            <div class="uk-modal-header">
+                <div class="d-flex align-items-center py-2 justify-content-start" dir="ltr">
+                    <div class="d-flex flex-column">
+                        <span class="mx-2 IRANSans_Light fontsize-10 blue-600 target-comment-fullname">......</span>
+                        <div class="IRANSans_Light fontsize-12 uk-text-muted mx-2 target-comment-description">.......</div>
+                    </div>
+                    <span class="material-icons blue-600">
+                        reply
+                    </span>
+                </div>
+            </div>
+            <div class="uk-modal-body">
+                <textarea class="uk-textarea IRANSans_Light fontsize-12 w-100  bg--light-2" name="replyDescription"
+                          rows="4" placeholder="write your answer"></textarea>
+                <div class="error-reply-description red-lighten-7 IRANSans fontsize-12 d-none"></div>
+            </div>
+            <div class="uk-modal-footer uk-text-left">
+
+                <button class="mdc-button mdc-button--unelevated bg--blue-700 uk-box-shadow-medium h-30 reply-comment-submit-button">
+                    <div class="mdc-button__ripple"></div>
+                    <span class="mdc-button__label IRANSans fontsize-12">
+                        Send
+                    </span>
+                    <span class="material-icons-round mx-2 fontsize-16">
+                        send
+                    </span>
+                </button>
+                <button class="mdc-button mdc-button--unelevated bg--white
+                        uk-box-shadow-medium blue-600 mx-2 h-30 uk-modal-close">
+                    <div class="mdc-button__ripple"></div>
+                    <span class="mdc-button__label IRANSans fontsize-12">
+                      Cancel
+                    </span>
+
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!--Delete a comment modal-->
+    <div id="delete-comment-modal" uk-modal dir="ltr">
+        <div class="uk-modal-dialog">
+            <button class="uk-modal-close-default" type="button" uk-close ></button>
+            <div class="uk-modal-header bg--light-2">
+                <span class="IRANSans fontsize-12">Delete Comment</span>
+            </div>
+            <div class="uk-modal-body">
+                <span class="IRANSans_Light fontsize-12">Are you sure want to delete this comment?</span>
+            </div>
+            <div class="uk-modal-footer uk-text-left">
+
+                <button class="mdc-button mdc-button--unelevated bg--red-lighten-7
+                        uk-box-shadow-medium h-30 delete-comment-submit-button">
+                    <div class="mdc-button__ripple"></div>
+                    <span class="mdc-button__label IRANSans fontsize-12">
+                        Delete
+                    </span>
+                    <span class="material-icons-round mx-2 fontsize-16">
+                        send
+                    </span>
+                </button>
+                <button class="mdc-button mdc-button--unelevated bg--white
+                        uk-box-shadow-medium blue-600 mx-2 h-30 uk-modal-close">
+                    <div class="mdc-button__ripple"></div>
+                    <span class="mdc-button__label IRANSans fontsize-12">
+                       Cancel
+                    </span>
+
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!--Delete a reply comment modal-->
+    <div id="delete-reply-comment-modal" uk-modal dir="ltr">
+        <div class="uk-modal-dialog">
+            <button class="uk-modal-close-default" type="button" uk-close></button>
+            <div class="uk-modal-header bg--light-2">
+                <span class="IRANSans fontsize-12">Delete Comment</span>
+            </div>
+            <div class="uk-modal-body">
+                <span class="IRANSans_Light fontsize-12">Are you sure want to delete this comment?</span>
+            </div>
+            <div class="uk-modal-footer uk-text-left">
+
+                <button class="mdc-button mdc-button--unelevated bg--red-lighten-7
+                        uk-box-shadow-medium h-30 delete-reply-comment-submit-button">
+                    <div class="mdc-button__ripple"></div>
+                    <span class="mdc-button__label IRANSans fontsize-12">
+                        Delete
+                    </span>
+                    <span class="material-icons-round mx-2 fontsize-16">
+                        send
+                    </span>
+                </button>
+                <button class="mdc-button mdc-button--unelevated bg--white
+                        uk-box-shadow-medium blue-600 mx-2 h-30 uk-modal-close">
+                    <div class="mdc-button__ripple"></div>
+                    <span class="mdc-button__label IRANSans fontsize-12">
+                        Cancel
+                    </span>
+
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <ul class="uk-list uk-list-divider p-0 m-0 commens-container-of-this-product">
+        @foreach (var item in Model)
+        {
+           
+            <li class="comment-and-reply-container" data-id="@item.Id">
+                <div class="d-flex flex-column py-2">
+                    <div class="uk-box-shadow-medium user-comment-box IRANSans_Light fontsize-12 my-2 border--red">
+                        <div class="d-flex justify-content-between flex-wrap text-left iranyekanwebregular fontsize-10 border-bottom w-100 pb-2">
+
+                            <span>@item.FullName</span>
+                            <span class="uk-text-muted">@item.SubmitedDate.ToString("yyyy/MM/dd")</span>
+                        </div>
+                        <div class="py-2">
+                            <p>@item.Description</p>
+                            <div class="d-flex align-items-center star-rating-container">
+                                @for (int i = 0; i < 5; i++)
+                                {
+                                    if (i < item.Rate)
+                                    {
+                                        <span class="material-icons-round checked">
+                                            grade
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="material-icons-round">
+                                            grade
+                                        </span>
+                                    }
+                                }
+
+
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-start comment-actions w-100 pt-2">
+                            <a href="#" data-id="@item.Id" class="comment-publish-icon"
+                               data-publish="@item.IsPublished" uk-tooltip="title:publish">
+                                @if (item.IsPublished)
+                                {
+                                    <i class="material-icons-outlined fontsize-16">
+                                        visibility
+                                    </i>
+                                }
+                                else
+                                {
+                                    <i class="material-icons-outlined fontsize-16">
+                                        visibility_off
+                                    </i>
+                                }
+
+                            </a>
+                            <a href="#reply-comment-modal" data-id="@item.Id"
+                               data-fullname="@item.FullName"
+                               data-description="@item.Description"
+                               class="reply-to-comment-button" uk-tooltip="title:reply" uk-toggle>
+                                <span uk-icon="icon:reply;ratio:.7"></span>
+                            </a>
+                            <a href="#delete-comment-modal" data-id="@item.Id"
+                               uk-toggle
+                               class="comment-delete"
+                               uk-tooltip="title:delete">
+                                <span uk-icon="icon:trash;ratio:.7"></span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="my-reply-comments" data-id="@item.Id">
+                        <!--Replied comments to this comment-->
+                        <vc:product-reply-comment-review comment-id="@item.Id"></vc:product-reply-comment-review>
+                    </div>
+
+                </div>
+            </li>
+        }
+
+
+    </ul>
+</div>
